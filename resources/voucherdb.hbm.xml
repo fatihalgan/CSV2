@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="csv.vouchers.domain.VoucherDBAudit" mutable="false">
+		<composite-id>
+			<key-property name="serialNumber" type="string"/>
+			<key-property name="strNewState" type="string"/>
+		</composite-id>
+		<property name="transactionId" type="long"/>
+		<property name="createdTime" type="timestamp"/>
+		<property name="strOldState" type="string"/>
+		<property name="msisdn" type="string"/>
+		<property name="operator" type="string"/>
+	</class>
+	<sql-query name="loadVoucherHistory">
+		<return alias="vh" class="csv.vouchers.domain.VoucherDBAudit" lock-mode="read"/>
+		SELECT 
+		VU.TRANSACTION_ID as {vh.transactionId},
+		VU.SERIAL_NUM as {vh.serialNumber},
+		'Used' as {vh.strNewState},
+		VU.DATE_TIME as {vh.createdTime},
+		VU.OPERATOR as {vh.operator},
+		VU.MSISDN as {vh.msisdn}
+		FROM VOUCHER_USED VU
+		WHERE VU.SERIAL_NUM = :serialNum
+		UNION ALL
+		SELECT
+		NULL as {vh.transactionId},
+		VUN.SERIAL_NUM as {vh.serialNumber},
+		'Unavailable' as {vh.strNewState},
+		VUN.DATE_TIME as {vh.createdTime},
+		VUN.OPERATOR as {vh.operator},
+		NULL as {vh.msisdn}
+		FROM VOUCHER_UNAVAILABLE VUN
+		WHERE VUN.SERIAL_NUM = :serialNum
+		UNION ALL
+		SELECT 
+		VP.TRANSACTION_ID as {vh.transactionId},
+		VP.SERIAL_NUM as {vh.serialNumber},
+		'Pending' as {vh.strNewState},
+		VP.DATE_TIME as {vh.createdTime},
+		VP.OPERATOR as {vh.operator},
+		VP.MSISDN as {vh.msisdn}
+		FROM VOUCHER_PENDING VP
+		WHERE VP.SERIAL_NUM = :serialNum
+	</sql-query>
+</hibernate-mapping>

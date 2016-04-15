@@ -1,0 +1,167 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical"
+		id="mainAgreementContactSelectionRegion">
+		<table>
+			<tr>
+				<td valign="top" rowspan="2"><rich:panel
+					header="Main Agreement Contacts">
+					<h:form id="mainAgreementContactList">
+						<rich:dataTable id="tblMainAgreementContacts"
+							value="#{mainAgreementContactListAction.mainAgreementContactList}"
+							var="item" rows="20">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementContactTitle}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementContactName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementContactSurname}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementContactPhone}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementContactFax}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementContactGsm}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementEmail}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.mainAgreementContactType}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Edit" />
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="#{item.mainAgreement.description}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.contactTitle}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.contactName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.contactSurname}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.phone}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.fax}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.gsm}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.email}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.contactTypes.description}" />
+								</rich:column>
+								<rich:column>
+									<a:commandButton
+										action="#{mainAgreementContactListAction.editMainAgreementContact(item)}"
+										value="Edit" reRender="mainAgreementContactSelectionRegion" />
+								</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+								<rich:datascroller for="tblMainAgreementContacts" maxPages="20"
+									boundaryControls="auto" fastControls="auto" />
+							</f:facet>
+						</rich:dataTable>
+						<div class="actionButtons"><h:commandButton
+							id="btnNewOpCont" value="Create New"
+							action="#{mainAgreementContactListAction.newMainAgreementContact}" /></div>
+					</h:form>
+				</rich:panel></td>
+				<td><rich:panel header="#{msg.roamingEditMainAgreementContact}"
+					rendered="#{mainAgreementContactListAction.selectedMainAgreementContact != null}">
+					<h:form id="frmEditMainAgreementContact">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.mainAgreementContactTitle}</ui:define>
+								<h:inputText
+									value="#{mainAgreementContactListAction.selectedMainAgreementContact.contactTitle}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.mainAgreementContactName}</ui:define>
+								<h:inputText
+									value="#{mainAgreementContactListAction.selectedMainAgreementContact.contactName}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.mainAgreementContactSurname}</ui:define>
+								<h:inputText
+									value="#{mainAgreementContactListAction.selectedMainAgreementContact.contactSurname}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.mainAgreementContactPhone}</ui:define>
+								<h:inputText
+									value="#{mainAgreementContactListAction.selectedMainAgreementContact.phone}"
+									required="false" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.mainAgreementContactFax}</ui:define>
+								<h:inputText
+									value="#{mainAgreementContactListAction.selectedMainAgreementContact.fax}"
+									required="false" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.mainAgreementContactGsm}</ui:define>
+								<h:inputText
+									value="#{mainAgreementContactListAction.selectedMainAgreementContact.gsm}"
+									required="false" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.mainAgreementEmail}</ui:define>
+								<h:inputText
+									value="#{mainAgreementContactListAction.selectedMainAgreementContact.email}"
+									required="false" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.mainAgreementContactType}</ui:define>
+								<h:selectOneMenu
+									value="#{mainAgreementContactListAction.selectedMainAgreementContact.contactTypes}">
+									<s:selectItems
+										value="#{mainAgreementContactListAction.contactTypesList}"
+										var="cntType" label="#{cntType.description}" />
+									<f:converter converterId="roamingEntityConverter" />
+								</h:selectOneMenu>
+							</s:decorate>
+						</h:panelGrid>
+						<div class="actionButtons"><h:commandButton
+							id="btnSaveMaCont" value="Save"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Agreement Save')}"
+							action="#{mainAgreementContactListAction.saveMainAgreementContact}"
+							reRender="mainAgreementContactSelectionRegion" /> <h:commandButton
+							id="btnDeleteMaCont" value="Delete MainAgreement Contact"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Agreement Delete')}"
+							action="#{mainAgreementContactListAction.deleteMainAgreementContact}"
+							reRender="mainAgreementContactSelectionRegion" /></div>
+					</h:form>
+				</rich:panel></td>
+			</tr>
+		</table>
+	</h:panelGroup>
+</ui:composition>

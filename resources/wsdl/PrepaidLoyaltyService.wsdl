@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:tns="http://www.bridge.com/PrepaidLoyaltyService/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:co="http://co.mcel.mz/types/common"
+	xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy"
+	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-utility-1.0.xsd" 
+	name="PrepaidLoyaltyService" 
+	targetNamespace="http://www.bridge.com/PrepaidLoyaltyService/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.bridge.com/PrepaidLoyaltyService/" xmlns:tns="http://www.bridge.com/PrepaidLoyaltyService/">
+      <xsd:import namespace="http://co.mcel.mz/types/common" schemaLocation="mcel_types.xsd"/>
+      <xsd:element name="queryPointsRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="msisdn" type="co:msisdnType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="queryPointsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="totalPoints" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="adjustPointsRequest">
+      	<xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:element name="msisdn" type="co:msisdnType"/>
+      			<xsd:element name="originTransId" type="xsd:string"/>
+      			<xsd:element name="relativeAmount" type="xsd:decimal"/>
+      			<xsd:element name="pointsAdjustmentType" type="tns:adjustmentType"/>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:simpleType name="adjustmentType">
+      	<xsd:restriction base="xsd:string">
+      		<xsd:enumeration value="ADD"/>
+      		<xsd:enumeration value="REMOVE"/>
+      	</xsd:restriction>
+      </xsd:simpleType>
+      <xsd:element name="adjustPointsResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:element name="transactionId" type="xsd:long"/>
+      			<xsd:element name="adjustedAmount" type="xsd:decimal"/>
+      			<xsd:element name="remainingPoints" type="xsd:decimal"/>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="loyaltyServiceError" type="tns:LoyaltyServiceErrorType"/>
+      <xsd:complexType name="LoyaltyServiceErrorType">
+      	<xsd:sequence>
+      		<xsd:element name="errorCode" type="xsd:int"/>
+      		<xsd:element name="errorMessage" type="xsd:string"/>
+      	</xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="queryPointsRequest">
+    <wsdl:part element="tns:queryPointsRequest" name="queryPointsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="queryPointsResponse">
+    <wsdl:part element="tns:queryPointsResponse" name="queryPointsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="adjustPointsRequest">
+  	<wsdl:part element="tns:adjustPointsRequest" name="adjustPointsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="adjustPointsResponse">
+  	<wsdl:part element="tns:adjustPointsResponse" name="adjustPointsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="loyaltyServiceFault">
+  	<wsdl:part element="tns:loyaltyServiceError" name="faultResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="PrepaidLoyaltyService">
+    <wsdl:operation name="queryLoyaltyPoints">
+      <wsdl:input message="tns:queryPointsRequest"/>
+      <wsdl:output message="tns:queryPointsResponse"/>
+      <wsdl:fault name="faultResponse" message="tns:loyaltyServiceFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="adjustLoyaltyPoints">
+      <wsdl:input message="tns:adjustPointsRequest"/>
+      <wsdl:output message="tns:adjustPointsResponse"/>
+      <wsdl:fault name="faultResponse" message="tns:loyaltyServiceFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PrepaidLoyaltyServiceSOAP" type="tns:PrepaidLoyaltyService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="queryLoyaltyPoints">
+      <soap:operation soapAction="http://www.bridge.com/PrepaidLoyaltyService/queryPoints"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="queryPointsRequest"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="queryPointsResponse"/>
+      </wsdl:output>
+      <wsdl:fault name="faultResponse">
+      	<soap:fault use="literal" name="faultResponse"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="adjustLoyaltyPoints">
+      <soap:operation soapAction="http://www.bridge.com/PrepaidLoyaltyService/adjustPoints"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="adjustPointsRequest"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="adjustPointsResponse"/>
+      </wsdl:output>
+      <wsdl:fault name="faultResponse">
+      	<soap:fault use="literal" name="faultResponse"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PrepaidLoyaltyService">
+    <wsdl:port binding="tns:PrepaidLoyaltyServiceSOAP" name="PrepaidLoyaltyServiceSOAP">
+      <soap:address location="http://localhost:8080/CSV/services/PrepaidLoyaltyService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

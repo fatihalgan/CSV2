@@ -1,0 +1,130 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:m="http://jboss.com/products/seam/mail"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.contractOverview}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.contractOverview}" styleClass="sectionPanel">
+			<h:panelGrid columns="2">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.customer}</ui:define>
+					<h:inputTextarea value="#{contractService.selectedContract.customerInfo}" readonly="true" cols="30" rows="7"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.ratePlan}</ui:define>
+					<h:inputText value="#{contractService.selectedContract.ratePlan}" size="30" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.storageMedium}</ui:define>
+					<h:inputText value="#{contractService.selectedContract.storageMediumNo}" size="30" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.contractStatus}</ui:define>
+					<h:inputText value="#{contractService.selectedContract.contractStatus}" size="30" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.reasonForStatus}</ui:define>
+					<h:inputTextarea value="#{contractService.selectedContract.statusReason}" readonly="true" cols="30"/>
+				</s:decorate>
+				<s:link value="Return To Contract Search" view="/postpaid/contracts/search_contract.xhtml"/>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel header="#{msg.directoryNumbers}" styleClass="sectionPanel" rendered="#{not empty contractService.selectedContract.directoryNumbers}">
+			<rich:dataTable id="tblDirectoryNumbers" rows="13" var="item"
+				value="#{contractService.selectedContract.directoryNumbers}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.service}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.profile}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.resourceType}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.resourceNo}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.numberingPlan}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.mainDirectoryNumber}"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.service}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.profile}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.resourceType}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.resourceNo}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.numberingPlan}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.mainDirectoryNumber}"/>
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+		<rich:panel header="#{msg.gprsUsage}" styleClass="sectionPanel">
+			<s:decorate template="../date_interval.xhtml">
+				<h:commandButton id="btnGprsUsage" action="#{contractService.retrieveGprsUsage}" value="#{msg.getGPRSUsage}" />
+			</s:decorate>
+			<rich:dataTable id="tblGprsUsages" rows="15" var="item" value="#{contractService.selectedContract.gprsUsages}"
+				rendered="#{not empty contractService.selectedContract.gprsUsages}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.total}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.downlink}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.uplink}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.date}"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.totalVolume} #{item.totalVolumeUmCodeDes}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.downlinkVolume} #{item.downlinkVolumeUmCodeDes}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.uplinkVolume} #{item.uplinkVolumeUmCodeDes}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.entryDate}"/>
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="tblGprsUsages" maxPages="20" boundaryControls="auto" fastControls="auto" />
+				</f:facet>	
+			</rich:dataTable>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+		<head>
+		<title>Daily Adjustments Report</title>
+		</head>
+		<body>
+		<table rules="all" border="1">
+			<caption>
+			<h3>DAILY ADJUSTMENTS FROM CUSTOMER SINGLE VIEW</h3>
+			</caption>
+			<tbody>
+				<tr>
+					<th colspan="9" align="left">
+					<h4>Date Of Report: <h:outputText
+						value="#{reportingService.startDate}">
+						<f:convertDateTime type="date" dateStyle="medium" timeZone="GMT+2"/>
+					</h:outputText></h4>
+					</th>
+				</tr>
+				<tr>
+					<th colspan="9"></th>
+				</tr>
+				<tr>
+					<th>
+					<h4>User</h4>
+					</th>
+					<th>
+					<h4>MSISDN</h4>
+					</th>
+					<th>
+					<h4>Main Account</h4>
+					</th>
+					<th>
+					<h4>Free SMS</h4>
+					</th>
+					<th>
+					<h4>Free MMS</h4>
+					</th>
+					<th>
+					<h4>Free Calls</h4>
+					</th>
+					<th>
+					<h4>Type</h4>
+					</th>
+					<th>
+					<h4>Status</h4>
+					</th>
+					<th>
+					<h4>Reason</h4>
+					</th>
+				</tr>
+				<c:set var="grandTotalMainAccountAdjustment" value="#{0}"></c:set>
+				<c:set var="grandTotalSMSAdjustment" value="#{0}"></c:set>
+				<c:set var="grandTotalMMSAdjustment" value="#{0}"></c:set>
+				<c:set var="grandTotalFreeCallsAdjustment" value="#{0}"></c:set>
+				<c:forEach items="#{reportingService.dailyAdjustments}" var="entry">
+					<c:set var="totalMainAccountAdjustment" value="#{0}"></c:set>
+					<c:set var="totalSMSAdjustment" value="#{0}"></c:set>
+					<c:set var="totalMMSAdjustment" value="#{0}"></c:set>
+					<c:set var="totalFreeCallsAdjustment" value="#{0}"></c:set>
+					<c:forEach items="#{entry.value}" var="adjustment">
+						<tr>
+							<td><h:outputText value="#{entry.key.fullName}"></h:outputText></td>
+							<td>#{'-'}#{adjustment.msisdn}#{'-'}</td>
+							<td><h:outputText
+								value="#{adjustment.mainAccountAdjustment}"></h:outputText></td>
+							<td><h:outputText value="#{adjustment.smsAdjustment}"></h:outputText></td>
+							<td><h:outputText value="#{adjustment.mmsAdjustment}"></h:outputText></td>
+							<td><h:outputText value="#{adjustment.freeCallsAdjustment}"></h:outputText></td>
+							<td><c:if test="#{adjustment.type == 'R'}">
+								<h:outputText value="Refill"></h:outputText>
+							</c:if> <c:if test="#{adjustment.type == 'A'}">
+								<h:outputText value="Adjustment"></h:outputText>
+							</c:if></td>
+							<td><h:outputText value="#{adjustment.status}"></h:outputText></td>
+							<td><h:outputText value="#{adjustment.reason}"></h:outputText></td>
+						</tr>
+						<c:set var="totalMainAccountAdjustment"
+							value="#{totalMainAccountAdjustment + adjustment.mainAccountAdjustment}"></c:set>
+						<c:set var="totalFreeSMSAdjustment"
+							value="#{totalSMSAdjustment + adjustment.smsAdjustment}"></c:set>
+						<c:set var="totalFreeMMSAdjustment"
+							value="#{totalMMSAdjustment + adjustment.mmsAdjustment}"></c:set>
+						<c:set var="totalFreeCallsAdjustment"
+							value="#{totalFreeCallsAdjustment + adjustment.freeCallsAdjustment}"></c:set>
+					</c:forEach>
+					<tr>
+						<td>
+						<h4>Total</h4>
+						</td>
+						<td></td>
+						<td><h:outputText value="#{totalMainAccountAdjustment}"></h:outputText></td>
+						<td><h:outputText value="#{totalSMSAdjustment}"></h:outputText></td>
+						<td><h:outputText value="#{totalMMSAdjustment}"></h:outputText></td>
+						<td><h:outputText value="#{totalFreeCallsAdjustment}"></h:outputText></td>
+						<td colspan="3"></td>
+					</tr>
+					<c:set var="grandTotalMainAccountAdjustment"
+						value="#{grandTotalMainAccountAdjustment + totalMainAccountAdjustment}"></c:set>
+					<c:set var="grandTotalSMSAdjustment"
+						value="#{grandTotalSMSAdjustment + totalSMSAdjustment}"></c:set>
+					<c:set var="grandTotalMMSAdjustment"
+						value="#{grandTotalMMSAdjustment + totalMMSAdjustment}"></c:set>
+					<c:set var="grandTotalFreeCallsAdjustment"
+						value="#{grandTotalFreeCallsAdjustment + totalFreeCallsAdjustment}"></c:set>
+				</c:forEach>
+				<tr>
+					<td>
+					<h4>Grand Total</h4>
+					</td>
+					<td></td>
+					<td><h:outputText value="#{grandTotalMainAccountAdjustment}"></h:outputText></td>
+					<td><h:outputText value="#{grandTotalSMSAdjustment}"></h:outputText></td>
+					<td><h:outputText value="#{grandTotalMMSAdjustment}"></h:outputText></td>
+					<td><h:outputText value="#{grandTotalFreeCallsAdjustment}"></h:outputText></td>
+					<td colspan="3"></td>
+				</tr>
+			</tbody>
+		</table>
+		</body>
+</ui:composition>

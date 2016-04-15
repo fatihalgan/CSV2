@@ -1,0 +1,64 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="iregStatusSelectionRegion">
+		<rich:panel header="#{msg.roamingEditIregStatus}"
+			rendered="#{iregStatusListAction.selectedIregStatus != null}">
+			<h:form id="frmEditIregStatus">
+				<h:panelGrid columns="2">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingIregStatusDesc}</ui:define>
+						<h:inputText
+							value="#{iregStatusListAction.selectedIregStatus.description}"
+							required="true" size="80" />
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons"><h:commandButton id="btnSaveIrSt"
+					value="Save" action="#{iregStatusListAction.saveIregStatus}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}" />
+				<h:commandButton id="btnDeleteIrSt" value="Delete Ireg Status"
+					action="#{iregStatusListAction.deleteIregStatus}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}" /></div>
+			</h:form>
+		</rich:panel>
+
+		<rich:panel header="IregStatuses">
+			<h:form id="iregStatusList">
+				<rich:dataTable id="tblIregStatuses"
+					value="#{iregStatusListAction.iregStatusList}" var="item" rows="20">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.roamingIregStatusDesc}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.description}" />
+						</rich:column>
+						<rich:column>
+							<a:commandButton
+								action="#{iregStatusListAction.editIregStatus(item)}"
+								value="Edit" reRender="iregStatusSelectionRegion" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblIregStatuses" maxPages="20"
+							boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+				<div class="actionButtons"><h:commandButton id="btnNewIrSt"
+					value="Create New" action="#{iregStatusListAction.newIregStatus}" /></div>
+			</h:form>
+		</rich:panel>
+	</h:panelGroup>
+</ui:composition>

@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="#{msg.myAssignedTasks}" rendered="#{not empty taskInstanceList}">
+		<h:form>
+		<ui:include src="./assigned_tasks_filter.xhtml" />
+		<rich:dataGrid id="assignedTasksGrid" value="#{filterableTaskInstanceList.taskInstanceList}" var="task" columns="2" elements="2" first="0">
+				<s:decorate template="./complaint_management/complaint_details.xhtml" rendered="#{task.processInstance.processDefinition.name == 'ComplaintManagement'
+					or task.processInstance.processDefinition.name == 'CorporateComplaintManagement' or task.processInstance.processDefinition.name == 'TechnicalDepartmentComplaintManagement'}">
+					<s:button action="#{attendOpenComplaintTask.attendCustomerComplaint}" taskInstance="#{task}" 
+                    	value="#{msg.beginTask}" view="/tasks/complaint_management/start_complaint_attendance.xhtml" />
+				</s:decorate>
+				<s:decorate template="./sim_migration/migration_details.xhtml" rendered="#{task.processInstance.processDefinition.name == 'PrepaidToPostpaidMigration'}">
+					<s:button action="#{postpaidMigrationService.attendMigrationRequest}" taskInstance="#{task}" 
+						value="#{msg.beginTask}" view="/tasks/sim_migration/attend_migration_request.xhtml"/>
+				</s:decorate>
+			<f:facet name="footer">
+				<rich:datascroller for="assignedTasksGrid" maxPages="10" boundaryControls="auto" fastControls="auto" 
+					/>
+			</f:facet>
+		</rich:dataGrid>
+		</h:form>
+	</rich:panel>
+</ui:composition>

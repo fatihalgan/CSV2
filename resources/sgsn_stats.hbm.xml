@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="csv.prepaid.netmovel.domain.SGSNDataUsage" table="SGSN_TBL">
+		<composite-id>
+			<key-property name="msisdn" column="SERVEDMSISDN" type="string"/>
+			<key-property name="openingTime" column="RECORDOPENINGTIME" type="timestamp"/>
+		</composite-id>
+		<property name="accessPointName" column="ACCESSPOINTNAMENI" type="string"/>
+		<property name="uplinkVolume" column="DATAVOLUMEGPRSUPLINK" type="double"/>
+		<property name="downlinkVolume" column="DATAVOLUMEGPRSDOWNLINK" type="double"/>
+		<property name="duration" column="DURATION" type="integer"/>
+	</class>
+</hibernate-mapping>

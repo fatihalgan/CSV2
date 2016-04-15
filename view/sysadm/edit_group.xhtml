@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+	<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+	<rich:panel header="Edit Group" styleClass="sectionPanel">
+		<h:form id="frmEditGroup">
+		<h:panelGrid columns="1">
+			<s:decorate template="../edit.xhtml">
+				<ui:define name="label">Supervisor</ui:define>
+				<h:selectOneMenu value="#{groupHomeAction.selectedGroup.parentGroup}" required="false">
+					<s:selectItems var="item" value="#{groupHomeAction.supervisorGroups}" label="#{item.groupName}" noSelectionLabel="No Supervisors" />
+					<f:converter converterId="csvEntityConverter"/>
+				</h:selectOneMenu>
+			</s:decorate>
+			<s:decorate template="../edit.xhtml">
+				<ui:define name="label">Groupname</ui:define>
+				<h:inputText value="#{groupHomeAction.selectedGroup.groupName}" required="true"/>
+			</s:decorate>
+			<s:decorate template="../edit.xhtml">
+				<ui:define name="label">Description</ui:define>
+				<h:inputText value="#{groupHomeAction.selectedGroup.description}" required="true" />
+			</s:decorate>
+			<s:decorate template="../edit.xhtml">
+				<ui:define name="label">Group Type</ui:define>
+				<h:selectOneMenu value="#{groupHomeAction.selectedGroup.groupType}">
+					<s:convertEnum/>
+					<s:selectItems var="type" value="#{allUserGroupTypes}" label="#{type.label}"/>		
+				</h:selectOneMenu>
+			</s:decorate>
+			<s:decorate template="../edit.xhtml">
+				<ui:define name="label">Authorizations</ui:define>
+				<rich:listShuttle var="item" sourceValue="#{groupHomeAction.unselectedOperations}" targetValue="#{groupHomeAction.selectedOperations}"
+					converter="#{groupHomeAction.operationListShuttleConverter}" required="false">
+					<f:facet name="sourceCaption">
+						<h:outputText value="Unpermitted Operations"/>
+					</f:facet>
+					<f:facet name="targetCaption">
+						<h:outputText value="Permitted Operations"/>
+					</f:facet>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Operation Name"/>
+						</f:facet>
+						<h:outputText value="#{item.operationName}"/>
+					</h:column>
+				</rich:listShuttle>
+			</s:decorate>
+		</h:panelGrid>
+		<div class="actionButtons">
+			<h:commandButton id="btnSave" value="Save Group" action="#{groupHomeAction.saveGroup}"/>
+			<h:commandButton id="cancel" value="Cancel" action="#{groupHomeAction.cancelSave}" immediate="true"/>
+		</div>
+		</h:form>
+	</rich:panel>
+</ui:define>			
+</ui:composition>

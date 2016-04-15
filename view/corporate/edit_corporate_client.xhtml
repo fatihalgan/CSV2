@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+				
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.editCorporateClient}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.editCorporateClient}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.customerCode}</ui:define>
+						<h:inputText value="#{corporateClientHomeAction.selectedClient.customerCode}" size="20" maxlength="20" required="true"/>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.companyName}</ui:define>
+						<h:inputTextarea value="#{corporateClientHomeAction.selectedClient.companyName}" required="true"/>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.contactNumber}</ui:define>
+						<h:inputText value="#{corporateClientHomeAction.selectedClient.contactNumber}" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.contactPerson}</ui:define>
+						<h:inputTextarea value="#{corporateClientHomeAction.selectedClient.contactPerson}" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.corporateResponsible}</ui:define>
+						<h:selectOneMenu value="#{corporateClientHomeAction.selectedClient.corporateResponsible}" required="true">
+							<s:selectItems var="resp" value="#{corporateClientHomeAction.corporateResponsibles}" label="#{resp.fullName}"/>
+							<f:converter converterId="csvEntityConverter"/>
+						</h:selectOneMenu>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton action="#{corporateClientHomeAction.saveClient}" value="#{msg.save}" />
+					<h:commandButton action="#{corporateClientHomeAction.cancel}" value="#{msg.cancel}" immediate="true"/>
+				</div>
+			</h:form>
+		</rich:panel>
+	</ui:define>			
+</ui:composition>

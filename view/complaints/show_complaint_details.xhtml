@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+                
+	<rich:modalPanel id="complaintDetailsMp" width="600" height="420" zindex="2000" style="overflow:auto">
+		<f:facet name="header">Complaint Details</f:facet>
+		<f:facet name="controls">
+			<a href="#" onclick="Richfaces.hideModalPanel('complaintDetailsMp')">X</a>
+		</f:facet>
+		<a:outputPanel id="complaintDetailPanel" layout="inline">
+			<h:panelGrid columns="1" style="width:100%">
+				<s:decorate template="../display.xhtml">
+					<ui:define name="label">Segment</ui:define>
+					<h:inputText value="#{complaintManagementService.currentViewedComplaint.segment.description}" size="50"/>
+				</s:decorate>
+				<h:panelGroup layout="block">
+					<span class="name">#{msg.description}</span>
+					<h:outputText value="#{complaintManagementService.currentViewedComplaint.description}" escape="false"/>
+				</h:panelGroup>
+			</h:panelGrid>
+		</a:outputPanel>
+	</rich:modalPanel>             
+</ui:composition>

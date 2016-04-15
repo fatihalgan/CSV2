@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.menuSMSReport}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<s:decorate template="./select_date.xhtml">
+			<h:commandButton value="#{msg.getReport}" action="#{reportingService.retrieveSMSLog}" />
+		</s:decorate>
+		
+		<rich:panel header="#{msg.menuSMSReport}" styleClass="sectionPanel" rendered="#{not empty reportingService.smsLog}">
+			<h:form>
+			<rich:dataTable id="tblSMSLog" value="#{reportingService.smsLog}" var="item" rows="15">
+				<f:facet name="header">
+					<rich:columnGroup>								
+						<rich:column>
+							<h:outputText value="User"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Date"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Msisdn"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Message"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Reason"></h:outputText>
+						</rich:column>							
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.owningUser.username}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.createdTime}">
+							<f:convertDateTime dateStyle="medium" timeStyle="short"/>
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.msisdn}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.message}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.reason}"/>
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="tblSMSLog" maxPages="20" boundaryControls="auto" fastControls="auto" />
+				</f:facet>
+			</rich:dataTable>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

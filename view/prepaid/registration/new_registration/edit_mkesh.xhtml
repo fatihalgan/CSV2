@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<script type="text/javascript" language="JavaScript" src="../field_restrictions.js"/>
+		<center>
+			<h3>#{msg.mKeshSubscription}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.mKeshSubscription}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="3">
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.wantsToSubscribeToMKesh}</ui:define>
+						<h:selectBooleanCheckbox value="#{prepaidRegistrarService.newRegistrar.requestMKesh}" />
+					</s:decorate>
+				</h:panelGrid>
+				<h:panelGroup layout="block">
+					<div class="actionButtons">
+						<h:commandButton  action="back" value="Back" immediate="true"/>
+						<h:commandButton action="finish" value="Finish" />
+					</div>
+				</h:panelGroup>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

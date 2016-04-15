@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="csv.common.domain.PUKInfo" mutable="false">
+		<id name="msisdn" type="string">
+			<generator class="assigned"/>
+		</id>
+		<property name="storageMediumId" type="long"/>
+		<property name="customerId" type="long"/>
+		<property name="customerCode" type="string"/>
+		<property name="contractId" type="long"/>
+		<property name="status" type="string"/>
+		<property name="validFrom" type="date"/>
+		<property name="billCycle" type="string"/>
+		<property name="puk" type="string"/>
+		<property name="puk2" type="string"/>
+		<loader query-ref="loadPUKInfo"/>
+	</class>
+	<class name="csv.postpaid.domain.PostpaidAccount" mutable="false">
+		<id name="customerCode" type="string">
+			<generator class="assigned"/>
+		</id>
+		<property name="customerId" type="integer" not-null="true"/>
+		<property name="firstName" type="string"/>
+		<property name="lastName" type="string"/>
+		<property name="email" type="string"/>
+		<property name="city" type="string"/>
+		<property name="country" type="string"/>
+		<property name="street" type="string"/>
+		<property name="streetNo" type="string"/>
+		<property name="zip" type="string"/>
+		<property name="line1" type="string"/>
+		<property name="line2" type="string"/>
+		<property name="csType" type="string"/>
+		<property name="activationDate" type="date"/>
+		<property name="sentDate" type="date"/>
+		<property name="prgName" type="string"/>
+		<property name="lbcDate" type="date"/>
+		<property name="currentBalance" type="float"/>
+		<property name="previousBalance" type="float" />
+		<property name="unbilledAmount" type="float"/>
+		<property name="csReason" type="string"/>
+		<loader query-ref="loadPostpaidAccount"/>
+	</class>
+	<class name="csv.postpaid.domain.Contract" mutable="false">
+		<id name="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="contractCode" type="string"/>
+		<property name="directoryNumber" type="string"/>
+		<property name="contractStatus" type="string"/>
+		<property name="activationDate" type="date"/>
+		<property name="ratePlan" type="string"/>
+		<property name="customerName" type="string"/>
+		<property name="customerCity" type="string"/>
+		<property name="customerCountry" type="string"/>
+		<property name="customerStreet" type="string"/>
+		<property name="customerStreetNo" type="string"/>
+		<property name="storageMediumNo" type="string"/>
+		<property name="statusReason" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.DirectoryNumber" mutable="false">
+		<composite-id>
+			<key-property name="resourceType" type="string"/>
+			<key-property name="resourceNo" type="string"/>
+		</composite-id>
+		<property name="service" type="string"/>
+		<property name="profile" type="string"/>
+		<property name="numberingPlan" type="string"/>
+		<property name="mainDirectoryNumber" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.GprsUsage" mutable="false">
+		<composite-id>
+			<key-property name="contractId" type="long"/>
+			<key-property name="entryDate" type="timestamp"/>
+		</composite-id>
+		<property name="downlinkVolume" type="integer"/>
+		<property name="uplinkVolume" type="integer"/>
+		<property name="totalVolume" type="integer"/>
+		<property name="downlinkVolumeUmCode" type="integer"/>
+		<property name="uplinkVolumeUmCode" type="integer"/>
+		<property name="totalVolumeUmCode" type="integer"/>
+	</class>
+	<class name="csv.postpaid.domain.StatusChange" mutable="false">
+		<composite-id>
+			<key-property name="contractId" type="long"/>
+			<key-property name="validFrom" type="date"/>
+		</composite-id>
+		<property name="status" type="string"/>
+		<property name="pendingStatus" type="string"/>
+		<property name="reason" type="string"/>
+		<property name="enteredOn" type="date"/>
+		<property name="enteredBy" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.StorageMediumChange" mutable="false">
+		<composite-id>
+			<key-property name="contractId" type="long"/>
+			<key-property name="validFrom" type="date"/>
+		</composite-id>
+		<property name="status" type="string"/>
+		<property name="pendingStatus" type="string"/>
+		<property name="storageMediumNo" type="string"/>
+		<property name="portNo" type="string"/>
+		<property name="enteredOn" type="date"/>
+		<property name="enteredBy" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.RatePlanChange" mutable="false">
+		<composite-id>
+			<key-property name="contractId" type="long"/>
+			<key-property name="validFrom" type="date"/>
+		</composite-id>
+		<property name="ratePlan" type="string"/>
+		<property name="enteredBy" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.PaymentArrangement" mutable="false">
+		<composite-id>
+			<key-property name="accountOwner" type="string"/>
+			<key-property name="accountNo" type="string"/>
+		</composite-id>
+		<property name="paymentName" type="string"/>
+		<property name="bankName" type="string"/>
+		<property name="bankCity" type="string"/>
+		<property name="city" type="string"/>
+		<property name="arrangementMode" type="string"/>
+		<property name="currencyCode" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.CallView" mutable="false">
+		<composite-id>
+			<key-property name="calledNumber" type="string"/>
+			<key-property name="dateCall" type="timestamp"/>
+		</composite-id>
+		<property name="service" type="string"/>
+		<property name="duration" type="string"/>
+		<property name="charge" type="big_decimal"/>
+		<property name="zone" type="string"/>
+		<loader query-ref="loadCallView"/>
+	</class>
+	<class name="csv.postpaid.domain.LargeAccount" mutable="false">
+		<id name="customerCode" type="string">
+			<generator class="assigned"/>
+		</id>
+		<property name="name" type="string"/>
+		<property name="status" type="string"/>
+		<property name="contractResponsible" type="string"/>
+		<property name="paymentResponsible" type="string"/>
+		<property name="streetNo" type="string"/>
+		<property name="street" type="string"/>
+		<property name="city" type="string"/>
+		<loader query-ref="loadLargeAccount"/>
+	</class>
+	<class name="csv.postpaid.domain.Document" mutable="false">
+		<id name="referenceNo" type="string">
+			<generator class="assigned"/>
+		</id>
+		<property name="referenceDate" type="date"/>
+		<property name="dueDate" type="date"/>
+		<property name="totalAmount" type="big_decimal"/>
+		<property name="openAmount" type="big_decimal"/>
+		<property name="documentType" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.Payment" mutable="false">
+		<id name="referenceNo" type="string">
+			<generator class="assigned"/>
+		</id>
+		<property name="documentReferenceNo" type="string"/>
+		<property name="paymentType" type="string"/>
+		<property name="entryDate" type="date"/>
+		<property name="receiptDate" type="date"/>
+		<property name="postingDate" type="date"/>
+		<property name="amountPaid" type="big_decimal"/>
+		<property name="comment" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.BillingAccount" mutable="false">
+		<id name="accountId" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="accountName" type="string"/>
+	</class>
+	<class name="csv.postpaid.domain.PromotionPackage" mutable="false">
+		<id name="sequenceNo" type="integer">
+			<generator class="assigned"/>
+		</id>
+		<property name="status" type="string"/>
+		<property name="validFrom" type="date"/>
+	</class>
+	<class name="csv.postpaid.domain.PromotionPackageHistoryItem" mutable="false">
+		<id name="sequenceNo" type="integer">
+			<generator class="assigned"/>
+		</id>
+		<property name="status" type="string"/>
+		<property name="validFrom" type="date"/>
+	</class>
+	<class name="csv.postpaid.domain.Memo" mutable="false">
+		<composite-id>
+			<key-property name="code" type="integer"/>
+			<key-property name="contractCode" type="string"/>
+		</composite-id>
+		<property name="type" type="string"/>
+		<property name="status" type="string"/>
+		<property name="shortDescription" type="string"/>
+		<property name="priority" type="integer"/>
+		<property name="deadLine" type="date"/>
+		<property name="createdOn" type="date"/>
+		<property name="longDescription" type="string"/>
+		<property name="createdBy" type="string"/>
+		<property name="closedBy" type="string"/>
+		<property name="closedOn" type="date"/>
+		<property name="modifiedBy" type="string"/>
+		<property name="modifiedOn" type="date"/>
+		<property name="ccUser1" type="string"/>
+		<property name="ccUser2" type="string"/>
+		<property name="ccUser3" type="string"/>
+		<property name="followUpType" type="integer"/>
+		<property name="followUpUser" type="string"/>
+	</class>
+	<class name="com.rim.blackberry.provision.RIMEvent" table="RIM_ACTION">
+		<id name="id" column="RIM_ID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string" not-null="true" update="false"/>
+		<property name="imsi" column="IMSI" type="string" not-null="false" update="false"/>
+		<property name="oldImsi" column="IMSI_OLD" type="string" not-null="false" update="false"/>	
+		<property name="entryDate" column="ENTRY_DATE" type="timestamp" not-null="true" update="false"/>
+		<property name="serviceName" column="SERVICE" type="string" not-null="false" update="false"/>
+		<property name="serviceStatus" column="SERVICE_STATUS" type="string" not-null="false" update="false"/>
+		<property name="newActivation" column="MSISDN_NEW" type="string" not-null="false" update="false"/>
+		<property name="simSwap" column="IMSI_NEW" type="string" not-null="false" update="false"/>
+		<property name="newService" column="SERVICE_NEW" type="string" not-null="false" update="false"/>
+		<property name="newServiceStatus" column="SERVICE_STATUS_NEW" type="string" not-null="false" update="false"/>
+		<property name="insertionDate" column="INSERTION_DATE" type="timestamp" not-null="true" update="false"/>
+		<property name="action" column="ACTION" type="string" not-null="false"/>
+		<property name="resultCode" column="RESULT_CODE" type="string" not-null="false"/>
+		<property name="resultDescription" column="RESULT_DESC" type="string" not-null="false"/>
+	</class>
+	<sql-query name="loadPUKInfo">
+		<return alias="puk" class="csv.common.domain.PUKInfo" lock-mode="read"/>
+		SELECT 
+		dn.dn_num as {puk.msisdn}, 
+		sm.sm_puk as {puk.puk}, 
+		sm.sm_puk2 as {puk.puk2}, 
+		sm.sm_id as {puk.storageMediumId}, 
+		cu.custcode as {puk.customerCode}, 
+		csc.co_id as {puk.contractId}, 
+		cu.customer_id as {puk.customerId}, 
+		decode(co.ch_status,'d','Deactive','a','Active','s','Suspended',co.ch_status) as {puk.status}, 
+		ch_validfrom as {puk.validFrom}, 
+		billcycle as {puk.billCycle} FROM 
+		directory_number dn, contr_services_cap csc, 
+		contract_all co, customer_all cu, curr_co_status ch1, 
+		ccontact_all cc, contr_devices cd, port p, 
+		storage_medium sm WHERE dn.dn_num = ? 
+		AND csc.sncode in (1, 9) AND csc.dn_id = dn.dn_id 
+		AND co.co_id = csc.co_id AND co.co_id = ch1.co_id
+		AND cd.CO_ID = co.co_id AND cu.customer_id = co.customer_id 
+		AND cc.customer_id = co.customer_id AND cs_deactiv_date is null
+		AND cc.cccontract = 'X' AND ch1.ch_status &lt;&gt; 'd'
+		and cd.CD_DEACTIV_DATE is null and cd.port_id = p.PORT_ID AND sm.sm_id = p.sm_id
+	</sql-query>
+	<sql-query name="loadPostpaidAccount">
+		<return alias="acct" class="csv.postpaid.domain.PostpaidAccount" lock-mode="read"/>
+		Select 
+		cca.ccfname as {acct.firstName}, 
+		cca.cclname as {acct.lastName}, 
+		cca.ccstreet as {acct.street}, 
+		cca.ccstreetno as {acct.streetNo}, 
+		cca.cccity as {acct.city}, 
+		ct.name as {acct.country}, 
+		cca.cczip as {acct.zip}, 
+		cca.ccline1 as {acct.line1}, 
+		cca.ccline2 as {acct.line2}, 
+		cca.ccemail as {acct.email}, 
+		ca.customer_id as {acct.customerId},
+		decode (cstype,'a', 'Active','d', 'Deactive','i', 'Interested','s', 'Suspended')  as {acct.csType},
+		csactivated as {acct.activationDate}, 
+		csentdate as {acct.sentDate}, 
+		pg.prgname as {acct.prgName}, 
+		lbc_date as {acct.lbcDate}, 
+		ca.cscurbalance as {acct.currentBalance},
+		ca.prev_balance as {acct.previousBalance}, 
+		mtab.unbilled_amount as {acct.unbilledAmount},
+		rs_desc as {acct.csReason}, 
+		ca.custcode as {acct.customerCode}
+		From customer_all ca, Pricegroup_all pg, 
+		reasonstatus_all rs, ccontact_all cca, country ct,  
+		mpuubtab mtab 
+		where ca.custcode = :customerCode
+		And ca.prgcode = pg.prgcode
+		And rs.rs_id(+) = ca.csreason
+		And cca.customer_id = ca.customer_id
+		And cca.ccbill = 'X'
+		And ct.country_id = cca.country
+		And ca.customer_id = mtab.customer_id
+		And ca.customer_id is not null
+		And rownum &gt;= 1
+	</sql-query>
+	<sql-query name="loadPostpaidAccountByCustomerId">
+		<return alias="acct" class="csv.postpaid.domain.PostpaidAccount" lock-mode="read"/>
+		Select 
+		cca.ccfname as {acct.firstName}, 
+		cca.cclname as {acct.lastName}, 
+		cca.ccstreet as {acct.street}, 
+		cca.ccstreetno as {acct.streetNo}, 
+		cca.cccity as {acct.city}, 
+		ct.name as {acct.country}, 
+		cca.cczip as {acct.zip}, 
+		cca.ccline1 as {acct.line1}, 
+		cca.ccline2 as {acct.line2}, 
+		cca.ccemail as {acct.email}, 
+		ca.customer_id as {acct.customerId},
+		ca.custcode as {acct.customerCode}, 
+		decode (cstype,'a', 'Active','d', 'Deactive','i', 'Interested','s', 'Suspended') as {acct.csType}, 
+		csactivated as {acct.activationDate}, 
+		csentdate as {acct.sentDate}, 
+		pg.prgname as {acct.prgName}, 
+		rs_desc as {acct.csReason}, 
+		lbc_date as {acct.lbcDate}, 
+		ca.cscurbalance as {acct.currentBalance},
+		ca.prev_balance as {acct.previousBalance}, 
+		mtab.unbilled_amount as {acct.unbilledAmount}
+		From customer_all ca, Pricegroup_all pg, reasonstatus_all rs, ccontact_all cca, 
+		country ct, mpuubtab mtab  
+		Where ca.customer_id = ?
+		And ca.prgcode = pg.prgcode And rs.rs_id(+) = ca.csreason 
+		And cca.customer_id = ca.customer_id And cca.ccbill = 'X'
+		And ct.country_id = cca.country
+		And ca.customer_id = mtab.customer_id	
+	</sql-query>
+	<sql-query name="loadPostpaidAccountByCustomerCodeAndName">
+		<return alias="acct" class="csv.postpaid.domain.PostpaidAccount" lock-mode="read"/>
+		Select 
+		cca.ccfname  as {acct.firstName}, 
+		cca.cclname  as {acct.lastName}, 
+		cca.ccstreet as {acct.street}, 
+		cca.ccstreetno  as {acct.streetNo}, 
+		cca.cccity  as {acct.city}, 
+		ct.name  as {acct.country}, 
+		cca.cczip  as {acct.zip}, 
+		cca.ccline1 as {acct.line1}, 
+		cca.ccline2  as {acct.line2}, 
+		cca.ccemail  as {acct.email}, 
+		ca.customer_id  as {acct.customerId},
+		decode (cstype,'a', 'Active','d', 'Deactive','i', 'Interested','s', 'Suspended')  as {acct.csType},
+		csactivated  as {acct.activationDate}, 
+		csentdate  as {acct.sentDate}, 
+		pg.prgname  as {acct.prgName}, 
+		lbc_date as {acct.lbcDate}, 
+		ca.cscurbalance  as {acct.currentBalance},
+		ca.prev_balance as {acct.previousBalance}, 
+		mtab.unbilled_amount as {acct.unbilledAmount},
+		rs_desc  as {acct.csReason}, 
+		ca.custcode as {acct.customerCode}
+		From customer_all ca, Pricegroup_all pg, 
+		reasonstatus_all rs, ccontact_all cca, country ct,  
+		mpuubtab mtab 
+		where (LOWER(ca.custcode) like :customerCode)
+		And (LOWER(cca.ccfname) like :firstName) 
+		And (LOWER(cca.cclname) like :lastName)
+		And ca.prgcode = pg.prgcode
+		And rs.rs_id(+) = ca.csreason
+		And cca.customer_id = ca.customer_id
+		And cca.ccbill = 'X'
+		And ct.country_id = cca.country
+		And ca.customer_id = mtab.customer_id
+		And rownum &lt;= 10
+	</sql-query>
+	<sql-query name="loadPostpaidAccountFromInvoiceNo">
+		<return alias="acct" class="csv.postpaid.domain.PostpaidAccount" lock-mode="read"/>
+		Select 
+		cca.ccfname as {acct.firstName}, 
+		cca.cclname as {acct.lastName}, 
+		cca.ccstreet as {acct.street}, 
+		cca.ccstreetno as {acct.streetNo}, 
+		cca.cccity as {acct.city}, 
+		ct.name as {acct.country}, 
+		cca.cczip as {acct.zip}, 
+		cca.ccline1 as {acct.line1}, 
+		cca.ccline2 as {acct.line2}, 
+		cca.ccemail as {acct.email}, 
+		ca.customer_id as {acct.customerId},
+		ca.custcode as {acct.customerCode}, 
+		decode (cstype,'a', 'Active','d', 'Deactive','i', 'Interested','s', 'Suspended') as {acct.csType}, 
+		csactivated as {acct.activationDate}, 
+		csentdate as {acct.sentDate}, 
+		pg.prgname as {acct.prgName}, 
+		rs_desc as {acct.csReason}, 
+		lbc_date as {acct.lbcDate},
+		ca.prev_balance as {acct.previousBalance}, 
+		mtab.unbilled_amount as {acct.unbilledAmount}, 
+		ca.cscurbalance as {acct.currentBalance}
+		From customer_all ca, Pricegroup_all pg, reasonstatus_all rs, 
+		ccontact_all cca, country ct, payment_all pa, paymenttype_all pat, 
+		SYSADM.tm_billing_documents bd, mpuubtab mtab 
+		Where ca.custcode = bd.custcode and 
+		bd.dr_ass_doc_number_external_id = ? And ca.prgcode = pg.prgcode And 
+		rs.rs_id(+) = ca.csreason And cca.customer_id = ca.customer_id And 
+		cca.ccbill = 'X'And ct.country_id = cca.country And 
+		pa.customer_id = ca.customer_id And pat.payment_id = pa.payment_type
+		And ca.customer_id = mtab.customer_id
+	</sql-query>
+	<sql-query name="loadCallView">
+		<return alias="cv" class="csv.postpaid.domain.CallView" lock-mode="read"/>
+		select lower(sn.shdes) as {cv.service}, 
+		start_time_charge_timestamp + (start_time_charge_offset/86400) as {cv.dateCall},
+        decode(sn.sncode,39,'1 [Msg]',1,lpad(trunc(sum(rated_volume)/3600),2,0) || ':' || lpad(trunc(sum(rated_volume)/60),2,0) || ':' || lpad(trunc((sum(rated_volume)/60 - trunc(sum(rated_volume)/60))*60),2,0),sum(rated_volume) || ' Kb') as {cv.duration}, 
+        max(o_p_number_address) as {cv.calledNumber}, 
+        round(sum(rated_flat_amount),3) - sum(nvl(free_charge_amount,0)) as {cv.charge},
+		nvl(decode(nvl(net_element_network_code,70) || nvl(substr(r.call_dest,1,1),'N'),'70N','1-Chamadas Nacionais', '70I','2-Chamadas Internacionais'),decode(call_type,1,'3-Chamada efectuada em roaming',11, '3-Chamada efectuada em roaming','4-Chamada recebida em roaming')) as {cv.zone}
+		from udr_lt r, mpusntab sn, mpuzntab zn 
+		where cust_info_customer_id = :customerId
+		and trunc(start_time_charge_timestamp + (start_time_charge_offset/86400)) between :startDate and (:startDate + to_char(last_day(:endDate),'dd') - 1)
+		and zncode = decode(call_type,2,1,tariff_info_zncode)
+   		and sncode = decode(free_rated_volume_umcode,1,1,3,39,tariff_info_sncode)
+		group by sn.shdes, start_time_charge_timestamp, start_time_charge_offset, sn.sncode,
+		nvl(decode(nvl(net_element_network_code,70) || nvl(substr(r.call_dest,1,1),'N'),'70N','1-Chamadas Nacionais','70I', '2-Chamadas Internacionais'),decode(call_type,1,'3-Chamada efectuada em roaming',11, '3-Chamada efectuada em roaming','4-Chamada recebida em roaming'))
+		order by sncode, start_time_charge_timestamp + (start_time_charge_offset/86400)
+	</sql-query>
+	<sql-query name="loadLargeAccount">
+		<return alias="la" class="csv.postpaid.domain.LargeAccount" lock-mode="read"/>
+		select 
+		cu.custcode as {la.customerCode}, 
+		cc.cclname as {la.name}, 
+		cu.cstype as {la.status}, 
+		cu.cscontresp as {la.contractResponsible},
+		cu.paymntresp as {la.paymentResponsible}, 
+		cc.ccstreetno as {la.streetNo}, 
+		cc.ccstreet as {la.street}, 
+		cc.cccity as {la.city}
+		from customer_all cu, customer_all cu2, 
+		ccontact_all cc where cc.customer_id = cu.customer_id 
+		and cu2.custcode = ? and 
+		(cu2.customer_id = cu.customer_id_high or cu.customer_id = cu2.customer_id)
+		order by cu.custcode
+	</sql-query>
+	<sql-query name="loadContractsByCustomerCode">
+		<return alias="co" class="csv.postpaid.domain.Contract" lock-mode="read"/>
+		SELECT 
+		co.co_id as {co.id}, 
+		co_code as {co.contractCode}, 
+		DN.DN_NUM as {co.directoryNumber}, 
+		decode (ca.cstype,'a', 'Active','d', 'Deactive','i', 'Interested','s', 'Suspended') as {co.contractStatus}, 
+		co_activated as {co.activationDate}, 
+		rp.des as {co.ratePlan},
+		cca.cclname as {co.customerName},
+		cca.ccstreet as {co.customerStreet},
+		cca.ccstreetno as {co.customerStreetNo},
+		cca.cccity as {co.customerCity},
+		ct.name as {co.customerCountry},
+		sm.sm_serialnum as {co.storageMediumNo},
+		rs.rs_desc as {co.statusReason}
+		FROM DIRECTORY_NUMBER DN, 
+		contract_all co, rateplan rp, customer_all ca,
+		ccontact_all cca, country ct, reasonstatus_all rs,
+		storage_medium sm, contr_services_cap csp
+		WHERE  
+		ca.custcode = ? And ca.customer_id = co.customer_id
+		And rs.rs_id(+) = ca.csreason
+		And cca.customer_id = ca.customer_id
+		And ct.country_id = cca.country
+		And co.co_id = csp.co_id
+		And sm.sm_id = csp.dn_id
+		And DN.DN_ID = csp.DN_ID And co.tmcode = rp.tmcode
+		AND csp.co_id = co.co_id AND csp.CS_DEACTIV_DATE IS NULL
+	</sql-query>
+	<sql-query name="loadContractStatusHistory">
+		<return alias="sc" class="csv.postpaid.domain.StatusChange" lock-mode="read"/>
+		Select  
+		co_id as {sc.contractId},
+		decode (ch_status,'a', 'Active','d', 'Deactive','o', 'On Hold','s', 'Suspended') as {sc.status},
+		ch.ch_pending as {sc.pendingStatus}, 
+		rs.rs_desc as {sc.reason}, 
+		ch.ch_validfrom as {sc.validFrom}, 
+		ch.entdate as {sc.enteredOn}, 
+		ur.description as {sc.enteredBy} 
+		From contract_history ch, 
+		reasonstatus_all rs, users ur 
+		where 
+		co_id = ? And rs.rs_id = ch.ch_reason 
+		And ch.userlastmod = ur.username
+	</sql-query>
+	<sql-query name="loadStorageMediumChanges">
+		<return alias="sc" class="csv.postpaid.domain.StorageMediumChange" lock-mode="read"/>
+		Select 
+		co_id as {sc.contractId},
+		decode (cd_status,'O', 'Original','R', 'Deactive') as {sc.status},
+		cd.cd_pending_state as {sc.pendingStatus}, 
+		cd.cd_sm_num as {sc.storageMediumNo}, 
+		pt.port_num as {sc.portNo}, 
+		cd.cd_validfrom as {sc.validFrom}, 
+		cd.cd_entdate as {sc.enteredOn}, 
+		ur.description as {sc.enteredBy}
+		From contr_devices cd, users ur, port pt
+		where cd.co_id = ? And cd.cd_userlastmod = ur.username
+		And cd.port_id = pt.port_id And cd.cd_deactiv_date IS NULL
+	</sql-query>
+	<sql-query name="loadRatePlanChanges">
+		<return alias="sc" class="csv.postpaid.domain.RatePlanChange" lock-mode="read"/>
+		Select 
+		co_id as {sc.contractId},
+		rp.des as {sc.ratePlan}, 
+		rph.tmcode_date as {sc.validFrom}, 
+		ur.description as {sc.enteredBy}
+		From rateplan_hist rph, rateplan rp, users ur
+		where co_id = ? And rph.tmcode = rp.tmcode
+		And rph.userlastmod = ur.username Order by rph.seqno
+	</sql-query>
+	<sql-query name="loadDirectoryNumbers">
+		<return alias="dn" class="csv.postpaid.domain.DirectoryNumber" lock-mode="read"/>
+		Select 
+		sntab.des as {dn.service}, 
+		np.des as {dn.profile}, 
+		rtab.des as {dn.resourceType}, 
+		dn.dn_num as {dn.resourceNo}, 
+		dntab.des as {dn.numberingPlan},  
+		decode (csp.main_dirnum,'X', 'Yes','', 'NO') as {dn.mainDirectoryNumber}
+		From 
+		net_Profile np, contr_services_cap csp, 
+		mpusntab sntab, directory_number dn, contract_all cta,  
+		mpdnptab dntab, raddntab rtab
+		Where 
+		np.net_profile_id = csp.profile_id
+		And sntab.sncode = csp.sncode 
+		And dntab.npcode = csp.sncode
+		And dn.dn_id = csp.dn_id
+		And cta.co_id = ?
+		And cta.co_id = csp.co_id
+		And rtab.dncode = dn.dn_type
+	</sql-query>
+	<sql-query name="loadGprsUsages">
+		<return alias="gu" class="csv.postpaid.domain.GprsUsage" lock-mode="read"/>
+		select 
+		cust_info_contract_id as {gu.contractId},
+		data_volume as {gu.totalVolume},
+		entry_date_timestamp as {gu.entryDate},
+		downlink_volume_volume as {gu.downlinkVolume},
+		uplink_volume_volume as {gu.uplinkVolume}, 
+		data_volume_umcode as {gu.totalVolumeUmCode},
+		downlink_volume_umcode as {gu.downlinkVolumeUmCode},
+		uplink_volume_umcode as {gu.uplinkVolumeUmCode}
+		from 
+		udr_lt 
+		where 
+		cust_info_contract_id = ? 
+		and tariff_info_sncode = 416
+		and entry_date_timestamp &gt;= ? 
+		and TRUNC(entry_date_timestamp) &lt;= ?
+	</sql-query>
+	<sql-query name="loadPaymentArrangement">
+		<return alias="pa" class="csv.postpaid.domain.PaymentArrangement" lock-mode="read"/>
+		Select 
+		pta.paymentname as {pa.paymentName}, 
+		pa.accountowner as {pa.accountOwner}, 
+		pa.bankaccno as {pa.accountNo}, 
+		pa.bankname as {pa.bankName}, 
+		pa.bankcity as {pa.bankCity}, 
+		ct.name as {pa.city}, 
+		pa.pmod as {pa.arrangementMode}, 
+		fc.fccode as {pa.currencyCode}
+		From payment_all pa, paymenttype_all pta, 
+		customer_all ca, country ct, forcurr fc
+		Where ca.custcode = ? And ca.customer_id = pa.customer_id
+		And pa.payment_type = pta.payment_id
+		And pa.bankcountry = ct.country_id
+		And fc.fc_id = pa.currency
+	</sql-query>
+	<sql-query name="loadDocumentsWithBillingAccount">
+		<return alias="d" class="csv.postpaid.domain.Document" lock-mode="read"/>
+		Select 
+		ohrefnum as {d.referenceNo}, 
+		ohrefdate as {d.referenceDate}, 
+		ohduedate as {d.dueDate}, 
+		ohinvamt_doc as {d.totalAmount}, 
+		ohopnamt_doc as {d.openAmount}, 
+		decode(ohstatus, 'OO','Open Order','IN','Invoice','CM','Credit Memo','CO','Advanced Payment','RD','Request Deposit','DP','Deposit','DI','Interest on Deposit','FC','Further Charge','TI','Test Invoice') as {d.documentType}
+		From orderhdr_all where customer_id = ?
+		And (Billing_account_id = ? or 0 = ?)
+	</sql-query>
+	<sql-query name="loadPayments">
+		<return alias="p" class="csv.postpaid.domain.Payment" lock-mode="read"/>
+		Select 
+		cachknum as {p.referenceNo}, 
+		cadocrefnum as {p.documentReferenceNo}, 
+		decode(catype,'1','Cash Assignment','2','Assign Overpayment','3','Cash Overpayment','4','Write off','5','Cash to General Ledger','7','Transfer Out','8','Transfer In','9','Further Charge','10','Deposit Entry','12','Deposit Refund','13','Credit Note','14','Payment Refund') as {p.paymentType}, 
+		caentdate as {p.entryDate}, 
+		carecdate as {p.receiptDate}, 
+		cachkdate as {p.postingDate}, 
+		cachkamt_pay as {p.amountPaid}, 
+		carem as {p.comment}
+		From cashreceipts_all
+		Where customer_id = ?
+	</sql-query>
+	<sql-query name="loadBillingAccounts">
+		<return alias="a" class="csv.postpaid.domain.BillingAccount" lock-mode="read"/>
+		Select 
+		Billing_account_id as {a.accountId}, 
+		Billing_account_name as {a.accountName} 
+		From Billing_Account where customer_id = ? 
+	</sql-query>
+	<sql-query name="loadPromotionPackages">
+		<return alias="p" class="csv.postpaid.domain.PromotionPackage" lock-mode="read"/>
+		select 
+		pa.assign_seq as {p.sequenceNo},
+		rp.description as {p.status},
+		pa.delete_date as {p.validFrom}
+		from promo_assign pa, rule_pack rp
+		where pa.pack_id = rp.rule_pack_id and pa.customer_id = ?
+	</sql-query>
+	<sql-query name="loadPromotionPackageHistory">
+		<return alias="p" class="csv.postpaid.domain.PromotionPackageHistoryItem" lock-mode="read"/>
+		select 
+		pas.seq as {p.sequenceNo},
+		pas.work_state as {p.status},
+		pas.state_date as {p.validFrom}
+		from promo_assign_state pas 
+		where pas.customer_id=? and pas.assign_seq = ?
+	</sql-query>
+	<sql-query name="loadMemos">
+		<return alias="m" class="csv.postpaid.domain.Memo" lock-mode="read"/>
+		select
+		tr.tickler_number as {m.code}, 
+		co.co_code as {m.contractCode},
+		tr.tickler_code as {m.type},
+		tr.tickler_status as {m.status},
+		tr.short_description as {m.shortDescription},
+		tr.priority as {m.priority},
+		tr.follow_up_date as {m.deadLine},
+		tr.created_date as {m.createdOn},
+		tr.long_description as {m.longDescription},
+		tr.created_by as {m.createdBy},
+		tr.closed_by as {m.closedBy},
+		tr.closed_date as {m.closedOn},
+		tr.modified_by as {m.modifiedBy},
+		tr.modified_date as {m.modifiedOn},
+		tr.distribution_user1 as {m.ccUser1},
+		tr.distribution_user2 as {m.ccUser2},
+		tr.distribution_user3 as {m.ccUser3},
+		tr.follow_up_code as {m.followUpType},
+		tr.follow_up_user as {m.followUpUser}
+		from tickler_records tr, contract_all co
+		where tr.customer_id=? and co.co_id = tr.co_id
+	</sql-query>
+</hibernate-mapping>

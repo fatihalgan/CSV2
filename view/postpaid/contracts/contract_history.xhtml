@@ -1,0 +1,143 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:m="http://jboss.com/products/seam/mail"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.customerHistory}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.statusChanges}" styleClass="sectionPanel">
+			<rich:dataTable id="tblStatusChanges" rows="13" var="item" value="#{contractService.selectedContract.statusHistory}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.status}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.pendingStatus}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.reasonForStatus}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.validFrom}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.enteredOn}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.enteredBy}"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.status}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.pendingStatus}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.reason}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.validFrom}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.enteredOn}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.enteredBy}"/>
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+		<rich:panel header="#{msg.storageMediumChanges}" styleClass="sectionPanel">
+			<rich:dataTable id="tblStorageMediumChanges" rows="13" var="item" value="#{contractService.selectedContract.storageMediumHistory}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.status}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.pendingStatus}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.storageMediumNo}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.portNo}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.validFrom}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.enteredOn}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.enteredBy}"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.status}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.pendingStatus}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.storageMediumNo}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.portNo}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.validFrom}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.enteredOn}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.enteredBy}"/>
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+		<rich:panel header="#{msg.ratePlanChanges}" styleClass="sectionPanel">
+			<rich:dataTable id="tblRatePlanChanges" rows="13" var="item" value="#{contractService.selectedContract.ratePlanHistory}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.ratePlan}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.validFrom}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.enteredBy}"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.ratePlan}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.validFrom}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.enteredBy}"/>
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

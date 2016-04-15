@@ -1,0 +1,119 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<head>
+	<title>Rollout Report</title>
+	</head>
+	<body>
+	<table rules="all" border="1">
+		<caption>
+		<h3>ROLLOUT REPORT</h3>
+		</caption>
+		<tbody>
+			<tr>
+				<th colspan="2"></th>
+			</tr>
+			<tr>
+				<th><h5>TAPCODE</h5></th>
+				<th><h5>Country Name</h5></th>
+				<th><h5>Status</h5></th>
+				<th><h5>Implementation  Status</h5></th>
+				<th><h5>IregTest  Status</h5></th>
+				<th><h5>TadigTest  Status</h5></th>
+				<th><h5>Commercial Priority</h5></th>
+				<th><h5>Technical Priority</h5></th>
+				<th><h5>Commitment Level</h5></th>
+				<th><h5>General Priority</h5></th>
+				<th><h5>PlannedMonthOfTest</h5></th>
+				<th><h5>ScheduledTest Date</h5></th>
+				<th><h5>Planned Launch Date</h5></th>
+				<th><h5>Commercial Launch Date</h5></th>
+				<th><h5>Tdoperator Name</h5></th>
+				<th><h5>Tdoperator Reception Date</h5></th>
+				<th><h5>Tdoperator  Status</h5></th>
+				<th><h5>Ir24Test  Start Date</h5></th>
+				<th><h5>Ir24Test End Date</h5></th>
+				<th><h5>Ir24 Outbound Test End Date</h5></th>
+				<th><h5>Tdmoz01 Name</h5></th>
+				<th><h5>Tdmoz01 Dispatch Date</h5></th>
+				<th><h5>Tdmoz01  Status</h5></th>
+				<th><h5>UnixImplm  Status</h5></th>
+				<th><h5>BscsixImplm  Status</h5></th>
+				<th><h5>Implementation Date</h5></th>
+				<th><h5>Test Cards Available Both</h5></th>
+				<th><h5>Card Inbound Active</h5></th>
+				<th><h5>Card Outbound Active</h5></th>
+				<th><h5> Signaling Gateway Implm</h5></th>
+				<th><h5>International Routes Quality</h5></th>
+				<th><h5>Action</h5></th>
+				<th><h5>Ireg Kpi</h5></th>
+				<th><h5>Test Duration</h5></th>
+				<th><h5>Rollout Duration</h5></th>
+				<th><h5>GRX Implm. End Date</h5></th>
+				<th><h5>CGSN Implm. Start Date</h5></th>
+				<th><h5>IR 35 Test Start Date</h5></th>
+				<th><h5>IR 35 Test End Date</h5></th>
+				<th><h5>IR 35 Out. Test End Date</h5></th>
+				<th><h5>Gprs Roaming Working</h5></th>
+				<th><h5>Nss Impl. Date</h5></th>
+				<th><h5>CS Implm. Status</h5></th>
+				<th><h5>Platform</h5></th>
+				<th><h5>MMSGW Test Status</h5></th>
+			</tr>
+			<c:forEach items="#{roamingReportingService.agreementScheduleList}" var="schedule">
+				<tr>
+					<td><h:outputText value="#{schedule.operatorCountry.operator.operatorCode}" /></td>
+					<td><h:outputText value="#{schedule.operatorCountry.country.countryName}" /></td>
+					<td><h:outputText value="#{schedule.status.description}" /></td>
+					<td><h:outputText value="#{schedule.implementationStatus.label}"/></td>
+					<td><h:outputText value="#{schedule.iregStatus.description}" /></td>
+					<td><h:outputText value="#{schedule.tadigStatus.description}" /></td>
+					<td><h:outputText value="#{schedule.commercialPriority.value}" /></td>
+					<td><h:outputText value="#{schedule.technicalPriority.value}" /></td>
+					<td><h:outputText value="#{schedule.commitmentLevel.value}" /></td>
+					<td><h:outputText value="#{schedule.generalPriority}" /></td>
+					<td><h:outputText value="#{schedule.plannedMonthOfTest}" /></td>
+					<td><h:outputText value="#{schedule.scheduledTestDate}" /></td>
+					<td><h:outputText value="#{schedule.plannedLaunchDate}" /></td>
+					<td><h:outputText value="#{schedule.commercialLaunchDate}" /></td>
+					<td><h:outputText value="#{schedule.tdoperatorName}" /></td>
+					<td><h:outputText value="#{schedule.tdoperatorReceptionDate}" /></td>
+					<td><h:outputText value="#{schedule.tdoperatorStatus}" /></td>
+					<td><h:outputText value="#{schedule.ir24TestStartDate}" /></td>
+					<td><h:outputText value="#{schedule.ir24TestEndDate}" /></td>
+					<td><h:outputText value="#{schedule.ir24OutboundTestEndDate}" /></td>
+					<td><h:outputText value="#{schedule.tdmoz01Name}" /></td>
+					<td><h:outputText value="#{schedule.tdmoz01DispatchDate}" /></td>
+					<td><h:outputText value="#{schedule.tdmoz01Status.label}" /></td>
+					<td><h:outputText value="#{schedule.unixImplmStatus.label}" /></td>
+					<td><h:outputText value="#{schedule.bscsixImplmStatus.label}" /></td>
+					<td><h:outputText value="#{schedule.implementationDate}" /></td>
+					<td><h:outputText value="#{schedule.testCardsAvailableBoth}" /></td>
+					<td><h:outputText value="#{schedule.cardInboundActive}" /></td>
+					<td><h:outputText value="#{schedule.cardOutboundActive}" /></td>
+					<td><h:outputText value="#{schedule.signalingGatewayImplm}" /></td>
+					<td><h:outputText value="#{schedule.internationalRoutesQuality.label}" /></td>
+					<td><h:outputText value="#{schedule.action}" /></td>
+					<td><h:outputText value="#{schedule.iregKpi}" /></td>
+					<td><h:outputText value="#{schedule.testDuration}" /></td>
+					<td><h:outputText value="#{schedule.rolloutDuration}" /></td>
+					<td><h:outputText value="#{schedule.policyImplmEndDate}" /></td>
+					<td><h:outputText value="#{schedule.cgsnImplmStartDate}" /></td>
+					<td><h:outputText value="#{schedule.ir35TestStartDate}" /></td>
+					<td><h:outputText value="#{schedule.ir35TestEndDate}" /></td>
+					<td><h:outputText value="#{schedule.ir35OutboundTestEndDate}" /></td>
+					<td><h:outputText value="#{schedule.gprsRoamingWorking}" /></td>
+					<td><h:outputText value="#{schedule.nssImplmDate}" /></td>
+					<td><h:outputText value="#{schedule.csImplmStatus.label}" /></td>
+					<td><h:outputText value="#{schedule.platform}" /></td>
+					<td><h:outputText value="#{schedule.mmsgwTestStatus.label}" /></td>			
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	</body>
+</ui:composition>

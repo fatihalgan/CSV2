@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:simpleTogglePanel styleClass="sectionPanel" opened="true" rendered="#{not empty complaintManagementService.complaintHistory}">
+		<f:facet name="header">#{msg.complaintHistoryForThisNumber}</f:facet>
+		<h:form>
+			<rich:dataTable id="tblComplaintHistory" value="#{complaintManagementService.complaintHistory}" var="item" rows="10">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.segment}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.creator}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.openingDate}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.closingDate}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.complaintStatus}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.viewDetails}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.viewHistory}" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.segment.description}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.creator.fullName}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.openingDate}">
+							<s:convertDateTime type="both" dateStyle="medium" timeStyle="medium"/>
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.closingDate}">
+							<s:convertDateTime type="both" dateStyle="medium" timeStyle="medium"/>
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.status}" />
+					</rich:column>
+					<rich:column>
+						<a:commandLink action="#{complaintManagementService.retrieveComplaintDetails(item)}" value="#{msg.complaintDetails}"
+						reRender="complaintDetailPanel" 
+						oncomplete="Richfaces.showModalPanel('complaintDetailsMp',{width:450, top:100})"/>
+					</rich:column>
+					<rich:column>
+						<a:commandLink action="#{openComplaintAction.retrieveOpenComplaintHistory(item.id)}" value="#{msg.viewHistory}"
+						reRender="complaintIterationsHistoryPanel"
+						oncomplete="Richfaces.showModalPanel('openComplaintHistoryMp',{width:500, top:100})"/>
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="tblComplaintHistory" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+				</f:facet>
+			</rich:dataTable>
+		</h:form>
+	</rich:simpleTogglePanel>                
+</ui:composition>

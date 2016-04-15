@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+                
+	<rich:panel header="#{msg.addressInfo}" styleClass="sectionPanel" rendered="#{prepaidCustomerService.currentSubscription != null}">
+		<h:panelGrid columns="3">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.email}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.email}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.streetAvenue}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.street}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.no}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.no}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.floor}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.floor}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.flat}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.flat}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.block}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.block}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.nuit}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.nuit}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.city}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.city}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.district}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.district}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.province}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.provincia}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.neighborHood}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.address.neighborHood}" readonly="true"/>
+			</s:decorate>
+		</h:panelGrid>
+	</rich:panel>
+</ui:composition>

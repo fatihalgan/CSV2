@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8'?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+	<soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+		<wsse:Security
+			xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+			soapenv:mustUnderstand="1">
+			<wsu:Timestamp
+				xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+				wsu:Id="Timestamp-1">
+				<wsu:Created>2010-09-09T18:09:13.130Z</wsu:Created>
+				<wsu:Expires>2010-09-09T18:14:13.130Z</wsu:Expires>
+			</wsu:Timestamp>
+			<xenc:EncryptedKey Id="EncKeyId-4B24CEC73729677B3212840557537705">
+				<xenc:EncryptionMethod
+					Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p" />
+				<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+					<wsse:SecurityTokenReference>
+						<wsse:KeyIdentifier
+							EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"
+							ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509SubjectKeyIdentifier">H0loLS8NYiSHQN7vOHX+/4e3ntc=</wsse:KeyIdentifier>
+					</wsse:SecurityTokenReference>
+				</ds:KeyInfo>
+				<xenc:CipherData>
+					<xenc:CipherValue>egr+KwqC7uPsHV941wIHCLH+bBE6+OrKxuxSQSoJ0+rPKSdxN6cWrDjuA+nbcnN+9sxoaoSDH2KkjZq4SsjEASk/JINY9ecL1iJS6IpZR1tA5IhHeWUvZcs/2tQIzZir3AYdQLTwY2YQLKuqgEyqXdgn4bFzXSsnizKlZhONdRg=
+					</xenc:CipherValue>
+				</xenc:CipherData>
+				<xenc:ReferenceList>
+					<xenc:DataReference URI="#EncDataId-3" />
+					<xenc:DataReference URI="#EncDataId-4" />
+				</xenc:ReferenceList>
+			</xenc:EncryptedKey>
+			<wsse:BinarySecurityToken
+				xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+				EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary"
+				ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3"
+				wsu:Id="CertId-4B24CEC73729677B3212840557533021">MIIBvzCCAW2gAwIBAgIQgzMaQWPds6ZETrwiQtKJ7zAJBgUrDgMCHQUAMBYxFDASBgNVBAMTC1Jvb3QgQWdlbmN5MB4XDTEwMDkwMzEzMjgwNVoXDTM5MTIzMTIzNTk1OVowIjEgMB4GA1UEAxMXd3d3Lm1jZWx0ZXN0Y2VydEIuY28ubXowgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAL4Rdv/J4DmlUzNTbLQkP9yS9i9mJ+zeQ8ITPKgRtMLA9Kikc5XbWv3a0Sc3A4cJ3YQWCM/54Gz7tiMUHanSscUtGusdqr9dcWMEHySenS5Nh/44AtYBJ6n1qn7mFBOj0WD38zffrVTsNiZYGa18Z+RNkLOrIb0yvtQvU5PHOETBAgMBAAGjSzBJMEcGA1UdAQRAMD6AEBLkCS0GHR1PAI1hIdwWZGOhGDAWMRQwEgYDVQQDEwtSb290IEFnZW5jeYIQBjdsAKoAZIoRz7jUqlw19DAJBgUrDgMCHQUAA0EAcZw5/jd7a817hs9NPSrFaGSDfCjuxlnweIdxAWTq78O0LFFlHPlMug49JgJ65W9WK/AxFrqY0sRzpAQ69py0jA==
+			</wsse:BinarySecurityToken>
+			<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+				Id="Signature-2">
+				<ds:SignedInfo>
+					<ds:CanonicalizationMethod
+						Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+					<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+					<ds:Reference URI="#Id-846275759">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>5d9tdIcApQPFy2wNCGfaRkCqu3Y=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#Timestamp-1">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+						<ds:DigestValue>JIbvbv8GEw95kPBYY6LvlthwfPE=</ds:DigestValue>
+					</ds:Reference>
+				</ds:SignedInfo>
+				<ds:SignatureValue>
+					rgzVpfDQiK99rdsthC3QXjJgBuDmzYgVc3bvIaO0QSrK4gOnbugj4mQI3pZwFd8RXl2nieyjIQ7q
+					rMX30a+6us/9Vj/91XZC6yD+TzCcLvYgi12qThzrX5uEyro444/4aEGMqu5ongVwIUB3If/Uvel5
+					6GVtVVykdG83X5/l/iE=
+				</ds:SignatureValue>
+				<ds:KeyInfo Id="KeyId-4B24CEC73729677B3212840557533182">
+					<wsse:SecurityTokenReference
+						xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+						wsu:Id="STRId-4B24CEC73729677B3212840557533183">
+						<wsse:Reference URI="#CertId-4B24CEC73729677B3212840557533021"
+							ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" />
+					</wsse:SecurityTokenReference>
+				</ds:KeyInfo>
+			</ds:Signature>
+		</wsse:Security>
+		<wsa:To>http://localhost:8081/CCT/services/WSmCelCCS2</wsa:To>
+		<wsa:MessageID>urn:uuid:0F97851B326C45FF0F1284055752839
+		</wsa:MessageID>
+		<wsa:Action>http://professionalservices.collab.pt/WSmCelCCS2/AgentInsert
+		</wsa:Action>
+	</soapenv:Header>
+	<soapenv:Body
+		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+		wsu:Id="Id-846275759">
+		<ns2:AgentInsert xmlns:ns2="http://professionalservices.collab.pt/">
+			<ns2:username>db2admin</ns2:username>
+			<ns2:password>db2pass</ns2:password>
+			<ns2:email>falgan@hotmail.com</ns2:email>
+		</ns2:AgentInsert>
+	</soapenv:Body>
+</soapenv:Envelope>

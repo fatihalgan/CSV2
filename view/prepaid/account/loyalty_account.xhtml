@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+                
+	    <rich:panel id="pnlLoyaltyAccount" header="#{msg.loyaltyAccount}" styleClass="sectionPanel" rendered="#{prepaidAccountService.loyaltyPoints != null}">
+			<h:panelGrid columns="1">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.totalLoyaltyPoints}</ui:define>
+					<h:inputText value="#{prepaidAccountService.loyaltyPoints}" readonly="true">
+						<f:convertNumber maxFractionDigits="0"/>
+					</h:inputText>
+				</s:decorate>
+			</h:panelGrid>	
+		</rich:panel>
+	
+		<rich:panel id="pnlLoyaltyHistory" header="#{msg.loyaltyPointsHistory}" styleClass="sectionPanel" rendered="#{prepaidAccountService.loyaltyTransactions != null}">
+			<rich:dataTable id="loyaltyTransactionsTable" rows="10" var="item" value="#{prepaidAccountService.loyaltyTransactions}"
+				rendered="#{prepaidAccountService.loyaltyTransactions != null}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="CS Trans ID" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Loyalty App Trans ID" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Trans Type" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Amount" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Is Spent" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Remaining Amount" />
+						</rich:column>>
+						<rich:column>
+							<h:outputText value="Date" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.originTransId}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.id}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.transType.label}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.amount}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.spent}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.remaining}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.transDate}">
+							<f:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+						</h:outputText>
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="loyaltyTransactionsTable" maxPages="20" boundaryControls="auto" fastControls="auto" />
+				</f:facet>
+			</rich:dataTable>
+		</rich:panel>                
+</ui:composition>

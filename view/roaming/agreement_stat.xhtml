@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="agrStatSelectionRegion">
+		<rich:panel header="#{msg.roamingEditAgreementStatus}"
+			rendered="#{agreementStatusListAction.selectedAgreementStatus != null}">
+			<h:form id="frmEditAgreementStatus">
+				<h:panelGrid columns="2">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingAgreementStatusDesc}</ui:define>
+						<h:inputText
+							value="#{agreementStatusListAction.selectedAgreementStatus.description}"
+							required="true" />
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons"><h:commandButton id="btnSaveAgSt"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}"
+					value="Save"
+					action="#{agreementStatusListAction.saveAgreementStatus}" /> <h:commandButton
+					id="btnDeleteAgSt" value="Delete Agreement Status"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}"
+					action="#{agreementStatusListAction.deleteAgreementStatus}" /></div>
+			</h:form>
+		</rich:panel>
+
+		<rich:panel header="Agreement Status">
+			<h:form id="AgStList">
+				<rich:dataTable id="tblAgSts"
+					value="#{agreementStatusListAction.agreementStatusList}" var="item"
+					rows="20">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.roamingAgreementStatusDesc}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.description}" />
+						</rich:column>
+						<rich:column>
+							<a:commandButton
+								action="#{agreementStatusListAction.editAgreementStatus(item)}"
+								value="Edit" reRender="agrStatSelectionRegion" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblAgSts" maxPages="20"
+							boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+				<div class="actionButtons"><h:commandButton id="btnNewAgSt"
+					value="Create New"
+					action="#{agreementStatusListAction.newAgreementStatus}" /></div>
+			</h:form>
+		</rich:panel>
+	</h:panelGroup>
+</ui:composition>

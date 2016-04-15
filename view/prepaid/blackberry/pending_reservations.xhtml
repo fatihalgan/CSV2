@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:rich="http://richfaces.org/rich"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:a="http://richfaces.org/a4j">
+	<rich:panel styleClass="sectionPanel" header="#{msg.pendingReservations}">
+		<rich:dataTable id="uncommittedReservationsTable" rows="13"
+			columnClasses="aligncentercolumn,aligncentercolumn,alignrightcolumn,alignrightcolumn,alignrightcolumn"
+			onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
+			onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+			cellpadding="0" cellspacing="0" width="800" border="0" var="item"
+			value="#{bb4pCustomerCareService.pendingReservations}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Transaction ID" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Reservation Date" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Amount" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Refund" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.id}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.reservationDate}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.amount}" />
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{bb4pCustomerCareService.refundReservation(item)}" value="Refund" />
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="uncommittedReservationsTable" maxPages="20"
+						boundaryControls="auto" fastControls="auto" />
+				</f:facet>
+		</rich:dataTable>
+	</rich:panel>  			
+</ui:composition>

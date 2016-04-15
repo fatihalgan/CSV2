@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="contTypeSelectionRegion">
+		<rich:panel header="#{msg.roamingEditContactType}"
+			rendered="#{contactTypeListAction.selectedContactType != null}">
+			<h:form id="frmEditContType">
+				<h:panelGrid columns="2">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingContactTypeDesc}</ui:define>
+						<h:inputText
+							value="#{contactTypeListAction.selectedContactType.description}"
+							required="true" size="80" />
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons"><h:commandButton id="btnSaveCtTy"
+					value="Save" action="#{contactTypeListAction.saveContactType}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}" />
+				<h:commandButton id="btnDeleteCtTy" value="Delete Contact Type"
+					action="#{contactTypeListAction.deleteContactType}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}" /></div>
+			</h:form>
+		</rich:panel>
+
+		<rich:panel header="Contact Types">
+			<h:form id="contactTypeList">
+				<rich:dataTable id="tblContactTypes"
+					value="#{contactTypeListAction.contactTypeList}" var="item"
+					rows="20">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.roamingContactTypeDesc}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.description}" />
+						</rich:column>
+						<rich:column>
+							<a:commandButton
+								action="#{contactTypeListAction.editContactType(item)}"
+								value="Edit" reRender="contTypeSelectionRegion" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblContactTypes" maxPages="20"
+							boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+				<div class="actionButtons"><h:commandButton id="btnNewCtType"
+					value="Create New" action="#{contactTypeListAction.newContactType}" /></div>
+			</h:form>
+		</rich:panel>
+	</h:panelGroup>
+</ui:composition>

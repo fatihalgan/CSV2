@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow-definition xmlns="http://jboss.com/products/seam/pageflow"
+	name="registerNewPrepaidSubscription">
+	<start-page name="EnterSubscriptionInfo"
+		view-id="/prepaid/registration/new_registration/edit_subscription.xhtml">
+		<action expression="#{prepaidRegistrarService.newSubscription}"></action>
+		<redirect />
+		<transition to="SubscriptionAlreadyExists" name="next"></transition>
+	</start-page>
+	<decision name="SubscriptionAlreadyExists"
+		expression="#{prepaidRegistrarService.validateSubscriptionAlreadyExists}">
+		<transition to="RegistrationError" name="true"></transition>
+		<transition name="false" to="SIMCardValid"></transition>
+	</decision>
+	<page name="RegistrationError"
+		view-id="/prepaid/registration/new_registration/registration_error.xhtml">
+		<end-conversation />
+		<redirect />
+	</page>
+	<decision name="SIMCardValid"
+		expression="#{prepaidRegistrarService.validateSIMCardNetworkStatus}">
+		<transition to="RegistrationError" name="false"></transition>
+		<transition name="true" to="EnterSubscriberInfo"></transition>
+	</decision>
+	<page name="EnterSubscriberInfo"
+		view-id="/prepaid/registration/new_registration/edit_customer_info.xhtml">
+		<action expression="#{prepaidRegistrarService.newRegistrar}" />
+		<redirect />
+		<transition to="EnterSubscriptionInfo" name="back"></transition>
+		<transition to="CheckIfExistingRegistrar" name="next"></transition>
+	</page>
+	<decision name="CheckIfExistingRegistrar"
+		expression="#{prepaidRegistrarService.registrarAlreadyExists}">
+		<transition to="EnterIdentityDocumentInfo" name="false"></transition>
+		<transition name="true" to="CheckRegistrationLimitExceeded"></transition>
+	</decision>
+	<decision name="CheckRegistrationLimitExceeded"
+		expression="#{prepaidRegistrarService.registrationLimitExceeded}">
+		<transition to="EnterIdentityDocumentInfo" name="false" />
+		<transition name="true" to="RegistrationError" />
+	</decision>
+	<page name="EnterIdentityDocumentInfo"
+		view-id="/prepaid/registration/new_registration/edit_document_info.xhtml">
+		<redirect />
+		<transition to="EnterSubscriberInfo" name="back" />
+		<transition to="EnterAddressInfo" name="next" />
+	</page>
+	<page name="EnterAddressInfo"
+		view-id="/prepaid/registration/new_registration/edit_address_info.xhtml">
+		<redirect />
+		<transition to="EnterIdentityDocumentInfo" name="back" />
+		<transition name="next" to="EnterWorkInfo"></transition>
+	</page>
+	<page name="EnterWorkInfo"
+		view-id="/prepaid/registration/new_registration/edit_work_info.xhtml">
+		<redirect />
+		<transition to="EnterAddressInfo" name="back"></transition>
+		<transition name="next" to="IsCorporateRegistrar?"></transition>
+	</page>
+	<decision name="IsCorporateRegistrar?"
+		expression="#{prepaidRegistrarService.newSubscription.registrarType.value == 'COMPANY'}">
+		<transition to="EnterCompanyInfo" name="true" />
+		<transition to="EnterMKeshRequest" name="false" />
+	</decision>
+	<page name="EnterCompanyInfo"
+		view-id="/prepaid/registration/new_registration/edit_company_info.xhtml">
+		<redirect />
+		<transition to="EnterWorkInfo" name="back"></transition>
+		<transition name="next" to="EnterMKeshRequest"></transition>
+	</page>
+	<page name="RegistrationCompleted"
+		view-id="/prepaid/registration/new_registration/registration_completed.xhtml">
+		<end-conversation before-redirect="yes" />
+		<redirect />
+	</page>
+	<page name="EnterMKeshRequest"
+		view-id="/prepaid/registration/new_registration/edit_mkesh.xhtml">
+		<redirect />
+		<transition to="IsCorporateRegistrarBack?" name="back"></transition>
+		<transition name="finish" to="RegistrationCompleted">
+			<action expression="#{prepaidRegistrarService.saveRegistrar}"></action>
+		</transition>
+	</page>
+	<decision name="IsCorporateRegistrarBack?"
+		expression="#{prepaidRegistrarService.newSubscription.registrarType.value == 'COMPANY'}">
+		<transition to="EnterCompanyInfo" name="true" />
+		<transition to="EnterWorkInfo" name="false" />
+	</decision>
+</pageflow-definition>

@@ -1,0 +1,88 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="Edit User" styleClass="sectionPanel">
+			<h:form id="frmEditUser">
+			<h:panelGrid columns="1">
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">Username</ui:define>
+					<h:inputText value="#{userHomeAction.selectedUser.username}" required="true"/>
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">Password</ui:define>
+					<h:inputSecret redisplay="true" value="#{userHomeAction.selectedUser.password}" required="true" />
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">Active</ui:define>
+					<h:selectBooleanCheckbox value="#{userHomeAction.selectedUser.active}"/>
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">EMail</ui:define>
+					<h:inputText value="#{userHomeAction.selectedUser.email}" required="true"/>
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">Firstname</ui:define>
+					<h:inputText value="#{userHomeAction.selectedUser.firstName}" required="true"/>
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">Lastname</ui:define>
+					<h:inputText value="#{userHomeAction.selectedUser.lastName}" required="true"/>
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">MSISDN</ui:define>
+					<h:inputText value="#{userHomeAction.selectedUser.msisdn}" />
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">Phone</ui:define>
+					<h:inputText value="#{userHomeAction.selectedUser.telephone}" />
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">Ext</ui:define>
+					<h:inputText value="#{userHomeAction.selectedUser.ext}" />
+				</s:decorate>
+				<s:decorate template="../edit.xhtml">
+					<ui:define name="label">Expiration Date</ui:define>
+					<rich:calendar value="#{userHomeAction.selectedUser.expirationDate}" required="true" direction="bottom-right"/>
+				</s:decorate>
+				<s:decorate template="../edit.xhtml" rendered="#{loggedInUser.hasPermissionFor('Manage Users')}">
+					<ui:define name="label">Is Supervisor</ui:define>
+					<h:selectBooleanCheckbox value="#{userHomeAction.selectedUser.supervisor}"/>
+				</s:decorate>
+				<s:decorate template="../edit.xhtml" rendered="#{loggedInUser.hasPermissionFor('Manage Users')}">
+					<ui:define name="label">Memberships</ui:define>
+					<rich:listShuttle var="item" sourceValue="#{userHomeAction.unselectedGroups}" targetValue="#{userHomeAction.selectedGroups}"
+						converter="#{userHomeAction.groupListShuttleConverter}" required="false">
+						<f:facet name="sourceCaption">
+							<h:outputText value="Unauthorized Groups"/>
+						</f:facet>
+						<f:facet name="targetCaption">
+							<h:outputText value="Authorized Groups"/>
+						</f:facet>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Group Name"/>
+							</f:facet>
+							<h:outputText value="#{item.groupName}"/>
+						</h:column>
+					</rich:listShuttle>
+				</s:decorate>
+			</h:panelGrid>
+			<div class="actionButtons">
+				<h:commandButton id="btnSave" value="Save User" action="#{userHomeAction.saveUser}" rendered="#{loggedInUser.hasPermissionFor('Edit User Details')}"/>
+				<h:commandButton id="btnChangePassword" value="Change Password" action="#{userHomeAction.changePassword}" rendered="#{loggedInUser.hasPermissionFor('Edit User Details')}"/>
+				<h:commandButton id="btnResetPassword" value="Reset Password" action="#{userHomeAction.resetPassword}" rendered="#{loggedInUser.hasPermissionFor('Edit User Details')}"/>
+				<h:commandButton id="cancel" value="Cancel" action="#{userHomeAction.cancelSave}" immediate="true"/>
+			</div>
+			</h:form>
+		</rich:panel>
+	</ui:define>			
+</ui:composition>

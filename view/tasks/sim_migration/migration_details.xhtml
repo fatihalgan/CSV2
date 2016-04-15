@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel>
+		<f:facet name="header">
+			<h:panelGrid columns="4">
+				<h:outputLabel value="#{msg.migrationRequest}" />
+				<rich:spacer width="5"/>
+				<h:outputLabel value="#{msg.requestID}: " styleClass="label" />
+				<h:outputLabel value="#{task.variables['simMigrationState'].requestId}" />
+			</h:panelGrid>
+		</f:facet>
+		<h:panelGrid columns="2">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.migrationType}</ui:define>
+				<h:outputText value="#{task.variables['simMigrationState'].migrationType.label}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.msisdn}</ui:define>
+				<h:outputText value="#{task.variables['simMigrationState'].msisdn}" />
+			</s:decorate>
+		</h:panelGrid>
+		<div class="actionButtons">
+			<ui:insert />
+		</div>
+	</rich:panel>                
+</ui:composition>

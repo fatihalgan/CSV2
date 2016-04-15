@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CSV" basedir="." default="cleanrestart">
+	<property name="project.name" value="CSV" />
+	<property file="build.properties" />
+	
+	<property name="javac.debug" value="true"/>
+	<property name="src.dir" value="src" />
+	<property name="test.dir" value="test"/>
+	<property name="classes.dir" value="bin"/>
+	<property name="view.dir" value="view" />
+	<property name="resources.dir" value="resources" />
+	<property name="exploded.dir" value="exploded-archive"/>
+	<property name="dist.dir" value="dist" />
+	<property name="lib.dir" value="${build.classpath}"/>
+	
+	<!-- WSDL Code generation parameters -->
+	<property name="wsdl.dir" value="${resources.dir}/wsdl"/>
+	<property name="service.name" value="SimRegistrationService"/>
+	<property name="wsdl.file" value="${wsdl.dir}/${service.name}.wsdl"/>
+	<property name="wsdl-namespace-to-package-mapping" value="http://www.bridge.com/simreg=com.bridge.simreg.wstypes,http://co.mcel.mz/types/common=co.mcel.mz.types.common"/>
+	<property name="wsdl2j-java-package" value="com.bridge.simreg"/>
+	<property name="wsdl2j-unwrap" value="true"/>
+	<property name="wsdl2j-client-synch-only" value="true"/>
+	<property name="generated.dir" value="generated"/>
+	
+	<!-- Deployment directories -->
+	<property name="deploy.dir" value="${jboss.home}/server/default/deploy" />
+	<property name="deploy.conf.dir" value="${jboss.home}/server/default/conf" />
+	
+	<!-- Target directories -->
+	<property name="ear.dir" value="${exploded.dir}/${project.name}.ear" />
+	<property name="jar.dir" value="${exploded.dir}/${project.name}.jar" />
+	<property name="war.dir" value="${exploded.dir}/${project.name}.war" />
+	<property name="ear.deploy.dir" value="${deploy.dir}/${project.name}.ear" />
+	<property name="jar.deploy.dir" value="${ear.deploy.dir}/${project.name}.jar" />
+	<property name="war.deploy.dir" value="${ear.deploy.dir}/${project.name}.war" />
+	
+		
+	<!-- ############### RESOURCES ################ -->
+	<path id="project.classpath">
+		<fileset dir="${build.classpath}" includes="**/*"/>
+	</path>
+	
+	<taskdef name="wsdl2java" classname="org.apache.axis2.tool.ant.AntCodegenTask"
+		classpathref="project.classpath"/>
+	
+	<fileset id="war.lib" dir="${lib.dir}">
+		<include name="jboss-seam-ui.jar"/>
+		<include name="jboss-seam-debug.jar"/>
+		<include name="jsf-facelets.jar"/>
+		<include name="jboss-seam-mail.jar"/>
+		<include name="richfaces-impl.jar"/>
+		<include name="richfaces-ui.jar"/>
+	</fileset>
+	
+	<fileset id="ear.lib" dir="${lib.dir}">
+		<include name="richfaces-api.jar"/>
+		<include name="jboss-el.jar"/>
+		<include name="commons-beanutils.jar"/>
+		<include name="commons-digester.jar"/>
+		<include name="commons-lang.jar"/>
+		<include name="spring.jar"/>
+		<include name="jboss-seam-ioc.jar"/>
+		<include name="hibernate-search.jar"/>
+		<include name="lucene-core.jar"/>
+		<include name="arete.jar"/>
+		<include name="Ena.jar"/>
+		<include name="commons-net-2.2.jar"/>
+		<include name="commons-codec-1.3.jar"/>
+		<include name="commons-httpclient-3.1.jar"/>
+		<include name="crsclient.jar"/>
+		<include name="httpcore-4.0.jar"/>
+		<include name="httpclient-4.0.3.jar"/>
+		<include name="annogen-0.1.0.jar"/>
+		<include name="axiom-api-1.2.8.jar"/>
+		<include name="axiom-dom-1.2.8.jar"/>
+		<include name="axiom-impl-1.2.8.jar"/>
+		<include name="axis2-adb-1.5.1.jar"/>
+		<include name="axis2-xmlbeans-1.5.1.jar"/>
+		<include name="axis2-fastinfoset-1.5.1.jar"/>
+		<include name="axis2-kernel-1.5.1.jar"/>
+		<include name="axis2-metadata-1.5.1.jar"/>
+		<include name="axis2-mtompolicy-1.5.1.jar"/>
+		<include name="axis2-saaj-1.5.1.jar"/>
+		<include name="axis2-transport-http-1.5.1.jar"/>
+		<include name="axis2-transport-local-1.5.1.jar"/>
+		<include name="wsdl4j-1.6.2.jar"/>
+		<include name="wstx-asl-3.2.4.jar"/>
+		<include name="xml-resolver-1.2.jar"/>
+		<include name="xalan-2.7.0.jar"/>
+		<include name="mex-1.5.1.jar"/>
+		<include name="XmlSchema-1.4.3.jar"/>
+		<include name="neethi-2.0.4.jar"/>
+		<include name="commons-fileupload-1.2.jar"/>
+		<include name="woden-api-1.0M8.jar"/>
+		<include name="woden-impl-dom-1.0M8.jar"/>
+		<include name="rampart-core-1.5.jar"/>
+		<include name="rampart-policy-1.5.jar"/>
+		<include name="rampart-trust-1.5.jar"/>
+		<include name="xmltooling-1.2.0.jar"/>
+		<include name="opensaml-1.1.jar"/>
+		<include name="opensaml-2.2.3.jar"/>
+		<include name="wss4j-1.5.8.jar"/>
+		<include name="xmlsec-1.4.2.jar"/>
+		<include name="j2ssh-common-0.2.9.jar"/>
+		<include name="j2ssh-core-0.2.9.jar"/>
+		<include name="j2ssh-dameon-0.2.9.jar"/>
+		<include name="likya.jar"/>
+		<include name="jasypt-1.3.1.jar"/>
+		<include name="icu4j-3.4.4.jar"/>
+		<include name="quartz.jar"/>
+		<include name="jboss-seam-excel.jar"/>
+		<include name="jxl.jar"/>
+		<include name="jstl-1.2.jar"/>
+		<include name="jbpm-jpdl.jar"/>
+		<include name="jbpm-identity.jar"/>
+		<include name="xmlbeans-2.3.0.jar"/>		
+	</fileset>
+		
+	<fileset id="seam.jar" dir="${lib.dir}">
+		<include name="jboss-seam.jar"/>
+	</fileset>
+	
+	<!-- View files -->
+	<fileset id="war.view" dir="${view.dir}">
+		<include name="**/*" />
+	</fileset>
+	
+	<!-- resources to go in the war -->
+	<fileset id="war.resources" dir="${resources.dir}/WEB-INF">
+		<include name="**/*.*" />		
+	</fileset>
+	
+	<!-- Property resources (e.g. themes, i8ln) get put on the classpath -->
+	<fileset id="war.classes.resources" dir="${resources.dir}">
+		<exclude name="seam.properties" />
+		<exclude name="components.properties" />
+		<include name="*.properties" />
+		<include name="commons-logging.properties"/>
+	</fileset>
+	
+	<!-- resources to go in the jar  -->
+	<fileset id="jar.resources" dir="${resources.dir}">
+		<include name="seam.properties"/>
+		<include name="MessageResources_*.properties"/>
+		<include name="seam.quartz.properties" />
+		<include name="*.drl" />
+		<include name="*_hibernate.cfg.xml" />
+		<include name="*.hbm.xml"/>
+		<include name="*.jpdl.xml" />
+		<include name="META-INF/ejb-jar.xml" />
+		<include name="META-INF/persistence.xml"/>
+		<exclude name="**/*-ds.xml"/>
+	</fileset>
+		
+	<!-- Resources to go in the ear -->
+	<fileset id="ear.resources" dir="${resources.dir}">
+		<include name="META-INF/application.xml" />
+		<include name="META-INF/jboss-app.xml" />
+		<include name="META-INF/jboss-classloading.xml"/>
+		<include name="META-INF/*-service.xml" />
+		<include name="META-INF/*-xmbean.xml" />
+		<include name="treecache.xml" />
+		<include name="*.jpdl.xml" />
+		<include name="jbpm.cfg.xml"/>
+		<exclude name=".gpd.*" />
+		<include name="*.xsd" />
+		<include name="jbpm.mail.templates.xml"/>
+		<exclude name="**/*-ds.xml"/>
+	</fileset>
+	
+	<!-- Test classpath -->
+	<path id="test.classpath">			
+		<path path="${test.dir}" />
+			<fileset dir="${lib.dir}/test">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${lib.dir}">
+			<!-- Don't include seam-ui or interop modules -->
+				<exclude name="jboss-seam-ui.jar" />
+			</fileset>
+		<path path="bootstrap"/>
+	</path>
+		
+	<!-- files to use as test resources, by default everything -->
+	<patternset id="test.resources.files">
+		<include name="**/*" />
+	</patternset>
+	
+	<!-- files from the view/ directory to copy to the test environment, by default *.xml -->
+	<patternset id="test.view.files">
+		<include name="**/*.page.xml" />
+	</patternset>
+					
+	<patternset id="test.src.files">
+		<include name="**/*.xml" />
+	</patternset>
+	
+	<!-- data source resources -->
+	<fileset id="ds.resources" dir="${resources.dir}">
+		<include name="**/*-ds.xml"/>
+	</fileset>
+	
+	<fileset id="ds.clean.resources" dir="${deploy.dir}">
+		<include name="csv-ds.xml"/>
+		<include name="dws-ds.xml"/>
+		<include name="cdrlive-ds.xml"/>
+		<include name="bscs-ds.xml"/>
+		<include name="dr-ds.xml"/>
+		<include name="tomala-ds.xml"/>
+		<include name="dbxdb-ds.xml"/>
+		<include name="pm-ds.xml"/>
+		<include name="loyalty-ds.xml"/>
+		<include name="jbpm-ds.xml"/>
+		<include name="sgsn_stats-ds.xml"/>
+		<include name="roaming-ds.xml"/>
+		<include name="simreg-ds.xml"/>
+		<include name="voucherdb-ds.xml"/>
+		<include name="**/*.jpdl.xml"/>
+	</fileset>
+	
+	<!-- ##################### BUILD TARGETS ##################### -->
+	<!-- Initialize the build -->
+	<target name="init">
+		<echo message="Building ${Name} ${version}" />
+		<mkdir dir="${jar.dir}" />
+		<mkdir dir="${ear.dir}" />
+		<mkdir dir="${war.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+    
+	<target name="clean">
+		<echo message="Cleaning the build and dist directory" />
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${classes.dir}" includes="**/*" />
+			<fileset dir="${dist.dir}" includes="**/*" />
+			<fileset dir="${exploded.dir}" includes="**/*"/>
+		</delete>
+	    <delete dir="${deploy.dir}/${project.name}.ear" includeemptydirs="true"/>
+		<delete failonerror="false">
+			<fileset refid="ds.clean.resources"/>
+		</delete>
+		<echo message="Cleaning the generated sources directory"/>
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${generated.dir}" includes="**/*"/>
+		</delete>
+	</target>
+	
+	<target name="undeploy_wsdl">
+		<echo message="Deleting the deployed service from Axis Home"/>
+		<delete dir="${axis.home}/services/${service.name}" excludes="services.list, version.aar" />
+	</target>
+	<!--
+	<target name="wsdl_server_codegen">
+		<echo message="Generating server side code"/>
+		<wsdl2java wsdlfilename="${wsdl.file}" output="${generated.dir}"
+			serverside="true" generateservicexml="true" packagename="${wsdl2j-java-package}.server"
+			databindingname="adb" portname="${service.name}SOAP" unpackclasses="true" serversideinterface="true" 
+			unwrap="${wsdl2j-unwrap}" namespacetopackages="${wsdl-namespace-to-package-mapping}">
+		</wsdl2java>
+		<copy todir="${src.dir}" overwrite="true" verbose="true">
+			<fileset dir="${generated.dir}/src" includes="**/*"/>
+		</copy>
+	</target>
+	-->
+	<target name="wsdl_server_codegen">
+			<echo message="Generating server side code"/>
+			<java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true" logerror="true">
+				<classpath refid="project.classpath"/>
+				<arg value="-d"/>
+				<arg value="adb"/>
+				<arg value="-uri"/>
+				<arg file="${wsdl.file}"/>
+				<arg value="-o"/>
+				<arg file="${generated.dir}"/>
+				<arg value="-ss"/>
+				<arg value="true"/>
+				<arg value="-sd"/>
+				<arg value="true"/>
+				<arg value="-p"/>
+				<arg value="${wsdl2j-java-package}.server"/>
+				<arg value="-pn"/>
+				<arg value="${service.name}SOAP"/>
+				<arg value="-s"/>
+				<arg value="${wsdl2j-client-synch-only}"/>
+				<arg value="-u"/>
+				<arg value="true"/>
+				<arg value="-ssi"/>
+				<arg value="true"/>
+				<arg value="-uw"/>
+				<arg value="${wsdl2j-unwrap}"/>
+				<arg value="-ns2p"/>
+				<arg value="${wsdl-namespace-to-package-mapping}"/>
+				<arg value="-t"/>
+				<arg value="false"/>	
+			</java>
+			<copy todir="${src.dir}" overwrite="true" verbose="true">
+				<fileset dir="${generated.dir}/src" includes="**/*"/>
+			</copy>
+	</target>
+	<target name="wsdl_client_codegen">
+		<echo message="Generating client side code"/>
+		<wsdl2java wsdlfilename="${wsdl.file}" output="${generated.dir}"
+			serverside="false" generateservicexml="true" packagename="${wsdl2j-java-package}.client"
+			databindingname="adb" portname="${service.name}SOAP" synconly="${wsdl2j-client-synch-only}" 
+			serversideinterface="false" unpackclasses="true" unwrap="${wsdl2j-unwrap}"
+			namespacetopackages="${wsdl-namespace-to-package-mapping}" 
+			testcase="true">
+		</wsdl2java>
+		<copy todir="${src.dir}" overwrite="true" verbose="true">
+			<fileset dir="${generated.dir}/src" includes="**/*"/>
+		</copy>
+		<copy todir="${test.dir}" overwrite="false" verbose="true" failonerror="false">
+			<fileset dir="${generated.dir}/test" includes="**/*.java"/>
+		</copy>
+	</target>
+	<!--
+	<target name="wsdl_client_codegen">
+		<echo message="Generating client side code"/>
+		<java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true" logerror="true">
+			<classpath refid="project.classpath"/>
+			<arg value="-d"/>
+			<arg value="xmlbeans"/>
+			<arg value="-uri"/>
+			<arg file="${wsdl.file}"/>
+			<arg value="-o"/>
+			<arg file="${generated.dir}"/>
+			<arg value="-ss"/>
+			<arg value="false"/>
+			<arg value="-sd"/>
+			<arg value="true"/>
+			<arg value="-p"/>
+			<arg value="${wsdl2j-java-package}.client"/>
+			<arg value="-pn"/>
+			<arg value="${service.name}SOAP"/>
+			<arg value="-s"/>
+			<arg value="${wsdl2j-client-synch-only}"/>
+			<arg value="-u"/>
+			<arg value="false"/>
+			<arg value="-ssi"/>
+			<arg value="false"/>
+			<arg value="-uw"/>
+			<arg value="${wsdl2j-unwrap}"/>
+			<arg value="-ns2p"/>
+			<arg value="${wsdl-namespace-to-package-mapping}"/>
+			<arg value="-t"/>
+			<arg value="false"/>	
+		</java>
+		<copy todir="${src.dir}" overwrite="true" verbose="true">
+			<fileset dir="${generated.dir}/src" includes="**/*"/>
+		</copy>
+		<copy todir="${test.dir}" overwrite="false" verbose="true" failonerror="false">
+			<fileset dir="${generated.dir}/test" includes="**/*.java"/>
+		</copy>
+	</target>
+	-->
+	<target name="deploy_wsdl" depends="wsdl_server_codegen, wsdl_client_codegen">
+		<copy todir="${axis.home}/services/${service.name}/META-INF" overwrite="true" verbose="true">
+			<fileset dir="${generated.dir}/resources" includes="**/*"/>
+		</copy>
+		<antcall target="clean"/>
+	</target>
+	
+	<!-- Compile the source code, directly into the jar -->
+	<target name="compile" depends="init">
+		<javac classpathref="project.classpath" destdir="${jar.dir}" debug="${javac.debug}" deprecation="on" source="1.6" target="1.6">
+			<src path="${src.dir}" />
+		</javac>
+		<copy todir="${jar.dir}" overwrite="true">
+			<fileset refid="jar.resources"/>
+		</copy>
+	</target>
+	
+	<target name="war" depends="compile">
+		<copy todir="${war.dir}">
+			<fileset refid="war.view" />
+		</copy>
+		<copy todir="${war.dir}/WEB-INF/lib">
+			<fileset refid="war.lib"/>
+			<mapper type="flatten" />
+		</copy>
+		<copy todir="${war.dir}/WEB-INF">
+			<fileset refid="war.resources"/>
+		</copy>
+		<!-- Put properties into the classpath -->
+		<copy todir="${war.dir}/WEB-INF/classes">
+			<fileset refid="war.classes.resources" />
+		</copy>
+	</target>
+	
+	<!-- Build the exploded ear -->
+	<target name="ear" depends="war">
+		<copy todir="${ear.dir}">
+			<fileset refid="seam.jar" />		
+			<fileset refid="ear.resources" />
+		</copy>
+		<mkdir dir="${ear.dir}/lib" />
+		<copy todir="${ear.dir}/lib">
+			<fileset refid="ear.lib"/>	
+			<mapper type="flatten" />
+		</copy>
+	</target>
+	
+	<target name="archive" depends="ear" description="Package the archives">
+		<jar jarfile="${dist.dir}/${project.name}.jar" basedir="${jar.dir}" />
+		<jar jarfile="${dist.dir}/${project.name}.war" basedir="${war.dir}" />
+		<jar jarfile="${dist.dir}/${project.name}.ear">
+			<fileset dir="${ear.dir}" />
+			<fileset dir="${dist.dir}">
+				<include name="${project.name}.jar" />
+				<include name="${project.name}.war" />
+			</fileset>
+		</jar>
+	</target>
+	
+	<!-- Copy the data source to JBoss AS -->
+	<target name="datasource">
+		<copy todir="${deploy.dir}">
+			<fileset dir="${resources.dir}">
+				<include name="*-ds.xml" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="deploy" depends="ear,datasource" description="Deploy the exploded archive">
+		<mkdir dir="${jar.deploy.dir}" />
+		<mkdir dir="${war.deploy.dir}" />
+		<copy todir="${jar.deploy.dir}">
+			<fileset dir="${jar.dir}" />
+		</copy>
+		<copy todir="${war.deploy.dir}">
+			<fileset dir="${war.dir}" />
+		</copy>
+		<copy todir="${ear.deploy.dir}">
+			<fileset dir="${ear.dir}" />
+		</copy>
+	</target>
+	
+	<target name="restart" depends="deploy" description="Restart the exploded archive">
+		<touch file="${ear.deploy.dir}/META-INF/application.xml" />
+	</target>
+
+	<target name="cleanrestart" depends="clean, deploy, restart" description="Clean the example and restart it" />
+	
+	<!-- #################### TEST TARGETS (JBOSS AS) ##################### -->
+	<target name="tcpmon">
+		<java classname="org.apache.ws.commons.tcpmon.TCPMon" fork="true">
+			<classpath refid="project.classpath"></classpath>
+		</java>
+	</target> 	
+	<!-- Build the exploded test directory structure -->
+	<target name="buildtest">
+		<copy todir="${test.dir}">
+			<fileset dir="${resources.dir}">
+				<patternset refid="test.resources.files" />
+			</fileset>
+		</copy>
+		<copy todir="${test.dir}">
+			<fileset dir="${view.dir}">
+				<patternset refid="test.view.files" />
+			</fileset>
+		</copy>
+	</target>
+			
+	<target name="test" depends="buildtest" description="Run the tests">
+		<taskdef resource="testngtasks" classpathref="test.classpath"/>
+		<testng outputdir="${test-report.dir}">
+			<jvmarg line="-Xmx800M" />
+			<jvmarg line="-Djava.awt.headless=true" />
+			<!--<jvmarg line="-Demma.coverage.out.file=${coverage.ec}" />-->
+			<jvmarg line="-Djava.endorsed.dirs=${endorsed.dir}" />
+			<!--added for JDK6 compatibility with JBoss embedded-->
+			<jvmarg line="-Dsun.lang.ClassLoader.allowArraySyntax=true"/>
+			<jvmarg line="${testng.jvmargs}"/>
+			<classpath>
+				<path refid="test.classpath" />
+			</classpath>
+			<xmlfileset dir="${src.test.dir}" includes="**/testng.xml" />
+		</testng>
+		<echo>You can increase the logging by editing bootstrap/log4j.xml..</echo>
+	</target>	
+</project>

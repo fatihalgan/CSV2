@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+                
+      <rich:panel header="#{msg.identityDocInfo}" styleClass="sectionPanel" rendered="#{prepaidCustomerService.currentSubscription != null}">
+		<h:panelGrid columns="3">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.idDocType}</ui:define>
+				<h:selectOneMenu value="#{prepaidCustomerService.currentSubscription.registeredTo.identityDocument.documentType}" readonly="true">
+					<s:convertEnum />
+					<s:selectItems value="#{allIdentityDocTypes}" var="id" label="#{id.label}"/>
+				</h:selectOneMenu>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.idDocNumber}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.identityDocument.documentNo}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.issuedBy}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.identityDocument.issuedBy}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.issueDate}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.identityDocument.issueDate}">
+					<f:convertDateTime type="date" dateStyle="medium"/>
+				</h:outputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.expiryDate}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.identityDocument.expiryDate}">
+					<f:convertDateTime type="date" dateStyle="medium"/>
+				</h:outputText>
+			</s:decorate>
+		</h:panelGrid>
+	</rich:panel>          
+</ui:composition>

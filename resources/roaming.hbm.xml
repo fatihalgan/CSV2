@@ -1,0 +1,1457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<typedef name="roamingStatus" class='csv.util.persistence.GenericEnumUserType'>
+		<param name="enumClass">csv.roaming.domain.RoamingStatus</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">fromString</param>
+	</typedef>
+	<typedef name="roamingQuality" class='csv.util.persistence.GenericEnumUserType'>
+		<param name="enumClass">csv.roaming.domain.RoamingQuality</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">fromString</param>
+	</typedef>
+	<typedef name="roamingPriority" class='csv.util.persistence.GenericEnumUserType'>
+		<param name="enumClass">csv.roaming.domain.RoamingPriority</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">valueOf</param>
+	</typedef>
+	<typedef name="roamingScheduleType" class='csv.util.persistence.GenericEnumUserType'>
+		<param name="enumClass">csv.roaming.domain.RoamingScheduleType</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">valueOf</param>
+	</typedef>
+	<typedef name="roamingLineType" class='csv.util.persistence.GenericEnumUserType'>
+		<param name="enumClass">csv.roaming.domain.RoamingLineType</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">valueOf</param>
+	</typedef>
+	<typedef name="roamingServiceType" class='csv.util.persistence.GenericEnumUserType'>
+		<param name="enumClass">csv.roaming.domain.RoamingServiceType</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">valueOf</param>
+	</typedef>
+	<typedef name="roamingFileStatus" class='csv.util.persistence.GenericEnumUserType'>
+		<param name="enumClass">csv.roaming.domain.OperatorFileStatus</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">fromString</param>
+	</typedef>
+
+	<class name="csv.roaming.domain.AgreementStatus" table="AGREEMENT_STATUS">
+		<id name="statusId" type="long">
+			<column name="STATUS_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="50" not-null="true" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.ContactTypes" table="CONTACT_TYPES">
+		<id name="typeId" type="long">
+			<column name="TYPE_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="50" not-null="true" />
+		</property>
+		<set name="operatorContacts" table="OPERATOR_CONTACT" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="CONTACT_TYPE" precision="35" scale="0" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorContact" />
+		</set>
+		<set name="mainAgreementContacts" table="MAIN_AGREEMENT_CONTACT"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="CONTACT_TYPE" precision="35" scale="0" />
+			</key>
+			<one-to-many class="csv.roaming.domain.MainAgreementContact" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.Continent" table="CONTINENT">
+		<id name="continentId" type="long">
+			<column name="CONTINENT_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="name" type="string">
+			<column name="NAME" length="50" not-null="true" />
+		</property>
+		<set name="countries" table="COUNTRY" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="CONTINENT_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.Country" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.Country" table="COUNTRY">
+		<id name="countryId" type="long">
+			<column name="COUNTRY_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="continent" class="csv.roaming.domain.Continent"
+			fetch="select">
+			<column name="CONTINENT_ID" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<property name="countryName" type="string">
+			<column name="COUNTRY_NAME" length="100" not-null="true" />
+		</property>
+		<property name="utc" type="string">
+			<column name="UTC" length="20" />
+		</property>
+		<property name="daylightSave" type="java.lang.Boolean">
+			<column name="DAYLIGHT_SAVE" precision="1" scale="0" />
+		</property>
+		<property name="utcEnd" type="string">
+			<column name="UTC_END" length="20" />
+		</property>
+		<property name="utcTimeDiff" type="int">
+			<column name="UTC_TIME_DIFF" length="5" />
+		</property>
+		<property name="utcEndTimeDiff" type="int">
+			<column name="UTC_END_TIME_DIFF" length="5" />
+		</property>
+		<set name="countryRegions" table="COUNTRY_REGION" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="COUNTRY_ID" precision="35" scale="0" not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.CountryRegion" />
+		</set>
+		<set name="operatorCountries" table="OPERATOR_COUNTRY" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="COUNTRY_ID" precision="35" scale="0" not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorCountry" />
+		</set>
+		<set name="countryNationalDialingCodes" table="COUNTRY_NATIONAL_DIALING_CODE"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="COUNTRY_ID" precision="35" scale="0" not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.CountryNationalDialingCode" />
+		</set>
+		<set name="countryIntDialingCodes" table="COUNTRY_INT_DIALING_CODE"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="COUNTRY_ID" precision="35" scale="0" not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.CountryIntDialingCode" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.CountryIntDialingCode" table="COUNTRY_INT_DIALING_CODE">
+		<id name="countryIntDialingCodeId" type="long">
+			<column name="COUNTRY_INT_DIALING_CODE_ID" precision="35"
+				scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="country" class="csv.roaming.domain.Country"
+			fetch="select">
+			<column name="COUNTRY_ID" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<property name="dialingCode" type="string">
+			<column name="DIALING_CODE" length="10" not-null="true" />
+		</property>
+		<property name="carrier" type="string">
+			<column name="CARRIER" length="50" not-null="true" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.CountryNationalDialingCode"
+		table="COUNTRY_NATIONAL_DIALING_CODE">
+		<id name="countryNationalDialCodeId" type="long">
+			<column name="COUNTRY_NATIONAL_DIAL_CODE_ID" precision="35"
+				scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="country" class="csv.roaming.domain.Country"
+			fetch="select">
+			<column name="COUNTRY_ID" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<property name="dialingCode" type="string">
+			<column name="DIALING_CODE" length="10" not-null="true" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.CountryRegion" table="COUNTRY_REGION">
+		<id name="countryRegionId" type="long">
+			<column name="COUNTRY_REGION_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="country" class="csv.roaming.domain.Country"
+			fetch="select">
+			<column name="COUNTRY_ID" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<property name="countryRegionName" type="string">
+			<column name="COUNTRY_REGION_NAME" length="50" not-null="true" />
+		</property>
+		<property name="additionalInfo" type="string">
+			<column name="ADDITIONAL_INFO" length="100" />
+		</property>
+		<set name="roamingServiceTariffs" table="ROAMING_SERVICE_TARIFF"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="REGION_ID" precision="35" scale="0" not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.RoamingServiceTariff" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.Currency" table="CURRENCY">
+		<id name="currencyId" type="long">
+			<column name="CURRENCY_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="currencyName" type="string">
+			<column name="CURRENCY_NAME" length="50" not-null="true" />
+		</property>
+		<property name="currencyShortCode" type="string">
+			<column name="CURRENCY_SHORT_CODE" length="10" not-null="true" />
+		</property>
+		<set name="tariffCalculationParamses" table="TARIFF_CALCULATION_PARAMS"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="CURRENCY_ID" precision="35" scale="0" />
+			</key>
+			<one-to-many class="csv.roaming.domain.TariffCalculationParams" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.IregStatus" table="IREG_STATUS">
+		<id name="statusId" type="long">
+			<column name="STATUS_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="100" not-null="true" />
+		</property>
+		<set name="mainAgreementSchedules" table="MAIN_AGREEMENT_SCHEDULE"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="IREG_TEST_STATUS" precision="35" scale="0" />
+			</key>
+			<one-to-many class="csv.roaming.domain.MainAgreementSchedule" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.MainAgreement" table="MAIN_AGREEMENT">
+		<id name="mainAgreementId" type="long">
+			<column name="MAIN_AGREEMENT_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="100" not-null="true" />
+		</property>
+		<set name="operatorCountries" table="OPERATOR_COUNTRY" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="MAIN_AGREEMENT_ID" precision="35" scale="0" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorCountry" />
+		</set>
+		<set name="mainAgreementContacts" table="MAIN_AGREEMENT_CONTACT"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="MAIN_AGREEMENT_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.MainAgreementContact" />
+		</set>
+		<set name="mainAgreementConfs" table="MAIN_AGREEMENT_CONF"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="MAIN_AGREEMENT_ID" precision="22" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.MainAgreementConf" />
+		</set>
+		<set name="mainAgreementAddresses" table="MAIN_AGREEMENT_ADDRESS"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="MAIN_AGREEMENT_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.MainAgreementAddress" />
+		</set>
+		<set name="mainAgreementApproachs" table="MAIN_AGREEMENT_APPROACH"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="MAIN_AGREEMENT_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.MainAgreementApproach" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.MainAgreementAddress" table="MAIN_AGREEMENT_ADDRESS">
+		<id name="mainAgreementAddressId" type="long">
+			<column name="MAIN_AGREEMENT_ADDRESS_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="mainAgreement" class="csv.roaming.domain.MainAgreement"
+			fetch="select">
+			<column name="MAIN_AGREEMENT_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<property name="address" type="string">
+			<column name="ADDRESS" length="250" not-null="true" />
+		</property>
+		<property name="city" type="string">
+			<column name="CITY" length="50" />
+		</property>
+		<property name="priority" type="java.lang.Boolean">
+			<column name="PRIORITY" precision="1" scale="0" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.MainAgreementApproach" table="MAIN_AGREEMENT_APPROACH">
+		<id name="mainAgreementApproachId" type="long">
+			<column name="MAIN_AGREEMENT_APPROACH_ID" precision="35"
+				scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="mainAgreement" class="csv.roaming.domain.MainAgreement"
+			fetch="select">
+			<column name="MAIN_AGREEMENT_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<property name="approach" type="string">
+			<column name="APPROACH" length="50" not-null="true" />
+		</property>
+		<property name="priority" type="long">
+			<column name="PRIORITY" precision="22" scale="0" />
+		</property>
+		<property name="firstApproachDate" type="date">
+			<column name="FIRST_APPROACH_DATE" length="7" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.MainAgreementConf" table="MAIN_AGREEMENT_CONF">
+		<id name="mainAgreementConfId" type="long">
+			<column name="MAIN_AGREEMENT_CONF_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="mainAgreement" class="csv.roaming.domain.MainAgreement"
+			fetch="select">
+			<column name="MAIN_AGREEMENT_ID" precision="22" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<property name="confDetails" type="string">
+			<column name="CONF_DETAILS" length="250" not-null="true" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.MainAgreementContact" table="MAIN_AGREEMENT_CONTACT">
+		<id name="mainAgreementContactId" type="long">
+			<column name="MAIN_AGREEMENT_CONTACT_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="contactTypes" class="csv.roaming.domain.ContactTypes"
+			fetch="select">
+			<column name="CONTACT_TYPE" precision="35" scale="0" />
+		</many-to-one>
+		<many-to-one name="mainAgreement" class="csv.roaming.domain.MainAgreement"
+			fetch="select">
+			<column name="MAIN_AGREEMENT_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<property name="contactName" type="string">
+			<column name="CONTACT_NAME" length="50" not-null="true" />
+		</property>
+		<property name="contactSurname" type="string">
+			<column name="CONTACT_SURNAME" length="50" not-null="true" />
+		</property>
+		<property name="phone" type="string">
+			<column name="PHONE" length="20" />
+		</property>
+		<property name="fax" type="string">
+			<column name="FAX" length="20" />
+		</property>
+		<property name="gsm" type="string">
+			<column name="GSM" length="20" />
+		</property>
+		<property name="email" type="string">
+			<column name="EMAIL" length="50" />
+		</property>
+		<property name="contactTitle" type="string">
+			<column name="CONTACT_TITLE" length="50" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.MainAgreementSchedule" table="MAIN_AGREEMENT_SCHEDULE">
+		<id name="agreementScheduleId" type="long">
+			<column name="AGREEMENT_SCHEDULE_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="tadigStatus" class="csv.roaming.domain.TadigStatus"
+			fetch="select">
+			<column name="TADIG_TEST_STATUS" precision="35" scale="0" />
+		</many-to-one>
+		<many-to-one name="iregStatus" class="csv.roaming.domain.IregStatus"
+			fetch="select">
+			<column name="IREG_TEST_STATUS" precision="35" scale="0" />
+		</many-to-one>
+		<many-to-one name="operatorCountry" class="csv.roaming.domain.OperatorCountry"
+			fetch="select">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<property name="scheduleType" type="roamingScheduleType">
+			<column name="SCHEDULE_TYPE" precision="1" scale="0" />
+		</property>
+		<many-to-one name="status" class="csv.roaming.domain.AgreementStatus"
+			fetch="select">
+			<column name="STATUS" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<property name="implementationStatus" type="roamingStatus">
+			<column name="IMPLEMENTATION_STATUS" length="1" />
+		</property>
+		<property name="commercialPriority" type="roamingPriority">
+			<column name="COMMERCIAL_PRIORITY" precision="1" scale="0" />
+		</property>
+		<property name="technicalPriority" type="roamingPriority">
+			<column name="TECHNICAL_PRIORITY" precision="1" scale="0" />
+		</property>
+		<property name="commitmentLevel" type="roamingPriority">
+			<column name="COMMITMENT_LEVEL" precision="1" scale="0" />
+		</property>
+		<property name="generalPriority" type="java.lang.Double">
+			<column name="GENERAL_PRIORITY" precision="126" scale="2" />
+		</property>
+		<property name="plannedMonthOfTest" type="date">
+			<column name="PLANNED_MONTH_OF_TEST" length="7" />
+		</property>
+		<property name="scheduledTestDate" type="date">
+			<column name="SCHEDULED_TEST_DATE" length="7" />
+		</property>
+		<property name="plannedLaunchDate" type="date">
+			<column name="PLANNED_LAUNCH_DATE" length="7" />
+		</property>
+		<property name="commercialLaunchDate" type="date">
+			<column name="COMMERCIAL_LAUNCH_DATE" length="7" />
+		</property>
+		<property name="unixImplmStatus" type="roamingStatus">
+			<column name="UNIX_IMPLM_STATUS" length="1" />
+		</property>
+		<property name="bscsixImplmStatus" type="roamingStatus">
+			<column name="BSCSIX_IMPLM_STATUS" length="1" />
+		</property>
+		<property name="implementationDate" type="date">
+			<column name="IMPLEMENTATION_DATE" length="7" />
+		</property>
+		<property name="testCardsAvailableBoth" type="java.lang.Boolean">
+			<column name="TEST_CARDS_AVAILABLE_BOTH" precision="1" scale="0" />
+		</property>
+		<property name="cardInboundActive" type="java.lang.Boolean">
+			<column name="CARD_INBOUND_ACTIVE" precision="1" scale="0" />
+		</property>
+		<property name="cardOutboundActive" type="java.lang.Boolean">
+			<column name="CARD_OUTBOUND_ACTIVE" precision="1" scale="0" />
+		</property>
+		<property name="signalingGatewayImplm" type="roamingStatus">
+			<column name="SIGNALING_GATEWAY_IMPLM" length="1" />
+		</property>
+		<property name="internationalRoutesQuality" type="roamingQuality">
+			<column name="INTERNATIONAL_ROUTES_QUALITY" length="1" />
+		</property>
+		<property name="ir24TestStartDate" type="date">
+			<column name="IR24_TEST_START_DATE" length="7" />
+		</property>
+		<property name="ir24TestEndDate" type="date">
+			<column name="IR24_TEST_END_DATE" length="7" />
+		</property>
+		<property name="ir24OutboundTestEndDate" type="date">
+			<column name="IR24_OUTBOUND_TEST_END_DATE" length="7" />
+		</property>
+		<property name="tdmoz01Name" type="string">
+			<column name="TDMOZ01_NAME" length="100" />
+		</property>
+		<property name="tdmoz01DispatchDate" type="date">
+			<column name="TDMOZ01_DISPATCH_DATE" length="7" />
+		</property>
+		<property name="tdmoz01Status" type="roamingStatus">
+			<column name="TDMOZ01_STATUS" length="1" />
+		</property>
+		<property name="tdoperatorName" type="string">
+			<column name="TDOPERATOR_NAME" length="100" />
+		</property>
+		<property name="tdoperatorReceptionDate" type="date">
+			<column name="TDOPERATOR_RECEPTION_DATE" length="7" />
+		</property>
+		<property name="tdoperatorStatus" type="roamingFileStatus">
+			<column name="TDOPERATOR_STATUS" length="1" />
+		</property>
+		<property name="action" type="string">
+			<column name="ACTION" length="100" />
+		</property>
+		<property name="iregKpi" type="java.lang.Integer">
+			<column name="IREG_KPI" precision="5" scale="0" />
+		</property>
+		<property name="testDuration" type="java.lang.Integer">
+			<column name="TEST_DURATION" precision="5" scale="0" />
+		</property>
+		<property name="rolloutDuration" type="java.lang.Integer">
+			<column name="ROLLOUT_DURATION" precision="5" scale="0" />
+		</property>
+		<property name="policyImplmEndDate" type="date">
+			<column name="POLICY_IMPLM_END_DATE" length="7" />
+		</property>
+		<property name="cgsnImplmStartDate" type="date">
+			<column name="CGSN_IMPLM_START_DATE" length="7" />
+		</property>
+		<property name="ir35TestStartDate" type="date">
+			<column name="IR35_TEST_START_DATE" length="7" />
+		</property>
+		<property name="ir35TestEndDate" type="date">
+			<column name="IR35_TEST_END_DATE" length="7" />
+		</property>
+		<property name="ir35OutboundTestEndDate" type="date">
+			<column name="IR35_OUTBOUND_TEST_END_DATE" length="7" />
+		</property>
+		<property name="gprsRoamingWorking" type="date">
+			<column name="GPRS_ROAMING_WORKING" length="7" />
+		</property>
+		<property name="nssImplmDate" type="date">
+			<column name="NSS_IMPLM_DATE" length="7" />
+		</property>
+		<property name="csImplmStatus" type="roamingStatus">
+			<column name="CS_IMPLM_STATUS" length="1" />
+		</property>
+		<property name="platform" type="string">
+			<column name="PLATFORM" length="50" />
+		</property>
+		<property name="mmsgwTestStatus" type="roamingStatus">
+			<column name="MMSGW_TEST_STATUS" length="1" />
+		</property>
+		<property name="active" type="java.lang.Boolean">
+			<column name="ACTIVE" precision="1" scale="0" />
+		</property>
+		<property name="passiveDate" type="date">
+			<column name="PASSIVE_DATE" length="7" />
+		</property>
+		<many-to-one name="mainAgreement" class="csv.roaming.domain.MainAgreement"
+			fetch="join">
+			<column name="MAIN_AGREEMENT_ID" precision="35" scale="0" />
+		</many-to-one>
+		<property name="signatureDate" type="date">
+			<column name="SIGNATURE_DATE" length="7" />
+		</property>
+		<property name="firstApproachDate" type="date">
+			<column name="FIRST_APROACH_DATE" length="7" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.Mccmnc" table="MCCMNC">
+		<id name="mccmncId" type="long">
+			<column name="MCCMNC_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="mccmnc" type="string">
+			<column name="MCCMNC" length="50" not-null="true" />
+		</property>
+		<set name="operators" table="OPERATOR" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="MCCMNC_ID" precision="35" scale="0" />
+			</key>
+			<one-to-many class="csv.roaming.domain.Operator" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.Operator" table="OPERATOR">
+		<id name="operatorId" type="long">
+			<column name="OPERATOR_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="mccmnc" class="csv.roaming.domain.Mccmnc"
+			fetch="select">
+			<column name="MCCMNC_ID" precision="35" scale="0" />
+		</many-to-one>
+		<many-to-one name="tapcode" class="csv.roaming.domain.Tapcode"
+			fetch="select">
+			<column name="TAPCODE_ID" precision="35" scale="0" />
+		</many-to-one>
+		<property name="operatorName" type="string">
+			<column name="OPERATOR_NAME" length="100" not-null="true" />
+		</property>
+		<property name="networkName" type="string">
+			<column name="NETWORK_NAME" length="100" />
+		</property>
+		<property name="displayName" type="string">
+			<column name="DISPLAY_NAME" length="500" />
+		</property>
+		<property name="networkCode" type="string">
+			<column name="NETWORK_CODE" length="10" />
+		</property>
+		<property name="operatorCode" unique="true" type="string">
+			<column name="OPERATOR_CODE" length="20" />
+		</property>
+		<property name="ccnc" type="string">
+			<column name="CCNC" length="10" />
+		</property>
+		<property name="tadig" type="string">
+			<column name="TADIG" length="5" />
+		</property>
+
+		<set name="operatorCountries" table="OPERATOR_COUNTRY" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_ID" precision="35" scale="0" not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorCountry" />
+		</set>
+		<set name="operatorPrefixes" table="OPERATOR_PREFIX" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_ID" precision="35" scale="0" not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorPrefix" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.OperatorAddress" table="OPERATOR_ADDRESS">
+		<id name="operatorAddressId" type="long">
+			<column name="OPERATOR_ADDRESS_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="operatorCountry" class="csv.roaming.domain.OperatorCountry"
+			fetch="select">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<property name="address" type="string">
+			<column name="ADDRESS" length="250" not-null="true" />
+		</property>
+		<property name="city" type="string">
+			<column name="CITY" length="50" not-null="true" />
+		</property>
+		<property name="priority" type="boolean">
+			<column name="PRIORITY" precision="1" scale="0" not-null="true" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.OperatorContact" table="OPERATOR_CONTACT">
+		<id name="operatorContactId" type="long">
+			<column name="OPERATOR_CONTACT_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="operatorCountry" class="csv.roaming.domain.OperatorCountry"
+			fetch="select">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<many-to-one name="contactTypes" class="csv.roaming.domain.ContactTypes"
+			fetch="select">
+			<column name="CONTACT_TYPE" precision="35" scale="0" />
+		</many-to-one>
+		<property name="contactName" type="string">
+			<column name="CONTACT_NAME" length="50" />
+		</property>
+		<property name="contactSurname" type="string">
+			<column name="CONTACT_SURNAME" length="50" />
+		</property>
+		<property name="phone" type="string">
+			<column name="PHONE" length="20" />
+		</property>
+		<property name="fax" type="string">
+			<column name="FAX" length="20" />
+		</property>
+		<property name="gsm" type="string">
+			<column name="GSM" length="20" />
+		</property>
+		<property name="email" type="string">
+			<column name="EMAIL" length="50" />
+		</property>
+		<property name="contactTitle" type="string">
+			<column name="CONTACT_TITLE" length="50" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.OperatorFrequency" table="OPERATOR_FREQUENCY">
+		<id name="operatorFrequencyId" type="long">
+			<column name="OPERATOR_FREQUENCY_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="operatorCountry" class="csv.roaming.domain.OperatorCountry"
+			fetch="select">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<property name="frequency" type="string">
+			<column name="FREQUENCY" length="20" not-null="true" />
+		</property>
+		<property name="handsetCode1" type="string">
+			<column name="HANDSET_CODE1" length="30" />
+		</property>
+		<property name="handsetCode2" type="string">
+			<column name="HANDSET_CODE2" length="30" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.OperatorPrefix" table="OPERATOR_PREFIX">
+		<id name="operatorPrefixId" type="long">
+			<column name="OPERATOR_PREFIX_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="operator" class="csv.roaming.domain.Operator"
+			fetch="join">
+			<column name="OPERATOR_ID" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<property name="prefix" type="string">
+			<column name="PREFIX" length="20" not-null="true" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.OperatorCountry" table="OPERATOR_COUNTRY">
+		<id name="operatorCountryId" type="long">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="country" class="csv.roaming.domain.Country"
+			fetch="select">
+			<column name="COUNTRY_ID" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<many-to-one name="operator" class="csv.roaming.domain.Operator"
+			fetch="select">
+			<column name="OPERATOR_ID" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<many-to-one name="mainAgreement" class="csv.roaming.domain.MainAgreement"
+			fetch="select">
+			<column name="MAIN_AGREEMENT_ID" precision="35" scale="0" />
+		</many-to-one>
+		<set name="operatorContacts" table="OPERATOR_CONTACT" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorContact" />
+		</set>
+		<set name="roamingServiceTariffs" table="ROAMING_SERVICE_TARIFF"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.RoamingServiceTariff" />
+		</set>
+		<set name="operatorServices" table="OPERATOR_SERVICE" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorService" />
+		</set>
+		<set name="operatorAddresses" table="OPERATOR_ADDRESS" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorAddress" />
+		</set>
+		<set name="tariffCalculationParamses" table="TARIFF_CALCULATION_PARAMS"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.TariffCalculationParams" />
+		</set>
+		<set name="operatorFrequencies" table="OPERATOR_FREQUENCY"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorFrequency" />
+		</set>
+		<set name="mainAgreementSchedules" table="MAIN_AGREEMENT_SCHEDULE"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.MainAgreementSchedule" />
+		</set>
+		<set name="operatorTariffs" table="OPERATOR_TARIFF" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorTariff" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.OperatorService" table="OPERATOR_SERVICE">
+		<id name="operatorServiceId" type="long">
+			<column name="OPERATOR_SERVICE_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="roamingService" class="csv.roaming.domain.RoamingService"
+			fetch="select">
+			<column name="ROAMING_SERVICE_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<many-to-one name="operatorCountry" class="csv.roaming.domain.OperatorCountry"
+			fetch="select">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+	</class>
+
+	<class name="csv.roaming.domain.RoamingService" table="ROAMING_SERVICE">
+		<id name="roamingServiceId" type="long">
+			<column name="ROAMING_SERVICE_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="roamingServiceName" type="string">
+			<column name="ROAMING_SERVICE_NAME" length="50" />
+		</property>
+		<set name="roamingServiceTariffs" table="ROAMING_SERVICE_TARIFF"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="ROAMING_SERVICE_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.RoamingServiceTariff" />
+		</set>
+		<set name="operatorServices" table="OPERATOR_SERVICE" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="ROAMING_SERVICE_ID" precision="35" scale="0"
+					not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorService" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.RoamingServiceTariff" table="ROAMING_SERVICE_TARIFF">
+		<id name="roamingServiceTariffId" type="long">
+			<column name="ROAMING_SERVICE_TARIFF_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="roamingService" class="csv.roaming.domain.RoamingService"
+			fetch="select">
+			<column name="ROAMING_SERVICE_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<many-to-one name="operatorCountry" class="csv.roaming.domain.OperatorCountry"
+			fetch="select">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<many-to-one name="countryRegion" class="csv.roaming.domain.CountryRegion"
+			fetch="select">
+			<column name="REGION_ID" precision="35" scale="0" not-null="true" />
+		</many-to-one>
+		<property name="price" type="java.lang.Double">
+			<column name="PRICE" precision="126" scale="0" />
+		</property>
+		<property name="status" type="string">
+			<column name="STATUS" length="1" />
+		</property>
+		<property name="information" type="string">
+			<column name="INFORMATION" length="100" />
+		</property>
+	</class>
+
+	<class name="csv.roaming.domain.TadigStatus" table="TADIG_STATUS">
+		<id name="statusId" type="long">
+			<column name="STATUS_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="description" type="string">
+			<column name="DESCRIPTION" length="100" not-null="true" />
+		</property>
+		<set name="mainAgreementSchedules" table="MAIN_AGREEMENT_SCHEDULE"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="TADIG_TEST_STATUS" precision="35" scale="0" />
+			</key>
+			<one-to-many class="csv.roaming.domain.MainAgreementSchedule" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.Tapcode" table="TAPCODE">
+		<id name="tapcodeId" type="long">
+			<column name="TAPCODE_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="tapcode" type="string">
+			<column name="TAPCODE" length="50" />
+		</property>
+		<set name="operators" table="OPERATOR" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="TAPCODE_ID" precision="35" scale="0" />
+			</key>
+			<one-to-many class="csv.roaming.domain.Operator" />
+		</set>
+	</class>
+
+
+	<class name="csv.roaming.domain.TariffCalculationParams" table="TARIFF_CALCULATION_PARAMS">
+		<id name="tariffCalcParamId" type="long">
+			<column name="TARIFF_CALC_PARAM_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="currency" class="csv.roaming.domain.Currency"
+			fetch="select">
+			<column name="CURRENCY_ID" precision="35" scale="0" />
+		</many-to-one>
+		<many-to-one name="operatorCountry" class="csv.roaming.domain.OperatorCountry"
+			fetch="select">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0"
+				not-null="true" />
+		</many-to-one>
+		<property name="validMonth" type="date">
+			<column name="VALID_MONTH" length="7" not-null="true" />
+		</property>
+		<property name="currencyExchange" type="java.lang.Double">
+			<column name="CURRENCY_EXCHANGE" precision="8" scale="6" />
+		</property>
+		<property name="exchange" type="java.lang.Double">
+			<column name="EXCHANGE" precision="8" scale="6" />
+		</property>
+		<property name="markup" type="java.lang.Short">
+			<column name="MARKUP" precision="3" scale="0" />
+		</property>
+		<property name="vat" type="java.lang.Short">
+			<column name="VAT" precision="3" scale="0" />
+		</property>
+		<property name="packetDataMultiplier" type="java.lang.Double">
+			<column name="PACKET_DATA_MULTIPLIER" precision="8" scale="3" />
+		</property>
+		<property name="gprsInitChargingInterval" type="java.lang.Long">
+			<column name="GPRS_INIT_CHARGING_INTERVAL" precision="10"
+				scale="0" />
+		</property>
+		<property name="gprsAdditionalDesc" type="string">
+			<column name="GPRS_ADDITIONAL_DESC" length="100" />
+		</property>
+		<property name="voiceInitChargingInterval" type="java.lang.Long">
+			<column name="VOICE_INIT_CHARGING_INTERVAL" precision="10"
+				scale="0" />
+		</property>
+		<property name="callSetupCharge" type="java.lang.Double">
+			<column name="CALL_SETUP_CHARGE" precision="8" scale="3" />
+		</property>
+		<property name="nationalVoiceMo" type="java.lang.Double">
+			<column name="NATIONAL_VOICE_MO" precision="8" scale="3" />
+		</property>
+		<property name="backHomeVoiceMo" type="java.lang.Double">
+			<column name="BACK_HOME_VOICE_MO" precision="8" scale="3" />
+		</property>
+		<property name="rowVoiceMo" type="java.lang.Double">
+			<column name="ROW_VOICE_MO" precision="8" scale="3" />
+		</property>
+		<property name="sattelliteVoiceMo" type="java.lang.Double">
+			<column name="SATTELLITE_VOICE_MO" precision="8" scale="3" />
+		</property>
+		<property name="voiceMt" type="java.lang.Double">
+			<column name="VOICE_MT" precision="8" scale="3" />
+		</property>
+		<property name="smsMo" type="java.lang.Double">
+			<column name="SMS_MO" precision="8" scale="3" />
+		</property>
+		<property name="gprsIotUnit" type="java.lang.Double">
+			<column name="GPRS_IOT_UNIT" precision="8" scale="6" />
+		</property>
+		<property name="active" type="java.lang.Boolean">
+			<column name="ACTIVE" precision="1" scale="0" />
+		</property>
+		<property name="passiveDate" type="date">
+			<column name="PASSIVE_DATE" length="7" />
+		</property>
+		<property name="exchangeRate" type="java.lang.Double">
+			<column name="EXCHANGE_RATE" precision="8" scale="6" />
+		</property>
+		<property name="womCallSetupCharge" type="java.lang.Double">
+			<column name="WOM_CALL_SETUP_CHARGE" precision="8" scale="6" />
+		</property>
+		<property name="womNationalVoiceMo" type="java.lang.Double">
+			<column name="WOM_NATIONAL_VOICEMO" precision="8" scale="6" />
+		</property>
+		<property name="womBackHomeVoiceMo" type="java.lang.Double">
+			<column name="WOM_BACK_HOME_VOICEMO" precision="8" scale="6" />
+		</property>
+		<property name="womRowVoiceMo" type="java.lang.Double">
+			<column name="WOM_ROW_VOICEMO" precision="8" scale="6" />
+		</property>
+		<property name="womSattelliteVoiceMo" type="java.lang.Double">
+			<column name="WOM_SATTELLITE_VOICEMO" precision="8" scale="6" />
+		</property>
+		<property name="womVoiceMt" type="java.lang.Double">
+			<column name="WOM_VOICE_MT" precision="8" scale="6" />
+		</property>
+		<property name="womSmsMo" type="java.lang.Double">
+			<column name="WOM_SMSMO" precision="8" scale="6" />
+		</property>
+		<property name="womGprsIotUnit" type="java.lang.Double">
+			<column name="WOM_GPRS_IOT_UNIT" precision="8" scale="6" />
+		</property>
+		<property name="wmCallSetupCharge" type="java.lang.Double">
+			<column name="WM_CALL_SETUP_CHARGE" precision="8" scale="6" />
+		</property>
+		<property name="wmNationalVoiceMo" type="java.lang.Double">
+			<column name="WM_NATIONAL_VOICEMO" precision="8" scale="6" />
+		</property>
+		<property name="wmBackHomeVoiceMo" type="java.lang.Double">
+			<column name="WM_BACK_HOME_VOICEMO" precision="8" scale="6" />
+		</property>
+		<property name="wmRowVoiceMo" type="java.lang.Double">
+			<column name="WM_ROW_VOICEMO" precision="8" scale="6" />
+		</property>
+		<property name="wmSattelliteVoiceMo" type="java.lang.Double">
+			<column name="WM_SATTELLITE_VOICEMO" precision="8" scale="6" />
+		</property>
+		<property name="wmVoiceMt" type="java.lang.Double">
+			<column name="WM_VOICE_MT" precision="8" scale="6" />
+		</property>
+		<property name="wmSmsMo" type="java.lang.Double">
+			<column name="WM_SMSMO" precision="8" scale="6" />
+		</property>
+		<property name="wmGprsIotUnit" type="java.lang.Double">
+			<column name="WM_GPRS_IOT_UNIT" precision="8" scale="6" />
+		</property>
+
+		<many-to-one name="mainAgreement" class="csv.roaming.domain.MainAgreement"
+			fetch="join">
+			<column name="MAIN_AGREEMENT_ID" precision="35" scale="0" />
+		</many-to-one>
+	</class>
+
+	<class name="csv.roaming.domain.Service" table="SERVICE">
+		<id name="serviceId" type="long">
+			<column name="SERVICE_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<property name="serviceName" type="string">
+			<column name="SERVICE_NAME" length="100" not-null="true" />
+		</property>
+		<property name="lineType" type="roamingLineType">
+			<column name="LINE_TYPE" precision="1" scale="0" />
+		</property>
+		<property name="serviceType" type="roamingServiceType">
+			<column name="SERVICE_TYPE" precision="1" scale="0" />
+		</property>
+		<set name="operatorTariffs" table="OPERATOR_TARIFF" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="SERVICE_ID" precision="35" scale="0" not-null="true" />
+			</key>
+			<one-to-many class="csv.roaming.domain.OperatorTariff" />
+		</set>
+	</class>
+
+	<class name="csv.roaming.domain.OperatorTariff" table="OPERATOR_TARIFF">
+		<id name="operatorTariffId" type="long">
+			<column name="OPERATOR_TARIFF_ID" precision="35" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">SEQ_ROAMING_ID</param>
+			</generator>
+		</id>
+		<many-to-one name="service" class="csv.roaming.domain.Service"
+			fetch="join">
+			<column name="SERVICE_ID" precision="35" scale="0" />
+		</many-to-one>
+		<many-to-one name="operatorCountry" class="csv.roaming.domain.OperatorCountry"
+			fetch="join">
+			<column name="OPERATOR_COUNTRY_ID" precision="35" scale="0" />
+		</many-to-one>
+		<property name="price" type="java.lang.Double">
+			<column name="PRICE" precision="8" scale="6" />
+		</property>
+	</class>
+
+
+	<sql-query name="commercialReportQuery">
+		<return-scalar column="continentName" type="string" />
+		<return-scalar column="countryName" type="string" />
+		<return-scalar column="operatorName" type="string" />
+		<return-scalar column="networkCode" type="string" />
+		<return-scalar column="operatorCode" type="string" />
+		<return-scalar column="ccnc" type="string" />
+		<return-scalar column="utcTimeDiff" type="java.lang.Integer" />
+		<return-scalar column="utcEndTimeDiff" type="java.lang.Integer" />
+		<return-scalar column="gsmStatus" type="string" />
+		<return-scalar column="gprsStatus" type="string" />
+		<return-scalar column="threegStatus" type="string" />
+		<return-scalar column="camel12Status" type="string" />
+		<return-scalar column="camel3Status" type="string" />
+		<return-scalar column="mmsStatus" type="string" />
+		<return-scalar column="frequencies" type="string" />
+
+		SELECT CT.NAME AS continentName,
+		C.COUNTRY_NAME AS
+		countryName,
+		O.OPERATOR_NAME AS
+		operatorName,
+		O.NETWORK_CODE AS
+		networkCode,
+		O.OPERATOR_CODE AS
+		operatorCode,
+		O.CCNC AS ccnc,
+		C.UTC_TIME_DIFF AS
+		utcTimeDiff,
+		C.UTC_END_TIME_DIFF
+		AS utcEndTimeDiff,
+		(SELECT
+		AGS.DESCRIPTION
+		FROM
+		MAIN_AGREEMENT_SCHEDULE S, AGREEMENT_STATUS AGS
+		WHERE
+		S.OPERATOR_COUNTRY_ID = OC.OPERATOR_COUNTRY_ID
+		AND S.SCHEDULE_TYPE
+		= 1
+		AND S.STATUS = AGS.STATUS_ID)
+		AS gsmStatus,
+		(SELECT
+		AGS.DESCRIPTION
+		FROM MAIN_AGREEMENT_SCHEDULE S, AGREEMENT_STATUS AGS
+		WHERE
+		S.OPERATOR_COUNTRY_ID = OC.OPERATOR_COUNTRY_ID
+		AND
+		S.SCHEDULE_TYPE = 2
+		AND S.STATUS = AGS.STATUS_ID)
+		AS
+		gprsStatus,
+		(SELECT AGS.DESCRIPTION
+		FROM
+		MAIN_AGREEMENT_SCHEDULE S, AGREEMENT_STATUS AGS
+		WHERE
+		S.OPERATOR_COUNTRY_ID = OC.OPERATOR_COUNTRY_ID
+		AND S.SCHEDULE_TYPE = 3
+		AND S.STATUS = AGS.STATUS_ID)
+		AS threegStatus,
+		(SELECT AGS.DESCRIPTION
+		FROM MAIN_AGREEMENT_SCHEDULE S,
+		AGREEMENT_STATUS AGS
+		WHERE
+		S.OPERATOR_COUNTRY_ID =
+		OC.OPERATOR_COUNTRY_ID
+		AND S.SCHEDULE_TYPE = 4
+		AND S.STATUS =
+		AGS.STATUS_ID)
+		AS camel12Status,
+		(SELECT
+		AGS.DESCRIPTION
+		FROM MAIN_AGREEMENT_SCHEDULE S, AGREEMENT_STATUS AGS
+		WHERE
+		S.OPERATOR_COUNTRY_ID = OC.OPERATOR_COUNTRY_ID
+		AND
+		S.SCHEDULE_TYPE = 5
+		AND S.STATUS = AGS.STATUS_ID)
+		AS
+		camel3Status,
+		(SELECT AGS.DESCRIPTION
+		FROM
+		MAIN_AGREEMENT_SCHEDULE S, AGREEMENT_STATUS AGS
+		WHERE
+		S.OPERATOR_COUNTRY_ID = OC.OPERATOR_COUNTRY_ID
+		AND S.SCHEDULE_TYPE = 6
+		AND S.STATUS = AGS.STATUS_ID)
+		AS mmsStatus,
+		( SELECT
+		RTRIM (
+		XMLAGG (
+		XMLELEMENT (C, FREQUENCY || ',') ORDER BY
+		FREQUENCY).EXTRACT('//text()'),
+		',')
+		FROM
+		OPERATOR_FREQUENCY
+		GROUP BY
+		OPERATOR_COUNTRY_ID
+		HAVING
+		OPERATOR_COUNTRY_ID = OC.OPERATOR_COUNTRY_ID)
+		AS
+		frequencies
+		FROM
+		OPERATOR_COUNTRY OC,
+		OPERATOR O,
+		COUNTRY C,
+		CONTINENT CT
+		WHERE
+		OC.COUNTRY_ID = C.COUNTRY_ID
+		AND
+		OC.OPERATOR_ID = O.OPERATOR_ID
+		AND
+		C.CONTINENT_ID = CT.CONTINENT_ID
+		AND
+		OC.OPERATOR_COUNTRY_ID IN (SELECT
+		DISTINCT (OPERATOR_COUNTRY_ID)
+		FROM
+		MAIN_AGREEMENT_SCHEDULE
+		WHERE STATUS
+		IN (1, 2, 3))
+		AND (:continentId IS NULL OR CT.CONTINENT_ID =
+		:continentId)
+		AND (:countryId IS NULL OR C.COUNTRY_ID = :countryId)
+		ORDER BY 1, 2, 3
+	</sql-query>
+
+
+
+	<sql-query name="agreementKPIQuery">
+		<return-scalar column="status" type="string" />
+		<return-scalar column="gsm" type="int" />
+		<return-scalar column="gprs" type="int" />
+		<return-scalar column="mmsiw" type="int" />
+		<return-scalar column="camel" type="int" />
+		<return-scalar column="threeg" type="int" />
+		<return-scalar column="nrtrde" type="int" />
+		SELECT description AS status,
+		(SELECT COUNT ( * )
+		FROM
+		main_agreement_schedule
+		WHERE schedule_type = 1 AND status =
+		ags.status_id)
+		AS gsm,
+		(SELECT COUNT ( * )
+		FROM main_agreement_schedule
+		WHERE schedule_type = 2 AND status = ags.status_id)
+		AS gprs,
+		(SELECT
+		COUNT ( * )
+		FROM MAIN_AGREEMENT_SCHEDULE
+		WHERE schedule_type = 6 AND
+		status = ags.status_id)
+		AS mmsiw,
+		(SELECT COUNT ( * )
+		FROM
+		MAIN_AGREEMENT_SCHEDULE
+		WHERE (schedule_type = 4 OR schedule_type = 5)
+		AND status = ags.status_id)
+		AS camel,
+		(SELECT COUNT ( * )
+		FROM
+		MAIN_AGREEMENT_SCHEDULE
+		WHERE schedule_type = 3 AND status =
+		ags.status_id)
+		AS threeg,
+		(SELECT COUNT ( * )
+		FROM
+		MAIN_AGREEMENT_SCHEDULE
+		WHERE schedule_type = 5 AND status =
+		ags.status_id)
+		AS nrtrde
+		FROM agreement_status ags
+		UNION ALL
+		SELECT
+		'COUNTRY_COUNT' AS status,
+		(SELECT COUNT (DISTINCT oc.country_id)
+		FROM
+		main_agreement_schedule mas, operator_country oc
+		WHERE
+		mas.schedule_type = 1
+		AND mas.status IN (1, 2, 3)
+		AND
+		mas.operator_country_id = oc.operator_country_id)
+		AS gsm,
+		(SELECT COUNT
+		(DISTINCT oc.country_id)
+		FROM main_agreement_schedule mas,
+		operator_country oc
+		WHERE mas.schedule_type = 2
+		AND mas.status IN (1, 2,
+		3)
+		AND mas.operator_country_id = oc.operator_country_id)
+		AS gprs,
+		(SELECT COUNT (DISTINCT oc.country_id)
+		FROM MAIN_AGREEMENT_SCHEDULE
+		mas, operator_country oc
+		WHERE mas.schedule_type = 6
+		AND mas.status IN
+		(1, 2, 3)
+		AND mas.operator_country_id = oc.operator_country_id)
+		AS
+		mmsiw,
+		(SELECT COUNT (DISTINCT oc.country_id)
+		FROM
+		MAIN_AGREEMENT_SCHEDULE mas, operator_country oc
+		WHERE
+		(mas.schedule_type = 4 OR mas.schedule_type = 5)
+		AND mas.status IN (1,
+		2, 3)
+		AND mas.operator_country_id = oc.operator_country_id)
+		AS camel,
+		(SELECT COUNT (DISTINCT oc.country_id)
+		FROM MAIN_AGREEMENT_SCHEDULE
+		mas, operator_country oc
+		WHERE mas.schedule_type = 3
+		AND mas.status IN
+		(1, 2, 3)
+		AND mas.operator_country_id = oc.operator_country_id)
+		AS
+		threeg,
+		(SELECT COUNT (DISTINCT oc.country_id)
+		FROM
+		MAIN_AGREEMENT_SCHEDULE mas, operator_country oc
+		WHERE
+		mas.schedule_type = 5
+		AND mas.status IN (1, 2, 3)
+		AND
+		mas.operator_country_id = oc.operator_country_id)
+		AS nrtrde
+		FROM DUAL
+	</sql-query>
+
+	<sql-query name="transferTariffInsertStatement">
+		INSERT INTO TARIFF_CALCULATION_PARAMS
+		(TARIFF_CALC_PARAM_ID,
+		OPERATOR_COUNTRY_ID,
+		VALID_MONTH,
+		CURRENCY_EXCHANGE,
+		EXCHANGE,
+		MARKUP,
+		VAT,
+		CURRENCY_ID,
+		PACKET_DATA_MULTIPLIER,
+		GPRS_INIT_CHARGING_INTERVAL,
+		GPRS_ADDITIONAL_DESC,
+		VOICE_INIT_CHARGING_INTERVAL,
+		CALL_SETUP_CHARGE,
+		NATIONAL_VOICE_MO,
+		BACK_HOME_VOICE_MO,
+		ROW_VOICE_MO,
+		SATTELLITE_VOICE_MO,
+		VOICE_MT,
+		SMS_MO,
+		GPRS_IOT_UNIT,
+		ACTIVE,
+		PASSIVE_DATE,
+		MAIN_AGREEMENT_ID,
+		EXCHANGE_RATE,
+		WOM_CALL_SETUP_CHARGE,
+		WOM_NATIONAL_VOICEMO,
+		WOM_BACK_HOME_VOICEMO,
+		WOM_ROW_VOICEMO,
+		WOM_SATTELLITE_VOICEMO,
+		WOM_VOICE_MT,
+		WOM_SMSMO,
+		WOM_GPRS_IOT_UNIT,
+		WM_CALL_SETUP_CHARGE,
+		WM_NATIONAL_VOICEMO,
+		WM_BACK_HOME_VOICEMO,
+		WM_ROW_VOICEMO,
+		WM_SATTELLITE_VOICEMO,
+		WM_VOICE_MT,
+		WM_SMSMO,
+		WM_GPRS_IOT_UNIT)
+		(SELECT SEQ_ROAMING_ID.NEXTVAL,
+		T.OPERATOR_COUNTRY_ID,
+		TO_DATE (?, 'DD/MM/YYYY'),
+		T.CURRENCY_EXCHANGE,
+		T.EXCHANGE,
+		T.MARKUP,
+		T.VAT,
+		T.CURRENCY_ID,
+		T.PACKET_DATA_MULTIPLIER,
+		T.GPRS_INIT_CHARGING_INTERVAL,
+		T.GPRS_ADDITIONAL_DESC,
+		T.VOICE_INIT_CHARGING_INTERVAL,
+		T.CALL_SETUP_CHARGE,
+		T.NATIONAL_VOICE_MO,
+		T.BACK_HOME_VOICE_MO,
+		T.ROW_VOICE_MO,
+		T.SATTELLITE_VOICE_MO,
+		T.VOICE_MT,
+		T.SMS_MO,
+		T.GPRS_IOT_UNIT,
+		1,
+		NULL,
+		NULL,
+		T.EXCHANGE_RATE,
+		T.WOM_CALL_SETUP_CHARGE,
+		T.WOM_NATIONAL_VOICEMO,
+		T.WOM_BACK_HOME_VOICEMO,
+		T.WOM_ROW_VOICEMO,
+		T.WOM_SATTELLITE_VOICEMO,
+		T.WOM_VOICE_MT,
+		T.WOM_SMSMO,
+		T.WOM_GPRS_IOT_UNIT,
+		T.WM_CALL_SETUP_CHARGE,
+		T.WM_NATIONAL_VOICEMO,
+		T.WM_BACK_HOME_VOICEMO,
+		T.WM_ROW_VOICEMO,
+		T.WM_SATTELLITE_VOICEMO,
+		T.WM_VOICE_MT,
+		T.WM_SMSMO,
+		T.WM_GPRS_IOT_UNIT
+		FROM TARIFF_CALCULATION_PARAMS T
+		WHERE
+		TO_DATE(T.VALID_MONTH,'DD/MM/YYYY')
+		= TO_DATE (?, 'DD/MM/YYYY'))
+	</sql-query>
+
+
+</hibernate-mapping>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process-definition 
+	xmlns="urn:jbpm.org:jpdl-3.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:jbpm.org:jpdl-3.2 http://jbpm.org/xsd/jpdl-3.2.xsd"
+  	name="PrepaidToPostpaidMigration">
+  	
+	<swimlane name="shopResponsible">
+		<assignment actor-id="#{loggedInUser.username}"/>
+	</swimlane>
+
+	<start-state name="Request Migration">
+		<description>
+			Customer Initiates A Prepaid To Postpaid Migration Request
+		</description>
+		<transition to="Perform Risk Analysis"></transition>
+	</start-state>
+
+
+	<decision name="Passed Risk Analysis?">
+		<transition to="Rejected" name="No - to Rejected">
+			<description>
+				Customer did not pass risk analysis. Reject Request.
+			</description>
+			<condition expression="#{simMigrationState.passedRiskAnalysis == false}"></condition>
+		</transition>
+		<transition to="Delete From Prepaid Network" name="Yes - to Delete From Prepaid Network">
+			<condition expression="#{simMigrationState.passedRiskAnalysis == true}"></condition>
+		</transition>
+	</decision>
+
+	<task-node name="Perform Risk Analysis">
+		<task name="Asses Customer Risk">
+			<assignment pooled-actors="System Admins"></assignment>
+		</task>
+		<transition to="Passed Risk Analysis?"></transition>
+	</task-node>
+
+	<task-node name="Collect Payment For New Rate Plan">
+		<description>
+			Collect Payment From Customer For the New Rate Plan
+		</description>
+		<task name="Collect Payment">
+			<assignment pooled-actors="System Admins"></assignment>
+		</task>
+		<transition to="Create Service"></transition>
+	</task-node>
+
+	<task-node name="Create Contract">
+		<description>
+			Business Support Creates the Customer Contract
+		</description>
+		<task name="Create Postpaid Contract">
+			<assignment pooled-actors="System Admins"></assignment>
+		</task>
+		<transition to="Collect Payment For New Rate Plan"></transition>
+	</task-node>
+
+	<state name="Create Subscriber As Postpaid">
+		<description>
+			Provision Manager recreates the resources as a postpaid subscription
+		</description>
+		<transition to="Insert Fee Into BSCS"></transition>
+	</state>
+
+	<state name="Delete From Prepaid Network">
+		<description>
+			Provision Manager Deletes the subscriber from Prepaid network and migrates the resources to Postpaid on BSCS
+		</description>
+		<transition to="Create Contract"></transition>
+	</state>
+
+	<state name="Insert Fee Into BSCS">
+		<transition to="Finish"></transition>
+	</state>
+
+	<task-node name="Create Service">
+		<description>
+			Business Support Creates The Service Customer Asks For on BSCS
+		</description>
+		<task name="Create Service in BSCS">
+			<assignment pooled-actors="System Admins"></assignment>
+		</task>
+		<transition to="Create Subscriber As Postpaid"></transition>
+	</task-node>
+
+
+	<end-state name="Rejected"></end-state>
+
+	<end-state name="Finish"></end-state>
+
+
+</process-definition>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" 
+             version="1.0">
+             
+	<persistence-unit name="csvPU" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:csvds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="csv_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/csvEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="simRegPU" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:simregds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="simreg_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/simRegEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="dwsPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:dwsds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="dws_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/dwsEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="cdrlivePU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:cdrliveds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="cdrlive_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/cdrliveEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="bscsPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:bscsds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="bscs_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/bscsEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="dbxdbPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:dbxdbds</jta-data-source>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.ejb.cfgfile" value="dbxdb_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/dbxdbEntityManagerFactory"/>
+		</properties>
+	</persistence-unit>
+	<persistence-unit name="pmPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:pmds</jta-data-source>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.ejb.cfgfile" value="pm_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/pmEntityManagerFactory"/>
+		</properties>
+	</persistence-unit>
+	<persistence-unit name="loyaltyPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:loyaltyds</jta-data-source>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.ejb.cfgfile" value="loyalty_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/loyaltyEntityManagerFactory"/>
+		</properties>
+	</persistence-unit>
+	<persistence-unit name="drPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:drds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="dr_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/drEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="netmovelPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:netmovelds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="netmovel_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/netmovelEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="sgsn_statsPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:sgsn_statsds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="sgsn_stats_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/sgsnStatsEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="tomalaPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:tomalads</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="tomala_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/tomalaEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	
+	<persistence-unit name="jbpmPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/jbpmds</jta-data-source>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+         	<property name="hibernate.ejb.cfgfile" value="jbpm_hibernate.cfg.xml"/>
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/jbpmEntityManagerFactory" />
+      </properties>
+	</persistence-unit>       
+	
+	<persistence-unit name="roamingPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:/roamingds</jta-data-source>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+        	<property name="hibernate.ejb.cfgfile" value="roaming_hibernate.cfg.xml"/>
+        	<property name="jboss.entity.manager.factory.jndi.name" value="java:/roamingEntityManagerFactory"/>
+        </properties>
+	</persistence-unit>
+	<persistence-unit name="voucherdbPU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/voucherds</jta-data-source>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="hibernate.ejb.cfgfile" value="voucherdb_hibernate.cfg.xml"/>
+			<property name="jboss.entity.manager.factory.jndi.name" value="java:/voucherEntityManagerFactory"/>
+		</properties>
+	</persistence-unit>    
+</persistence>

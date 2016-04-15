@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<head>
+	<title>Tariff Params. Report</title>
+	</head>
+	<body>
+	<table rules="all" border="1">
+		<caption>
+		<h3>TARIFF PARAMS. REPORT</h3>
+		</caption>
+		<tbody>
+			<tr>
+				<th colspan="2"></th>
+			</tr>
+			<tr>
+				<th><h5> Gprs Initial Charging Interval</h5></th>
+				<th><h5> Gprs Additional Information</h5></th>
+				<th><h5> Voice Initial Charging Interval</h5></th>
+				<th><h5> Call Setup Charge</h5></th>
+				<th><h5> National Voice Mo</h5></th>
+				<th><h5> Back Home Voice Mo</h5></th>
+				<th><h5> Row Voice Mo</h5></th>
+				<th><h5> Sattelite Voice Mo</h5></th>
+				<th><h5> Voice Mt</h5></th>
+				<th><h5> Sms Mo</h5></th>
+				<th><h5> GPRS IOT Unit</h5></th>
+				<th><h5> Call Setup Charge</h5></th>
+				<th><h5> National Voice MO</h5></th>
+				<th><h5> Back Home Voice MO</h5></th>
+				<th><h5> Row Voice MO</h5></th>
+				<th><h5> Sattelite Voice MO</h5></th>
+				<th><h5> Voice Mt</h5></th>
+				<th><h5> Sms Mo</h5></th>
+				<th><h5> GPRS IOT Unit</h5></th>
+				<th><h5> Call Setup Charge</h5></th>
+				<th><h5> National Voice MO</h5></th>
+				<th><h5> Back Home Voice MO</h5></th>
+				<th><h5> Row Voice MO</h5></th>
+				<th><h5> Sattelite Voice MO</h5></th>
+				<th><h5> Voice Mt</h5></th>
+				<th><h5> Sms Mo</h5></th>
+				<th><h5> GPRS IOT Unit</h5></th>
+			</tr>
+			<c:forEach items="#{roamingReportingService.tariffCalculationParams}" var="params">
+				<tr>
+					<td><h:outputText value="#{params.operatorCountry.country.countryName}" /></td>
+					<td><h:outputText value="#{params.validMonth}" /></td>
+					<td><h:outputText value="#{params.exchangeRate}" /></td>
+					<td><h:outputText value="#{params.currencyExchange}" /></td>
+					<td><h:outputText value="#{params.exchange}" /></td>
+					<td><h:outputText value="#{params.markup}" /></td>
+					<td><h:outputText value="#{params.vat}" /></td>
+					<td><h:outputText value="#{params.currency.currencyShortCode}" /></td>
+					<td><h:outputText value="#{params.operatorCountry.operator.operatorName}" /></td>
+					<td><h:outputText value="#{params.operatorCountry.operator.networkCode}" /></td>
+					<td><h:outputText value="#{params.operatorCountry.operator.operatorCode}" /></td>
+					<td><h:outputText value="#{params.packetDataMultiplier}" /></td>
+					<td><h:outputText value="#{params.gprsInitChargingInterval}" /></td>
+					<td><h:outputText value="#{params.gprsAdditionalDesc}" /></td>
+					<td><h:outputText value="#{params.voiceInitChargingInterval}" /></td>
+					<td><h:outputText value="#{params.callSetupCharge}" /></td>
+					<td><h:outputText value="#{params.nationalVoiceMo}" /></td>
+					<td><h:outputText value="#{params.backHomeVoiceMo}" /></td>
+					<td><h:outputText value="#{params.rowVoiceMo}" /></td>
+					<td><h:outputText value="#{params.sattelliteVoiceMo}" /></td>
+					<td><h:outputText value="#{params.voiceMt}" /></td>
+					<td><h:outputText value="#{params.smsMo}" /></td>
+					<td><h:outputText value="#{params.gprsIotUnit}" /></td>
+					<td><h:outputText value="#{params.womCallSetupCharge}" /></td>
+					<td><h:outputText value="#{params.womNationalVoiceMo}" /></td>
+					<td><h:outputText value="#{params.womBackHomeVoiceMo}" /></td>
+					<td><h:outputText value="#{params.womRowVoiceMo}" /></td>
+					<td><h:outputText value="#{params.womSattelliteVoiceMo}" /></td>
+					<td><h:outputText value="#{params.womVoiceMt}" /></td>
+					<td><h:outputText value="#{params.womSmsMo}" /></td>
+					<td><h:outputText value="#{params.womGprsIotUnit}" /></td>
+					<td><h:outputText value="#{params.wmCallSetupCharge}" /></td>
+					<td><h:outputText value="#{params.wmNationalVoiceMo}" /></td>
+					<td><h:outputText value="#{params.wmBackHomeVoiceMo}" /></td>
+					<td><h:outputText value="#{params.wmRowVoiceMo}" /></td>
+					<td><h:outputText value="#{params.wmSattelliteVoiceMo}" /></td>
+					<td><h:outputText value="#{params.wmVoiceMt}" /></td>
+					<td><h:outputText value="#{params.wmSmsMo}" /></td>
+					<td><h:outputText value="#{params.wmGprsIotUnit}" /></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	</body>
+</ui:composition>

@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="roamingServiceSelectionRegion">
+		<rich:panel header="#{msg.roamingEditService}"
+			rendered="#{roamingServiceListAction.selectedRoamingService != null}">
+			<h:form id="frmEditRoamingService">
+				<h:panelGrid columns="3">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingServiceName}</ui:define>
+						<h:inputText
+							value="#{roamingServiceListAction.selectedRoamingService.roamingServiceName}"
+							required="true" />
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons"><h:commandButton
+					id="btnSaveRoamSrv" value="Save"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}"
+					action="#{roamingServiceListAction.saveRoamingService}" /> <h:commandButton
+					id="btnDeleteRoamSrv" value="Delete Service"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}"
+					action="#{roamingServiceListAction.deleteRoamingService}" /></div>
+			</h:form>
+		</rich:panel>
+
+		<rich:panel header="RoamingServices">
+			<h:form id="roamingServiceList">
+				<rich:dataTable id="tblRoamingServices"
+					value="#{roamingServiceListAction.roamingServiceList}" var="item"
+					rows="20">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.roamingServiceName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.roamingServiceName}" />
+						</rich:column>
+						<rich:column>
+							<a:commandButton
+								action="#{roamingServiceListAction.editRoamingService(item)}"
+								value="Edit" reRender="roamingServiceSelectionRegion" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblRoamingServices" maxPages="20"
+							boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+				<div class="actionButtons"><h:commandButton id="btnNewRoamSrv"
+					value="Create New Roaming Service"
+					action="#{roamingServiceListAction.newRoamingService}" /></div>
+			</h:form>
+		</rich:panel>
+	</h:panelGroup>
+</ui:composition>

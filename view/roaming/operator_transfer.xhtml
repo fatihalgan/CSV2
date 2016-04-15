@@ -1,0 +1,93 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>#{msg.roamingTransfer}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<h:panelGroup layout="vertical" id="roamOpRegTrSelRegion">
+			<h:form id="roamOpRegTr">
+				<rich:panel header="Operators">
+					<table>
+						<tr>
+							<td valign="top" rowspan="2"><rich:panel
+								header="Operator Region Search">
+								<h:panelGrid columns="2">
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingContinent}</ui:define>
+										<h:selectOneMenu id="opRegTrContinentSelOne"
+											value="#{operatorRegionTransferListAction.selectedContinent}">
+											<a:support event="onblur"
+												action="#{operatorRegionTransferListAction.findCountryList}"
+												ajaxSingle="true" reRender="opRegTrCountrySelOne" />
+											<s:selectItems
+												value="#{operatorRegionTransferListAction.continentList}"
+												var="cnt" label="#{cnt.name}" />
+											<f:converter converterId="roamingEntityConverter" />
+										</h:selectOneMenu>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingCountry}</ui:define>
+										<h:selectOneMenu id="opRegTrCountrySelOne"
+											value="#{operatorRegionTransferListAction.selectedCountry}">
+											<a:support event="onblur"
+												action="#{operatorRegionTransferListAction.findOperatorCountryList}"
+												ajaxSingle="true" reRender="opRegTrOpRegionSelOne" />
+											<s:selectItems
+												value="#{operatorRegionTransferListAction.countryList}"
+												var="country" label="#{country.countryName}" />
+											<f:converter converterId="roamingEntityConverter" />
+										</h:selectOneMenu>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingOperator}</ui:define>
+										<h:selectOneMenu id="opRegTrOpRegionSelOne"
+											value="#{operatorRegionTransferListAction.selectedOperatorCountry}">
+											<s:selectItems
+												value="#{operatorRegionTransferListAction.operatorCountryList}"
+												var="opReg" label="#{opReg.operator.operatorName}" />
+											<f:converter converterId="roamingEntityConverter" />
+										</h:selectOneMenu>
+									</s:decorate>
+								</h:panelGrid>
+								<div class="actionButtons"><h:commandButton id="btnSearch"
+									value="Search Details"
+									action="#{operatorRegionTransferListAction.searchMainAgreement}" /></div>
+							</rich:panel></td>
+						</tr>
+					</table>
+				</rich:panel>
+				<rich:panel header="Main Agreement Details">
+					<h:panelGrid columns="2">
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingCurrentMainAgreement}</ui:define>
+							<h:inputTextarea readonly="true"
+								value="#{operatorRegionTransferListAction.selectedOperatorCountry.mainAgreement.description}" />
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingNewMainAgreement}</ui:define>
+							<h:selectOneMenu id="opRegTrMainAgreementSelOne"
+								value="#{operatorRegionTransferListAction.newMainAgreement}">
+								<s:selectItems
+									value="#{operatorRegionTransferListAction.mainAgreementList}"
+									var="ma" label="#{ma.description}" />
+								<f:converter converterId="roamingEntityConverter" />
+							</h:selectOneMenu>
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons"><h:commandButton id="btnChange"
+						value="Update Main Agreement"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Transfer Save')}"
+						action="#{operatorRegionTransferListAction.updateMainAgreement}" /></div>
+				</rich:panel>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

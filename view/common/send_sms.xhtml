@@ -1,0 +1,64 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+				
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.menuSendSMS}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.menuSendSMS}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.addRecipient}</ui:define>
+							<h:inputText value="#{smsRecipient}" required="true" maxlength="9"/>
+						</s:decorate>
+					</h:panelGrid>
+					<h:panelGroup styleClass="actionButtons">
+						<h:commandButton value="#{msg.addRecipient}" action="#{drService.addSMSRecipient}" />
+						<h:commandButton value="#{msg.removeAllRecipients}" action="#{drService.removeAllRecipients}" immediate="true"
+							rendered="#{smsRecipientList != null and smsRecipientList.size != 0}"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:form>
+			<h:form>
+				<h:panelGrid columns="1" rendered="#{smsRecipientList != null and smsRecipientList.size != 0}">
+					<rich:dataGrid value="#{smsRecipientList}" var="item" columns="4" elements="40" first="0">
+						<f:facet name="header">
+							<h:outputText value="#{msg.recipientList}"/>
+						</f:facet>
+						<h:panelGrid columns="2">
+							<h:outputText value="#{item}" />
+							<h:commandButton action="#{drService.removeSMSRecipient(item)}" value="#{msg.removeRecipient}" />
+						</h:panelGrid>	
+					</rich:dataGrid>
+				</h:panelGrid>
+			</h:form>
+		</rich:panel>
+		<rich:panel header="#{msg.SMSContent}" rendered="#{smsRecipientList != null and smsRecipientList.size != 0}">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.SMSContent}</ui:define>
+						<h:inputTextarea value="#{smsContent}" required="true"/>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.reason}</ui:define>
+						<h:inputTextarea value="#{reason}" required="true"/>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton value="#{msg.menuSendSMS}" action="#{drService.sendSMS}" />
+				</div>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

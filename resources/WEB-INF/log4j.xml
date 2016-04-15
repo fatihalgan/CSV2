@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%d{dd/MM HH:mm:ss} %p - %C{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+    	<param name="File" value="${jboss.server.log.dir}/csv.log"/>
+    	<param name="MaxFileSize" value="10000KB"/>
+    	<param name="MaxBackupIndex" value="500"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%d{dd/MM HH:mm:ss} %p - %C{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+
+    <logger name="org.springframework">
+        <level value="ERROR"/>
+    </logger>
+    
+    <logger name="org.hibernate">
+        <level value="ERROR"/>
+    </logger>
+    
+    <logger name="org.hibernate.type">
+    	<level value="ERROR"/>
+    </logger>
+	
+    <logger name="csv">
+        <level value="DEBUG"/>
+    </logger>
+    
+    <logger name="org.jboss.seam">
+    	<level value="ERROR"/>
+    </logger>
+    
+    <logger name="org.jboss.seam.faces">
+    	<level value="INFO"></level>
+    </logger>
+    
+    <logger name="org.jbos.seam.conversation">
+    	<level value="INFO"/>
+    </logger>
+    
+    <logger name="javax.faces">
+    	<level value="INFO"></level>
+    </logger>
+    
+    <logger name="org.jboss.seam.bpm">
+    	<level value="INFO"/>
+    </logger>
+    
+    <logger name="org.jboss.seam.pageflow">
+    	<level value="INFO"/>
+    </logger>
+    
+    <logger name="org.jbpm">
+    	<level value="INFO"/>	
+    </logger>
+    <logger name="com.bridge">
+    	<level value="DEBUG"/>
+    </logger>
+    <logger name="org.apache.axis2">
+		<level value="INFO"/>
+	</logger>
+	<logger name="org.apache.rampart">
+		<level value="INFO"/>
+	</logger>	
+	<logger name="co.mcel.mz">
+		<level value="INFO"/>
+	</logger>
+	<logger name="org.jasig.cas">
+		<level value="INFO"/>
+	</logger>
+	<logger name="com.rim">
+		<level value="DEBUG"/>
+	</logger>
+	<root>
+        <level value="INFO"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</log4j:configuration>

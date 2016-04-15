@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file was auto-generated from WSDL -->
+<!-- by the Apache Axis2 version: 1.5.1  Built on : Oct 19, 2009 (10:59:00 EDT) -->
+<serviceGroup>
+    <service name="ReservedChargingService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="co.mcel.mz.reservedcharging.server.ReserveChargingServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">co.mcel.mz.reservedcharging.server.ReserveChargingServiceImpl</parameter>
+        <parameter name="useOriginalwsdl">false</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="cancelReservation" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/reserveCharging">
+            <actionMapping>http://co.mcel.mz/reserveCharging/cancelReservation</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/reserveCharging/ReservedChargingService/cancelReservationResponse</outputActionMapping>
+            <faultActionMapping faultName="f04">http://co.mcel.mz/reserveCharging/ReservedChargingService/cancelReservation/Fault/f04</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:cancelReservationCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/reserveCharging/ReservedChargingService/cancelReservation/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="InvalidReservationStatus">urn:cancelReservationInvalidReservationStatus</faultActionMapping>
+            <faultActionMapping faultName="f03">http://co.mcel.mz/reserveCharging/ReservedChargingService/cancelReservation/Fault/f03</faultActionMapping>
+            <faultActionMapping faultName="CSError">urn:cancelReservationCSError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/reserveCharging/ReservedChargingService/cancelReservation/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="TransactionNotFound">urn:cancelReservationTransactionNotFound</faultActionMapping>
+        </operation>
+        <operation name="directDebit" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/reserveCharging">
+            <actionMapping>http://co.mcel.mz/reserveCharging/directDebit</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/reserveCharging/ReservedChargingService/directDebitResponse</outputActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/reserveCharging/ReservedChargingService/directDebit/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:directDebitCSVSystemError</faultActionMapping>
+        </operation>
+        <operation name="refund" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/reserveCharging">
+            <actionMapping>http://co.mcel.mz/reserveCharging/refund</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/reserveCharging/ReservedChargingService/refundResponse</outputActionMapping>
+            <faultActionMapping faultName="f04">http://co.mcel.mz/reserveCharging/ReservedChargingService/refund/Fault/f04</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:refundCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/reserveCharging/ReservedChargingService/refund/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="InvalidReservationStatus">urn:refundInvalidReservationStatus</faultActionMapping>
+            <faultActionMapping faultName="f03">http://co.mcel.mz/reserveCharging/ReservedChargingService/refund/Fault/f03</faultActionMapping>
+            <faultActionMapping faultName="CSError">urn:refundCSError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/reserveCharging/ReservedChargingService/refund/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="TransactionNotFound">urn:refundTransactionNotFound</faultActionMapping>
+        </operation>
+        <operation name="reserveAmount" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/reserveCharging">
+            <actionMapping>http://co.mcel.mz/reserveCharging/reserveAmount</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/reserveCharging/ReservedChargingService/reserveAmountResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/reserveCharging/ReservedChargingService/reserveAmount/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:reserveAmountCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/reserveCharging/ReservedChargingService/reserveAmount/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="CSError">urn:reserveAmountCSError</faultActionMapping>
+        </operation>
+        <operation name="getAccountType" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/reserveCharging">
+            <actionMapping>http://co.mcel.mz/reserveCharging/getAccountType</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/reserveCharging/ReservedChargingService/getAccountTypeResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/reserveCharging/ReservedChargingService/getAccountType/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:getAccountTypeCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/reserveCharging/ReservedChargingService/getAccountType/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="CSError">urn:getAccountTypeCSError</faultActionMapping>
+        </operation>
+        <operation name="checkStatus" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/reserveCharging">
+            <actionMapping>http://co.mcel.mz/reserveCharging/checkStatus</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/reserveCharging/ReservedChargingService/checkStatusResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/reserveCharging/ReservedChargingService/checkStatus/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="TransactionNotFound">urn:checkStatusTransactionNotFound</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/reserveCharging/ReservedChargingService/checkStatus/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:checkStatusCSVSystemError</faultActionMapping>
+        </operation>
+        <operation name="debitAmount" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/reserveCharging">
+            <actionMapping>http://co.mcel.mz/reserveCharging/debitAmount</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/reserveCharging/ReservedChargingService/debitAmountResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/reserveCharging/ReservedChargingService/debitAmount/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="InvalidReservationStatus">urn:debitAmountInvalidReservationStatus</faultActionMapping>
+            <faultActionMapping faultName="f03">http://co.mcel.mz/reserveCharging/ReservedChargingService/debitAmount/Fault/f03</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:debitAmountCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/reserveCharging/ReservedChargingService/debitAmount/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="TransactionNotFound">urn:debitAmountTransactionNotFound</faultActionMapping>
+        </operation>
+        <wsp:Policy wsu:Id="reserveChargingSec" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-utility-1.0.xsd">
+			<wsp:ExactlyOne>
+				<wsp:All>
+					<sp:AsymmetricBinding>
+						<wsp:Policy>
+							<sp:InitiatorToken>
+								<wsp:Policy>
+									<sp:X509Token
+										sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+										<wsp:Policy>
+											<sp:RequireThumbprintReference />
+											<sp:WssX509V3Token10 />
+										</wsp:Policy>
+									</sp:X509Token>
+								</wsp:Policy>
+							</sp:InitiatorToken>
+							<sp:RecipientToken>
+								<wsp:Policy>
+									<sp:X509Token
+										sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+										<wsp:Policy>
+											<sp:RequireThumbprintReference />
+											<sp:WssX509V3Token10 />
+										</wsp:Policy>
+									</sp:X509Token>
+								</wsp:Policy>
+							</sp:RecipientToken>
+							<sp:AlgorithmSuite>
+								<wsp:Policy>
+									<sp:TripleDesRsa15 />
+								</wsp:Policy>
+							</sp:AlgorithmSuite>
+						</wsp:Policy>
+					</sp:AsymmetricBinding>
+					<sp:Wss10>
+						<wsp:Policy>
+							<sp:MustSupportRefKeyIdentifier />
+							<sp:MustSupportRefIssuerSerial />
+						</wsp:Policy>
+					</sp:Wss10>
+					<sp:SignedParts>
+						<sp:Body />
+					</sp:SignedParts>
+					<ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy">
+						<ramp:user>service</ramp:user>
+						<ramp:encryptionUser>client</ramp:encryptionUser>
+						<ramp:passwordCallbackClass>co.mcel.mz.bb4p.security.PasswordCallbackHandler</ramp:passwordCallbackClass>
+						<ramp:signatureCrypto>
+							<ramp:crypto provider="org.apache.ws.security.components.crypto.Merlin">
+								<ramp:property name="org.apache.ws.security.crypto.merlin.keystore.type">JKS</ramp:property>
+								<ramp:property name="org.apache.ws.security.crypto.merlin.file">c:/TUMKeystore/service.jks</ramp:property>
+								<ramp:property name="org.apache.ws.security.crypto.merlin.keystore.password">apache</ramp:property>
+							</ramp:crypto>
+						</ramp:signatureCrypto>
+					</ramp:RampartConfig>
+				</wsp:All>
+			</wsp:ExactlyOne>
+		</wsp:Policy>
+    </service>
+</serviceGroup>

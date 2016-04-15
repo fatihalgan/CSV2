@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<typedef name="ReservationStatusType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">co.mcel.mz.reservedcharging.model.ReservationStatus</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<class name="co.mcel.mz.bb4p.model.BB4PReservation" table="BB4P_RESERVATIONS">
+		<id name="id" column="ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string"/>
+		<property name="reservationDate" column="RESERVATION_DATE" type="timestamp"/>
+		<property name="processedDate" column="PROCESSED_DATE" type="timestamp"/>
+		<property name="amount" column="AMOUNT" type="float"/>
+		<property name="status" column="STATUS" type="ReservationStatusType"/>
+	</class>
+	<class name="co.mcel.mz.reservedcharging.model.ChargingReservation" table="CHARGING_RESERVATIONS">
+		<composite-id class="co.mcel.mz.reservedcharging.model.ChargingReservationPK" name="id">
+			<key-property name="id" type="string" column="ID"/>
+			<key-property name="requesterService" type="string" column="REQUESTER_SERVICE"/>
+		</composite-id>
+		<property name="msisdn" type="string" column="MSISDN"/>
+		<property name="reservationDate" type="timestamp" column="RESERVATION_DATE"/>
+		<property name="processedDate" type="timestamp" column="PROCESSED_DATE"/>
+		<property name="amount" type="float" column="AMOUNT"/>
+		<property name="status" column="STATUS" type="ReservationStatusType"/>
+		<property name="description" type="string" column="DESCRIPTION"/>
+	</class>
+	<class name="co.mcel.mz.reservedcharging.model.ReservedChargingMessage" table="BB4P_AUDIT">
+		<id name="id" column="ID">
+			<generator class="sequence">
+        		<param name="sequence">SEQ_BB4P_AUDIT</param>
+        	</generator>
+		</id>
+		<property name="appName" column="APP_NAME" type="string"/>
+		<property name="msisdn" column="MSISDN" type="string"/>
+		<property name="message" column="MESSAGE" type="string"/>
+		<property name="responseCode" column="RESPONSE_CODE" type="string"/>
+		<property name="timestamp" type="timestamp" column="DATEOF"/>
+	</class>
+	<class name="csv.common.domain.Province" table="PROVINCES">
+		<id name="id" column="ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="name" column="PROVINCE" type="string"/>
+		<set name="districts" inverse="true" lazy="false" fetch="join">
+			<key column="PROVINCE_ID"/>
+			<one-to-many class="csv.common.domain.District"/>
+		</set>
+	</class>
+	<class name="csv.common.domain.District" table="DISTRICTS">
+		<id name="id" column="ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="name" column="DISTRICT" type="string"/>
+		<many-to-one name="owningProvince" column="PROVINCE_ID" not-null="true"/>
+	</class>
+	<class name="csv.prepaid.domain.simreg.activation.AccountAdjustment" table="SIM_ACTIVATION_ADJUSTMENT">
+		<id name="accountId" column="ACCOUNT_ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="adjustmentAmount" column="ADJUSTMENT_AMOUNT" type="float" not-null="true"/>
+		<property name="expiryDays" column="EXPIRY_DAYS" type="integer" not-null="true"/>
+	</class>
+</hibernate-mapping>

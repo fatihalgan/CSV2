@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="#{msg.friendsAndFamilyStatus}" styleClass="sectionPanel" rendered="#{prepaidAccountService.account.fafInfo != null}">
+		<h:panelGrid columns="4" >
+			<f:facet name="caption">#{msg.nationalNumbers}</f:facet>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#1</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[0]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#2</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[1]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#3</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[2]}" />
+			</s:decorate>								
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#4</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[3]}" />
+			</s:decorate>																		
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#5</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[4]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#6</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[5]}" />
+			</s:decorate>						
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#7</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[6]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#8</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[7]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#9</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[8]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#10</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[9]}" />
+			</s:decorate>
+		</h:panelGrid>
+		<h:panelGrid columns="4">
+			<f:facet name="caption">#{msg.internationalNumbers}</f:facet>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#11</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[10]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#12</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[11]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#13</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[12]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#14</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[13]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#15</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[14]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#16</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[15]}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">FaF#17</ui:define>
+				<h:inputText value="#{prepaidAccountService.account.fafInfo.fafNumbers[16]}" disabled="true"/>
+			</s:decorate>																		
+		</h:panelGrid>
+		<div class="actionButtons">
+			<h:commandButton rendered="#{loggedInUser.hasPermissionFor('MINSAT Change Family and Friends Numbers')}" action="#{prepaidAccountService.updateFaFNumbers}" value="#{msg.modifyFaFNumbers}" />
+		</div>
+	</rich:panel>
+</ui:composition>

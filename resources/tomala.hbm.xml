@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="csv.common.domain">
+	<typedef name="TomalaResultType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.common.domain.TomalaResult</param>
+		<param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<class name="TomalaBlacklist" table="TOMALA_BLACKLIST">
+		<id name="msisdn" column="MSISDN">
+			<generator class="assigned"/>
+		</id>
+		<property name="customerId" column="CUSTOMER_ID" type="long"/>
+		<property name="custCode" column="CUSTCODE" type="string"/>
+		<property name="userName" column="USER_NAME" type="string"/>
+		<property name="date" column="USER_TIMESTAMP" type="timestamp"/>
+		<property name="reason" column="USER_COMMENT" type="string"/>
+	</class>
+	<class name="TomalaTransaction" table="TRANSACTIONS">
+		<id name="id" column="TRANSACTION_ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="sender" column="A_MSISDN" type="string"/>
+		<property name="receiver" column="B_MSISDN" type="string"/>
+		<property name="amount" column="AMOUNT" type="big_decimal"/>
+		<property name="result" column="ERROR_CODE" type="TomalaResultType"/>
+		<property name="date" column="CREATE_TIMESTAMP" type="timestamp"/>
+		<property name="smsContent" column="SMS_CONTENT" type="string"/>
+	</class>
+</hibernate-mapping>

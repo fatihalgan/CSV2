@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="CorporateComplaintManagement" width="1347" height="687">
+  <node name="EnterComplaint" x="145" y="3" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="AccountManager Attendance" x="95" y="194" width="232" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Resolved?" x="145" y="290" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-73" y="-18"/>
+      <bendpoint w1="332" h1="-1" w2="-57" h2="121"/>
+    </edge>
+  </node>
+  <node name="Get Customer Feedback" x="545" y="517" width="206" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Confirm Resolved?" x="583" y="384" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-223" h1="-1" w2="187" h2="-50"/>
+    </edge>
+  </node>
+  <node name="HD Resolved?" x="151" y="515" width="132" height="36">
+    <edge>
+      <label x="-113" y="-20"/>
+    </edge>
+    <edge>
+      <label x="-166" y="-28"/>
+    </edge>
+    <edge>
+      <label x="-87" y="-147"/>
+      <bendpoint w1="-379" h1="0" w2="0" h2="197"/>
+    </edge>
+    <edge>
+      <label x="-4" y="-12"/>
+    </edge>
+  </node>
+  <node name="HelpDesk Attendance" x="106" y="418" width="211" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Outbound Support Attendance" x="-108" y="623" width="208" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-122" h1="0" w2="-300" h2="160"/>
+      <bendpoint w1="-121" h1="-206" w2="-336" h2="-1"/>
+    </edge>
+  </node>
+  <node name="DepartmentLeader Feedback" x="-262" y="318" width="200" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Technical Department Complaint Management" x="199" y="650" width="293" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="178" h1="2" w2="244" h2="225"/>
+      <bendpoint w1="177" h1="-224" w2="243" h2="-1"/>
+    </edge>
+  </node>
+  <node name="Is Initiator Corporate Responsible?" x="85" y="90" width="251" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-240" h1="2" w2="-241" h2="-326"/>
+      <bendpoint w1="-240" h1="243" w2="-241" h2="-85"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Close Complaint" x="584" y="209" width="132" height="36"/>
+</root-container>

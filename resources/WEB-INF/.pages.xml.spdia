@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram model-entity="SeamPagesDiagram">
+ <item ID="*" NAME="*" PATH="*" SHAPE="24,17,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/main.xhtml" NAME="output" PATH="/main.xhtml"
+   TARGET="#xmain.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/users.xhtml" NAME="output1"
+   PATH="/sysadm/users.xhtml" TARGET="#xsysadm#xusers.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/groups.xhtml" NAME="output2"
+   PATH="/sysadm/groups.xhtml" TARGET="#xsysadm#xgroups.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/operations.xhtml" NAME="output3"
+   PATH="/sysadm/operations.xhtml" TARGET="#xsysadm#xoperations.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/modules.xhtml" NAME="output4"
+   PATH="/sysadm/modules.xhtml" TARGET="#xsysadm#xmodules.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/complaint_segments.xhtml" NAME="output5"
+   PATH="/sysadm/complaint_segments.xhtml"
+   TARGET="#xsysadm#xcomplaint_segments.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/prepaid/prepaid_enquiry.xhtml" NAME="output6"
+   PATH="/prepaid/prepaid_enquiry.xhtml"
+   TARGET="#xprepaid#xprepaid_enquiry.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output
+   ID="/prepaid/registration/new_registration/edit_subscription.xhtml"
+   NAME="output7"
+   PATH="/prepaid/registration/new_registration/edit_subscription.xhtml"
+   TARGET="#xprepaid#xregistration#xnew_registration#xedit_subscription.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/prepaid/registration/search_registration.xhtml"
+   NAME="output8" PATH="/prepaid/registration/search_registration.xhtml"
+   TARGET="#xprepaid#xregistration#xsearch_registration.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output
+   ID="/prepaid/registration/activation/remove_call_barring.xhtml"
+   NAME="output9"
+   PATH="/prepaid/registration/activation/remove_call_barring.xhtml"
+   TARGET="#xprepaid#xregistration#xactivation#xremove_call_barring.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/prepaid/voucher/voucher_status.xhtml" NAME="output10"
+   PATH="/prepaid/voucher/voucher_status.xhtml"
+   TARGET="#xprepaid#xvoucher#xvoucher_status.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/prepaid/netmovel/netmovel_prepago.xhtml" NAME="output11"
+   PATH="/prepaid/netmovel/netmovel_prepago.xhtml"
+   TARGET="#xprepaid#xnetmovel#xnetmovel_prepago.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/prepaid/netmovelduo/netmovel_duo.xhtml" NAME="output12"
+   PATH="/prepaid/netmovelduo/netmovel_duo.xhtml"
+   TARGET="#xprepaid#xnetmovelduo#xnetmovel_duo.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/prepaid/blackberry/blackberry_prepaid.xhtml"
+   NAME="output13" PATH="/prepaid/blackberry/blackberry_prepaid.xhtml"
+   TARGET="#xprepaid#xblackberry#xblackberry_prepaid.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/prepaid/sim/sim_swap.xhtml" NAME="output14"
+   PATH="/prepaid/sim/sim_swap.xhtml"
+   TARGET="#xprepaid#xsim#xsim_swap.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/prepaid/sim/migration/validate_card_info.xhtml"
+   NAME="output15"
+   PATH="/prepaid/sim/migration/validate_card_info.xhtml"
+   TARGET="#xprepaid#xsim#xmigration#xvalidate_card_info.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/imei_records.xhtml" NAME="output16"
+   PATH="/common/imei_records.xhtml"
+   TARGET="#xcommon#ximei_records.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/failed_calls.xhtml" NAME="output17"
+   PATH="/common/failed_calls.xhtml"
+   TARGET="#xcommon#xfailed_calls.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/puk_info.xhtml" NAME="output18"
+   PATH="/common/puk_info.xhtml" TARGET="#xcommon#xpuk_info.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/send_sms.xhtml" NAME="output19"
+   PATH="/common/send_sms.xhtml" TARGET="#xcommon#xsend_sms.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/tomala/tomala.xhtml" NAME="output20"
+   PATH="/common/tomala/tomala.xhtml"
+   TARGET="#xcommon#xtomala#xtomala.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/voicemail/voice_mail.xhtml" NAME="output21"
+   PATH="/common/voicemail/voice_mail.xhtml"
+   TARGET="#xcommon#xvoicemail#xvoice_mail.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/smsc/smsc_manage.xhtml" NAME="output22"
+   PATH="/common/smsc/smsc_manage.xhtml"
+   TARGET="#xcommon#xsmsc#xsmsc_manage.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/dds/dds_tariff.xhtml" NAME="output23"
+   PATH="/common/dds/dds_tariff.xhtml"
+   TARGET="#xcommon#xdds#xdds_tariff.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/common/ema/ema_status.xhtml" NAME="output24"
+   PATH="/common/ema/ema_status.xhtml"
+   TARGET="#xcommon#xema#xema_status.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/postpaid/invoice/invoice_view.xhtml" NAME="output25"
+   PATH="/postpaid/invoice/invoice_view.xhtml"
+   TARGET="#xpostpaid#xinvoice#xinvoice_view.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/postpaid/history/call_view.xhtml" NAME="output26"
+   PATH="/postpaid/history/call_view.xhtml"
+   TARGET="#xpostpaid#xhistory#xcall_view.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/postpaid/contracts/search_contract.xhtml" NAME="output27"
+   PATH="/postpaid/contracts/search_contract.xhtml"
+   TARGET="#xpostpaid#xcontracts#xsearch_contract.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/postpaid/contracts/account_overview.xhtml"
+   NAME="output28" PATH="/postpaid/contracts/account_overview.xhtml"
+   TARGET="#xpostpaid#xcontracts#xaccount_overview.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/corporate/my_corporate_clients.xhtml" NAME="output29"
+   PATH="/corporate/my_corporate_clients.xhtml"
+   TARGET="#xcorporate#xmy_corporate_clients.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/system/my_actions.xhtml" NAME="output30"
+   PATH="/system/my_actions.xhtml" TARGET="#xsystem#xmy_actions.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/system/change_password.xhtml" NAME="output31"
+   PATH="/system/change_password.xhtml"
+   TARGET="#xsystem#xchange_password.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/reports/user_audit.xhtml" NAME="output32"
+   PATH="/reports/user_audit.xhtml" TARGET="#xreports#xuser_audit.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/reports/daily_adjustments.xhtml" NAME="output33"
+   PATH="/reports/daily_adjustments.xhtml"
+   TARGET="#xreports#xdaily_adjustments.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/reports/daily_csv_usage.xhtml" NAME="output34"
+   PATH="/reports/daily_csv_usage.xhtml"
+   TARGET="#xreports#xdaily_csv_usage.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/reports/daily_ema_operations.xhtml" NAME="output35"
+   PATH="/reports/daily_ema_operations.xhtml"
+   TARGET="#xreports#xdaily_ema_operations.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/reports/postpaid_call_view.xhtml" NAME="output36"
+   PATH="/reports/postpaid_call_view.xhtml"
+   TARGET="#xreports#xpostpaid_call_view.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/reports/postpaid_invoice_view.xhtml" NAME="output37"
+   PATH="/reports/postpaid_invoice_view.xhtml"
+   TARGET="#xreports#xpostpaid_invoice_view.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/reports/operations_log.xhtml" NAME="output38"
+   PATH="/reports/operations_log.xhtml"
+   TARGET="#xreports#xoperations_log.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/reports/sms_log.xhtml" NAME="output39"
+   PATH="/reports/sms_log.xhtml" TARGET="#xreports#xsms_log.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/roam_parameters.xhtml" NAME="output40"
+   PATH="/roaming/roam_parameters.xhtml"
+   TARGET="#xroaming#xroam_parameters.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/operator.xhtml" NAME="output41"
+   PATH="/roaming/operator.xhtml" TARGET="#xroaming#xoperator.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/operator_region_details.xhtml" NAME="output42"
+   PATH="/roaming/operator_region_details.xhtml"
+   TARGET="#xroaming#xoperator_region_details.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/main_agreement.xhtml" NAME="output43"
+   PATH="/roaming/main_agreement.xhtml"
+   TARGET="#xroaming#xmain_agreement.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/main_agreement_schedule.xhtml" NAME="output44"
+   PATH="/roaming/main_agreement_schedule.xhtml"
+   TARGET="#xroaming#xmain_agreement_schedule.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/tariff_calculation.xhtml" NAME="output45"
+   PATH="/roaming/tariff_calculation.xhtml"
+   TARGET="#xroaming#xtariff_calculation.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/monthly_tariff_transfer.xhtml" NAME="output46"
+   PATH="/roaming/monthly_tariff_transfer.xhtml"
+   TARGET="#xroaming#xmonthly_tariff_transfer.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/roaming_test.xhtml" NAME="output47"
+   PATH="/roaming/roaming_test.xhtml"
+   TARGET="#xroaming#xroaming_test.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/roaming_service_tariffs.xhtml" NAME="output48"
+   PATH="/roaming/roaming_service_tariffs.xhtml"
+   TARGET="#xroaming#xroaming_service_tariffs.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/operator_transfer.xhtml" NAME="output49"
+   PATH="/roaming/operator_transfer.xhtml"
+   TARGET="#xroaming#xoperator_transfer.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/schedule_report.xhtml" NAME="output50"
+   PATH="/roaming/reports/schedule_report.xhtml"
+   TARGET="#xroaming#xreports#xschedule_report.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/calendar_reports.xhtml" NAME="output51"
+   PATH="/roaming/reports/calendar_reports.xhtml"
+   TARGET="#xroaming#xreports#xcalendar_reports.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/commercial_report.xhtml" NAME="output52"
+   PATH="/roaming/reports/commercial_report.xhtml"
+   TARGET="#xroaming#xreports#xcommercial_report.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/tariff_params_report.xhtml"
+   NAME="output53" PATH="/roaming/reports/tariff_params_report.xhtml"
+   TARGET="#xroaming#xreports#xtariff_params_report.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/tasks/my_current_task.xhtml" NAME="output54"
+   PATH="/tasks/my_current_task.xhtml"
+   TARGET="#xtasks#xmy_current_task.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/tasks/manage_open_tasks.xhtml" NAME="output55"
+   PATH="/tasks/manage_open_tasks.xhtml"
+   TARGET="#xtasks#xmanage_open_tasks.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/tasks/complaint_management/manage_open_complaints.xhtml"
+   NAME="output56"
+   PATH="/tasks/complaint_management/manage_open_complaints.xhtml"
+   TARGET="#xtasks#xcomplaint_management#xmanage_open_complaints.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/corporate/start_customer_session.xhtml" NAME="output57"
+   PATH="/corporate/start_customer_session.xhtml"
+   TARGET="#xcorporate#xstart_customer_session.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/loggedOut.xhtml" NAME="output58" PATH="/loggedOut.xhtml"
+   TARGET="#xloggedOut.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/start_customer_session.xhtml" NAME="output59"
+   PATH="/start_customer_session.xhtml"
+   TARGET="#xstart_customer_session.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/end_customer_session.xhtml" NAME="output60"
+   PATH="/end_customer_session.xhtml"
+   TARGET="#xend_customer_session.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output
+   ID="/tasks/complaint_management/end_complaint_attendance.xhtml"
+   NAME="output61"
+   PATH="/tasks/complaint_management/end_complaint_attendance.xhtml"
+   TARGET="#xtasks#xcomplaint_management#xend_complaint_attendance.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#loggedOut.xhtml" NAME="#xloggedOut.xhtml"
+  PATH="/loggedOut.xhtml" SHAPE="376,145,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#main.xhtml" NAME="#xmain.xhtml" PATH="/main.xhtml"
+  SHAPE="344,17,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#new_session.xhtml" NAME="#xnew_session.xhtml"
+  PATH="/new_session.xhtml" SHAPE="856,2529,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#tasks#complaint_management#start_complaint_attendance.xhtml"
+  NAME="#xtasks#xcomplaint_management#xstart_complaint_attendance.xhtml"
+  PATH="/tasks/complaint_management/start_complaint_attendance.xhtml"
+  SHAPE="856,17,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#tasks#complaint_management#end_complaint_attendance.xhtml"
+  NAME="#xtasks#xcomplaint_management#xend_complaint_attendance.xhtml"
+  PATH="/tasks/complaint_management/end_complaint_attendance.xhtml"
+  SHAPE="504,1417,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/main.xhtml" NAME="output" PATH="/main.xhtml"
+   TARGET="#xmain.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#start_customer_session.xhtml"
+  NAME="#xstart_customer_session.xhtml"
+  PATH="/start_customer_session.xhtml" SHAPE="472,1393,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/new_session.xhtml" NAME="output"
+   PATH="/new_session.xhtml" TARGET="#xnew_session.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#end_customer_session.xhtml"
+  NAME="#xend_customer_session.xhtml" PATH="/end_customer_session.xhtml"
+  SHAPE="472,2401,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/main.xhtml" NAME="output" PATH="/main.xhtml"
+   TARGET="#xmain.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/main.xhtml" NAME="output1" PATH="/main.xhtml"
+   TARGET="#xmain.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#sysadm#users.xhtml" NAME="#xsysadm#xusers.xhtml"
+  PATH="/sysadm/users.xhtml" SHAPE="408,273,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/sysadm/edit_user.xhtml" NAME="output"
+   PATH="/sysadm/edit_user.xhtml" TARGET="#xsysadm#xedit_user.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/edit_user.xhtml" NAME="output1"
+   PATH="/sysadm/edit_user.xhtml" TARGET="#xsysadm#xedit_user.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#sysadm#edit_user.xhtml" NAME="#xsysadm#xedit_user.xhtml"
+  PATH="/sysadm/edit_user.xhtml" SHAPE="760,297,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/sysadm/users.xhtml" NAME="output"
+   PATH="/sysadm/users.xhtml" TARGET="#xsysadm#xusers.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/users.xhtml" NAME="output1"
+   PATH="/sysadm/users.xhtml" TARGET="#xsysadm#xusers.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/users.xhtml" NAME="output2"
+   PATH="/sysadm/users.xhtml" TARGET="#xsysadm#xusers.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/users.xhtml" NAME="output3"
+   PATH="/sysadm/users.xhtml" TARGET="#xsysadm#xusers.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#sysadm#groups.xhtml" NAME="#xsysadm#xgroups.xhtml"
+  PATH="/sysadm/groups.xhtml" SHAPE="440,401,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/sysadm/edit_group.xhtml" NAME="output"
+   PATH="/sysadm/edit_group.xhtml" TARGET="#xsysadm#xedit_group.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/edit_group.xhtml" NAME="output1"
+   PATH="/sysadm/edit_group.xhtml" TARGET="#xsysadm#xedit_group.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#sysadm#edit_group.xhtml" NAME="#xsysadm#xedit_group.xhtml"
+  PATH="/sysadm/edit_group.xhtml" SHAPE="760,449,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/sysadm/groups.xhtml" NAME="output"
+   PATH="/sysadm/groups.xhtml" TARGET="#xsysadm#xgroups.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/groups.xhtml" NAME="output1"
+   PATH="/sysadm/groups.xhtml" TARGET="#xsysadm#xgroups.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#sysadm#operations.xhtml" NAME="#xsysadm#xoperations.xhtml"
+  PATH="/sysadm/operations.xhtml" SHAPE="472,577,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/sysadm/edit_operation.xhtml" NAME="output"
+   PATH="/sysadm/edit_operation.xhtml"
+   TARGET="#xsysadm#xedit_operation.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/edit_operation.xhtml" NAME="output1"
+   PATH="/sysadm/edit_operation.xhtml"
+   TARGET="#xsysadm#xedit_operation.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#sysadm#edit_operation.xhtml"
+  NAME="#xsysadm#xedit_operation.xhtml"
+  PATH="/sysadm/edit_operation.xhtml" SHAPE="792,705,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/sysadm/operations.xhtml" NAME="output"
+   PATH="/sysadm/operations.xhtml" TARGET="#xsysadm#xoperations.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/operations.xhtml" NAME="output1"
+   PATH="/sysadm/operations.xhtml" TARGET="#xsysadm#xoperations.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#sysadm#modules.xhtml" NAME="#xsysadm#xmodules.xhtml"
+  PATH="/sysadm/modules.xhtml" SHAPE="472,601,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#sysadm#complaint_segments.xhtml"
+  NAME="#xsysadm#xcomplaint_segments.xhtml"
+  PATH="/sysadm/complaint_segments.xhtml" SHAPE="472,1369,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/sysadm/edit_complaint_segment.xhtml" NAME="output"
+   PATH="/sysadm/edit_complaint_segment.xhtml"
+   TARGET="#xsysadm#xedit_complaint_segment.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/edit_complaint_segment.xhtml" NAME="output1"
+   PATH="/sysadm/edit_complaint_segment.xhtml"
+   TARGET="#xsysadm#xedit_complaint_segment.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#sysadm#edit_complaint_segment.xhtml"
+  NAME="#xsysadm#xedit_complaint_segment.xhtml"
+  PATH="/sysadm/edit_complaint_segment.xhtml" SHAPE="56,2377,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/sysadm/complaint_segments.xhtml" NAME="output"
+   PATH="/sysadm/complaint_segments.xhtml"
+   TARGET="#xsysadm#xcomplaint_segments.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sysadm/complaint_segments.xhtml" NAME="output1"
+   PATH="/sysadm/complaint_segments.xhtml"
+   TARGET="#xsysadm#xcomplaint_segments.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#prepaid#prepaid_enquiry.xhtml"
+  NAME="#xprepaid#xprepaid_enquiry.xhtml"
+  PATH="/prepaid/prepaid_enquiry.xhtml" SHAPE="24,1553,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#prepaid#voucher#voucher_status.xhtml"
+  NAME="#xprepaid#xvoucher#xvoucher_status.xhtml"
+  PATH="/prepaid/voucher/voucher_status.xhtml" SHAPE="472,745,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#prepaid#netmovel#netmovel_prepago.xhtml"
+  NAME="#xprepaid#xnetmovel#xnetmovel_prepago.xhtml"
+  PATH="/prepaid/netmovel/netmovel_prepago.xhtml" SHAPE="472,769,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#prepaid#blackberry#blackberry_prepaid.xhtml"
+  NAME="#xprepaid#xblackberry#xblackberry_prepaid.xhtml"
+  PATH="/prepaid/blackberry/blackberry_prepaid.xhtml"
+  SHAPE="472,913,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#prepaid#sim#sim_swap.xhtml"
+  NAME="#xprepaid#xsim#xsim_swap.xhtml"
+  PATH="/prepaid/sim/sim_swap.xhtml" SHAPE="472,1057,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#imei_records.xhtml"
+  NAME="#xcommon#ximei_records.xhtml" PATH="/common/imei_records.xhtml"
+  SHAPE="24,1577,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#failed_calls.xhtml"
+  NAME="#xcommon#xfailed_calls.xhtml" PATH="/common/failed_calls.xhtml"
+  SHAPE="472,721,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#puk_info.xhtml" NAME="#xcommon#xpuk_info.xhtml"
+  PATH="/common/puk_info.xhtml" SHAPE="24,1673,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#send_sms.xhtml" NAME="#xcommon#xsend_sms.xhtml"
+  PATH="/common/send_sms.xhtml" SHAPE="472,817,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#tomala#tomala.xhtml"
+  NAME="#xcommon#xtomala#xtomala.xhtml"
+  PATH="/common/tomala/tomala.xhtml" SHAPE="472,841,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#voicemail#voice_mail.xhtml"
+  NAME="#xcommon#xvoicemail#xvoice_mail.xhtml"
+  PATH="/common/voicemail/voice_mail.xhtml" SHAPE="472,865,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#smsc#smsc_manage.xhtml"
+  NAME="#xcommon#xsmsc#xsmsc_manage.xhtml"
+  PATH="/common/smsc/smsc_manage.xhtml" SHAPE="472,1081,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#dds#dds_tariff.xhtml"
+  NAME="#xcommon#xdds#xdds_tariff.xhtml"
+  PATH="/common/dds/dds_tariff.xhtml" SHAPE="472,889,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#common#ema#ema_status.xhtml"
+  NAME="#xcommon#xema#xema_status.xhtml"
+  PATH="/common/ema/ema_status.xhtml" SHAPE="472,937,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#postpaid#invoice#invoice_view.xhtml"
+  NAME="#xpostpaid#xinvoice#xinvoice_view.xhtml"
+  PATH="/postpaid/invoice/invoice_view.xhtml" SHAPE="472,961,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#postpaid#history#call_view.xhtml"
+  NAME="#xpostpaid#xhistory#xcall_view.xhtml"
+  PATH="/postpaid/history/call_view.xhtml" SHAPE="472,985,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#postpaid#contracts#search_contract.xhtml"
+  NAME="#xpostpaid#xcontracts#xsearch_contract.xhtml"
+  PATH="/postpaid/contracts/search_contract.xhtml" SHAPE="472,1033,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/postpaid/contracts/postpaid_account_view.xhtml"
+   NAME="output" PATH="/postpaid/contracts/postpaid_account_view.xhtml"
+   TARGET="#xpostpaid#xcontracts#xpostpaid_account_view.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#postpaid#contracts#postpaid_account_view.xhtml"
+  NAME="#xpostpaid#xcontracts#xpostpaid_account_view.xhtml"
+  PATH="/postpaid/contracts/postpaid_account_view.xhtml"
+  SHAPE="824,1753,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/postpaid/contracts/contract_overview.xhtml" NAME="output"
+   PATH="/postpaid/contracts/contract_overview.xhtml"
+   TARGET="#xpostpaid#xcontracts#xcontract_overview.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/postpaid/contracts/contract_history.xhtml" NAME="output1"
+   PATH="/postpaid/contracts/contract_history.xhtml"
+   TARGET="#xpostpaid#xcontracts#xcontract_history.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/postpaid/contracts/payment_arrangement.xhtml"
+   NAME="output2" PATH="/postpaid/contracts/payment_arrangement.xhtml"
+   TARGET="#xpostpaid#xcontracts#xpayment_arrangement.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/postpaid/contracts/promotions.xhtml" NAME="output3"
+   PATH="/postpaid/contracts/promotions.xhtml"
+   TARGET="#xpostpaid#xcontracts#xpromotions.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/postpaid/contracts/memos.xhtml" NAME="output4"
+   PATH="/postpaid/contracts/memos.xhtml"
+   TARGET="#xpostpaid#xcontracts#xmemos.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#postpaid#contracts#payment_arrangement.xhtml"
+  NAME="#xpostpaid#xcontracts#xpayment_arrangement.xhtml"
+  PATH="/postpaid/contracts/payment_arrangement.xhtml"
+  SHAPE="1208,2353,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#postpaid#contracts#financial_overview.xhtml"
+  NAME="#xpostpaid#xcontracts#xfinancial_overview.xhtml"
+  PATH="/postpaid/contracts/financial_overview.xhtml"
+  SHAPE="1240,2353,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#postpaid#contracts#contract_overview.xhtml"
+  NAME="#xpostpaid#xcontracts#xcontract_overview.xhtml"
+  PATH="/postpaid/contracts/contract_overview.xhtml"
+  SHAPE="824,1625,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#postpaid#contracts#promotions.xhtml"
+  NAME="#xpostpaid#xcontracts#xpromotions.xhtml"
+  PATH="/postpaid/contracts/promotions.xhtml" SHAPE="1240,2353,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#postpaid#contracts#memos.xhtml"
+  NAME="#xpostpaid#xcontracts#xmemos.xhtml"
+  PATH="/postpaid/contracts/memos.xhtml" SHAPE="1272,2353,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#reports#user_audit.xhtml" NAME="#xreports#xuser_audit.xhtml"
+  PATH="/reports/user_audit.xhtml" SHAPE="472,1153,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#reports#daily_adjustments.xhtml"
+  NAME="#xreports#xdaily_adjustments.xhtml"
+  PATH="/reports/daily_adjustments.xhtml" SHAPE="472,1177,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/reports/daily_adjustment_result.xhtml" NAME="output"
+   PATH="/reports/daily_adjustment_result.xhtml"
+   TARGET="#xreports#xdaily_adjustment_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#reports#daily_csv_usage.xhtml"
+  NAME="#xreports#xdaily_csv_usage.xhtml"
+  PATH="/reports/daily_csv_usage.xhtml" SHAPE="472,1201,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/reports/daily_csv_usage_result.xhtml" NAME="output"
+   PATH="/reports/daily_csv_usage_result.xhtml"
+   TARGET="#xreports#xdaily_csv_usage_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#reports#daily_ema_operations.xhtml"
+  NAME="#xreports#xdaily_ema_operations.xhtml"
+  PATH="/reports/daily_ema_operations.xhtml" SHAPE="472,1225,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/reports/daily_ema_operations_result.xhtml" NAME="output"
+   PATH="/reports/daily_ema_operations_result.xhtml"
+   TARGET="#xreports#xdaily_ema_operations_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#reports#postpaid_call_view.xhtml"
+  NAME="#xreports#xpostpaid_call_view.xhtml"
+  PATH="/reports/postpaid_call_view.xhtml" SHAPE="472,1249,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/reports/postpaid_call_view_result.xhtml" NAME="output"
+   PATH="/reports/postpaid_call_view_result.xhtml"
+   TARGET="#xreports#xpostpaid_call_view_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#reports#postpaid_invoice_view.xhtml"
+  NAME="#xreports#xpostpaid_invoice_view.xhtml"
+  PATH="/reports/postpaid_invoice_view.xhtml" SHAPE="472,1273,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/reports/postpaid_invoice_view_result.xhtml" NAME="output"
+   PATH="/reports/postpaid_invoice_view_result.xhtml"
+   TARGET="#xreports#xpostpaid_invoice_view_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#reports#operations_log.xhtml"
+  NAME="#xreports#xoperations_log.xhtml"
+  PATH="/reports/operations_log.xhtml" SHAPE="472,1297,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#reports#sms_log.xhtml" NAME="#xreports#xsms_log.xhtml"
+  PATH="/reports/sms_log.xhtml" SHAPE="472,1321,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#roam_parameters.xhtml"
+  NAME="#xroaming#xroam_parameters.xhtml"
+  PATH="/roaming/roam_parameters.xhtml" SHAPE="504,1585,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#operator_region_details.xhtml"
+  NAME="#xroaming#xoperator_region_details.xhtml"
+  PATH="/roaming/operator_region_details.xhtml" SHAPE="504,1705,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#operator.xhtml" NAME="#xroaming#xoperator.xhtml"
+  PATH="/roaming/operator.xhtml" SHAPE="504,2721,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#main_agreement.xhtml"
+  NAME="#xroaming#xmain_agreement.xhtml"
+  PATH="/roaming/main_agreement.xhtml" SHAPE="504,2825,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#operator_service.xhtml"
+  NAME="#xroaming#xoperator_service.xhtml"
+  PATH="/roaming/operator_service.xhtml" SHAPE="504,2929,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#main_agreement_schedule.xhtml"
+  NAME="#xroaming#xmain_agreement_schedule.xhtml"
+  PATH="/roaming/main_agreement_schedule.xhtml" SHAPE="504,3129,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#tariff_calculation.xhtml"
+  NAME="#xroaming#xtariff_calculation.xhtml"
+  PATH="/roaming/tariff_calculation.xhtml" SHAPE="504,3233,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#operator_transfer.xhtml"
+  NAME="#xroaming#xoperator_transfer.xhtml"
+  PATH="/roaming/operator_transfer.xhtml" SHAPE="504,3049,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#reports#schedule_report.xhtml"
+  NAME="#xroaming#xreports#xschedule_report.xhtml"
+  PATH="/roaming/reports/schedule_report.xhtml" SHAPE="504,3249,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/roaming/reports/schedule_gsm_result.xhtml" NAME="output"
+   PATH="/roaming/reports/schedule_gsm_result.xhtml"
+   TARGET="#xroaming#xreports#xschedule_gsm_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/schedule_gprs_result.xhtml"
+   NAME="output1" PATH="/roaming/reports/schedule_gprs_result.xhtml"
+   TARGET="#xroaming#xreports#xschedule_gprs_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/schedule_threeg_result.xhtml"
+   NAME="output2" PATH="/roaming/reports/schedule_threeg_result.xhtml"
+   TARGET="#xroaming#xreports#xschedule_threeg_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/schedule_camel12_result.xhtml"
+   NAME="output3" PATH="/roaming/reports/schedule_camel12_result.xhtml"
+   TARGET="#xroaming#xreports#xschedule_camel12_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/schedule_camel3_result.xhtml"
+   NAME="output4" PATH="/roaming/reports/schedule_camel3_result.xhtml"
+   TARGET="#xroaming#xreports#xschedule_camel3_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/schedule_mmsi_result.xhtml"
+   NAME="output5" PATH="/roaming/reports/schedule_mmsi_result.xhtml"
+   TARGET="#xroaming#xreports#xschedule_mmsi_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/schedule_all_result.xhtml" NAME="output6"
+   PATH="/roaming/reports/schedule_all_result.xhtml"
+   TARGET="#xroaming#xreports#xschedule_all_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#roaming#reports#calendar_reports.xhtml"
+  NAME="#xroaming#xreports#xcalendar_reports.xhtml"
+  PATH="/roaming/reports/calendar_reports.xhtml" SHAPE="504,1753,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/roaming/reports/impl_cal_result.xhtml" NAME="output"
+   PATH="/roaming/reports/impl_cal_result.xhtml"
+   TARGET="#xroaming#xreports#ximpl_cal_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/impl_cal_kpi_result.xhtml" NAME="output1"
+   PATH="/roaming/reports/impl_cal_kpi_result.xhtml"
+   TARGET="#xroaming#xreports#ximpl_cal_kpi_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/negotiation_cal_result.xhtml"
+   NAME="output2" PATH="/roaming/reports/negotiation_cal_result.xhtml"
+   TARGET="#xroaming#xreports#xnegotiation_cal_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/negotiation_cal_kpi_result.xhtml"
+   NAME="output3"
+   PATH="/roaming/reports/negotiation_cal_kpi_result.xhtml"
+   TARGET="#xroaming#xreports#xnegotiation_cal_kpi_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/comm_cal_kpi_result.xhtml" NAME="output4"
+   PATH="/roaming/reports/comm_cal_kpi_result.xhtml"
+   TARGET="#xroaming#xreports#xcomm_cal_kpi_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#roaming#roaming_service_tariffs.xhtml"
+  NAME="#xroaming#xroaming_service_tariffs.xhtml"
+  PATH="/roaming/roaming_service_tariffs.xhtml" SHAPE="504,1729,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="org.jboss.seam.security.AuthorizationException"
+  NAME="exception:org.jboss.seam.security.AuthorizationException"
+  PATH="org.jboss.seam.security.AuthorizationException"
+  SHAPE="24,1009,0,0" TYPE="exception" model-entity="SeamPagesDiagramItem">
+  <output ID="/notAuthorized.xhtml" NAME="output"
+   PATH="/notAuthorized.xhtml" TARGET="#xnotAuthorized.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="javax.faces.application.ViewExpiredException"
+  NAME="exception:javax.faces.application.ViewExpiredException"
+  PATH="javax.faces.application.ViewExpiredException"
+  SHAPE="24,1937,0,0" TYPE="exception" model-entity="SeamPagesDiagramItem">
+  <output ID="/loggedOut.xhtml" NAME="output" PATH="/loggedOut.xhtml"
+   TARGET="#xloggedOut.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="org.jboss.seam.security.NotLoggedInException"
+  NAME="exception:org.jboss.seam.security.NotLoggedInException"
+  PATH="org.jboss.seam.security.NotLoggedInException"
+  SHAPE="24,2297,0,0" TYPE="exception" model-entity="SeamPagesDiagramItem">
+  <output ID="/login_error.xhtml" NAME="output"
+   PATH="/login_error.xhtml" TARGET="#xlogin_error.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item NAME="#xreports#xpostpaid_invoice_view_result.xhtml"
+  PATH="/reports/postpaid_invoice_view_result.xhtml"
+  SHAPE="824,1401,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xsystem#xchange_password.xhtml"
+  PATH="/system/change_password.xhtml" SHAPE="472,1129,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xpostpaid#xcontracts#xcontract_history.xhtml"
+  PATH="/postpaid/contracts/contract_history.xhtml"
+  SHAPE="1208,2353,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xschedule_threeg_result.xhtml"
+  PATH="/roaming/reports/schedule_threeg_result.xhtml"
+  SHAPE="952,4673,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xreports#xdaily_adjustment_result.xhtml"
+  PATH="/reports/daily_adjustment_result.xhtml" SHAPE="824,1977,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xtasks#xmanage_open_tasks.xhtml"
+  PATH="/tasks/manage_open_tasks.xhtml" SHAPE="504,1633,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xnegotiation_cal_result.xhtml"
+  PATH="/roaming/reports/negotiation_cal_result.xhtml"
+  SHAPE="952,2209,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xnotAuthorized.xhtml" PATH="/notAuthorized.xhtml"
+  SHAPE="344,1217,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xschedule_camel3_result.xhtml"
+  PATH="/roaming/reports/schedule_camel3_result.xhtml"
+  SHAPE="952,4569,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xtasks#xmy_current_task.xhtml"
+  PATH="/tasks/my_current_task.xhtml" SHAPE="504,1609,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xschedule_camel12_result.xhtml"
+  PATH="/roaming/reports/schedule_camel12_result.xhtml"
+  SHAPE="952,5105,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xreports#xdaily_csv_usage_result.xhtml"
+  PATH="/reports/daily_csv_usage_result.xhtml" SHAPE="824,2001,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xpostpaid#xcontracts#xaccount_overview.xhtml"
+  PATH="/postpaid/contracts/account_overview.xhtml" SHAPE="472,1009,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xroaming_test.xhtml"
+  PATH="/roaming/roaming_test.xhtml" SHAPE="504,2841,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#ximpl_cal_result.xhtml"
+  PATH="/roaming/reports/impl_cal_result.xhtml" SHAPE="952,1953,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xcomm_cal_kpi_result.xhtml"
+  PATH="/roaming/reports/comm_cal_kpi_result.xhtml" SHAPE="952,2313,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xsystem#xmy_actions.xhtml" PATH="/system/my_actions.xhtml"
+  SHAPE="472,1105,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xschedule_all_result.xhtml"
+  PATH="/roaming/reports/schedule_all_result.xhtml" SHAPE="952,5121,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xreports#xpostpaid_call_view_result.xhtml"
+  PATH="/reports/postpaid_call_view_result.xhtml" SHAPE="824,2153,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xschedule_gsm_result.xhtml"
+  PATH="/roaming/reports/schedule_gsm_result.xhtml" SHAPE="856,3249,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xnegotiation_cal_kpi_result.xhtml"
+  PATH="/roaming/reports/negotiation_cal_kpi_result.xhtml"
+  SHAPE="952,1345,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xschedule_mmsi_result.xhtml"
+  PATH="/roaming/reports/schedule_mmsi_result.xhtml"
+  SHAPE="952,5209,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#ximpl_cal_kpi_result.xhtml"
+  PATH="/roaming/reports/impl_cal_kpi_result.xhtml" SHAPE="952,1625,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xschedule_gprs_result.xhtml"
+  PATH="/roaming/reports/schedule_gprs_result.xhtml"
+  SHAPE="952,5001,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xreports#xdaily_ema_operations_result.xhtml"
+  PATH="/reports/daily_ema_operations_result.xhtml" SHAPE="824,2025,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xlogin_error.xhtml" PATH="/login_error.xhtml"
+  SHAPE="344,3433,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#prepaid#registration#search_registration.xhtml"
+  NAME="#xprepaid#xregistration#xsearch_registration.xhtml"
+  PATH="/prepaid/registration/search_registration.xhtml"
+  SHAPE="504,1777,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#roaming#reports#commercial_report.xhtml"
+  NAME="#xroaming#xreports#xcommercial_report.xhtml"
+  PATH="/roaming/reports/commercial_report.xhtml" SHAPE="504,1825,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/roaming/reports/commercial_report_result.xhtml"
+   NAME="output" PATH="/roaming/reports/commercial_report_result.xhtml"
+   TARGET="#xroaming#xreports#xcommercial_report_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/roaming/reports/commercial_kpi_result.xhtml"
+   NAME="output1" PATH="/roaming/reports/commercial_kpi_result.xhtml"
+   TARGET="#xroaming#xreports#xcommercial_kpi_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#roaming#reports#tariff_params_report.xhtml"
+  NAME="#xroaming#xreports#xtariff_params_report.xhtml"
+  PATH="/roaming/reports/tariff_params_report.xhtml"
+  SHAPE="504,2961,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/roaming/reports/tariff_params_result.xhtml" NAME="output"
+   PATH="/roaming/reports/tariff_params_result.xhtml"
+   TARGET="#xroaming#xreports#xtariff_params_result.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item NAME="#xroaming#xreports#xcommercial_report_result.xhtml"
+  PATH="/roaming/reports/commercial_report_result.xhtml"
+  SHAPE="952,1953,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xcommercial_kpi_result.xhtml"
+  PATH="/roaming/reports/commercial_kpi_result.xhtml"
+  SHAPE="952,1697,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xroaming#xreports#xtariff_params_result.xhtml"
+  PATH="/roaming/reports/tariff_params_result.xhtml"
+  SHAPE="952,2961,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="csv.common.domain.CustomerSessionExpiredException"
+  NAME="exception:csv.common.domain.CustomerSessionExpiredException"
+  PATH="csv.common.domain.CustomerSessionExpiredException"
+  SHAPE="24,5353,0,0" TYPE="exception" model-entity="SeamPagesDiagramItem">
+  <output ID="/main.xhtml" NAME="output" PATH="/main.xhtml"
+   TARGET="#xmain.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item NAME="#xroaming#xmonthly_tariff_transfer.xhtml"
+  PATH="/roaming/monthly_tariff_transfer.xhtml" SHAPE="504,1849,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#prepaid#registration#activation#remove_call_barring.xhtml"
+  NAME="#xprepaid#xregistration#xactivation#xremove_call_barring.xhtml"
+  PATH="/prepaid/registration/activation/remove_call_barring.xhtml"
+  SHAPE="504,1873,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#corporate#my_corporate_clients.xhtml"
+  NAME="#xcorporate#xmy_corporate_clients.xhtml"
+  PATH="/corporate/my_corporate_clients.xhtml" SHAPE="504,1921,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/corporate/edit_corporate_client.xhtml" NAME="output"
+   PATH="/corporate/edit_corporate_client.xhtml"
+   TARGET="#xcorporate#xedit_corporate_client.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/corporate/edit_corporate_client.xhtml" NAME="output1"
+   PATH="/corporate/edit_corporate_client.xhtml"
+   TARGET="#xcorporate#xedit_corporate_client.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#corporate#edit_corporate_client.xhtml"
+  NAME="#xcorporate#xedit_corporate_client.xhtml"
+  PATH="/corporate/edit_corporate_client.xhtml" SHAPE="24,5449,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/corporate/my_corporate_clients.xhtml" NAME="output"
+   PATH="/corporate/my_corporate_clients.xhtml"
+   TARGET="#xcorporate#xmy_corporate_clients.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/corporate/my_corporate_clients.xhtml" NAME="output1"
+   PATH="/corporate/my_corporate_clients.xhtml"
+   TARGET="#xcorporate#xmy_corporate_clients.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#corporate#start_customer_session.xhtml"
+  NAME="#xcorporate#xstart_customer_session.xhtml"
+  PATH="/corporate/start_customer_session.xhtml" SHAPE="504,1921,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/new_session.xhtml" NAME="output"
+   PATH="/new_session.xhtml" TARGET="#xnew_session.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/main.xhtml" NAME="output1" PATH="/main.xhtml"
+   TARGET="#xmain.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#corporate#edit_complaint_owner_company.xhtml"
+  NAME="#xcorporate#xedit_complaint_owner_company.xhtml"
+  PATH="/corporate/edit_complaint_owner_company.xhtml"
+  SHAPE="24,5473,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/corporate/start_customer_session.xhtml" NAME="output"
+   PATH="/corporate/start_customer_session.xhtml"
+   TARGET="#xcorporate#xstart_customer_session.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item
+  NAME="#xtasks#xcomplaint_management#xmanage_open_complaints.xhtml"
+  PATH="/tasks/complaint_management/manage_open_complaints.xhtml"
+  SHAPE="504,1921,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#prepaid#sim#migration#validate_card_info.xhtml"
+  NAME="#xprepaid#xsim#xmigration#xvalidate_card_info.xhtml"
+  PATH="/prepaid/sim/migration/validate_card_info.xhtml"
+  SHAPE="504,1945,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item
+  ID="#prepaid#registration#new_registration#edit_subscription.xhtml"
+  NAME="#xprepaid#xregistration#xnew_registration#xedit_subscription.xhtml"
+  PATH="/prepaid/registration/new_registration/edit_subscription.xhtml"
+  SHAPE="504,1969,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#prepaid#netmovelduo#netmovel_duo.xhtml"
+  NAME="#xprepaid#xnetmovelduo#xnetmovel_duo.xhtml"
+  PATH="/prepaid/netmovelduo/netmovel_duo.xhtml" SHAPE="504,1993,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
+</diagram>

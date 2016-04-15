@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.menuPrepaidSimSwap}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.subscriberNumber}" styleClass="sectionPanel">
+			<h:panelGrid columns="2">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.msisdn}</ui:define>
+					<h:outputText value="#{currentServedCustomer.msisdn}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.name}</ui:define>
+					<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.name}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.surname}</ui:define>
+					<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.surname}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.idDocType}</ui:define>
+					<h:selectOneMenu value="#{prepaidCustomerService.currentSubscription.registeredTo.identityDocument.documentType}" readonly="true">
+						<s:convertEnum />
+						<s:selectItems value="#{allIdentityDocTypes}" var="doc" label="#{doc.label}"/>
+					</h:selectOneMenu>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.idDocNumber}</ui:define>
+					<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.identityDocument.documentNo}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml" rendered="#{SIMSwapService.swapInfo != null}">
+					<ui:define name="label">#{msg.currentImsi}</ui:define>
+					<h:outputText value="#{SIMSwapService.swapInfo.currentImsi}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml" rendered="#{SIMSwapService.swapInfo != null}">
+					<ui:define name="label">#{msg.currentSim}</ui:define>
+					<h:outputText value="#{SIMSwapService.swapInfo.currentSim}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml" rendered="#{SIMSwapService.swapInfo != null}">
+					<ui:define name="label">#{msg.currentCardProfile}</ui:define>
+					<h:outputText value="#{SIMSwapService.swapInfo.currentCardProfile}" />
+				</s:decorate>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel header="#{msg.swapInformation}" styleClass="sectionPanel" rendered="#{SIMSwapService.subscriberValidated}">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.newSim}</ui:define>
+						<h:inputText value="#{SIMSwapService.swapInfo.newSim}" required="true"/>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton action="#{SIMSwapService.requestSimSwap}" value="#{msg.requestSIMSwap}"/>
+				</div>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

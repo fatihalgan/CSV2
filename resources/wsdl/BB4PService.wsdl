@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://co.mcel.mz/bb4p" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:co="http://co.mcel.mz/types/common"
+	xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy"
+	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-utility-1.0.xsd"
+	name="BB4PService"
+	targetNamespace="http://co.mcel.mz/bb4p">
+	<wsp:Policy wsu:Id="bb4pSec">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:AsymmetricBinding>
+					<wsp:Policy>
+						<sp:InitiatorToken>
+							<wsp:Policy>
+								<sp:X509Token
+									sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference />
+										<sp:WssX509V3Token10 />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:InitiatorToken>
+						<sp:RecipientToken>
+							<wsp:Policy>
+								<sp:X509Token
+									sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference />
+										<sp:WssX509V3Token10 />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:RecipientToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:TripleDesRsa15 />
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+					</wsp:Policy>
+				</sp:AsymmetricBinding>
+				<sp:Wss10>
+					<wsp:Policy>
+						<sp:MustSupportRefKeyIdentifier />
+						<sp:MustSupportRefIssuerSerial />
+					</wsp:Policy>
+				</sp:Wss10>
+				<sp:SignedParts>
+					<sp:Body />
+				</sp:SignedParts>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://co.mcel.mz/bb4p"
+			xmlns:tns="http://co.mcel.mz/bb4p">
+			<xsd:import namespace="http://co.mcel.mz/types/common" schemaLocation="mcel_types.xsd"/>
+			<xsd:element name="debitAmountRequest" type="xsd:string"/>
+			<xsd:element name="debitAmountResponse" type="xsd:boolean" />
+			<xsd:element name="cancelReservationRequest" type="xsd:string"/>
+			<xsd:element name="cancelReservationResponse" type="xsd:boolean" />
+			<xsd:element name="refundRequest" type="xsd:string"/>
+			<xsd:element name="refundResponse" type="xsd:boolean"/>
+			<xsd:element name="reserveAmountRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType"/>
+						<xsd:element name="transactionId" type="xsd:string"/>
+						<xsd:element name="amount" type="xsd:float"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="reserveAmountResponse" type="xsd:boolean"/>
+			<xsd:element name="checkStatusRequest" type="xsd:string"/>
+			<xsd:element name="checkStatusResponse">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="RESERVED"/>
+						<xsd:enumeration value="DEBITTED"/>
+						<xsd:enumeration value="CANCELLED"/>
+						<xsd:enumeration value="REFUNDED"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="registerAPNRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType"/>
+						<xsd:element name="apnId" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="registerAPNResponse" type="xsd:boolean"/>
+			<xsd:element name="unregisterAPNRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType"/>
+						<xsd:element name="apnId" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="unregisterAPNResponse" type="xsd:boolean"/>
+			<xsd:element name="getImsiRequest" type="co:msisdnType"/>
+			<xsd:element name="getImsiResponse" type="xsd:string"/>
+			<xsd:element name="getServiceClassRequest" type="co:msisdnType"/>
+			<xsd:element name="getServiceClassResponse" type="xsd:int"/>
+			<xsd:element name="emaError" type="co:EMAErrorType"/>
+			<xsd:element name="csError" type="co:CSErrorType"/>
+			<xsd:element name="transactionNotFound" type="xsd:string"/>
+			<xsd:element name="invalidReservationStatus" type="xsd:string"/>
+			<xsd:element name="csvSystemError" type="xsd:string"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="debitAmountRequest">
+		<wsdl:part element="tns:debitAmountRequest" name="debitAmountRequest" />
+	</wsdl:message>
+	<wsdl:message name="debitAmountResponse">
+		<wsdl:part element="tns:debitAmountResponse" name="debitAmountResponse" />
+	</wsdl:message>
+	<wsdl:message name="cancelReservationRequest">
+		<wsdl:part element="tns:cancelReservationRequest" name="cancelReservationRequest" />
+	</wsdl:message>
+	<wsdl:message name="cancelReservationResponse">
+		<wsdl:part element="tns:cancelReservationResponse" name="cancelReservationResponse" />
+	</wsdl:message>
+	<wsdl:message name="refundRequest">
+		<wsdl:part element="tns:refundRequest" name="refundRequest"/>
+	</wsdl:message>
+	<wsdl:message name="refundResponse">
+		<wsdl:part element="tns:refundResponse" name="refundResponse"/>
+	</wsdl:message>
+	<wsdl:message name="reserveAmountRequest">
+		<wsdl:part element="tns:reserveAmountRequest" name="reserveAmountRequest"/>
+	</wsdl:message>
+	<wsdl:message name="reserveAmountResponse">
+		<wsdl:part element="tns:reserveAmountResponse" name="reserveAmountResponse"/>
+	</wsdl:message>
+	<wsdl:message name="checkStatusRequest">
+		<wsdl:part element="tns:checkStatusRequest" name="checkStatusRequest"/>
+	</wsdl:message>
+	<wsdl:message name="checkStatusResponse">
+		<wsdl:part element="tns:checkStatusResponse" name="checkStatusResponse"/>
+	</wsdl:message>
+	<wsdl:message name="registerAPNRequest">
+		<wsdl:part element="tns:registerAPNRequest" name="registerAPNRequest"/>
+	</wsdl:message>
+	<wsdl:message name="registerAPNResponse">
+		<wsdl:part element="tns:registerAPNResponse" name="registerAPNResponse"/>
+	</wsdl:message>
+	<wsdl:message name="unregisterAPNRequest">
+		<wsdl:part element="tns:unregisterAPNRequest" name="unregisterAPNRequest"/>
+	</wsdl:message>
+	<wsdl:message name="unregisterAPNResponse">
+		<wsdl:part element="tns:unregisterAPNResponse" name="unregisterAPNResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getImsiRequest">
+		<wsdl:part element="tns:getImsiRequest" name="getImsiRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getImsiResponse">
+		<wsdl:part element="tns:getImsiResponse" name="getImsiResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getServiceClassRequest">
+		<wsdl:part element="tns:getServiceClassRequest" name="getServiceClassRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getServiceClassResponse">
+		<wsdl:part element="tns:getServiceClassResponse" name="getServiceClassResponse"/>
+	</wsdl:message>
+	<wsdl:message name="EMAError">
+		<wsdl:part element="tns:emaError" name="faultPart" />
+	</wsdl:message>
+	<wsdl:message name="CSError">
+		<wsdl:part element="tns:csError" name="faultPart"/>
+	</wsdl:message>
+	<wsdl:message name="TransactionNotFound">
+		<wsdl:part element="tns:transactionNotFound" name="faultPart"/>
+	</wsdl:message>
+	<wsdl:message name="InvalidReservationStatus">
+		<wsdl:part element="tns:invalidReservationStatus" name="faultPart"/>
+	</wsdl:message>
+	<wsdl:message name="CSVSystemError">
+		<wsdl:part element="tns:csvSystemError" name="faultPart"/>
+	</wsdl:message>
+	<wsdl:portType name="BB4PService">
+		<wsdl:operation name="debitAmount">
+			<wsdl:input message="tns:debitAmountRequest" />
+			<wsdl:output message="tns:debitAmountResponse" />
+			<wsdl:fault name="f01" message="tns:TransactionNotFound"/>
+			<wsdl:fault name="f02" message="tns:InvalidReservationStatus"/>
+			<wsdl:fault name="f03" message="tns:CSVSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="cancelReservation">
+			<wsdl:input message="tns:cancelReservationRequest" />
+			<wsdl:output message="tns:cancelReservationResponse" />
+			<wsdl:fault name="f01" message="tns:TransactionNotFound"/>
+			<wsdl:fault name="f02" message="tns:InvalidReservationStatus"/>
+			<wsdl:fault name="f03" message="tns:CSError"/>
+			<wsdl:fault name="f04" message="tns:CSVSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="refund">
+			<wsdl:input message="tns:refundRequest"/>
+			<wsdl:output message="tns:refundResponse"/>
+			<wsdl:fault name="f01" message="tns:TransactionNotFound"/>
+			<wsdl:fault name="f02" message="tns:InvalidReservationStatus"/>
+			<wsdl:fault name="f03" message="tns:CSError"/>
+			<wsdl:fault name="f04" message="tns:CSVSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="reserveAmount">
+			<wsdl:input message="tns:reserveAmountRequest"/>
+			<wsdl:output message="tns:reserveAmountResponse"/>
+			<wsdl:fault name="f01" message="tns:CSError"/>
+			<wsdl:fault name="f02" message="tns:CSVSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="checkStatus">
+			<wsdl:input message="tns:checkStatusRequest"/>
+			<wsdl:output message="tns:checkStatusResponse"/>
+			<wsdl:fault name="f01" message="tns:CSVSystemError"/>
+			<wsdl:fault name="f02" message="tns:TransactionNotFound"/>
+		</wsdl:operation>
+		<wsdl:operation name="registerAPN">
+			<wsdl:input message="tns:registerAPNRequest"/>
+			<wsdl:output message="tns:registerAPNResponse"/>
+			<wsdl:fault name="f01" message="tns:EMAError"/>
+			<wsdl:fault name="f02" message="tns:CSVSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="unregisterAPN">
+			<wsdl:input message="tns:unregisterAPNRequest"/>
+			<wsdl:output message="tns:unregisterAPNResponse"/>
+			<wsdl:fault name="f01" message="tns:EMAError"/>
+			<wsdl:fault name="f02" message="tns:CSVSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="getImsi">
+			<wsdl:input message="tns:getImsiRequest"/>
+			<wsdl:output message="tns:getImsiResponse"/>
+			<wsdl:fault name="f01" message="tns:EMAError"/>
+			<wsdl:fault name="f02" message="tns:CSVSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="getServiceClass">
+			<wsdl:input message="tns:getServiceClassRequest"/>
+			<wsdl:output message="tns:getServiceClassResponse"/>
+			<wsdl:fault name="f01" message="tns:CSError"/>
+			<wsdl:fault name="f02" message="tns:CSVSystemError"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BB4PServiceSOAP" type="tns:BB4PService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="debitAmount">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/debitAmount" />
+			<wsdl:input>
+				<soap:body use="literal" parts="debitAmountRequest" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="debitAmountResponse" />
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01" />
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02" />
+			</wsdl:fault>
+			<wsdl:fault name="f03">
+				<soap:fault use="literal" name="f03"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="cancelReservation">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/cancelReservation" />
+			<wsdl:input>
+				<soap:body use="literal" parts="cancelReservationRequest" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="cancelReservationResponse" />
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02"/>
+			</wsdl:fault>
+			<wsdl:fault name="f03">
+				<soap:fault use="literal" name="f03"/>
+			</wsdl:fault>
+			<wsdl:fault name="f04">
+				<soap:fault use="literal" name="f04"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="refund">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/refund"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="refundRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="refundResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02"/>
+			</wsdl:fault>
+			<wsdl:fault name="f03">
+				<soap:fault use="literal" name="f03"/>
+			</wsdl:fault>
+			<wsdl:fault name="f04">
+				<soap:fault use="literal" name="f04"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="reserveAmount">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/reserveAmount"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="reserveAmountRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="reserveAmountResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="checkStatus">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/checkStatus"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="checkStatusRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="checkStatusResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="registerAPN">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/registerAPN"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="registerAPNRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="registerAPNResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="unregisterAPN">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/unregisterAPN"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="unregisterAPNRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="unregisterAPNResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getImsi">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/getImsi"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="getImsiRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="getImsiResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getServiceClass">
+			<soap:operation soapAction="http://co.mcel.mz/bb4p/getServiceClass"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="getServiceClassRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="getServiceClassResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="f01">
+				<soap:fault use="literal" name="f01"/>
+			</wsdl:fault>
+			<wsdl:fault name="f02">
+				<soap:fault use="literal" name="f02"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="BB4PService">
+		<wsdl:port binding="tns:BB4PServiceSOAP" name="BB4PServiceSOAP">
+			<soap:address location="http://localhost:9090/CSV/services/BB4PService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

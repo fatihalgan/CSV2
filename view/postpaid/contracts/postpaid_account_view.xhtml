@@ -1,0 +1,133 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:m="http://jboss.com/products/seam/mail"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.customerOverview}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.customerOverview}" styleClass="sectionPanel">
+			<h:panelGrid columns="2">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.title}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.title}" readonly="true" size="55"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.firstName}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.firstName}" readonly="true" size="55"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.lastName}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.lastName}" readonly="true" size="55"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.email}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.email}" readonly="true" size="55"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.city}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.city}" readonly="true" size="55"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.country}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.country}" readonly="true" size="55"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.streetAvenue}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.street}" size="55"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.number}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.streetNo}" size="55"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.zipCode}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.zip}" size="55"/>
+				</s:decorate>
+				<s:link value="Return To Contract Search" view="/postpaid/contracts/search_contract.xhtml"/>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel header="#{msg.customerInformation}" styleClass="sectionPanel">
+			<h:panelGrid columns="2">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.customerStatus}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.csType}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.statusValidFrom}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.activationDate}" />
+				</s:decorate>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<s:link value="#{msg.paymentArrangement}" action="#{contractService.viewPaymentArrangement}" rendered="#{contractService.selectedAccount != null}"/>
+				<s:link value="#{msg.financialOverview}" view="/postpaid/contracts/financial_overview.xhtml" rendered="#{contractService.selectedAccount != null}"/>
+				<s:link value="#{msg.promotions}" action="#{contractService.viewPromotionPackages}" rendered="#{contractService.selectedAccount != null}"/>
+				<s:link value="#{msg.memos}" action="#{contractService.viewMemos}" rendered="#{contractService.selectedAccount != null}"/>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel header="#{msg.contracts}" styleClass="sectionPanel">
+			<h:form>
+				<rich:dataTable id="tblContracts" rows="13" var="item" rendered="#{not empty contractService.selectedAccount.contracts}"
+					value="#{contractService.selectedAccount.contracts}">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.contractCode}"/>
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.directoryNumber}"/>
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.contractStatus}"/>
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.activationDate}"/>
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.ratePlan}"/>
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Contract Details" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.customerHistory}" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.contractCode}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.directoryNumber}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.contractStatus}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.activationDate}">
+								<f:convertDateTime type="both" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.ratePlan}"/>
+						</rich:column>
+						<rich:column>
+							<h:commandButton value="Contract Details" action="#{contractService.viewContractDetails(item)}" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton value="#{msg.customerHistory}" action="#{contractService.viewContractHistory(item)}" />
+						</rich:column>
+					</rich:columnGroup>
+				</rich:dataTable>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

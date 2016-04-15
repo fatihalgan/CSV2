@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="operatorServicesRegion">
+		<h:form id="operatorServiceForm">
+			<table>
+				<tr>
+					<td><rich:panel>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">Edit Services</ui:define>
+							<rich:listShuttle var="item"
+								sourceValue="#{operatorServiceListAction.unselectedServices}"
+								targetValue="#{operatorServiceListAction.selectedServices}"
+								converter="#{operatorServiceListAction.serviceListShuttleConverter}"
+								required="false">
+								<f:facet name="sourceCaption">
+									<h:outputText value="Unselected Roaming Services" />
+								</f:facet>
+								<f:facet name="targetCaption">
+									<h:outputText value="Selected Roaming Services" />
+								</f:facet>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Service" />
+									</f:facet>
+									<h:outputText value="#{item.roamingServiceName}" />
+								</h:column>
+							</rich:listShuttle>
+						</s:decorate>
+						<div class="saveButton"><h:commandButton id="btnSaveSrv"
+							value="Save"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail Save')}"
+							action="#{operatorServiceListAction.saveOperatorServices}" /></div>
+					</rich:panel></td>
+				</tr>
+			</table>
+		</h:form>
+	</h:panelGroup>
+</ui:composition>

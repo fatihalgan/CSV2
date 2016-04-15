@@ -1,0 +1,111 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>#{msg.roamingMainAgreement}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<h:panelGroup layout="vertical" id="mainAgreementSelectionRegion">
+			<rich:panel header="#{msg.roamingEditMainAgreement}"
+				rendered="#{mainAgreementListAction.selectedMainAgreement != null}">
+				<h:form id="frmEditMainAgreement">
+					<h:panelGrid columns="3">
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingMainAgreementDesc}</ui:define>
+							<h:inputText
+								value="#{mainAgreementListAction.selectedMainAgreement.description}"
+								required="true" />
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons"><h:commandButton
+						id="btnSaveMainAg" value="Save"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Agreement Save')}"
+						action="#{mainAgreementListAction.saveMainAgreement}" /> <h:commandButton
+						id="btnDeleteMainAg" value="Delete Main Agreement"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Agreement Delete')}"
+						action="#{mainAgreementListAction.deleteMainAgreement}" /></div>
+				</h:form>
+			</rich:panel>
+
+			<rich:panel header="MainAgreements">
+				<h:form id="mainAgreementList">
+					<h:panelGrid columns="3">
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">Agreement Name</ui:define>
+							<h:inputText value="#{mainAgreementListAction.agreementName}" />
+						</s:decorate>
+						<h:commandButton id="search" value="Search"
+							action="#{mainAgreementListAction.searchMainAgreementsByName}" />
+						<h:commandButton id="clear" value="Clear Search"
+							action="#{mainAgreementListAction.searchMainAgreement}" />
+					</h:panelGrid>
+					<rich:dataTable id="tblMainAgreements"
+						value="#{mainAgreementListAction.mainAgreementList}" var="item"
+						rows="20">
+						<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="#{msg.roamingMainAgreementDesc}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Edit" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Edit Details" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{item.description}" />
+							</rich:column>
+							<rich:column>
+								<a:commandButton
+									action="#{mainAgreementListAction.editMainAgreement(item)}"
+									value="Edit" reRender="mainAgreementSelectionRegion" />
+							</rich:column>
+							<rich:column>
+								<a:commandLink
+									action="#{mainAgreementListAction.searchDetails(item)}"
+									value="Main Agreement Details"
+									reRender="mainAgreementSelectionRegion" />
+							</rich:column>
+						</rich:columnGroup>
+						<f:facet name="footer">
+							<rich:datascroller for="tblMainAgreements" maxPages="20"
+								boundaryControls="auto" fastControls="auto" />
+						</f:facet>
+					</rich:dataTable>
+					<div class="actionButtons"><h:commandButton
+						id="btnNewMainAgreement" value="Create New Main Agreement"
+						action="#{mainAgreementListAction.newMainAgreement}" /></div>
+				</h:form>
+			</rich:panel>
+
+			<rich:panel header="Main Agreement Details">
+				<rich:tabPanel switchType="ajax">
+					<rich:tab label="#{msg.roamingMainAgreementAddress}">
+						<ui:include src="/roaming/main_agreement_address.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.roamingMainAgreementContact}">
+						<ui:include src="/roaming/main_agreement_contact.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.roamingMainAgreementApproach}">
+						<ui:include src="/roaming/main_agreement_approach.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.roamingMainAgreementNwConf}">
+						<ui:include src="/roaming/main_agreement_nwconf.xhtml" />
+					</rich:tab>
+				</rich:tabPanel>
+			</rich:panel>
+
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

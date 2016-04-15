@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.bridge.com/netmovel" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:co="http://co.mcel.mz/types/common"
+	xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy"
+	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-utility-1.0.xsd"
+	name="NetmovelService"
+	targetNamespace="http://www.bridge.com/netmovel">
+	<wsp:Policy wsu:Id="netmovelSec">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:AsymmetricBinding>
+					<wsp:Policy>
+						<sp:InitiatorToken>
+							<wsp:Policy>
+								<sp:X509Token
+									sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference />
+										<sp:WssX509V3Token10 />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:InitiatorToken>
+						<sp:RecipientToken>
+							<wsp:Policy>
+								<sp:X509Token
+									sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference />
+										<sp:WssX509V3Token10 />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:RecipientToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:TripleDesRsa15 />
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+					</wsp:Policy>
+				</sp:AsymmetricBinding>
+				<sp:Wss10>
+					<wsp:Policy>
+						<sp:MustSupportRefKeyIdentifier />
+						<sp:MustSupportRefIssuerSerial />
+					</wsp:Policy>
+				</sp:Wss10>
+				<sp:SignedParts>
+					<sp:Body />
+				</sp:SignedParts>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.bridge.com/netmovel"
+			xmlns:tns="http://www.bridge.com/netmovel">
+			<xsd:import namespace="http://co.mcel.mz/types/common" schemaLocation="mcel_types.xsd"/>
+			<xsd:element name="balanceEnquiryRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="balanceEnquiryResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="accountExpiryDate" type="xsd:date" nillable="true"/>
+						<xsd:element name="balance" type="xsd:float" nillable="true"/>
+						<xsd:element name="remainingVolume" type="xsd:float" nillable="true"/>
+						<xsd:element name="currentActiveBundle" type="xsd:string" nillable="true"/>
+						<xsd:element name="bundleEndDate" type="xsd:date" nillable="true"/>
+						<xsd:element name="resultCode" type="xsd:int" nillable="false"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="startBundleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType"/>
+						<xsd:element name="bundleId" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="startVoiceAddOnBundleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType"/>
+						<xsd:element name="bundleId" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="activateDuoRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType"/>
+						<xsd:element name="contractValue" type="xsd:int"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="bundleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="bundleResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resultCode" type="xsd:int" nillable="false"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="voucherTopUpRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="msisdn" type="co:msisdnType" nillable="false"/>
+						<xsd:element name="activationCode" type="xsd:string" nillable="false"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="voucherTopUpResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="resultCode" type="xsd:int" nillable="false"/>
+						<xsd:element name="amount" type="xsd:decimal" nillable="true"/>
+						<xsd:element name="remainingVolume" type="xsd:decimal" nillable="true"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="netmovelSystemError" type="xsd:string"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="balanceEnquiryRequest">
+		<wsdl:part element="tns:balanceEnquiryRequest" name="balanceEnquiryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="balanceEnquiryResponse">
+		<wsdl:part element="tns:balanceEnquiryResponse" name="balanceEnquiryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="startBundleRequest">
+		<wsdl:part element="tns:startBundleRequest" name="startBundleRequest"/>
+	</wsdl:message>
+	<wsdl:message name="startBundleResponse">
+		<wsdl:part element="tns:bundleResponse" name="startBundleResponse"/>
+	</wsdl:message>
+	<wsdl:message name="stopBundleRequest">
+		<wsdl:part element="tns:bundleRequest" name="stopBundleRequest"/>
+	</wsdl:message>
+	<wsdl:message name="stopBundleResponse">
+		<wsdl:part element="tns:bundleResponse" name="stopBundleResponse"/>
+	</wsdl:message>
+	<wsdl:message name="extendBundleRequest">
+		<wsdl:part element="tns:bundleRequest" name="extendBundleRequest"/>
+	</wsdl:message>
+	<wsdl:message name="extendBundleResponse">
+		<wsdl:part element="tns:bundleResponse" name="extendBundleResponse"/>
+	</wsdl:message>
+	<wsdl:message name="activateNTDuoRequest">
+		<wsdl:part element="tns:activateDuoRequest" name="activateNTDuoRequest"/>
+	</wsdl:message>
+	<wsdl:message name="activateNTDuoResponse">
+		<wsdl:part element="tns:bundleResponse" name="activateNTDuoResponse"/>
+	</wsdl:message>
+	<wsdl:message name="deactivateNTDuoRequest">
+		<wsdl:part element="tns:bundleRequest" name="deactivateNTDuoRequest"/>
+	</wsdl:message>
+	<wsdl:message name="deactivateNTDuoResponse">
+		<wsdl:part element="tns:bundleResponse" name="deactivateNTDuoResponse"/>
+	</wsdl:message>
+	<wsdl:message name="startVoiceAddOnBundleRequest">
+		<wsdl:part element="tns:startVoiceAddOnBundleRequest" name="startVoiceAddOnBundleRequest"/>
+	</wsdl:message>
+	<wsdl:message name="startVoiceAddOnBundleResponse">
+		<wsdl:part element="tns:bundleResponse" name="startVoiceAddOnBundleResponse"/>
+	</wsdl:message>
+	<wsdl:message name="voucherTopUpRequest">
+		<wsdl:part element="tns:voucherTopUpRequest" name="voucherTopUpRequest"/>
+	</wsdl:message>
+	<wsdl:message name="voucherTopUpResponse">
+		<wsdl:part element="tns:voucherTopUpResponse" name="voucherTopUpResponse"/>
+	</wsdl:message>
+	<wsdl:message name="NetmovelSystemError">
+		<wsdl:part element="tns:netmovelSystemError" name="faultPart"/>
+	</wsdl:message>
+	<wsdl:portType name="NetmovelService">
+		<wsdl:operation name="balanceEnquiry">
+			<wsdl:input message="tns:balanceEnquiryRequest"/>
+			<wsdl:output message="tns:balanceEnquiryResponse"/>
+			<wsdl:fault name="error" message="tns:NetmovelSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="startBundle">
+			<wsdl:input message="tns:startBundleRequest"/>
+			<wsdl:output message="tns:startBundleResponse"/>
+			<wsdl:fault name="error" message="tns:NetmovelSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="stopBundle">
+			<wsdl:input message="tns:stopBundleRequest"/>
+			<wsdl:output message="tns:stopBundleResponse"/>
+			<wsdl:fault name="error" message="tns:NetmovelSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="extendBundle">
+			<wsdl:input message="tns:extendBundleRequest"/>
+			<wsdl:output message="tns:extendBundleResponse"/>
+			<wsdl:fault name="error" message="tns:NetmovelSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="activateNTDuo">
+			<wsdl:input message="tns:activateNTDuoRequest"/>
+			<wsdl:output message="tns:activateNTDuoResponse"/>
+			<wsdl:fault name="error" message="tns:NetmovelSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="deactivateNTDuo">
+			<wsdl:input message="tns:deactivateNTDuoRequest"/>
+			<wsdl:output message="tns:deactivateNTDuoResponse"/>
+			<wsdl:fault name="error" message="tns:NetmovelSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="startVoiceAddOnBundle">
+			<wsdl:input message="tns:startVoiceAddOnBundleRequest"/>
+			<wsdl:output message="tns:startVoiceAddOnBundleResponse"/>
+			<wsdl:fault name="error" message="tns:NetmovelSystemError"/>
+		</wsdl:operation>
+		<wsdl:operation name="refillVoucher">
+			<wsdl:input message="tns:voucherTopUpRequest"/>
+			<wsdl:output message="tns:voucherTopUpResponse"/>
+			<wsdl:fault name="error" message="tns:NetmovelSystemError"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="NetmovelServiceSOAP" type="tns:NetmovelService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="balanceEnquiry">
+			<soap:operation soapAction="http://www.bridge.com/netmovel/balanceEnquiry" />
+			<wsdl:input>
+				<soap:body use="literal" parts="balanceEnquiryRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="balanceEnquiryResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="error">
+				<soap:fault use="literal" name="error"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="startBundle">
+			<soap:operation soapAction="http://www.bridge.com/netmovel/startBundle"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="startBundleRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="startBundleResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="error">
+				<soap:fault use="literal" name="error"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="stopBundle">
+			<soap:operation soapAction="http://www.bridge.com/netmovel/stopBundle"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="stopBundleRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="stopBundleResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="error">
+				<soap:fault use="literal" name="error"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="extendBundle">
+			<soap:operation soapAction="http://www.bridge.com/netmovel/extendBundle"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="extendBundleRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="extendBundleResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="error">
+				<soap:fault use="literal" name="error"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="activateNTDuo">
+			<soap:operation soapAction="http://www.bridge.com/netmovel/activateNTDuo"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="activateNTDuoRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="activateNTDuoResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="error">
+				<soap:fault use="literal" name="error"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="deactivateNTDuo">
+			<soap:operation soapAction="http://www.bridge.com/netmovel/deactivateNTDuo"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="deactivateNTDuoRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="deactivateNTDuoResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="error">
+				<soap:fault use="literal" name="error"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="startVoiceAddOnBundle">
+			<soap:operation soapAction="http://www.bridge.com/netmovel/startVoiceAddOnBundle"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="startVoiceAddOnBundleRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="startVoiceAddOnBundleResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="error">
+				<soap:fault use="literal" name="error"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="refillVoucher">
+			<soap:operation soapAction="http://www.bridge.com/netmovel/refillVoucher"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="voucherTopUpRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="voucherTopUpResponse"/>
+			</wsdl:output>
+			<wsdl:fault name="error">
+				<soap:fault use="literal" name="error"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="NetmovelService">
+		<wsdl:port name="NetmovelServiceSOAP" binding="tns:NetmovelServiceSOAP">
+			<soap:address location="http://192.168.7.170:8080/Netmovel/services/NetmovelService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

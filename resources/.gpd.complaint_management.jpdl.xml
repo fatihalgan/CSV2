@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="ComplaintManagement" width="855" height="427">
+  <node name="Raise Complaint" x="100" y="29" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Help Desk Attendance" x="75" y="145" width="181" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Resolved?" x="99" y="283" width="132" height="36">
+    <edge>
+      <label x="-88" y="-27"/>
+    </edge>
+    <edge>
+      <label x="-36" y="-4"/>
+    </edge>
+    <edge>
+      <label x="-69" y="-28"/>
+    </edge>
+    <edge>
+      <label x="-132" y="-1"/>
+      <bendpoint w1="-117" h1="-106" w2="106" h2="105"/>
+    </edge>
+  </node>
+  <node name="Get Customer Feedback" x="399" y="284" width="183" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Confirm Resolved?" x="424" y="146" width="132" height="36">
+    <edge>
+      <label x="-53" y="-22"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Outbound Support Attendance" x="51" y="390" width="226" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-345" h1="0" w2="-340" h2="249"/>
+      <bendpoint w1="-346" h1="-246" w2="-347" h2="-1"/>
+    </edge>
+  </node>
+  <node name="Supervisor Feedback" x="-218" y="284" width="165" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="49" h1="-65" w2="-252" h2="74"/>
+      <bendpoint w1="248" h1="-66" w2="-53" h2="73"/>
+    </edge>
+  </node>
+  <node name="Technical Department Complaint Management" x="-201" y="76" width="296" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="177" h1="1" w2="-46" h2="-72"/>
+    </edge>
+  </node>
+  <node name="Close Complaint" x="423" y="33" width="132" height="36"/>
+  <deployment serverName="" serverPort="" serverDeployer="">
+    <classesAndResources/>
+    <filesAndFolders>
+      <element value="/CSV/resources/.gpd.complaint_management.jpdl.xml"/>
+      <element value="/CSV/resources/.gpd.complaint_management.xml"/>
+      <element value="/CSV/resources/META-INF/application.xml"/>
+      <element value="/CSV/resources/META-INF/ejb-jar.xml"/>
+      <element value="/CSV/resources/META-INF/persistence.xml"/>
+      <element value="/CSV/resources/MessageResources_en.properties"/>
+      <element value="/CSV/resources/MessageResources_pt.properties"/>
+      <element value="/CSV/resources/WEB-INF/.faces-config.xml.jsfdia"/>
+      <element value="/CSV/resources/WEB-INF/.pages.xml.spdia"/>
+      <element value="/CSV/resources/WEB-INF/components.xml"/>
+      <element value="/CSV/resources/WEB-INF/conf/axis2.xml"/>
+      <element value="/CSV/resources/WEB-INF/csvApplicationContext.xml"/>
+      <element value="/CSV/resources/WEB-INF/faces-config.xml"/>
+      <element value="/CSV/resources/WEB-INF/jboss-classloading.xml"/>
+      <element value="/CSV/resources/WEB-INF/log4j.xml"/>
+      <element value="/CSV/resources/WEB-INF/modules/addressing-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/mex-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/modules.list"/>
+      <element value="/CSV/resources/WEB-INF/modules/mtompolicy-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/ping-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/rahas-1.5.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/rampart-1.5.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/scripting-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/soapmonitor-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/pages.xml"/>
+      <element value="/CSV/resources/WEB-INF/services/BB4PService/META-INF/BB4PService.wsdl"/>
+      <element value="/CSV/resources/WEB-INF/services/BB4PService/META-INF/mcel_types.xsd"/>
+      <element value="/CSV/resources/WEB-INF/services/BB4PService/META-INF/services.xml"/>
+      <element value="/CSV/resources/WEB-INF/services/ReservedChargingService/META-INF/ReservedChargingService.wsdl"/>
+      <element value="/CSV/resources/WEB-INF/services/ReservedChargingService/META-INF/mcel_types.xsd"/>
+      <element value="/CSV/resources/WEB-INF/services/ReservedChargingService/META-INF/services.xml"/>
+      <element value="/CSV/resources/WEB-INF/services/services.list"/>
+      <element value="/CSV/resources/WEB-INF/services/version.aar"/>
+      <element value="/CSV/resources/WEB-INF/web.xml"/>
+      <element value="/CSV/resources/bscs-ds.xml"/>
+      <element value="/CSV/resources/bscs.hbm.xml"/>
+      <element value="/CSV/resources/bscs_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/cdrlive-ds.xml"/>
+      <element value="/CSV/resources/cdrlive.hbm.xml"/>
+      <element value="/CSV/resources/cdrlive_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/complaint_management.jpdl.xml"/>
+      <element value="/CSV/resources/csv-ds.xml"/>
+      <element value="/CSV/resources/csv.hbm.xml"/>
+      <element value="/CSV/resources/csv_crm.hbm.xml"/>
+      <element value="/CSV/resources/csv_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/dbxdb-ds.xml"/>
+      <element value="/CSV/resources/dbxdb_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/dr-ds.xml"/>
+      <element value="/CSV/resources/dr.hbm.xml"/>
+      <element value="/CSV/resources/dr_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/dws-ds.xml"/>
+      <element value="/CSV/resources/dws.hbm.xml"/>
+      <element value="/CSV/resources/dws_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/emeraldTown.skin.properties"/>
+      <element value="/CSV/resources/jbpm-ds.xml"/>
+      <element value="/CSV/resources/jbpm_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/loyalty-ds.xml"/>
+      <element value="/CSV/resources/loyalty.hbm.xml"/>
+      <element value="/CSV/resources/loyalty_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/netmovel-ds.xml"/>
+      <element value="/CSV/resources/netmovel.hbm.xml"/>
+      <element value="/CSV/resources/netmovel_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/pm-ds.xml"/>
+      <element value="/CSV/resources/pm.hbm.xml"/>
+      <element value="/CSV/resources/pm_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/prep_subscription.hbm.xml"/>
+      <element value="/CSV/resources/seam.properties"/>
+      <element value="/CSV/resources/security.hbm.xml"/>
+      <element value="/CSV/resources/sgsn_stats-ds.xml"/>
+      <element value="/CSV/resources/sgsn_stats.hbm.xml"/>
+      <element value="/CSV/resources/sgsn_stats_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/tomala-ds.xml"/>
+      <element value="/CSV/resources/tomala.hbm.xml"/>
+      <element value="/CSV/resources/tomala_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/wsdl/BB4PService.wsdl"/>
+      <element value="/CSV/resources/wsdl/NetmovelService.wsdl"/>
+      <element value="/CSV/resources/wsdl/ProvisionManagerService.wsdl"/>
+      <element value="/CSV/resources/wsdl/ReservedChargingService.wsdl"/>
+      <element value="/CSV/resources/wsdl/SyncronizeAgents.wsdl"/>
+      <element value="/CSV/resources/wsdl/mcel_types.xsd"/>
+      <element value="/CSV/resources/wsdl/provision_manager_types.xsd"/>
+    </filesAndFolders>
+  </deployment>
+</root-container>

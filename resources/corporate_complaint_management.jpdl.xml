@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process-definition 
+	xmlns="urn:jbpm.org:jpdl-3.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:jbpm.org:jpdl-3.2 http://jbpm.org/xsd/jpdl-3.2.xsd"
+  	name="CorporateComplaintManagement">
+  	
+	<swimlane name="CorporateResponsible">
+		<assignment actor-id="#{corporateResponsibleResolver.resolveCorporateResponsible}"/>
+	</swimlane>
+
+
+	<start-state name="EnterComplaint">
+		<transition to="Is Initiator Corporate Responsible?"></transition>
+	</start-state>
+	
+	<task-node name="AccountManager Attendance">
+		<task name="AttendComplaint" swimlane="CorporateResponsible">
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<event type="node-enter">
+			<action expression="#{openComplaintAttendanceFinished.corporateComplaintRaised}"></action>
+		</event>
+		<transition to="Resolved?"></transition>
+	</task-node>
+
+	<decision name="Resolved?">
+		<transition to="HelpDesk Attendance" name="No - to Help Desk">
+			<condition expression="#{openComplaint.helpDesk == true}"></condition>
+		</transition>
+		<transition to="Close Complaint" name="Yes - to Close Complaint">
+			<condition expression="#{openComplaint.finalized == true}"></condition>
+		</transition>
+	</decision>
+
+	<task-node name="Get Customer Feedback">
+		<task name="Get Customer Feedback" swimlane="CorporateResponsible">
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="Confirm Resolved?"></transition>
+	</task-node>
+
+	<decision name="Confirm Resolved?">
+		<transition to="Close Complaint" name="Yes - to Close Complaint">
+			<condition expression="#{openComplaint.finalized == true}"></condition>
+		</transition>
+		<transition to="HelpDesk Attendance" name="No - to Start New Iteration">
+			<condition expression="#{openComplaint.helpDesk == true}"></condition>
+		</transition>
+	</decision>
+
+	<decision name="HD Resolved?">
+		<transition to="Get Customer Feedback" name="Yes - to Customer Feedback">
+			<condition expression="#{openComplaint.customerFeedback == true}"></condition>
+		</transition>
+		<transition to="Outbound Support Attendance" name="No - to TechnicalSupport Attendance">
+			<condition expression="#{openComplaint.outboundSupport == true}"></condition>
+		</transition>
+		<transition to="DepartmentLeader Feedback" name="No - to DepartmentLeader Feedback">
+			<condition expression="#{openComplaint.supervisorFeedback == true}"></condition>
+		</transition>
+	</decision>
+
+	<task-node name="HelpDesk Attendance">
+		<task name="Attend Complaint">
+			<assignment pooled-actors="#{openComplaint.helpDeskGroupName}"></assignment>
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="node-enter">
+			<action expression="#{openComplaintAttendanceFinished.complaintReiterated}"/>
+		</event>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="HD Resolved?"></transition>
+	</task-node>
+
+	<task-node name="Outbound Support Attendance">
+		<task name="Attend Complaint">
+			<assignment actor-id="#{openComplaint.assignedToUser}" pooled-actors="#{openComplaint.assignedTo}"></assignment>
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="HelpDesk Attendance"></transition>
+	</task-node>
+
+	<task-node name="DepartmentLeader Feedback">
+		<task name="Give Supervisor Feedback">
+			<assignment pooled-actors="Corporate Supervisor"></assignment>
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="HelpDesk Attendance"></transition>
+	</task-node>
+
+	<decision name="Is Initiator Corporate Responsible?">
+		<transition to="HelpDesk Attendance" name="Yes - to Help Desk Attendance">
+			<condition expression="#{corporateResponsibleResolver.initiatorIsCorporateResponsible == true}"></condition>
+		</transition>
+		<transition to="AccountManager Attendance" name="No - to AccountManager Attendance">
+			<condition expression="#{corporateResponsibleResolver.initiatorIsCorporateResponsible == false}"></condition>
+		</transition>
+	</decision>
+
+
+	<end-state name="Close Complaint">
+		<event type="node-enter">
+			<action expression="#{openComplaintAttendanceFinished.synchronizeComplaintStatus}"></action>
+		</event>
+	</end-state>
+
+
+</process-definition>  	

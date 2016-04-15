@@ -1,0 +1,82 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.myCorporateClients}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<h:form id="frmSearchClients">
+			<s:decorate template="search_corporate_client.xhtml">
+				<div class="actionButtons">
+					<h:commandButton action="#{corporateClientListAction.searchMyCorporateClients}" value="#{msg.search}" />
+					<h:commandButton action="#{corporateClientListAction.resetSearch}" value="#{msg.resetForNewSearch}"/>
+					<h:commandButton action="#{corporateClientHomeAction.newClient}" value="#{msg.newClient}" />
+				</div>
+			</s:decorate>
+		</h:form>
+		<h:form>
+		<rich:panel header="#{msg.searchResults}" styleClass="sectionPanel" rendered="#{corporateClientList != null}">
+			<rich:dataTable id="tblClients" value="#{corporateClientList}" var="item" rows="15">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.customerCode}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.companyName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.contactPerson}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.contactNumber}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.corporateResponsible}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.edit}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.delete}" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.customerCode}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.companyName}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.contactPerson}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.contactNumber}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.corporateResponsible.fullName}" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton action="#{corporateClientHomeAction.editClient(item)}" value="Edit" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton action="#{corporateClientListAction.deleteClient(item)}" value="#{msg.delete}" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblClients" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+					</f:facet>	
+				</rich:dataTable>
+		</rich:panel>
+		</h:form>		
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="csv.dr.domain">
+	<class name="SMSMessage" table="SMS_MESSAGES">
+		<composite-id>
+			<key-property name="msisdn" column="MSISDN" type="string"/>
+			<key-property name="creationDate" column="CREATE_TIMESTAMP" type="timestamp"/>
+		</composite-id>
+		<property name="messageText" column="MESSAGE_TEXT" type="string"/>
+		<property name="source" column="SOURCE" type="string"/>
+		<property name="status" column="STATUS" type="string"/>
+		<property name="errorCode" column="ERROR_CODE" type="integer"/>
+		<property name="modifiedDate" column="LAST_UPDATE" type="timestamp"/>
+	</class>
+	<class name="BillImage" mutable="false">
+		<id name="ohxAct" type="integer">
+			<generator class="assigned"/>
+		</id>
+		<property name="biImage" type="binary"/>
+		<loader query-ref="loadBillImage"/>
+	</class>
+	<sql-query name="loadBillImage">
+		<return alias="bi" class="BillImage" lock-mode="read"/>
+		SELECT 
+		ohxact as {bi.ohxAct}, 
+		bi_image as {bi.biImage}
+		FROM bill_images 
+		WHERE customer_id = ? 
+		AND ohxAct is not null 
+		and to_char(bi_date, 'yyyy/mm') = ?
+	</sql-query>
+</hibernate-mapping>

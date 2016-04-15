@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:rich="http://richfaces.org/rich">
+                
+	<rich:modalPanel id="complaintStatusRemarkMp" width="600" height="420" zindex="2000"  style="overflow:auto" domElementAttachment="body">
+		<f:facet name="header">#{msg.statusRemark}</f:facet>
+		<f:facet name="controls">
+        	<a href="#" onclick="Richfaces.hideModalPanel('complaintStatusRemarkMp')">X</a>
+     	</f:facet>
+     	<h:form>
+     		<a:outputPanel id="complaintStatusRemarkPanel" layout="inline">
+     			<h:inputTextarea value="#{currentViewedComplaint.attendanceRemark}" escape="false"
+     				rows="6" cols="40" />
+     		</a:outputPanel>
+     		<div class="actionButtons">
+     			<h:commandButton action="#{attendOpenComplaintTask.addStatusRemark(currentViewedComplaint)}" value="#{msg.updateStatusRemark}" />
+     		</div>
+     	</h:form>
+	</rich:modalPanel>                
+</ui:composition>

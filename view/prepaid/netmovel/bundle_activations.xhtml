@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	
+	<rich:dataTable id="bundleActivationsTable" rows="10" var="item" value="#{netmovelService.bundleActivations}"
+		onRowMouseOver="this.style.backgroundColor='yellow'"
+		onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'">
+		<f:facet name="header">
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="Transaction ID" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Main Account Balance" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Dedicated Account Balance" />	
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Service Class" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Bundle Name" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Last Processed(Date)" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Bundle Expiration Date" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Last Operation" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Status" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Last Operation Result" />
+				</rich:column>
+			</rich:columnGroup>
+		</f:facet>
+		<rich:columnGroup>
+			<rich:column>
+				<h:outputText value="#{item.id}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.mainAccountBalanceBefore} - #{item.mainAccountBalanceAfter}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.dedicatedAccountBalanceBefore} - #{item.dedicatedAccountBalanceAfter}" />	
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.serviceClassBefore} - #{item.serviceClassAfter}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.bundleName}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.requestTimestamp}">
+					<s:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.bundleExpirationDate}">
+					<s:convertDateTime type="date" dateStyle="medium"/>
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.operationCode}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.status}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.resultCode}" />
+			</rich:column>
+		</rich:columnGroup>
+		<f:facet name="footer">
+			<rich:datascroller for="bundleActivationsTable" maxPages="20" boundaryControls="auto" fastControls="auto" />
+		</f:facet>		
+	</rich:dataTable>                
+</ui:composition>

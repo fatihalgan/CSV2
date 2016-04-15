@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<head>
+	<title>CSV Daily Usage Report</title>
+	</head>
+	<body>
+	<table rules="all" border="1">
+		<caption>
+		<h3>CSV DAILY USAGE REPORT</h3>
+		</caption>
+		<tbody>
+			<tr>
+				<th colspan="2" align="left">
+				<h4>Date Of Report: <h:outputText
+					value="#{reportingService.startDate}">
+					<f:convertDateTime type="date" dateStyle="medium" timeZone="GMT+2"/>
+				</h:outputText></h4>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="2"></th>
+			</tr>
+			<tr>
+				<th>
+				<h4>User</h4>
+				</th>
+				<th>
+				<h4>Total Operations Performed</h4>
+				</th>
+			</tr>
+			<c:set var="totalOperationsPerformed" value="#{0}" />
+			<c:forEach items="#{reportingService.accessLogMap}" var="groupEntry">
+				<tr>
+					<th colspan="2"><h:outputText value="#{groupEntry.key.groupName}" /></th>
+				</tr>
+				<c:forEach items="#{groupEntry.value}" var="userEntry">
+					<tr>
+						<td><h:outputText value="#{userEntry.key.fullName}" /></td>
+						<c:set var="operationsPerformed" value="#{0}" />
+						<c:forEach items="#{userEntry.value}" var="accessLog">
+							<c:set var="operationsPerformed"
+								value="#{operationsPerformed + 1}" />
+						</c:forEach>
+						<td>${operationsPerformed}</td>
+					</tr>
+					<c:set var="totalOperationsPerformed"
+						value="#{totalOperationsPerformed + operationsPerformed}" />
+				</c:forEach>
+			</c:forEach>
+			<tr>
+				<th></th>
+			</tr>
+			<tr>
+				<td>
+				<h4>TOTAL</h4>
+				</td>
+				<td>${totalOperationsPerformed}</td>
+			</tr>
+		</tbody>
+	</table>
+	</body>
+</ui:composition>

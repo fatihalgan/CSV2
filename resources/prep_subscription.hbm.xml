@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false">
+	<class name="csv.prepaid.domain.PrepaidCustomer" table="PREPAID_CUSTOMER">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_PREPAID_CUSTOMER</param>
+			</generator>
+		</id>
+		<property name="name" column="NAME" type="string"/>
+		<property name="surname" column="SURNAME" type="string"/>
+		<property name="birthDate" column="BIRTH_DATE" type="date"/>
+		<property name="idType" column="ID_TYPE" type="integer"/>
+		<property name="idNumber" column="ID_NUMBER" type="string"/>
+		<property name="address" column="ADDRESS" type="string"/>
+		<property name="email" column="EMAIL" type="string"/>
+		<property name="club" column="CLUB" type="string"/>
+		<property name="color" column="COLOR" type="string"/>
+		<property name="occupation" column="OCCUPATION" type="string"/>
+	</class>
+	<class name="csv.prepaid.domain.PrepaidSubscription" table="PREPAID_SUBSCRIPTION">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_PREPAID_SUBSCRIPTION</param>
+			</generator>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string"/>
+		<property name="subscriptionDate" column="SUBSCRIPTION_DATE" type="date"/>
+		<property name="deactivationDate" column="DEACTIVATION_DATE" type="date"/>
+		<property name="status" column="STATUS" type="string"/>
+		<many-to-one name="owningCustomer" column="CUSTOMER_ID" class="csv.prepaid.domain.PrepaidCustomer" lazy="false" fetch="join"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+				template="templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" infoClass="info"/>
+		
+		<ui:include src="/complaints/show_complaints_history.xhtml" />
+		
+		<ui:include src="/complaints/show_complaint_details.xhtml" />
+		
+		<ui:include src="/tasks/complaint_iteration/complaint_iterations_history.xhtml" />
+		
+		<rich:simpleTogglePanel rendered="#{currentServedCustomer.customerValid}"
+			styleClass="sectionPanel" opened="true">
+			<f:facet name="header">#{msg.initialComplaintEntry}</f:facet>
+			<h:form>
+				<ui:include src="/complaints/complaint_entry_form.xhtml" />
+				<div class="actionButtons">
+					<h:commandButton action="#{complaintManagementService.rememberInitialComplaintEntry}" value="#{msg.rememberUntilCustomerSessionEnds}"/>
+				</div>
+			</h:form>
+		</rich:simpleTogglePanel>		
+	</ui:define>
+</ui:composition>

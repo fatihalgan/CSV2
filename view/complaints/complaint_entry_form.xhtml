@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	
+	<h:panelGrid columns="2">
+		<h:panelGrid columns="2">
+			<s:decorate template="../edit.xhtml">
+				<ui:define name="label">#{msg.msisdn}</ui:define>
+				<h:outputLabel value="#{complaintManagementService.complaintOwner.msisdn}"/>
+			</s:decorate>
+		</h:panelGrid>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.subscriptionType}</ui:define>
+			<h:selectOneMenu value="#{complaintManagementService.complaintOwner.subscriptionType}" required="true">
+				<s:convertEnum/>
+				<s:selectItems value="#{allSubscriptionTypes}" var="subscriptionType" label="#{subscriptionType.label}" noSelectionLabel="Select Subscription Type.."/>
+			</h:selectOneMenu>
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.contactNumber}</ui:define>
+			<h:inputText value="#{complaintManagementService.complaintOwner.contactNumber}" />
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.firstName}</ui:define>
+			<h:inputText value="#{complaintManagementService.complaintOwner.firstName}" />
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.lastName}</ui:define>
+			<h:inputText value="#{complaintManagementService.complaintOwner.lastName}" />
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.segment}</ui:define>
+			<h:selectOneMenu value="#{complaintManagementService.newComplaint.segment}" required="true">
+				<s:selectItems var="item" value="#{complaintSegmentList}" label="#{item.description}" noSelectionLabel="Select Segment..."/>
+				<f:converter converterId="csvEntityConverter"/>
+			</h:selectOneMenu>
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.province}</ui:define>
+			<h:selectOneMenu value="#{complaintLocality.province}">
+				<a:support event="onchange" reRender="districts" ajaxSingle="true"/>
+				<s:selectItems var="item" value="#{complaintLocality.provinces}" label="#{item.name}" noSelectionLabel="Select Province..."/>
+				<f:converter converterId="csvEntityConverter"/>
+			</h:selectOneMenu>
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.district}</ui:define>
+			<h:selectOneMenu value="#{complaintLocality.district}" id="districts" required="true">
+				<s:selectItems var="item" value="#{complaintLocality.districts}" label="#{item.name}" noSelectionLabel="Select District..."/>
+				<f:converter converterId="csvEntityConverter"/>
+			</h:selectOneMenu>
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.dateOfOccurence}</ui:define>
+			<rich:calendar direction="bottom-right" value="#{complaintLocality.dateOfOccurence}" datePattern="dd/MM/yyyy HH:mm" required="true"/>
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.destinationNumber}</ui:define>
+			<h:inputText value="#{complaintManagementService.newComplaint.destinationNumber}" />
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.displayInformation}</ui:define>
+			<h:inputTextarea value="#{complaintManagementService.newComplaint.displayInfo}" rows="6" cols="40"/>
+		</s:decorate>
+		<s:decorate template="../edit.xhtml">
+			<ui:define name="label">#{msg.description}</ui:define>
+			<rich:editor value="#{complaintManagementService.newComplaint.description}" theme="advanced" required="true">
+				<f:param name="width" value="450"/>
+				<f:param name="height" value="100"/>
+			</rich:editor>
+		</s:decorate>
+	</h:panelGrid>                
+</ui:composition>

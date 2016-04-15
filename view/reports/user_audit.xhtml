@@ -1,0 +1,120 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.menuUserAudit}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.searchUser}" styleClass="sectionPanel">
+			<s:decorate template="../sysadm/search_user.xhtml">
+				<div class="actionButtons">
+					<h:commandButton id="search" value="Search" action="#{userListAction.searchUsers}"/>
+					<h:commandButton action="#{userListAction.resetSearch}" value="Reset For New Search" />
+				</div>
+			</s:decorate>
+			<h:form id="userList">
+				<rich:dataTable id="tblUsers" value="#{userList}" var="item" rows="5" rendered="#{userList != null}">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="Firstname" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Surname" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Username" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Email" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="History" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.firstName}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.lastName}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.username}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.email}" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton action="#{reportingService.retrieveUserAuditHistory(item)}" value="#{msg.viewUsageHistory}" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblUsers" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+					</f:facet>
+				</rich:dataTable>
+			</h:form>
+		</rich:panel>
+		<rich:panel header="#{msg.menuUserAudit}" styleClass="sectionPanel" rendered="#{not empty reportingService.userAuditHistory}">
+			<h:form>
+			<rich:dataTable id="tblAuditHistory" value="#{reportingService.userAuditHistory}" var="item" rows="20">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Time" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="User" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="MSISDN" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Operation" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Remarks" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="IP Address" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.date}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"  timeZone="GMT+02:00"/>
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.owningUser.fullName}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.msisdn}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.owningOperation.operationName}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.remark}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.ipAddress}"/>
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="tblAuditHistory" maxPages="20" boundaryControls="auto" fastControls="auto" />
+				</f:facet>
+			</rich:dataTable>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<typedef name="OperationCodeType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.netmovel.domain.OperationCode</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="ResultCodeType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.netmovel.domain.ResultCode</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="ServiceClassType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.gateway.cs.ServiceClass</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="BundleNameType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.netmovel.domain.BundleName</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">factory</param>
+	</typedef>
+	<class name="csv.prepaid.netmovel.domain.BundleActivation" table="BUNDLE_ACTIVATIONS">
+		<id name="id" column="ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string"/>
+		<property name="mainAccountBalanceBefore" type="float" column="MAIN_ACC_BALANCE_BEFORE"/>
+		<property name="mainAccountBalanceAfter" type="float" column="MAIN_ACC_BALANCE_AFTER"/>
+		<property name="dedicatedAccountBalanceBefore" column="DEDIC_ACC_BALANCE_BEFORE" type="float"/>
+		<property name="dedicatedAccountBalanceAfter" column="DEDIC_ACC_BALANCE_AFTER" type="float"/>
+		<property name="serviceClassBefore" column="SC_BEFORE" type="ServiceClassType"/>
+		<property name="serviceClassAfter" column="SC_AFTER" type="ServiceClassType"/>
+		<property name="bundleName" column="BUNDLE_ID" type="BundleNameType"/>
+		<property name="requestTimestamp" column="REQUEST_TIMESTAMP" type="timestamp"/>
+		<property name="bundleExpirationDate" column="BUNDLE_END_DATE" type="date"/>
+		<property name="status" column="STATUS" type="string"/>
+		<property name="operationCode" column="OPERATION_CODE" type="OperationCodeType"/>
+		<property name="resultCode" column="RESULTCODE" type="ResultCodeType"/>
+	</class>
+	<class name="csv.prepaid.netmovel.domain.DuoActivation" table="DUO_ACTIVATIONS">
+		<id name="id" column="ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string" not-null="true"/>
+		<property name="serviceClassBefore" column="SC_BEFORE" type="ServiceClassType" not-null="true"/>
+		<property name="serviceClassAfter" column="SC_AFTER" type="ServiceClassType" not-null="true"/>
+		<property name="requestTimestamp" column="REQUEST_TIMESTAMP" type="timestamp" not-null="true"/>
+		<property name="contractName" column="CONTRACT_ID" type="BundleNameType"/>
+		<property name="status" column="STATUS" type="string"/>
+		<property name="operationCode" column="OPERATION_CODE" type="OperationCodeType"/>
+		<property name="resultCode" column="RESULTCODE" type="ResultCodeType"/>
+		<property name="activationDate" column="ACTIVATION_DATE" type="timestamp" not-null="false"/>
+		<property name="deactivationDate" column="DEACTIVATION_DATE" type="timestamp" not-null="false"/>
+	</class>
+	<class name="csv.prepaid.netmovel.domain.VoiceAddOnActivation" table="VOICE_ADDON_ACTIVATIONS">
+		<id name="id" column="ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string" not-null="true"/>
+		<property name="mainAccountBalanceBefore" type="float" column="MAIN_ACC_BALANCE_BEFORE"/>
+		<property name="mainAccountBalanceAfter" type="float" column="MAIN_ACC_BALANCE_AFTER"/>
+		<property name="dedicatedAccountBalanceBefore" column="DEDIC_ACC_BALANCE_BEFORE" type="float"/>
+		<property name="dedicatedAccountBalanceAfter" column="DEDIC_ACC_BALANCE_AFTER" type="float"/>
+		<property name="serviceClassBefore" column="SC_BEFORE" type="ServiceClassType"/>
+		<property name="serviceClassAfter" column="SC_AFTER" type="ServiceClassType"/>
+		<property name="bundleName" column="BUNDLE_ID" type="BundleNameType"/>
+		<property name="requestTimestamp" column="REQUEST_TIMESTAMP" type="timestamp"/>
+		<property name="bundleEndDate" column="BUNDLE_END_DATE" type="timestamp"/>
+		<property name="status" column="STATUS" type="string"/>
+		<property name="operationCode" column="OPERATION_CODE" type="OperationCodeType"/>
+		<property name="resultCode" column="RESULTCODE" type="ResultCodeType"/>
+	</class>
+</hibernate-mapping>

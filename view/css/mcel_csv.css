@@ -1,0 +1,131 @@
+/* ----------------------Layout ---------------------- */
+
+.login {
+	position:absolute;
+    left: 40%; 
+    top: 40%;
+    width: 300px;
+    height: 150px;
+    margin-top: -75px; /* half of the height */
+    margin-left: -150; /* half of the width */
+    /* border: 1px solid #000; */
+}
+
+#leftbar {
+	width: 9%;
+	padding-right: 10px;
+	vertical-align: top;
+}
+
+#rightbar {
+	width: 87%;
+	padding-right: 10px;
+	vertical-align: top;
+}
+
+/* ----------------------Edit/Display Templates ---------------------- */
+
+.name {
+	vertical-align: top;
+	font-weight: bold;
+	color:#005000;
+	width: 70px;
+	float: left;
+	padding: 5px;
+	clear: left;
+}
+
+.compact-name {
+	font-weight: bold;
+	color:#005000;
+	padding-right: 5px;
+}
+
+.value {
+	float: left;
+	padding: 5px;
+}
+
+.prop {
+	margin-right: 20px;	
+}
+
+.sectionPanel {
+	margin-top: 20px;
+	margin-right: 20px;	
+}
+
+.error {
+	float: left;
+	padding: 5px;
+}
+
+.errors {
+	color: red;
+	vertical-align: middle;
+	font-weight: bold;
+}
+
+.info {
+	color: #005000;
+	vertical-align: middle;
+	font-weight: bold;		
+}
+
+.required {
+	color: red;
+	padding-left: 2px;
+}
+
+.tableControl, .actionButtons {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.widthFiftyPercent {
+	width: 38%;
+	vertical-align: top;
+}
+
+.widthFull {
+	width: 100%;
+}
+
+/* ---------------------- HTML Generic ---------------------- */
+input[type='submit'], input[type='button'] {
+	background: #005000;
+	color: white;
+	font-weight:bold;
+	font-size: 10px;
+	border-color: gray;
+}
+
+input, textarea, option, optgroup, select {
+	border: 1px solid #BBBBBB;
+	font-size: 10px;
+	background: #F0F8FF;
+	color: black;
+}
+
+body {
+	background-image: url("../images/bg.gif");
+	background-repeat: repeat-x;	
+}
+
+caption {
+	color: #005000;
+	font-size: 10px;
+}
+
+h3 {
+	color: #005000;	
+}
+
+/* ------------------------RichFaces Gerneric ------------------- */
+.rich-shuttle-source-caption {
+	color: #005000;
+}
+
+.rich-shuttle-target-caption {
+	color: #005000;	
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../templateNoCustomer.xhtml">
+	
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.hlrSettings}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.retrieveHLRSettings}" styleClass="sectionPanel">
+			<h:form>
+				<div class="actionButtons">
+					<h:commandButton value="#{msg.getSettings}" action="#{emaService.retrieveHLRSettings}" />
+				</div>
+				<h:panelGrid columns="1" rendered="#{emaService.hlrSettings != null}">
+					<h:inputTextarea value="#{emaService.hlrSettings}" rows="20" cols="100" readonly="true"/>
+				</h:panelGrid>
+			</h:form>
+		</rich:panel>
+		<rich:panel styleClass="sectionPanel" header="#{msg.modifySettings}" rendered="#{emaService.hlrSettings != null and loggedInUser.hasPermissionFor('EMA Change Status')}">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.selectOperation}</ui:define>
+						<h:selectOneMenu value="#{emaService.selectedOperation}">
+							<s:convertEnum />
+							<s:selectItems value="#{allEmaOperations}" var="operation" label="#{operation.label}"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.callForwardMsisdn}(258-82XXXXXXX)</ui:define>
+						<span>
+						<h:inputText value="#{emaService.callForwardPrefix}" maxlength="5" size="5"/>
+						<rich:spacer width="5"/>
+						<h:inputText maxlength="9" size="9" value="#{emaService.callForwardMsisdn}"/>
+						</span>
+					</s:decorate>
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.reason}</ui:define>
+						<h:inputTextarea value="#{emaService.reason}" required="true" requiredMessage="Please enter a reason for operation" rows="10" cols="30"/>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton action="#{emaService.modifyHLRSettings}" value="#{msg.modifySettings}" />
+				</div>
+			</h:form>
+		</rich:panel>
+	</ui:define>			
+</ui:composition>

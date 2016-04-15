@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:modalPanel id="complaintAttachmentsMp" width="600" height="420" zindex="2000" style="overflow:auto" domElementAttachment="body">
+		<f:facet name="header">#{msg.attachments}</f:facet>
+		<f:facet name="controls">
+        	<a href="#" onclick="Richfaces.hideModalPanel('complaintAttachmentsMp')">X</a>
+     	</f:facet>
+		<a:outputPanel id="complaintAttachmentsPanel" layout="inline">
+			<rich:dataList id="complaintAttachmentsList" value="#{complaintAttachmentViewer.attachments}" var="attachment">
+				<c:set var="filePath" value="${complaintAttachmentViewer.downloadLocation}${attachment.id}${attachment.fileName}" /> 
+				<h:outputLink target="new" value="${filePath}">#{attachment.fileName}</h:outputLink>
+			</rich:dataList>
+		</a:outputPanel>
+	</rich:modalPanel>  
+</ui:composition>

@@ -1,0 +1,85 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+	<center>
+		<h3>#{msg.prepaidEnquiry}</h3>
+	</center>
+	<rich:messages globalOnly="true" layout="table" errorClass="errors" infoClass="info"/>
+	<s:decorate template="./date_interval.xhtml">
+		<h:panelGrid columns="9">
+			<a:commandButton id="btnRefreshAccount" action="#{prepaidAccountService.retrieveAccountInformation}" value="Refresh Account Data"
+			reRender="pnlAccountInfo, pnlEditAccount, pnlAdjustment" onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Refresh Account Data'; this.disabled=false"
+				eventsQueue="accountHistoryQueue"/>
+			<rich:spacer width="5"/>
+			<a:commandButton id="btnCRSAccountHistory" action="#{prepaidAccountService.retrieveCRSAccountHistory}" value="Get Account History" 
+				rendered="#{loggedInUser.hasPermissionFor('Prepaid Account History')}" reRender="allCRSEventsList"
+				onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Account History'; this.disabled=false"
+				eventsQueue="accountHistoryQueue"/>
+			<rich:spacer width="5"/>	
+			<a:commandButton id="btnLoyaltyHistory" action="#{prepaidAccountService.retrieveLoyaltyInformation}" value="Get Loyalty Points" 
+  				rendered="#{loggedInUser.hasPermissionFor('Retrieve Loyalty Info')}" reRender="pnlLoyaltyInfo"
+  				onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Loyalty Points'; this.disabled=false"
+  				eventsQueue="accountHistoryQueue"/>
+  			<rich:spacer width="5"/>
+  			<a:commandButton id="btnFaFHistory" action="#{prepaidAccountService.retrieveFaFHistory}" value="Get FaF History"
+  				rendered="#{loggedInUser.hasPermissionFor('Prepaid Account History')}" reRender="pnlFaFHistory"
+  				onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get FaF History'; this.disabled=false" 
+  				eventsQueue="accountHistoryQueue"/>
+  			<rich:spacer width="5"/>
+  			<a:commandButton id="btnCCHistory" action="#{reportingService.retrieveOperationsLog}" value="Get Customer Care History"
+  				rendered="#{loggedInUser.hasPermissionFor('Prepaid Account History')}" reRender="pnlCCHistory"
+  				onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Customer Care History'; this.disabled=false" 
+  				eventsQueue="accountHistoryQueue"/>
+		</h:panelGrid>
+	</s:decorate>	
+	<h:form>
+		<rich:tabPanel switchType="client">
+			<rich:tab label="#{msg.accountInformation}">
+			<a:outputPanel id="pnlAccountInfo">	
+				<h:panelGrid columns="1">
+					<ui:include src="/prepaid/account/account_info.xhtml" />
+					<ui:include src="/prepaid/account/accumulator_info.xhtml"/>
+					<ui:include src="/prepaid/account/faf_info.xhtml"/>
+					<ui:include src="/prepaid/account/community_info.xhtml" />
+				</h:panelGrid>
+			</a:outputPanel>
+			</rich:tab>
+			<rich:tab label="#{msg.accountHistory}">
+				<ui:include src="/prepaid/account/history/account_history.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.friendsAndFamilyHistory}">
+			<a:outputPanel id="pnlFaFHistory">
+				<ui:include src="/prepaid/account/faf_history.xhtml" />
+			</a:outputPanel>
+			</rich:tab>
+			<rich:tab label="#{msg.changeSubscriberInformation}" rendered="#{prepaidAccountService.account != null}">
+			<a:outputPanel id="pnlEditAccount">
+				<ui:include src="/prepaid/account/edit_account.xhtml" />
+			</a:outputPanel>			
+			</rich:tab>
+			<rich:tab label="#{msg.adjustment}" rendered="#{prepaidAccountService.account != null}">
+			<a:outputPanel id="pnlAdjustment">
+				<ui:include src="/prepaid/account/adjustment.xhtml" />
+			</a:outputPanel>
+			</rich:tab>
+			<rich:tab label="#{msg.loyaltyPoints}">
+				<a:outputPanel id="pnlLoyaltyInfo">
+					<ui:include src="/prepaid/account/loyalty_account.xhtml" />
+				</a:outputPanel>
+			</rich:tab>
+			<rich:tab label="#{msg.CCHistory}">
+				<a:outputPanel id="pnlCCHistory">
+					<ui:include src="/prepaid/account/customer_care_history.xhtml" />
+				</a:outputPanel>
+			</rich:tab>
+		</rich:tabPanel>
+	</h:form>
+	</ui:define>
+</ui:composition>

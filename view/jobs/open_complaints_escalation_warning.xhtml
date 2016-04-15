@@ -1,0 +1,60 @@
+<ui:repeat xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:m="http://jboss.com/products/seam/mail"
+           xmlns:ui="http://java.sun.com/jsf/facelets"
+           xmlns:h="http://java.sun.com/jsf/html" value="#{notificationsProcessor.groupSupervisors}" var="user">
+	<m:message>
+		<m:from name="MCEL SARL" address="csvAdmin@mcel.co.mz" />  
+    	<m:to name="#{user.fullName}">#{user.email}</m:to>
+    	<m:to>falgan@mcel.co.mz</m:to>       
+		<m:subject>Unresolved Complaints on CSV!</m:subject>
+		<m:body>
+		<html>
+    		<p>There are currently #{notificationsProcessor.openPooledTaskInstances.size()} unresolved customer complaints waiting on CSV for more than #{notificationsProcessor.daysPassedSinceDueDate} day(s) 
+    		waiting on departments under your supervision.</p>
+    		
+    		<ui:repeat var="taskInstance" value="#{notificationsProcessor.openPooledTaskInstances}">
+    			<table border="1">
+					<caption>Complaint Details</caption>
+					<tr>
+						<td>Complaint ID:</td>
+						<td>#{taskInstance.variables['openComplaint'].complaintId}</td>
+					</tr>
+					<tr>
+						<td>Currently Waiting On:</td>
+						<td>#{taskInstance.variables['openComplaint'].phase.label} - #{taskInstance.variables['openComplaint'].assignedTo} / #{taskInstance.variables['openComplaint'].assignedToUser}</td>
+					</tr>
+					<tr>
+						<td>Sent To This Group On:</td>
+						<td>#{taskInstance.create}</td>
+					</tr>
+					<tr>
+						<td>Complaint Opened By: </td>
+						<td>#{taskInstance.variables['openComplaint'].enteredBy}</td>
+					</tr>
+					<tr>
+						<td>Complaint Opening Time: </td>
+						<td>#{taskInstance.variables['openComplaint'].openingDate}</td>
+					</tr>
+					<tr>
+						<td>Subscriber: </td>
+						<td>#{taskInstance.variables['openComplaint'].customerMsisdn}</td>
+					</tr>
+					<tr>
+						<td>Location:</td>
+						<td>#{taskInstance.variables['openComplaint'].province} / #{taskInstance.variables['openComplaint'].district}</td>
+					</tr>
+					<tr>
+						<td>Description:</td>
+						<td><h:outputText value="#{taskInstance.variables['openComplaint'].description}" escape="false"/></td>
+					</tr>
+					<tr>
+						<td>Attendance Remark:</td>
+						<td>#{taskInstance.variables['openComplaint'].attendanceRemark}</td>
+					</tr>
+				</table>
+				<p></p>
+    		</ui:repeat>
+    	</html>
+    	</m:body>
+	</m:message>
+</ui:repeat>

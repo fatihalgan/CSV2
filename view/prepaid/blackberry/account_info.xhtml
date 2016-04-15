@@ -1,0 +1,110 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:rich="http://richfaces.org/rich"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:a="http://richfaces.org/a4j">
+
+	<rich:panel styleClass="sectionPanel" header="#{msg.accountInfo}">
+		<h:panelGrid columns="3" cellspacing="20px">
+			<h:panelGrid columns="1">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">IMSI</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.imsi}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Creation Date</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.creationDate}" readonly="true" />
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Last Reload Amount</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.lastReloadAmount}" readonly="true"/>
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Email</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.email}" readonly="true"/>
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Subscription</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.subscription}" readonly="true"/>
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Subscription Com Offer</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.subscriptionComOffer}" readonly="true"/>
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Subscription Next Date</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.subscriptionNextDate}" readonly="true"/>
+				</s:decorate>	
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Account Status</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.status}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">End Date</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.endDate}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Last Reload Date</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.lastReloadDate}" readonly="true"/>
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Password Blocked</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.passwordBlocked}" readonly="true"/>
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Login</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.login}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Blocked</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.blocked}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Consecutive Bad Passwords</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.consecutiveBadPasswords}" readonly="true"/>
+				</s:decorate>	
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Service</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.service}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Activity Notification 1</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.activityNotification1}" readonly="true"/>
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Activity Notification 2</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.activityNotification2}" readonly="true"/>
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">End Of Activity Notification 1</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.endActivityNotification1}" />
+				</s:decorate>	
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">End Of Activity Notification 2</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.accountInfo.endActivityNotification2}" />
+				</s:decorate>	
+			</h:panelGrid>
+		</h:panelGrid>
+	</rich:panel>
+	<rich:panel header="#{msg.suspendDeactivate}">
+		<h:form>
+		<h:panelGrid columns="1">
+			<s:decorate template="../../edit.xhtml">
+				<ui:define name="label">#{msg.reason}</ui:define>
+				<h:inputTextarea value="#{bb4pCustomerCareService.reason}" rows="10" cols="30" required="true" requiredMessage="Please enter reason"/>		
+			</s:decorate>
+		</h:panelGrid>
+		<div class="actionButtons">
+			<h:commandButton action="#{bb4pCustomerCareService.deactivateAccount}" value="#{msg.deactivateAccount}" immediate="true"/>
+			<h:commandButton action="#{bb4pCustomerCareService.suspendAccount}" value="#{msg.suspendAccount}" immediate="true"/>
+		</div>
+		</h:form>
+	</rich:panel>
+</ui:composition>

@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>#{msg.roamingParameters}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<rich:tabPanel switchType="ajax">
+			<rich:tab label="#{msg.roamingCountry}">
+				<ui:include src="/roaming/country.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.roamingContinent}">
+				<ui:include src="/roaming/continent.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.roamingService}">
+				<ui:include src="/roaming/roaming_service.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.roamingAgreementStatus}">
+				<ui:include src="/roaming/agreement_stat.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.roamingContactTypes}">
+				<ui:include src="/roaming/contact_types.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.roamingIregStatus}">
+				<ui:include src="/roaming/ireg_status.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.roamingTadigStatus}">
+				<ui:include src="/roaming/tadig_status.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.roamingCurrency}">
+				<ui:include src="/roaming/currency.xhtml" />
+			</rich:tab>
+<!--			<rich:tab label="#{msg.roamingMccmnc}">-->
+<!--				<ui:include src="/roaming/mccmnc.xhtml" />-->
+<!--			</rich:tab>-->
+<!--			<rich:tab label="#{msg.roamingTapcode}">-->
+<!--				<ui:include src="/roaming/tapcode.xhtml" />-->
+<!--			</rich:tab>-->
+		</rich:tabPanel>
+	</ui:define>
+</ui:composition>

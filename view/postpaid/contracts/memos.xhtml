@@ -1,0 +1,150 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:m="http://jboss.com/products/seam/mail"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.memos}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.memos}" styleClass="sectionPanel">
+			<h:form>
+			<rich:dataTable id="tblMemos" value="#{contractService.selectedAccount.memos}" var="item">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.memoCode}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.contractCode}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.memoType}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.memoStatus}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.shortDescription}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.priority}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.deadLine}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.createdOn}"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:commandLink value="#{item.code}" action="#{contractService.viewMemoDetails(item.code)}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.contractCode}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.type}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.status}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.shortDescription}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.priority}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.deadLine}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.createdOn}"/>
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+			</h:form>
+			<s:link value="#{msg.returnToCustomerDetails}" view="/postpaid/contracts/postpaid_account_view.xhtml"/>
+		</rich:panel>
+		<rich:panel header="#{msg.memoDetails}" styleClass="sectionPanel" rendered="#{contractService.selectedMemo != null}">
+			<h:panelGrid columns="2">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.memoCode}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.code}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.priority}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.priority}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.shortDescription}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.shortDescription}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.longDescription}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.longDescription}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.memoType}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.type}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.memoStatus}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.status}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.createdBy}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.createdBy}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.createdOn}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.createdOn}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.closedBy}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.closedBy}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.modifiedBy}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.modifiedBy}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.modifiedOn}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.modifiedOn}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.ccUser1}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.ccUser1}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.ccUser2}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.ccUser2}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.ccUser3}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.ccUser3}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.followUpType}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.followUpType}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.followUpUser}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.followUpUser}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.deadLine}</ui:define>
+					<h:outputText value="#{contractService.selectedMemo.deadLine}" />
+				</s:decorate>
+			</h:panelGrid>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

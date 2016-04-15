@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:c="http://java.sun.com/jstl/core">
+	<rich:panel header="#{msg.registrationInfo}" styleClass="sectionPanel" rendered="#{prepaidCustomerService.currentSubscription != null}">
+		<h:panelGrid columns="3">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.imsiNumber}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.imsi}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.simNumber}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.sim}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.registrationType}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.registrarType}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.registrationStatus}</ui:define>
+				<h:selectOneMenu value="#{prepaidCustomerService.currentSubscription.status}" readonly="true">
+					<s:convertEnum />
+					<s:selectItems var="status" value="#{allCustomerRegistrationStatuses}" label="#{status.label}"/>
+				</h:selectOneMenu>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.serviceType}</ui:define>
+				<h:selectOneMenu value="#{prepaidCustomerService.currentSubscription.service}" readonly="true">
+					<s:convertEnum />
+					<s:selectItems var="service" value="#{allSIMServiceTypes}" label="#{service.label}"/>
+				</h:selectOneMenu>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.registrationDate}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registrationDate}">
+					<f:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>	
+				</h:outputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.documentSource}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.documentSource.collectorName}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.enteredBy}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.saveUser}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.incmStatus}</ui:define>
+				<h:selectOneMenu value="#{prepaidCustomerService.currentSubscription.INCMStatus}" readonly="true">
+					<s:convertEnum/>
+					<s:selectItems var="status" value="#{allINCMStatuses}" label="#{status.label}"/>
+				</h:selectOneMenu>
+			</s:decorate>
+		</h:panelGrid>
+	</rich:panel>   
+</ui:composition>

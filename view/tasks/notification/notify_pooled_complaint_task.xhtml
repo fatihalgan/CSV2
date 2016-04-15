@@ -1,0 +1,39 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:m="http://jboss.com/products/seam/mail"
+           xmlns:ui="http://java.sun.com/jsf/facelets"
+           xmlns:f="http://java.sun.com/jsf/core"
+           xmlns:h="http://java.sun.com/jsf/html">
+	<m:from name="MCEL SARL" address="csvAdmin@mcel.co.mz" />  
+    <m:to>#{groupSupervisorEmail}</m:to>
+    <m:subject>New Customer Complaint From CSV: #{processKeyResolver.getProcessKey()}</m:subject>
+    <m:body>
+    	<html>
+    	<p>
+    	You have a new customer complaint waiting for assignment under your supervision. The complaint number is #{processKeyResolver.getProcessKey()}.
+    	</p>
+		<table>
+			<caption>Complaint Details</caption>
+			<tr>
+				<td>Opened By: </td>
+				<td>#{taskInstance.variables['openComplaint'].enteredBy}</td>
+			</tr>
+			<tr>
+				<td>Opening Time: </td>
+				<td>#{taskInstance.variables['openComplaint'].openingDate}</td>
+			</tr>
+			<tr>
+				<td>Location</td>
+				<td>#{taskInstance.variables['openComplaint'].province} / #{taskInstance.variables['openComplaint'].district}</td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><h:outputText value="#{taskInstance.variables['openComplaint'].description}" escape="false"/></td>
+			</tr>
+			<tr>
+				<td>Task Id:</td>
+				<td>#{taskInstance.id}</td>
+			</tr>
+		</table>
+		</html>
+    </m:body>           
+</m:message>

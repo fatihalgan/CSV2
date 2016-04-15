@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process-definition 
+	xmlns="urn:jbpm.org:jpdl-3.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:jbpm.org:jpdl-3.2 http://jbpm.org/xsd/jpdl-3.2.xsd"
+  	name="ComplaintManagement">
+  	
+  	<start-state name="Raise Complaint">
+  		<transition to="Help Desk Attendance"></transition>
+	</start-state>
+
+
+	<task-node name="Help Desk Attendance" >
+		<task name="Attend Complaint">
+			<assignment pooled-actors="#{openComplaint.helpDeskGroupName}"/>
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="node-enter">
+			<action expression="#{openComplaintAttendanceFinished.complaintReiterated}"/>
+		</event>
+		<event type="task-create">
+			<action expression="#{taskVariableResolver.checkTaskVariableConsistency}"/>
+		</event>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="Resolved?"></transition>
+	</task-node>
+
+	<decision name="Resolved?">
+		<transition to="Customer Feedback" name="Yes - to Customer Feedback">
+			<condition expression="#{openComplaint.customerFeedback == true}"/>
+		</transition>
+		<transition to="Outbound Support Attendance" name="No - to Outbound Support Attendance">
+			<condition expression="#{openComplaint.outboundSupport == true}"/>
+		</transition>
+		<transition to="Supervisor Feedback" name="No - to Supervisor Feedback">
+			<condition expression="#{openComplaint.supervisorFeedback == true}"/>
+		</transition>
+		<transition to="Close Complaint" name="to Close Complaint">
+			<condition expression="#{openComplaint.finalized == true}"/>
+		</transition>
+	</decision>
+
+	<task-node name="Outbound Support Attendance">
+		<task name="Attend Complaint">
+			<assignment actor-id="#{openComplaint.assignedToUser}" pooled-actors="#{openComplaint.assignedTo}"/>
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="task-create">
+			<action expression="#{taskVariableResolver.checkTaskVariableConsistency}"/>
+		</event>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="Help Desk Attendance"></transition>
+	</task-node>
+
+	<task-node name="Supervisor Feedback">
+		<task name="Give Supervisor Feedback">
+			<assignment pooled-actors="#{openComplaint.supervisorGroupName}"></assignment>
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="task-create">
+			<action expression="#{taskVariableResolver.checkTaskVariableConsistency}"/>
+		</event>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="Help Desk Attendance"></transition>
+	</task-node>
+	
+	<task-node name="Customer Feedback">
+		<task name="Get Customer Feedback">
+			<assignment pooled-actors="#{openComplaint.customerFeedbackGroupName}"></assignment>
+			<reminder duedate="2 business hours" repeat="2 business hours"/>
+		</task>
+		<event type="task-create">
+			<action expression="#{taskVariableResolver.checkTaskVariableConsistency}"/>
+		</event>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="Confirm Resolved?"></transition>
+	</task-node>
+	
+	<decision name="Confirm Resolved?">
+		<transition to="Help Desk Attendance" name="No - to Help Desk Attendance">
+			<condition expression="#{openComplaint.finalized == false}"/>
+		</transition>
+		<transition to="Close Complaint" name="Yes - to Close Complaint">
+			<condition expression="#{openComplaint.finalized == true}"/>
+		</transition>
+	</decision>
+	
+	<end-state name="Close Complaint">
+		<event type="node-enter">
+			<action expression="#{openComplaintAttendanceFinished.synchronizeComplaintStatus}"/>
+		</event>
+	</end-state>
+</process-definition>

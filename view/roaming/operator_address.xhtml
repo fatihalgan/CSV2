@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="operatorAddressSelectionRegion">
+		<table>
+			<tr>
+				<td valign="top" rowspan="2"><rich:panel
+					header="Operator Addresses">
+					<h:form id="operatorAddressList">
+						<rich:dataTable id="tblOperatorAddresses"
+							value="#{operatorAddressListAction.operatorAddressList}"
+							var="item" rows="20">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column>
+										<h:outputText value="#{msg.operatorName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.roamingCountryName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.roamingOperatorAddress}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.roamingOperatorAddressCity}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Edit" />
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.operator.operatorName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.country.countryName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.address}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.city}" />
+								</rich:column>
+								<rich:column>
+									<a:commandButton
+										action="#{operatorAddressListAction.editOperatorAddress(item)}"
+										value="Edit" reRender="operatorAddressSelectionRegion" />
+								</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+								<rich:datascroller for="tblOperatorAddresses" maxPages="20"
+									boundaryControls="auto" fastControls="auto" />
+							</f:facet>
+						</rich:dataTable>
+						<div class="actionButtons"><h:commandButton id="btnNewOpAd"
+							value="Create New"
+							action="#{operatorAddressListAction.newOperatorAddress}" /></div>
+					</h:form>
+				</rich:panel></td>
+				<td><rich:panel header="#{msg.roamingEditOperatorAddress}"
+					rendered="#{operatorAddressListAction.selectedOperatorAddress != null}">
+					<h:form id="frmEditOperatorAddress">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingOperatorAddress}</ui:define>
+								<h:inputText
+									value="#{operatorAddressListAction.selectedOperatorAddress.address}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingOperatorAddressCity}</ui:define>
+								<h:inputText
+									value="#{operatorAddressListAction.selectedOperatorAddress.city}"
+									required="true" />
+							</s:decorate>
+						</h:panelGrid>
+						<div class="actionButtons"><h:commandButton id="btnSaveOpAd"
+							value="Save"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail Save')}"
+							action="#{operatorAddressListAction.saveOperatorAddress}"
+							reRender="operatorAddressSelectionRegion" /> <h:commandButton
+							id="btnDeleteOpAd" value="Delete Operator Address"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail Delete')}"
+							action="#{operatorAddressListAction.deleteOperatorAddress}"
+							reRender="operatorAddressSelectionRegion" /></div>
+					</h:form>
+				</rich:panel></td>
+			</tr>
+		</table>
+	</h:panelGroup>
+</ui:composition>

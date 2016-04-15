@@ -1,0 +1,30 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+				
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.selectCorporateClient}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="4">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.companyName}</ui:define>
+						<h:selectOneMenu value="#{complaintManagementService.complaintOwner.company}">
+							<s:selectItems var="item" value="#{corporateClientListAction.corporateClientList}" label="#{item.companyName}"/>
+							<f:converter converterId="csvEntityConverter"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<rich:spacer width="5"/>
+					<h:commandButton value="#{msg.submit}" action="#{complaintManagementService.updateCompanyInfo}" />
+					<s:button value="#{msg.cancel}" view="/corporate/start_customer_session.xhtml" immediate="true"/>
+				</h:panelGrid>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

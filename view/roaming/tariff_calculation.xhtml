@@ -1,0 +1,412 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>#{msg.roamingTariffCalculation}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<h:panelGroup layout="vertical" id="tariffCalcRegion">
+			<rich:panel header="Tariff Search">
+				<h:form id="tariffCalc">
+					<table>
+						<tr align="center">
+							<td valign="top" rowspan="2"><rich:panel
+								header="Operator Region Search">
+								<table>
+									<tr>
+										<td valign="top"><rich:panel>
+											<h:panelGrid columns="2">
+												<s:decorate template="../edit.xhtml">
+													<ui:define name="label">#{msg.roamingCcnc}</ui:define>
+													<h:inputText value="#{tariffCalculationListAction.ccnc}" />
+												</s:decorate>
+												<s:decorate template="../edit.xhtml">
+													<ui:define name="label">#{msg.roamingNetworkCode}</ui:define>
+													<h:inputText value="#{tariffCalculationListAction.mccmnc}" />
+												</s:decorate>
+												<s:decorate template="../edit.xhtml">
+													<ui:define name="label">#{msg.roamingOperatorCode}</ui:define>
+													<h:inputText
+														value="#{tariffCalculationListAction.operatorCode}" />
+												</s:decorate>
+												<s:decorate template="../edit.xhtml">
+													<ui:define name="label">#{msg.roamingOperatorName}</ui:define>
+													<h:inputText
+														value="#{tariffCalculationListAction.operatorName}" />
+												</s:decorate>
+												<s:decorate template="../edit.xhtml">
+													<h:commandButton value="Find Operator List"
+														action="#{tariffCalculationListAction.findOperatorCountryListByCriteria}" />
+												</s:decorate>
+											</h:panelGrid>
+										</rich:panel></td>
+										<td valign="top"><rich:panel>
+											<h:panelGrid>
+												<s:decorate template="../edit.xhtml">
+													<ui:define name="label">#{msg.roamingMainAgreement}</ui:define>
+													<h:selectOneMenu id="tcMainAgreementSelOne"
+														value="#{tariffCalculationListAction.selectedMainAgreement}">
+														<a:support event="onblur"
+															action="#{tariffCalculationListAction.findOperatorCountryList}"
+															ajaxSingle="true" reRender="tcOperatorRegionSelOne" />
+														<f:converter converterId="roamingEntityConverter" />
+														<s:selectItems
+															value="#{tariffCalculationListAction.mainAgreementList}"
+															var="tcMa" label="#{tcMa.description}" />
+													</h:selectOneMenu>
+												</s:decorate>
+											</h:panelGrid>
+										</rich:panel></td>
+									</tr>
+									<tr>
+										<td valign="top"><rich:panel>
+											<h:panelGrid columns="1">
+												<s:decorate template="../edit.xhtml">
+													<ui:define name="label">#{msg.roamingOperatorCountry}</ui:define>
+													<h:selectOneMenu id="tcOperatorRegionSelOne"
+														value="#{tariffCalculationListAction.selectedOperatorCountry}">
+														<f:converter converterId="roamingEntityConverter" />
+														<s:selectItems id="tcOpRegList"
+															value="#{tariffCalculationListAction.operatorCountryList}"
+															var="tcOpReg"
+															label="#{tcOpReg.country.countryName}-#{tcOpReg.operator.operatorName}" />
+													</h:selectOneMenu>
+												</s:decorate>
+											</h:panelGrid>
+											<h:panelGrid columns="2">
+												<s:decorate template="../edit.xhtml">
+													<ui:define name="label">#{msg.roamingMonths}</ui:define>
+													<h:selectOneMenu id="monthSelOne"
+														value="#{tariffCalculationListAction.selectedMonth}">
+														<s:convertEnum />
+														<s:selectItems value="#{allMonths}" var="types"
+															label="#{types.label}" />
+													</h:selectOneMenu>
+												</s:decorate>
+												<s:decorate template="../edit.xhtml">
+													<ui:define name="label">#{msg.roamingYear}</ui:define>
+													<h:inputText id="yearInput"
+														value="#{tariffCalculationListAction.year}">
+													</h:inputText>
+												</s:decorate>
+											</h:panelGrid>
+										</rich:panel></td>
+									</tr>
+								</table>
+								<div class="actionButtons"><h:commandButton id="btnSearch"
+									value="Search"
+									action="#{tariffCalculationListAction.searchTariff}" /></div>
+							</rich:panel></td>
+						</tr>
+					</table>
+				</h:form>
+				<table>
+					<tr>
+						<td><h:form>
+							<rich:panel header="#{msg.editTariffCalcParams}"
+								styleClass="sectionPanel">
+								<h:panelGrid columns="3">
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingCurrencyExchange}</ui:define>
+										<h:inputText id="tcpCurEx"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.currencyExchange}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpCurEx,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingExchange}</ui:define>
+										<h:inputText id="tcpEx"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.exchange}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpEx,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingMarkup}</ui:define>
+										<h:inputText id="tcpMarkup"
+											action="#{tariffCalculationListAction.calculateParams}"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.markup}">
+											<a:support event="onblur"
+												reRender="tcpMarkup,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateLongRange minimum="0" maximum="100" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingVat}</ui:define>
+										<h:inputText id="tcpVat"
+											action="#{tariffCalculationListAction.calculateParams}"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.vat}">
+											<a:support event="onblur"
+												reRender="tcpVat,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateLongRange minimum="0" maximum="100" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingExchangeUnit}</ui:define>
+										<h:selectOneMenu id="currencyCelOne"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.currency}">
+											<f:converter converterId="roamingEntityConverter" />
+											<s:selectItems
+												value="#{tariffCalculationListAction.currencyList}"
+												var="cur"
+												label="#{cur.currencyName}-#{cur.currencyShortCode}" />
+										</h:selectOneMenu>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingPacketDataMultiplier}</ui:define>
+										<h:inputText id="tcpPacDatMul"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.packetDataMultiplier}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpPacDatMul,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingGprsInitChargingInterval}</ui:define>
+										<h:inputText id="tcpGprsInitInt"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.gprsInitChargingInterval}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpGprsInitInt,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingGprsAdditionalDesc}</ui:define>
+										<h:inputText
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.gprsAdditionalDesc}" />
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingVoiceInitChargingInterval}</ui:define>
+										<h:inputText id="tcpVoiceInitInt"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.voiceInitChargingInterval}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpVoiceInitInt,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateLongRange minimum="0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingCallSetupCharge}</ui:define>
+										<h:inputText id="tcpCallSetup"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.callSetupCharge}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpCallSetup,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingNationalVoiceMo}</ui:define>
+										<h:inputText id="tcpNatVoiceMo"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.nationalVoiceMo}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpNatVoiceMo,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingBackHomeVoiceMo}</ui:define>
+										<h:inputText id="tcpBackHomeVoiceMo"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.backHomeVoiceMo}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpBackHomeVoiceMo,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingRowVoiceMo}</ui:define>
+										<h:inputText id="tcpRowVoiceMo"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.rowVoiceMo}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpRowVoiceMo,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingSattelliteVoiceMo}</ui:define>
+										<h:inputText id="tcpSatteliteVoiceMo"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.sattelliteVoiceMo}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpSatteliteVoiceMo,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingVoiceMt}</ui:define>
+										<h:inputText id="tcpVoiceMt"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.voiceMt}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpVoiceMt,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingSmsMo}</ui:define>
+										<h:inputText id="tcpSmsMo"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.smsMo}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpSmsMo,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<s:decorate template="../edit.xhtml">
+										<ui:define name="label">#{msg.roamingGprsIotUnit}</ui:define>
+										<h:inputText id="tcpGprsIot"
+											value="#{tariffCalculationListAction.selectedTariffCalculationParams.gprsIotUnit}">
+											<a:support event="onblur"
+												action="#{tariffCalculationListAction.calculateParams}"
+												reRender="tcpGprsIot,tcIOTwoMarkup,tcIOTwithMarkup" />
+											<f:validateDoubleRange minimum="0.0" />
+										</h:inputText>
+									</s:decorate>
+									<div class="saveTariffDiv"><h:commandButton
+										id="btnSaveTariff" value="Save"
+										rendered="#{loggedInUser.hasPermissionFor('Roaming Tariff Save')}"
+										action="#{tariffCalculationListAction.saveTariffCalculationParam}" />
+									<h:commandButton id="btnDeleteTariff" value="Delete"
+										rendered="#{loggedInUser.hasPermissionFor('Roaming Tariff Delete')}"
+										action="#{tariffCalculationListAction.deleteTariffCalculationParam}" /></div>
+								</h:panelGrid>
+							</rich:panel>
+						</h:form></td>
+						<td valign="top"><rich:panel styleClass="sectionPanel"
+							header="IOT (Without Markup and VAT) In Meticail">
+							<h:panelGrid id="tcIOTwoMarkup" columns="2">
+								<h:outputText value="Money Exchange" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.exchangeRate}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+
+								<h:outputText value="Call Setup Charge" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.womCallSetupCharge}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="National Voice MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.womNationalVoiceMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="Back Home Voice MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.womBackHomeVoiceMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="RoW Voice MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.womRowVoiceMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="Satellite Voice MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.womSattelliteVoiceMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="Voice MT" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.womVoiceMt}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="SMS MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.womSmsMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="GPRS" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.womGprsIotUnit}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+							</h:panelGrid>
+						</rich:panel></td>
+						<td valign="top"><rich:panel styleClass="sectionPanel"
+							header="IOT (With Markup and VAT) In Meticail">
+							<h:panelGrid id="tcIOTwithMarkup" columns="2">
+								<h:outputText value="Call Setup Charge" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.wmCallSetupCharge}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="National Voice MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.wmNationalVoiceMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="Back Home Voice MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.wmBackHomeVoiceMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="RoW Voice MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.wmRowVoiceMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="Satellite Voice MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.wmSattelliteVoiceMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="Voice MT" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.wmVoiceMt}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="SMS MO" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.wmSmsMo}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+								<h:outputText value="GPRS" styleClass="label" />
+								<h:inputText readonly="true"
+									value="#{tariffCalculationListAction.selectedTariffCalculationParams.wmGprsIotUnit}">
+									<f:convertNumber groupingUsed="true" minFractionDigits="2"
+										maxFractionDigits="2" />
+								</h:inputText>
+							</h:panelGrid>
+						</rich:panel></td>
+
+					</tr>
+				</table>
+
+			</rich:panel>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

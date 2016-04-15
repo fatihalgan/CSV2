@@ -1,0 +1,173 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="operatorContactSelectionRegion">
+		<table>
+			<tr>
+				<td valign="top" rowspan="2"><rich:panel
+					header="Operator Contacts">
+					<h:form id="operatorContactList">
+						<rich:dataTable id="tblOperatorContacts"
+							value="#{operatorContactListAction.operatorContactList}"
+							var="item" rows="20">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column>
+										<h:outputText value="#{msg.operatorName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.roamingCountryName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorContactTitle}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorContactName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorContactSurname}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorContactPhone}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorContactFax}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorContactGsm}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorContactEmail}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorContactType}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Edit" />
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.operator.operatorName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.country.countryName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.contactTitle}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.contactName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.contactSurname}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.phone}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.fax}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.gsm}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.email}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.contactTypes.description}" />
+								</rich:column>
+								<rich:column>
+									<a:commandButton
+										action="#{operatorContactListAction.editOperatorContact(item)}"
+										value="Edit" reRender="operatorContactSelectionRegion" />
+								</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+								<rich:datascroller for="tblOperatorContacts" maxPages="20"
+									boundaryControls="auto" fastControls="auto" />
+							</f:facet>
+						</rich:dataTable>
+						<div class="actionButtons"><h:commandButton
+							id="btnNewOpCont" value="Create New"
+							action="#{operatorContactListAction.newOperatorContact}" /></div>
+					</h:form>
+				</rich:panel></td>
+				<td><rich:panel header="#{msg.roamingEditOperatorContact}"
+					rendered="#{operatorContactListAction.selectedOperatorContact != null}">
+					<h:form id="frmEditOperatorContact">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.operatorContactTitle}</ui:define>
+								<h:inputText
+									value="#{operatorContactListAction.selectedOperatorContact.contactTitle}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.operatorContactName}</ui:define>
+								<h:inputText
+									value="#{operatorContactListAction.selectedOperatorContact.contactName}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.operatorContactSurname}</ui:define>
+								<h:inputText
+									value="#{operatorContactListAction.selectedOperatorContact.contactSurname}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.operatorContactPhone}</ui:define>
+								<h:inputText
+									value="#{operatorContactListAction.selectedOperatorContact.phone}"
+									required="false" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.operatorContactFax}</ui:define>
+								<h:inputText
+									value="#{operatorContactListAction.selectedOperatorContact.fax}"
+									required="false" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.operatorContactGsm}</ui:define>
+								<h:inputText
+									value="#{operatorContactListAction.selectedOperatorContact.gsm}"
+									required="false" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.operatorContactEmail}</ui:define>
+								<h:inputText
+									value="#{operatorContactListAction.selectedOperatorContact.email}"
+									required="false" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.operatorContactType}</ui:define>
+								<h:selectOneMenu
+									value="#{operatorContactListAction.selectedOperatorContact.contactTypes}">
+									<s:selectItems value="#{operatorContactTypeList}" var="cntType"
+										label="#{cntType.description}" />
+									<f:converter converterId="roamingEntityConverter" />
+								</h:selectOneMenu>
+							</s:decorate>
+						</h:panelGrid>
+						<div class="actionButtons"><h:commandButton
+							id="btnSaveOpCont" value="Save"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail Save')}"
+							action="#{operatorContactListAction.saveOperatorContact}"
+							reRender="operatorContactSelectionRegion" /> <h:commandButton
+							id="btnDeleteOpCont" value="Delete Operator Contact"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail Delete')}"
+							action="#{operatorContactListAction.deleteOperatorContact}"
+							reRender="operatorContactSelectionRegion" /></div>
+					</h:form>
+				</rich:panel></td>
+			</tr>
+		</table>
+	</h:panelGroup>
+</ui:composition>

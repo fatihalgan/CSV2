@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="PrepaidToPostpaidMigration" width="715" height="514">
+  <node name="Request Migration" x="94" y="108" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Passed Risk Analysis?" x="87" y="207" width="167" height="36">
+    <edge>
+      <label x="-30" y="-25"/>
+    </edge>
+    <edge>
+      <label x="-104" y="-13"/>
+    </edge>
+  </node>
+  <node name="Perform Risk Analysis" x="350" y="107" width="195" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Collect Payment For New Rate Plan" x="495" y="311" width="219" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Create Contract" x="310" y="311" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Create Subscriber As Postpaid" x="220" y="393" width="208" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Delete From Prepaid Network" x="74" y="312" width="194" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Insert Fee Into BSCS" x="228" y="477" width="194" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Create Service" x="538" y="394" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Rejected" x="419" y="206" width="132" height="36"/>
+  <node name="Finish" x="509" y="477" width="132" height="36"/>
+  <deployment serverName="" serverPort="" serverDeployer="">
+    <classesAndResources/>
+    <filesAndFolders>
+      <element value="/CSV/resources/.gpd.complaint_management.jpdl.xml"/>
+      <element value="/CSV/resources/.gpd.complaint_management.xml"/>
+      <element value="/CSV/resources/.gpd.complaint_management2.jpdl.xml"/>
+      <element value="/CSV/resources/.gpd.corporate_complaint_management.jpdl.xml"/>
+      <element value="/CSV/resources/.gpd.deneme.jpdl.xml"/>
+      <element value="/CSV/resources/.gpd.prepaid_to_postpaid_migration.jpdl.xml"/>
+      <element value="/CSV/resources/META-INF/application.xml"/>
+      <element value="/CSV/resources/META-INF/ejb-jar.xml"/>
+      <element value="/CSV/resources/META-INF/persistence.xml"/>
+      <element value="/CSV/resources/MessageResources_en.properties"/>
+      <element value="/CSV/resources/MessageResources_pt.properties"/>
+      <element value="/CSV/resources/WEB-INF/.faces-config.xml.jsfdia"/>
+      <element value="/CSV/resources/WEB-INF/.pages.xml.spdia"/>
+      <element value="/CSV/resources/WEB-INF/clients/cct_user_repo_policy_config.xml"/>
+      <element value="/CSV/resources/WEB-INF/components.xml"/>
+      <element value="/CSV/resources/WEB-INF/conf/axis2.xml"/>
+      <element value="/CSV/resources/WEB-INF/csvApplicationContext.xml"/>
+      <element value="/CSV/resources/WEB-INF/faces-config.xml"/>
+      <element value="/CSV/resources/WEB-INF/jboss-classloading.xml"/>
+      <element value="/CSV/resources/WEB-INF/log4j.xml"/>
+      <element value="/CSV/resources/WEB-INF/modules/addressing-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/mex-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/modules.list"/>
+      <element value="/CSV/resources/WEB-INF/modules/mtompolicy-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/ping-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/rahas-1.5.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/rampart-1.5.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/scripting-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/modules/soapmonitor-1.5.1.mar"/>
+      <element value="/CSV/resources/WEB-INF/pages.xml"/>
+      <element value="/CSV/resources/WEB-INF/services/BB4PService/META-INF/BB4PService.wsdl"/>
+      <element value="/CSV/resources/WEB-INF/services/BB4PService/META-INF/mcel_types.xsd"/>
+      <element value="/CSV/resources/WEB-INF/services/BB4PService/META-INF/services.xml"/>
+      <element value="/CSV/resources/WEB-INF/services/ReservedChargingService/META-INF/ReservedChargingService.wsdl"/>
+      <element value="/CSV/resources/WEB-INF/services/ReservedChargingService/META-INF/mcel_types.xsd"/>
+      <element value="/CSV/resources/WEB-INF/services/ReservedChargingService/META-INF/services.xml"/>
+      <element value="/CSV/resources/WEB-INF/services/services.list"/>
+      <element value="/CSV/resources/WEB-INF/services/version.aar"/>
+      <element value="/CSV/resources/WEB-INF/web.xml"/>
+      <element value="/CSV/resources/bscs-ds.xml"/>
+      <element value="/CSV/resources/bscs.hbm.xml"/>
+      <element value="/CSV/resources/bscs_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/cdrlive-ds.xml"/>
+      <element value="/CSV/resources/cdrlive.hbm.xml"/>
+      <element value="/CSV/resources/cdrlive_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/complaint_management.jpdl.jpg"/>
+      <element value="/CSV/resources/complaint_management.jpdl.xml"/>
+      <element value="/CSV/resources/corporate_complaint_management.jpdl.jpg"/>
+      <element value="/CSV/resources/corporate_complaint_management.jpdl.xml"/>
+      <element value="/CSV/resources/csv-ds.xml"/>
+      <element value="/CSV/resources/csv.hbm.xml"/>
+      <element value="/CSV/resources/csv_crm.hbm.xml"/>
+      <element value="/CSV/resources/csv_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/dbxdb-ds.xml"/>
+      <element value="/CSV/resources/dbxdb_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/dr-ds.xml"/>
+      <element value="/CSV/resources/dr.hbm.xml"/>
+      <element value="/CSV/resources/dr_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/dws-ds.xml"/>
+      <element value="/CSV/resources/dws.hbm.xml"/>
+      <element value="/CSV/resources/dws_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/emeraldTown.skin.properties"/>
+      <element value="/CSV/resources/jbpm-ds.xml"/>
+      <element value="/CSV/resources/jbpm.cfg.xml"/>
+      <element value="/CSV/resources/jbpm.mail.templates.xml"/>
+      <element value="/CSV/resources/jbpm_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/jbpm_tasks.hbm.xml"/>
+      <element value="/CSV/resources/loyalty-ds.xml"/>
+      <element value="/CSV/resources/loyalty.hbm.xml"/>
+      <element value="/CSV/resources/loyalty_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/netmovel-ds.xml"/>
+      <element value="/CSV/resources/netmovel.hbm.xml"/>
+      <element value="/CSV/resources/netmovel_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/pm-ds.xml"/>
+      <element value="/CSV/resources/pm.hbm.xml"/>
+      <element value="/CSV/resources/pm_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/prep_subscription.hbm.xml"/>
+      <element value="/CSV/resources/prepaid_to_postpaid_migration.jpdl.xml"/>
+      <element value="/CSV/resources/roaming-ds.xml"/>
+      <element value="/CSV/resources/roaming.hbm.xml"/>
+      <element value="/CSV/resources/roaming_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/seam.properties"/>
+      <element value="/CSV/resources/security.hbm.xml"/>
+      <element value="/CSV/resources/sgsn_stats-ds.xml"/>
+      <element value="/CSV/resources/sgsn_stats.hbm.xml"/>
+      <element value="/CSV/resources/sgsn_stats_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/simreg-ds.xml"/>
+      <element value="/CSV/resources/simreg.hbm.xml"/>
+      <element value="/CSV/resources/simreg_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/tomala-ds.xml"/>
+      <element value="/CSV/resources/tomala.hbm.xml"/>
+      <element value="/CSV/resources/tomala_hibernate.cfg.xml"/>
+      <element value="/CSV/resources/wsdl/BB4PService.wsdl"/>
+      <element value="/CSV/resources/wsdl/NetmovelService.wsdl"/>
+      <element value="/CSV/resources/wsdl/ProvisionManagerService.wsdl"/>
+      <element value="/CSV/resources/wsdl/ReservedChargingService.wsdl"/>
+      <element value="/CSV/resources/wsdl/SyncronizeAgents.wsdl"/>
+      <element value="/CSV/resources/wsdl/mcel_types.xsd"/>
+      <element value="/CSV/resources/wsdl/provision_manager_types.xsd"/>
+    </filesAndFolders>
+  </deployment>
+</root-container>

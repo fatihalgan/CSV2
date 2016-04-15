@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="registerNewPrepaidSubscription" width="737" height="1128">
+  <node name="EnterSubscriptionInfo" x="168" y="37" width="196" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="SubscriptionAlreadyExists" x="178" y="137" width="177" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="RegistrationError" x="455" y="138" width="132" height="36"/>
+  <node name="SIMCardValid" x="201" y="226" width="132" height="36">
+    <edge>
+      <label x="-117" y="-18"/>
+      <bendpoint w1="254" h1="-1" w2="0" h2="87"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="EnterSubscriberInfo" x="164" y="307" width="210" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-231" h1="-2" w2="-228" h2="268"/>
+      <bendpoint w1="-231" h1="-271" w2="-228" h2="-1"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="CheckIfExistingRegistrar" x="145" y="398" width="245" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="170" h1="0" w2="170" h2="-165"/>
+      <bendpoint w1="170" h1="165" w2="170" h2="0"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="CheckRegistrationLimitExceeded" x="155" y="484" width="225" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="EnterIdentityDocumentInfo" x="129" y="563" width="276" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-180" h1="0" w2="-182" h2="256"/>
+      <bendpoint w1="-181" h1="-243" w2="-183" h2="13"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="EnterAddressInfo" x="184" y="651" width="165" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-177" h1="0" w2="-178" h2="88"/>
+      <bendpoint w1="-176" h1="-72" w2="-177" h2="16"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="EnterWorkInfo" x="201" y="748" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-126" h1="-1" w2="-125" h2="96"/>
+      <bendpoint w1="-125" h1="-75" w2="-124" h2="22"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="IsCorporateRegistrar?" x="171" y="829" width="191" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="175" h1="2" w2="176" h2="-164"/>
+      <bendpoint w1="175" h1="164" w2="176" h2="-2"/>
+    </edge>
+  </node>
+  <node name="EnterCompanyInfo" x="193" y="911" width="146" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-150" h1="0" w2="-151" h2="163"/>
+      <bendpoint w1="-149" h1="-137" w2="-150" h2="26"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="RegistrationCompleted" x="180" y="1091" width="169" height="36"/>
+  <node name="EnterMKeshRequest" x="154" y="995" width="223" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-309" h1="1" w2="-2" h2="75"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="IsCorporateRegistrarBack?" x="-137" y="921" width="190" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="83" h1="38" w2="-225" h2="48"/>
+      <bendpoint w1="269" h1="37" w2="-39" h2="47"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="42" h1="-153" w2="-267" h2="20"/>
+    </edge>
+  </node>
+</root-container>

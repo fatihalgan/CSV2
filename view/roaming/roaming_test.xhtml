@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>Roaming Test Page</h3>
+		</center>
+
+		<h:form id="excelExport">
+			<h:commandButton value="Search" reRender="searchResults"
+				action="#{mainAgreementScheduleReportListAction.searchSchedules}" />
+			<h:commandButton value="Clear" reRender="searchResults"
+				action="#{roamingTestListAction.clearContinentList}" />
+
+
+			<h:dataTable
+				value="#{mainAgreementScheduleReportListAction.scheduleList}"
+				var="schedule" id="excelTable" columnClasses="left, right">
+				<h:column>
+					<f:facet name="header">Country </f:facet>
+					<h:outputText
+						value="#{schedule.operatorRegion.countryRegion.country.countryName}}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Region</f:facet>
+					<h:outputText
+						value="#{schedule.operatorRegion.countryRegion.countryRegionName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Status</f:facet>
+					<h:outputText value="#{schedule.status.description}"></h:outputText>
+				</h:column>
+			</h:dataTable>
+
+			<h:commandLink value="Export table"
+				action="#{org.jboss.seam.excel.exporter.excelExporter.export('excelExport:excelTable')}" />
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

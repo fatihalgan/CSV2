@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="Search Operations" styleClass="sectionPanel">
+			<h:form id="operationsSearch">
+				<h:panelGroup layout="vertical" styleClass="sectionPanel" style="margin-bottom: 50px;">
+					<h:panelGrid columns="2">
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">Module</ui:define>
+							<h:selectOneMenu value="#{operationListAction.selectedModule}">
+								<s:selectItems var="item" value="#{operationListAction.moduleList}" label="#{item.moduleName}"/>
+								<f:converter converterId="csvEntityConverter" />
+							</h:selectOneMenu>							
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons">
+						<h:commandButton id="btnSearch" action="#{operationListAction.searchOperations}" value="Search" />
+						<h:commandButton action="#{operationListAction.resetSearch}" value="Reset For New Search" />
+						<h:commandButton action="#{operationHomeAction.newOperation}" value="New Operation"/>
+					</div>
+				</h:panelGroup>
+			</h:form>
+			
+			<h:form id="operationList" rendered="#{operationListAction.operationList != null}">
+			<rich:dataTable id="tblOperations" value="#{operationListAction.operationList}" var="item" rows="20">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Operationname" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Description" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Edit" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Delete" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.operationName}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.description}" />
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{operationHomeAction.editOperation(item)}" value="Edit"/>
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{operationListAction.deleteOperation(item)}" value="Delete"/>
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="tblOperations" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+				</f:facet>
+			</rich:dataTable>
+			</h:form>
+		</rich:panel>
+	</ui:define>			
+</ui:composition>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="csv.prepaid.domain.simreg">
+	<typedef name="RegistrarType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.RegistrarType</param>
+		<param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="RegistrationStatusType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.RegistrationStatus</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="GenderType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.Gender</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="IdentityDocType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.IdentityDocType</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="RegistrarRecordChangeReasonType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.RegistrarRecordChangeReason</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="ServiceType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.ServiceType</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="INCMStatusType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.INCMStatus</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="CallUnbarStatus" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.CallUnbarStatus</param>
+		<param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="SIMRegLopgType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.prepaid.domain.simreg.LogType</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">factory</param>
+	</typedef>
+	<class name="DocumentCollector" table="DOCUMENT_COLLPOINTS">
+		<id name="id" column="DEALER_ID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="collectorName" type="string" column="DEALER_NAME"/>
+	</class>
+	<class name="Country" table="COUNTRIES">
+		<id name="countryName" column="COUNTRY_NAME" type="string">
+			<generator class="assigned"/>
+		</id>
+	</class>
+	<class name="Subscription" table="SUBSCRIBER_CELLS">
+		<id name="id" column="MATCH_ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" column="CELL_NUMBER" type="string" not-null="true"/>
+		<property name="sim" column="SIM_NUMBER" type="string" not-null="false"/>
+		<property name="imsi" column="IMSI" type="string" not-null="false"/>
+		<property name="registrationDate" column="SAVE_DATE" type="date" not-null="true"/>
+		<property name="status" type="RegistrationStatusType" not-null="true"/>
+		<property name="registrarType" type="RegistrarType" column="TYPEOF" not-null="true"/>
+		<property name="service" type="ServiceType" column="SERVICE"/>
+		<property name="INCMStatus" type="INCMStatusType" column="STATUS1" not-null="true"/>
+		<property name="saveUser" type="string" column="SAVE_USER" not-null="true"/>
+		<many-to-one name="registeredTo" class="AbstractRegistrar" column="SUBSCRIBER_INFO_ID" fetch="join" lazy="false"/>
+	</class>
+	<class name="SubscriptionHistory" table="SUBSCRIBER_CELLS_HIST">
+		<id name="requestId" column="MATCH_ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" column="CELL_NUMBER" type="string" not-null="true"/>
+		<property name="unregisterDate" column="SAVE_DATE" type="date" not-null="true"/>
+		<property name="unregisteredBy" column="SAVE_USER" type="string"/>
+		<property name="registrarType" type="RegistrarType" column="TYPEOF" not-null="true"/>
+		<property name="status" column="STATUS" type="RegistrationStatusType" not-null="true"/>
+		<property name="INCMStatus" type="INCMStatusType" column="STATUS1" not-null="true"/>
+		<property name="service" type="ServiceType" column="SERVICE"/>
+		<property name="unregisterReason" column="CHANGE_REASON" type="string"/>
+		<property name="registeredToId" column="SUBSCRIBER_INFO_ID" type="long" not-null="true"/>
+	</class>
+	<class name="AbstractRegistrar" abstract="true" table="SUBSCRIBER_INFO">
+		<id name="id" type="long" column="SUBSCRIBER_INFO_ID">
+			<generator class="assigned"/>
+		</id>
+		<discriminator column="TYPEOFSUBS" type="string"/>
+		<property name="name" type="string" column="NAME" not-null="true"/>
+		<property name="surname" type="string" column="SURNAME" not-null="true"/>
+		<property name="otherNames" type="string" column="OTHER_NAMES" not-null="false"/>
+		<property name="birthDate" type="date" column="BIRTH_DATE" not-null="true"/>
+		<property name="birthPlace" type="string" column="BIRTH_PLACE" not-null="true"/>
+		<property name="gender" type="GenderType" column="GENDER" not-null="true"/>
+		<property name="saveUser" type="string" column="SAVE_USER"/>
+		<property name="saveDate" type="date" column="SAVE_DATE"/>
+		<property name="status" type="RegistrationStatusType" column="STATUS" not-null="true"/>
+		<property name="documentsComplete" type="string" column="DOCUMENTS_COMPLETE" not-null="true"/>
+		<property name="requestMKesh" type="boolean" column="MKESH_QUESTION"/>
+		<component name="identityDocument" class="csv.prepaid.domain.simreg.IdentificationDocument">
+			<property name="documentType" column="DOCUMENT_TYPE" type="IdentityDocType"/>
+			<property name="documentNo" column="DOCUMENT_NO" type="string"/>
+			<property name="issuedBy" column="ISSUED_BY" type="string"/>
+			<property name="issueDate" column="ISSUE_DATE" type="date"/>
+			<property name="expiryDate" column="EXPIRY_DATE" type="date"/>
+		</component>
+		<component name="address" class="csv.prepaid.domain.simreg.Address">
+			<property name="street" column="AVENUE_STREET" type="string"/>
+			<property name="no" column="NO" type="integer"/>
+			<property name="floor" column="FLOOR" type="string"/>
+			<property name="flat" column="FLAT" type="integer"/>
+			<property name="block" column="BLOCK" type="string"/>
+			<property name="nuit" column="NUIT" type="string"/>
+			<property name="city" column="CITY" type="string"/>
+			<property name="district" column="DISTRICT" type="string"/>
+			<property name="provincia" column="PROVINCIA" type="string"/>
+			<property name="neighborHood" column="NBRHOOD" type="string"/>
+			<property name="email" column="EMAIL" type="string"/>
+		</component>
+		<component name="workInfo" class="csv.prepaid.domain.simreg.WorkInfo">
+			<property name="company" column="COMPANY" type="string"/>
+			<property name="place" column="PLACE" type="string"/>
+			<property name="title" column="TITLE" type="string"/>
+		</component>
+		<many-to-one name="documentSource" class="DocumentCollector" fetch="join" lazy="false" column="DOCUMENT_SOURCE"/>
+		<many-to-one name="nationality" class="Country" column="NATIONALITY" lazy="false" fetch="join"/>
+		<set name="currentSubscriptions" inverse="true" lazy="true" cascade="all">
+			<key column="SUBSCRIBER_INFO_ID"/>
+			<one-to-many class="Subscription"/>
+		</set>
+		<subclass name="PersonalRegistrar" discriminator-value="PERSONAL"/>
+		<subclass name="TestemunhaRegistrar" discriminator-value="TESTEMUNHA"/>
+		<subclass name="CorporateRegistrar" discriminator-value="COMPANY">
+			<component name="companyInfo" class="csv.prepaid.domain.simreg.CompanyInfo">
+				<property name="companyDocType" type="string" column="COMP_DOC_TYPE"/>
+				<property name="companyDocNo" type="string" column="COMP_DOC_NO"/>
+				<property name="province" type="string" column="COMP_PROVINCE"/>
+				<property name="district" type="string" column="COMP_DISTRICT"/>
+				<property name="place" type="string" column="COMP_PLACE"/>
+				<property name="neighborHood" type="string" column="COMP_NBRHOOD"/>
+				<property name="block" type="string" column="COMP_BLOCK"/>
+				<property name="street" type="string" column="COMP_AVENUE_STREET"/>
+				<property name="no" type="integer" column="COMP_NO"/>
+				<property name="flat" type="integer" column="COMP_FLAT"/>
+			</component>
+		</subclass>
+	</class>
+	<class name="RegistrarHistory" table="SUBSCRIBER_INFO_HIST">
+		<id name="id" type="long" column="CHANGE_ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_EDIT_CHANGEID</param>
+			</generator>
+		</id>
+		<property name="id" type="long" column="SUBSCRIBER_INFO_ID" not-null="true"/>
+		<property name="name" type="string" column="NAME" not-null="true"/>
+		<property name="surname" type="string" column="SURNAME" not-null="true"/>
+		<property name="otherNames" type="string" column="OTHER_NAMES"/>
+		<property name="birthDate" type="date" column="BIRTH_DATE" not-null="true"/>
+		<property name="birthPlace" type="string" column="BIRTH_PLACE" not-null="true"/>
+		<property name="gender" type="GenderType" column="GENDER" not-null="true"/>
+		<property name="saveUser" type="string" column="SAVE_USER"/>
+		<property name="saveDate" type="timestamp" column="SAVE_DATE"/>
+		<property name="status" type="RegistrationStatusType" column="STATUS" not-null="true"/>
+		<property name="documentsComplete" type="string" column="DOCUMENTS_COMPLETE" not-null="true"/>
+		<property name="requestMKesh" type="boolean" column="MKESH_QUESTION"/>
+		<property name="typeOfSubs" type="string" column="TYPEOFSUBS" not-null="true"/>
+		<component name="identityDocument" class="csv.prepaid.domain.simreg.IdentificationDocument">
+			<property name="documentType" column="DOCUMENT_TYPE" type="IdentityDocType"/>
+			<property name="documentNo" column="DOCUMENT_NO" type="string"/>
+			<property name="issuedBy" column="ISSUED_BY" type="string"/>
+			<property name="issueDate" column="ISSUE_DATE" type="date"/>
+			<property name="expiryDate" column="EXPIRY_DATE" type="date"/>
+		</component>
+		<component name="address" class="csv.prepaid.domain.simreg.Address">
+			<property name="street" column="AVENUE_STREET" type="string"/>
+			<property name="no" column="NO" type="integer"/>
+			<property name="floor" column="FLOOR" type="string"/>
+			<property name="flat" column="FLAT" type="integer"/>
+			<property name="block" column="BLOCK" type="string"/>
+			<property name="nuit" column="NUIT" type="string"/>
+			<property name="city" column="CITY" type="string"/>
+			<property name="district" column="DISTRICT" type="string"/>
+			<property name="provincia" column="PROVINCIA" type="string"/>
+			<property name="neighborHood" column="NBRHOOD" type="string"/>
+			<property name="email" column="EMAIL" type="string"/>
+		</component>
+		<component name="workInfo" class="csv.prepaid.domain.simreg.WorkInfo">
+			<property name="company" column="COMPANY" type="string"/>
+			<property name="place" column="PLACE" type="string"/>
+			<property name="title" column="TITLE" type="string"/>
+		</component>
+		<many-to-one name="documentSource" class="DocumentCollector" fetch="join" lazy="false" column="DOCUMENT_SOURCE"/>
+		<many-to-one name="nationality" class="Country" column="NATIONALITY" lazy="false" fetch="join"/>
+	</class>
+	<class name="csv.prepaid.domain.simreg.activation.Dealer" table="DEALERS">
+		<id name="id" column="ID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="dealerName" type="string" column="DEALER_NAME" not-null="true"/>
+	</class>
+	<class name="csv.prepaid.domain.simreg.activation.SIMCardActivation" table="SIM_CARD_ACTIVATIONS">
+		<id name="id" column="ID" type="long">
+			<generator class="sequence">
+				<param name="sequence">SEQ_SIM_CARD_ACTIVATION</param>
+			</generator>
+		</id>
+		<property name="storageMediumNo" column="SIM" type="string" not-null="true"/>
+		<property name="msisdn" column="MSISDN" type="string" not-null="true"/>
+		<property name="activationDate" column="ACTIVATION_TIMESTAMP"  type="timestamp" not-null="true"/>
+		<property name="activatedBy" column="ACTIVATED_BY" type="string" not-null="true"/>
+		<many-to-one name="vendor" column="DEALER_ID" class="csv.prepaid.domain.simreg.activation.Dealer" not-null="true" lazy="false"/>
+	</class>
+	<class name="csv.prepaid.domain.simreg.CallUnbarLog" table="SHOP_ACTIVATION">
+		<id name="id" column="ID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="saveUser" column="SAVE_USER" type="string"/>
+		<property name="saveDate" column="SAVE_DATE" type="timestamp"/>
+		<property name="msisdn" column="CELL_NUMBER" type="string"/>
+		<property name="updateDate" column="UPD_DATE" type="timestamp"/>
+		<property name="status" column="STATUS" type="CallUnbarStatus"/>
+		<property name="emaResponse" column="EMA_RESPONSE" type="integer" not-null="false"/>
+	</class>
+	<class name="csv.prepaid.domain.simreg.SubscriberLog" table="SUBSCRIBER_LOGS">
+		<composite-id>
+			<key-property name="registrarId" column="SUBSCRIBER_INFO_ID" type="long"/>
+			<key-property name="msisdn" column="MSISDN" type="string"/>
+			<key-property name="logType" column="LOG_TYPE" type="SIMRegLopgType"/>
+		</composite-id>
+		<property name="logDate" column="LOG_DATE" type="timestamp"/>
+		<property name="user" column="LOG_USER" type="string"/>
+		<property name="detail" column="DETAIL" type="string"/>
+	</class>
+</hibernate-mapping>

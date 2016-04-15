@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file was auto-generated from WSDL -->
+<!-- by the Apache Axis2 version: 1.5.1  Built on : Oct 19, 2009 (10:59:00 EDT) -->
+<serviceGroup>
+    <service name="BB4PService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="co.mcel.mz.bb4p.server.BB4PServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">co.mcel.mz.bb4p.server.BB4PServiceImpl</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="registerAPN" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/registerAPN</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/registerAPNResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/registerAPN/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:registerAPNCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/registerAPN/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="EMAError">urn:registerAPNEMAError</faultActionMapping>
+        </operation>
+        <operation name="debitAmount" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/debitAmount</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/debitAmountResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/debitAmount/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="InvalidReservationStatus">urn:debitAmountInvalidReservationStatus</faultActionMapping>
+            <faultActionMapping faultName="f03">http://co.mcel.mz/bb4p/BB4PService/debitAmount/Fault/f03</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:debitAmountCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/debitAmount/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="TransactionNotFound">urn:debitAmountTransactionNotFound</faultActionMapping>
+        </operation>
+        <operation name="unregisterAPN" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/unregisterAPN</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/unregisterAPNResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/unregisterAPN/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:unregisterAPNCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/unregisterAPN/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="EMAError">urn:unregisterAPNEMAError</faultActionMapping>
+        </operation>
+        <operation name="cancelReservation" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/cancelReservation</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/cancelReservationResponse</outputActionMapping>
+            <faultActionMapping faultName="f04">http://co.mcel.mz/bb4p/BB4PService/cancelReservation/Fault/f04</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:cancelReservationCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/cancelReservation/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="InvalidReservationStatus">urn:cancelReservationInvalidReservationStatus</faultActionMapping>
+            <faultActionMapping faultName="f03">http://co.mcel.mz/bb4p/BB4PService/cancelReservation/Fault/f03</faultActionMapping>
+            <faultActionMapping faultName="CSError">urn:cancelReservationCSError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/cancelReservation/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="TransactionNotFound">urn:cancelReservationTransactionNotFound</faultActionMapping>
+        </operation>
+        <operation name="getImsi" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/getImsi</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/getImsiResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/getImsi/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:getImsiCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/getImsi/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="EMAError">urn:getImsiEMAError</faultActionMapping>
+        </operation>
+        <operation name="getServiceClass" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/getServiceClass</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/getServiceClassResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/getServiceClass/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:getServiceClassCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/getServiceClass/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="CSError">urn:getServiceClassCSError</faultActionMapping>
+        </operation>
+        <operation name="reserveAmount" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/reserveAmount</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/reserveAmountResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/reserveAmount/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:reserveAmountCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/reserveAmount/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="CSError">urn:reserveAmountCSError</faultActionMapping>
+        </operation>
+        <operation name="checkStatus" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/checkStatus</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/checkStatusResponse</outputActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/checkStatus/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="TransactionNotFound">urn:checkStatusTransactionNotFound</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/checkStatus/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:checkStatusCSVSystemError</faultActionMapping>
+        </operation>
+        <operation name="refund" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://co.mcel.mz/bb4p">
+            <actionMapping>http://co.mcel.mz/bb4p/refund</actionMapping>
+            <outputActionMapping>http://co.mcel.mz/bb4p/BB4PService/refundResponse</outputActionMapping>
+            <faultActionMapping faultName="f04">http://co.mcel.mz/bb4p/BB4PService/refund/Fault/f04</faultActionMapping>
+            <faultActionMapping faultName="CSVSystemError">urn:refundCSVSystemError</faultActionMapping>
+            <faultActionMapping faultName="f02">http://co.mcel.mz/bb4p/BB4PService/refund/Fault/f02</faultActionMapping>
+            <faultActionMapping faultName="InvalidReservationStatus">urn:refundInvalidReservationStatus</faultActionMapping>
+            <faultActionMapping faultName="f03">http://co.mcel.mz/bb4p/BB4PService/refund/Fault/f03</faultActionMapping>
+            <faultActionMapping faultName="CSError">urn:refundCSError</faultActionMapping>
+            <faultActionMapping faultName="f01">http://co.mcel.mz/bb4p/BB4PService/refund/Fault/f01</faultActionMapping>
+            <faultActionMapping faultName="TransactionNotFound">urn:refundTransactionNotFound</faultActionMapping>
+        </operation>
+        <wsp:Policy wsu:Id="bb4pSec" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-utility-1.0.xsd">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:AsymmetricBinding>
+					<wsp:Policy>
+						<sp:InitiatorToken>
+							<wsp:Policy>
+								<sp:X509Token
+									sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference />
+										<sp:WssX509V3Token10 />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:InitiatorToken>
+						<sp:RecipientToken>
+							<wsp:Policy>
+								<sp:X509Token
+									sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference />
+										<sp:WssX509V3Token10 />
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:RecipientToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:TripleDesRsa15 />
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+					</wsp:Policy>
+				</sp:AsymmetricBinding>
+				<sp:Wss10>
+					<wsp:Policy>
+						<sp:MustSupportRefKeyIdentifier />
+						<sp:MustSupportRefIssuerSerial />
+					</wsp:Policy>
+				</sp:Wss10>
+				<sp:SignedParts>
+					<sp:Body />
+				</sp:SignedParts>
+				<ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy">
+					<ramp:user>service</ramp:user>
+					<ramp:encryptionUser>client</ramp:encryptionUser>
+					<ramp:passwordCallbackClass>co.mcel.mz.bb4p.security.PasswordCallbackHandler</ramp:passwordCallbackClass>
+					<ramp:signatureCrypto>
+						<ramp:crypto provider="org.apache.ws.security.components.crypto.Merlin">
+							<ramp:property name="org.apache.ws.security.crypto.merlin.keystore.type">JKS</ramp:property>
+							<ramp:property name="org.apache.ws.security.crypto.merlin.file">c:/TUMKeystore/service.jks</ramp:property>
+							<ramp:property name="org.apache.ws.security.crypto.merlin.keystore.password">apache</ramp:property>
+						</ramp:crypto>
+					</ramp:signatureCrypto>
+				</ramp:RampartConfig>
+			</wsp:All>
+		</wsp:ExactlyOne>
+		</wsp:Policy>
+    </service>
+</serviceGroup>

@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<h:panelGrid columns="1">
+		<s:decorate template="../../edit.xhtml">
+			<ui:define name="label">#{msg.complaintStatus}</ui:define>
+			<h:selectOneMenu value="#{openComplaint.status}">
+				<s:selectItems value="#{allFinalComplaintStatuses}" var="status" label="#{status.label}"/>
+				<s:convertEnum/>
+			</h:selectOneMenu>
+		</s:decorate>
+		<s:decorate template="../../edit.xhtml">
+			<ui:define name="label">#{msg.comment}</ui:define>
+			<rich:editor value="#{attendOpenComplaintTask.currentOpenComplaintIteration.comment}" theme="advanced" required="true">
+				<f:param name="width" value="450"/>
+				<f:param name="height" value="100"/>
+			</rich:editor>
+		</s:decorate>
+	</h:panelGrid>   
+	<div class="actionButtons">
+		<h:commandButton action="#{attendOpenComplaintTask.endAttendOpenComplaint}" value="#{msg.closeComplaint}" />
+	</div>             
+</ui:composition>

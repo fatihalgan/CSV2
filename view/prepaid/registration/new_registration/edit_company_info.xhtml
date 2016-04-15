@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<script type="text/javascript" language="JavaScript" src="../field_restrictions.js"/>
+		<center>
+			<h3>#{msg.companyInfo}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.enterCompanyDetails}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="2">
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.companyDocType}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.companyDocType}" required="true" onkeypress="event.returnValue=english(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.companyDocNo}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.companyDocNo}" required="true" onkeypress="event.returnValue=englishnospaces(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.province}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.province}" required="true" onkeypress="event.returnValue=english(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.district}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.district}" required="true" onkeypress="event.returnValue=english(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.place}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.place}" required="true" onkeypress="event.returnValue=english(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.neighborHood}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.neighborHood}" onkeypress="event.returnValue=english(event);" size="30" maxlength="30"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.block}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.block}" onkeypress="event.returnValue=english(event);" size="15" maxlength="4"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">{msg.street}</ui:define>
+						<h:inputTextarea value="#{prepaidRegistrarService.newRegistrar.companyInfo.street}" onkeypress="event.returnValue=english(event);"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.no}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.no}" onkeypress="event.returnValue=numbers(event);" size="15" maxlength="4"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.flat}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.companyInfo.flat}" onkeypress="event.returnValue=numbers(event);" size="15" maxlength="4"/>
+					</s:decorate>
+				</h:panelGrid>
+				<h:panelGroup layout="block">
+					<div class="actionButtons">
+						<h:commandButton  action="back" value="Back" immediate="true"/>
+						<h:commandButton action="next" value="Next" />
+					</div>
+				</h:panelGroup>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

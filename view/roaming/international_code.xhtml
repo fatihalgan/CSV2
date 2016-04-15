@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="countryIntDialCodeSelectionRegion">
+		<table>
+			<tr>
+				<td valign="top" rowspan="2"><rich:panel
+					header="Country Int Code">
+					<h:form id="countryIntCodeList">
+						<rich:dataTable id="tblCountryIntCode"
+							value="#{countryIntDialingCodeListAction.countryIntDialingCodeList}"
+							var="item" rows="20">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column>
+										<h:outputText value="#{msg.roamingCountryName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.roamingCountryIntCode}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.countryIntDialingCodeCarrier}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Edit" />
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="#{item.country.countryName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.dialingCode}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.carrier}" />
+								</rich:column>
+								<rich:column>
+									<a:commandButton
+										action="#{countryIntDialingCodeListAction.editCountryIntDialingCode(item)}"
+										value="Edit" reRender="countryIntDialCodeSelectionRegion" />
+								</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+								<rich:datascroller for="tblCountryIntCode" maxPages="20"
+									boundaryControls="auto" fastControls="auto" />
+							</f:facet>
+						</rich:dataTable>
+						<div class="actionButtons"><h:commandButton
+							id="btnNewCntIntCode" value="Create New"
+							action="#{countryIntDialingCodeListAction.newCountryIntDialingCode}" /></div>
+					</h:form>
+				</rich:panel></td>
+				<td><rich:panel
+					header="#{msg.roamingEditCountryIntDialingCode}"
+					rendered="#{countryIntDialingCodeListAction.selectedCountryIntDialingCode != null}">
+					<h:form id="frmEditCountryIntCode">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingCountryIntCode}</ui:define>
+								<h:inputText
+									value="#{countryIntDialingCodeListAction.selectedCountryIntDialingCode.dialingCode}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.countryIntDialingCodeCarrier}</ui:define>
+								<h:inputText
+									value="#{countryIntDialingCodeListAction.selectedCountryIntDialingCode.carrier}"
+									required="true" />
+							</s:decorate>
+						</h:panelGrid>
+						<div class="actionButtons"><h:commandButton
+							id="btnSaveCounIntCode" value="Save"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}"
+							action="#{countryIntDialingCodeListAction.saveCountryIntDialingCode}"
+							reRender="countryIntDialCodeSelectionRegion" /> <h:commandButton
+							id="btnDeleteCounIntCode" value="Delete"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}"
+							action="#{countryIntDialingCodeListAction.deleteCountryIntDialingCode}"
+							reRender="countryIntDialCodeSelectionRegion" /></div>
+					</h:form>
+				</rich:panel></td>
+			</tr>
+		</table>
+	</h:panelGroup>
+</ui:composition>

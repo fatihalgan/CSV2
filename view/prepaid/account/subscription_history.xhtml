@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="Subscription History" styleClass="sectionPanel">
+		<rich:dataTable value="#{prepaidCustomerService.subscriptionHistory}" var="item" rendered="#{prepaidCustomerService.subscriptionHistory != null}">
+			<f:facet name="header">
+				<rich:columnGroup>								
+					<rich:column>
+						<h:outputText value="Name"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Surname"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="ID Number"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Subscription Date"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Deactivate Date"></h:outputText>
+					</rich:column>								
+				</rich:columnGroup>
+			</f:facet>
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="#{null == item.owningCustomer?'-':item.owningCustomer.name}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{null == item.owningCustomer?'-':item.owningCustomer.surname}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{null == item.owningCustomer?'-':item.owningCustomer.idNumber}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.subscriptionDate}"><f:convertDateTime type="date" pattern="dd/MM/yyyy" /></h:outputText>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.deactivationDate}"><f:convertDateTime type="date" pattern="dd/MM/yyyy" /></h:outputText>
+				</rich:column>
+			</rich:columnGroup>
+		</rich:dataTable>
+	</rich:panel>                
+</ui:composition>

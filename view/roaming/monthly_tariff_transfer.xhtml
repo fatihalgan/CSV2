@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>#{msg.roamingTariffTransfer}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<h:panelGroup layout="vertical" id="roamMonTarTraSelRegion">
+			<h:form id="roamMonTarTra">
+				<rich:panel header="Transfer Tariff">
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">From: #{msg.roamingMonths}</ui:define>
+								<h:selectOneMenu id="fromMonTarTraSelOne"
+									value="#{monthlyTariffTransferListAction.fromMonth}">
+									<s:convertEnum />
+									<s:selectItems value="#{allMonths}" var="types"
+										label="#{types.label}" />
+								</h:selectOneMenu>
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingYear}</ui:define>
+								<h:inputText id="fromMonTarTraYear"
+									value="#{monthlyTariffTransferListAction.fromYear}">
+								</h:inputText>
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">To: #{msg.roamingMonths}</ui:define>
+								<h:selectOneMenu id="toMonTarTraSelOne"
+									value="#{monthlyTariffTransferListAction.toMonth}">
+									<s:convertEnum />
+									<s:selectItems value="#{allMonths}" var="types"
+										label="#{types.label}" />
+								</h:selectOneMenu>
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingYear}</ui:define>
+								<h:inputText id="toMonTarTraYear"
+									value="#{monthlyTariffTransferListAction.toYear}">
+								</h:inputText>
+							</s:decorate>
+						</h:panelGrid>
+						<h:panelGrid columns="1">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">Message</ui:define>
+								<h:inputTextarea readonly="true"
+									value="#{monthlyTariffTransferListAction.checkString}">
+								</h:inputTextarea>
+							</s:decorate>
+						</h:panelGrid>
+
+					</h:panelGrid>
+					<div class="actionButtons"><h:commandButton
+						id="btnChkTransfer" value="Check Transfer Details"
+						action="#{monthlyTariffTransferListAction.checkCounts}" /><h:commandButton
+						id="btnTransfer" value="Transfer Tariffs"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Tariff Transfer Save')}"
+						action="#{monthlyTariffTransferListAction.transferTariffs}" /></div>
+				</rich:panel>
+			</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

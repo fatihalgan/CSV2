@@ -1,0 +1,92 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+              
+			<rich:panel>
+				<f:facet name="header">
+					<h:panelGrid columns="1">
+					<h:panelGrid columns="6">
+						<h:outputLabel value="#{msg.customerComplaint}" />
+						<rich:spacer width="5"/>
+						<h:outputLabel value="#{msg.complaintID}: " styleClass="label" />
+						<h:outputLabel value="#{task.variables['openComplaint'].complaintId}" />
+						<rich:spacer width="5"/>
+						<h:outputLabel value="#{task.variables['openComplaint'].phase}"/>
+					</h:panelGrid>
+					<h:panelGrid columns="1" rendered="#{task.variables['openComplaint'].iterations.size > 0}">
+						<h:outputLabel value="Do not forget to check the attendace history (Click the View History Button)!!" />
+					</h:panelGrid>
+					</h:panelGrid>
+				</f:facet>
+				<h:panelGrid columns="2">
+					<s:decorate template="../../display.xhtml" rendered="#{task.variables['openComplaint'].customerMsisdn != null}">
+						<ui:define name="label">#{msg.msisdn}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].customerMsisdn}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml" rendered="#{task.variables['openComplaint'].customerName != null}">
+						<ui:define name="label">#{msg.customer}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].customerName}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml" rendered="#{task.variables['openComplaint'].companyName != null}">
+						<ui:define name="label">#{msg.company}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].companyName}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml" rendered="#{task.variables['openComplaint'].customerContactNumber != null}">
+						<ui:define name="label">#{msg.contactNumber}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].customerContactNumber}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.enteredBy}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].enteredBy}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.openingDate}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].openingDate}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.location}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].province} / #{task.variables['openComplaint'].district}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.dateOfOccurence}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].dateOfOccurence}">
+							<s:convertDateTime dateStyle="medium" timeStyle="short" type="both"/>
+						</h:outputText>
+					</s:decorate>
+					<s:decorate template="../../display.xhtml" rendered="#{task.variables['openComplaint'].destinationNumber != null}">
+						<ui:define name="label">#{msg.destinationNumber}</ui:define>
+						<h:outputText value="#{task.variables['openComplaint'].destinationNumber}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.taskId}</ui:define>
+						<h:outputText value="#{task.id}" />
+					</s:decorate>
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+					<span class="name">#{msg.description}</span>	
+					<rich:editor value="#{task.variables['openComplaint'].description}" readonly="true" theme="advanced">
+						<f:param name="width" value="450"/>
+						<f:param name="height" value="100"/>
+					</rich:editor>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<ui:insert />
+					<a:commandButton action="#{openComplaintAction.retrieveOpenComplaintHistory(task.variables['openComplaint'])}"
+						reRender="complaintIterationsHistoryPanel" oncomplete="Richfaces.showModalPanel('openComplaintHistoryMp',{width:500, top:100})"
+						value="#{msg.viewHistory}"/>
+					<a:commandButton action="#{complaintAttachmentViewer.retrieveAttachments(task.variables['openComplaint'].complaintId)}"
+						reRender="complaintAttachmentsPanel" oncomplete="Richfaces.showModalPanel('complaintAttachmentsMp',{width:500, top:100})"
+						value="#{msg.attachments}"/>
+					<a:commandButton action="#{openComplaintAction.retrieveOpenComplaintHistory(task.variables['openComplaint'])}"
+						reRender="complaintDisplayInfoPanel" oncomplete="Richfaces.showModalPanel('complaintDisplayInfoMp', {width:500, top:100})"
+						value="#{msg.displayInformation}"/>
+					<a:commandButton action="#{openComplaintAction.retrieveOpenComplaintHistory(task.variables['openComplaint'])}"
+						reRender="complaintStatusRemarkPanel" oncomplete="Richfaces.showModalPanel('complaintStatusRemarkMp', {width:500, top:100})"
+						value="#{msg.statusRemark}"/>
+				</div>
+			</rich:panel>
+</ui:composition>

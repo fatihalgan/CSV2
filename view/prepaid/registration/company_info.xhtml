@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+                
+	<rich:panel header="#{msg.companyInfo}" styleClass="sectionPanel" rendered="#{prepaidCustomerService.currentSubscription != null}">
+		<h:panelGrid columns="3">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.companyDocType}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.companyDocType}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.companyDocNo}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.companyDocNo}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.province}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.province}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.district}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.district}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.place}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.place}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.neighborHood}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.neighborHood}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.block}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.block}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.street}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.street}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.no}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.no}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.flat}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.companyInfo.flat}" readonly="true"/>
+			</s:decorate>
+		</h:panelGrid>
+	</rich:panel>
+</ui:composition>

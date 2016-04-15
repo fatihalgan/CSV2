@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<head>
+	<title>Commercial Calendar KPI Report</title>
+	</head>
+	<body>
+	<table rules="all" border="1">
+		<caption>
+		<h3>COMMERCIAL CALENDAR KPI REPORT</h3>
+		</caption>
+		<tbody>
+			<tr>
+				<th colspan="2"></th>
+			</tr>
+			<tr>
+				<th><h5> TAPCODE</h5></th>
+				<th><h5> Country Name</h5></th>
+				<th><h5> Schedule Type</h5></th>
+				<th><h5> Status</h5></th>
+				<th><h5> Commercial Priority</h5></th>
+				<th><h5> Planned Test Month</h5></th>
+				<th><h5> First Approach Date</h5></th>
+				<th><h5> Signature Date</h5></th>
+				<th><h5> Commercial LaunchDate</h5></th>
+				<th><h5> Implementation Duration</h5></th>
+				<th><h5> Test Duration</h5></th>
+			</tr>
+			<c:forEach items="#{calendarReportService.agreementScheduleList}" var="schedule">
+				<tr>
+					<td><h:outputText value="#{schedule.operatorCountry.operator.operatorCode}" /></td>
+					<td><h:outputText value="#{schedule.operatorCountry.country.countryName}" /></td>
+					<td><h:outputText value="#{schedule.scheduleType.label}" /></td>
+					<td><h:outputText value="#{schedule.status.description}" /></td>
+					<td><h:outputText value="#{schedule.commercialPriority.value}" /></td>
+					<td><h:outputText value="#{schedule.plannedMonthOfTest}" /></td>
+					<td><h:outputText value="#{schedule.firstApproachDate}" /></td>
+					<td><h:outputText value="#{schedule.signatureDate}" /></td>
+					<td><h:outputText value="#{schedule.commercialLaunchDate}" /></td>
+					<td><h:outputText value="#{schedule.implementationDuration}" /></td>
+					<td><h:outputText value="#{schedule.reportTestDuration}" /></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	</body>
+</ui:composition>

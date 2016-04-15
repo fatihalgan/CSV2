@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="countryRegionSelectionRegion">
+		<table>
+			<tr>
+				<td valign="top" rowspan="2"><rich:panel
+					header="Country Regions">
+					<h:form id="countryRegionList">
+						<rich:dataTable id="tblCountryRegions"
+							value="#{countryRegionListAction.countryRegionList}" var="item"
+							rows="20">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column>
+										<h:outputText value="#{msg.countryRegionName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Edit" />
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="#{item.countryRegionName}" />
+								</rich:column>
+								<rich:column>
+									<a:commandButton
+										action="#{countryRegionListAction.editCountryRegion(item)}"
+										value="Edit" reRender="countryRegionSelectionRegion" />
+								</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+								<rich:datascroller for="tblCountryRegions" maxPages="20"
+									boundaryControls="auto" fastControls="auto" />
+							</f:facet>
+						</rich:dataTable>
+						<div class="actionButtons"><h:commandButton
+							id="btnNewCountRegion" value="Create New"
+							action="#{countryRegionListAction.newCountryRegion}" /></div>
+					</h:form>
+				</rich:panel></td>
+				<td><rich:panel header="#{msg.roamingEditCountryRegion}"
+					rendered="#{countryRegionListAction.selectedCountryRegion != null}">
+					<h:form id="frmEditCountryRegion">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.countryRegionName}</ui:define>
+								<h:inputText
+									value="#{countryRegionListAction.selectedCountryRegion.countryRegionName}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingCountryRegionInfo}</ui:define>
+								<h:inputText
+									value="#{countryRegionListAction.selectedCountryRegion.additionalInfo}"
+									required="false" />
+							</s:decorate>
+						</h:panelGrid>
+						<div class="actionButtons"><h:commandButton
+							id="btnSaveCountRegion" value="Save"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}"
+							action="#{countryRegionListAction.saveCountryRegion}"
+							reRender="countryRegionSelectionRegion" /> <h:commandButton
+							id="btnDeleteCountRegion" value="Delete"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}"
+							action="#{countryRegionListAction.deleteCountryRegion}"
+							reRender="countryRegionSelectionRegion" /></div>
+					</h:form>
+				</rich:panel></td>
+			</tr>
+		</table>
+	</h:panelGroup>
+</ui:composition>

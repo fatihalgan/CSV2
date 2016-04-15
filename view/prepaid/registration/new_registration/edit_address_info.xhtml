@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<script type="text/javascript" language="JavaScript" src="../field_restrictions.js"/>
+		<center>
+			<h3>#{msg.addressInfo}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.enterCustomerAddressDetails}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="3">
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.email}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.email}" onkeypress="event.returnValue=english(event);" size="30" maxlength="30"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.streetAvenue}</ui:define>
+						<h:inputTextarea value="#{prepaidRegistrarService.newRegistrar.address.street}" onkeypress="event.returnValue=english(event);" />
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.no}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.no}" onkeypress="event.returnValue=numbers(event);" size="15" maxlength="6"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.floor}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.floor}" onkeypress="event.returnValue=numbers(event);" size="15" maxlength="4"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.flat}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.flat}" onkeypress="event.returnValue=numbers(event);" size="15" maxlength="4"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.block}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.block}" onkeypress="event.returnValue=english(event);" size="15" maxlength="4"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.nuit}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.nuit}" onkeypress="event.returnValue=numbers(event);" size="15" maxlength="10"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.city}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.city}" onkeypress="event.returnValue=english(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.district}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.district}" required="true" onkeypress="event.returnValue=englishnospace(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.province}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.provincia}" required="true" onkeypress="event.returnValue=english(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.neighborHood}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.address.neighborHood}" onkeypress="event.returnValue=english(event);" size="30" maxlength="30"/>
+					</s:decorate>
+				</h:panelGrid>
+				<h:panelGroup layout="block">
+					<div class="actionButtons">
+						<h:commandButton  action="back" value="Back" immediate="true"/>
+						<h:commandButton action="next" value="Next" />
+					</div>
+				</h:panelGroup>
+			</h:form>
+		</rich:panel>
+	</ui:define>							
+</ui:composition>

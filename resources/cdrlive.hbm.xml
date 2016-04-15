@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="csv.common.domain">
+	<class name="IMEIRecord" table="IMEI" mutable="false" schema="cdrdata">
+		<composite-id>
+			<key-property name="imei" column="IMEI" type="string"/>
+			<key-property name="firstCDRDate" column="FIRSTCDRDATE" type="date"/>
+		</composite-id>
+		<property name="lastCDRDate" column="LASTCDRDATE" type="date"/>
+	</class>
+	<class name="FailedCall" mutable="false">
+		<composite-id>
+			<key-property name="chargingDate" type="timestamp"/>
+			<key-property name="sequenceNo" type="string"/>
+		</composite-id>
+		<property name="sourceMsisdn"/>
+		<property name="destMsisdn" />
+		<property name="recordType"/>
+		<property name="tsc"/>
+		<property name="chargeableDuration"/>
+		<property name="siteName"/>
+		<property name="code"/>
+		<property name="description"/>
+		<loader query-ref="loadFailedCalls"/>
+	</class>
+	<sql-query name="loadFailedCalls">
+		<return alias="call" class="FailedCall" lock-mode="read"/>
+		Select 
+		c.recordtype as {call.recordType}, 
+		c.tsc as {call.tsc}, 
+		c.a_msisdn as {call.sourceMsisdn}, 
+		c.b_msisdn as {call.destMsisdn}, 
+		c.chargeableduration as {call.chargeableDuration}, 
+		c.datestartofcharging as {call.chargingDate},
+		c.sequencenumber as {call.sequenceNo}, 
+		m.sitename as {call.siteName}, 
+		c.cause as {call.code}, 
+		f.description as {call.description}
+		From  cdrdb c, cdrfieldvalxlat f, mcell m
+		Where to_char(c.cause) = f.code and (c.a_msisdn = ? or c.b_msisdn = ?)
+		And c.firstcgi = m.cell and f.systemid = 2 
+		And TRUNC(datestartofcharging) &gt;= ? And TRUNC(datestartofcharging) &lt;= ?
+		Order by datestartofcharging desc
+	</sql-query>
+</hibernate-mapping>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="csv.security.domain" auto-import="false">
+	<typedef name="encrypted" class="org.jasypt.hibernate.type.EncryptedStringType">
+      <param name="encryptorRegisteredName">strongHibernateStringEncryptor</param>
+    </typedef>
+	<typedef name="VoucherStatusType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.gateway.cs.VoucherStatus</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="GroupType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.security.domain.GroupType</param>
+		<param name="identifierMethod">getValue</param>
+		<param name="valueOfMethod">factory</param>
+	</typedef>
+	<class name="User" table="USERS">
+		<id name="id" column="ID">
+			<generator class="sequence">
+        		<param name="sequence">SEQ_SECURITY</param>
+        	</generator>
+        </id>
+        <property name="username" type="string" column="USERNAME" not-null="true"/>
+        <property name="password" type="encrypted" column="ENCRYPT_PASSWD" not-null="true"/>
+        <property name="firstName" type="string" column="FIRSTNAME"/>
+        <property name="lastName" type="string" column="SURNAME"/>
+        <property name="active" type="boolean" column="ACTIVE"/>
+        <property name="msisdn" type="string" column="MSISDN"/>
+        <property name="telephone" type="string" column="TELEPHONE"/>
+        <property name="ext" type="string" column="EXT"/>
+        <property name="email" type="string" column="EMAIL"/>
+        <property name="expirationDate" type="date" column="EXPIRATION_DATE"/>
+        <property name="supervisor" type="boolean" column="SUPERVISOR"/>
+        <set name="memberships" table="GROUP_USER" inverse="false" lazy="false" cascade="save-update">
+        	<key column="USER_ID"/>
+        	<many-to-many column="GROUP_ID" class="Group"/>
+        </set>
+	</class>
+	<class name="Group" table="GROUPS">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_SECURITY</param>
+			</generator>
+		</id>
+		<property name="groupName" type="string" column="GROUPNAME"/>
+		<property name="description" type="string" column="DESCRIPTION"/>
+		<property name="groupType" type="GroupType" column="GROUP_TYPE"/>
+		<many-to-one name="parentGroup" column="PARENT_ID" lazy="false" fetch="join"/>
+		<set name="usersInGroup" table="GROUP_USER" inverse="true" lazy="true" cascade="save-update">
+			<key column="GROUP_ID"/>
+			<many-to-many column="USER_ID" class="User"/>
+		</set>
+		<set name="permittedOperations" table="GROUPPERMISSIONS" inverse="false" lazy="true" cascade="save-update">
+			<key column="GROUP_ID"/>
+			<many-to-many column="OPERATION_ID" class="Operation"/>
+		</set>
+		<set name="childGroups" lazy="false" inverse="true" cascade="all">
+			<key column="PARENT_ID"/>
+			<one-to-many class="Group"/>
+		</set>
+	</class>
+	<class name="Operation" table="OPERATION">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_SECURITY</param>
+			</generator>
+		</id>
+		<property name="operationName" type="string" column="OPERATIONNAME"/>
+		<property name="description" type="string" column="DESCRIPTION"/>
+		<set name="permittedGroups" table="GROUPPERMISSIONS" inverse="true" lazy="false" cascade="save-update">
+			<key column="OPERATION_ID"/>
+			<many-to-many column="GROUP_ID" class="Group"/>
+		</set>
+		<many-to-one name="owningModule" column="MODULE_ID" lazy="false" fetch="join" not-null="true"/>
+	</class>
+	<class name="Module" table="MODULE">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_SECURITY</param>
+			</generator>
+		</id>
+		<property name="moduleName" type="string" column="MODULENAME"/>
+		<property name="description" type="string" column="DESCRIPTION"/>
+		<set name="operations" lazy="true" inverse="true" cascade="save-update">
+			<key column="MODULE_ID"/>
+			<one-to-many class="Operation"/>
+		</set>
+	</class>
+	<class name="AccessLog" table="ACCESSLOG">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_ACCESSLOG</param>
+			</generator>
+		</id>
+		<property name="ipAddress" column="IPADDRESS" type="string"/>
+		<property name="date" column="CREATEDTIME" type="timestamp"/>
+		<property name="msisdn" column="MSISDN" type="string" not-null="false"/>
+		<property name="contractId" column="CONTRACTID" type="string" not-null="false"/>
+		<property name="customerId" column="CUSTOMERID" type="string" not-null="false"/>
+		<property name="remark" column="REMARK" type="string"/>
+		<many-to-one name="owningUser" column="USER_ID" lazy="false" fetch="join" not-null="true" class="User"/>
+		<many-to-one name="owningOperation" column="OPERATION_ID" lazy="false" fetch="join" not-null="true" class="Operation"/>
+	</class>
+	<class name="Adjustment" table="ADJUSTMENT">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_ADJUSTMENT</param>
+			</generator>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string"/>
+		<property name="mainAccountAdjustment" column="MAINACCOUNTADJUSTMENT" type="float"/>
+		<property name="relativeSupervisionPeriodIncrease" column="RELDATEADJSUPERVISION" type="integer"/>
+		<property name="relativeServiceFeeIncrease" column="RELDATEADJSERVICEFEE" type="integer"/>
+		<property name="smsAdjustment" column="FREESMSADJUSTMENT" type="integer"/>
+		<property name="mmsAdjustment" column="FREEMMSADJUSTMENT" type="integer"/>
+		<property name="freeCallsAdjustment" column="FREECALLSADJUSTMENT" type="float"/>
+		<property name="status" column="STATUS" type="string"/>
+		<property name="reason" column="REASON" type="string"/>
+		<property name="type" column="TYPE" type="string"/>
+		<property name="voucherSerialNumber" column="VOUCHER_SERIAL_NUMBER" type="string"/>
+		<property name="adjustmentDate" column="CREATEDTIME" type="timestamp"/>
+		<many-to-one name="owningUser" column="CREATEDBY_ID" class="User" cascade="none"/>
+		<set name="dedicatedAccountAdjustments" table="DEDICATED_ACCOUNT_ADJUSTMENTS" lazy="false" inverse="false">
+			<key column="ADJUSTMENT_ID"/>
+			<composite-element class="DedicatedAccountAdjustment">
+				<property name="dedicatedAccountID" column="DEDICATED_ACCOUNT_ID" type="integer" not-null="true"/>
+				<property name="adjustmentValue" column="ADJUSTMENT_VALUE" type="float" not-null="true"/>
+			</composite-element>
+		</set>
+	</class>
+	<class name="SMSLog" table="SMSLOG">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_SMSLOG</param>
+			</generator>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string"/>
+		<property name="createdTime" column="CREATEDTIME" type="timestamp"/>
+		<property name="message" column="MESSAGE" type="string"/>
+		<property name="reason" column="REASON" type="string"/>
+		<many-to-one name="owningUser" class="User" column="USER_ID" cascade="none"/>
+	</class>
+	<class name="EMALog" table="EMALOG">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_EMALOG</param>
+			</generator>
+		</id>
+		<property name="ipAddress" column="IPADDRESS" type="string"/>
+		<property name="date" column="CREATEDTIME" type="timestamp"/>
+		<property name="operationType" column="OPERATION_TYPE" type="integer"/>
+		<property name="msisdn" column="MSISDN" type="string"/>
+		<property name="forwardMsisdn" column="FORWARD_MSISDN" type="string" not-null="false"/>
+		<property name="remark" column="REMARK" type="string" not-null="false"/>
+		<property name="reason" column="REASON" type="string"/>
+		<many-to-one name="owningUser" class="User" column="USER_ID" cascade="none" fetch="join"/>
+	</class>
+	<class name="VoucherLog" table="VOUCHERLOG">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_VOUCHERLOG</param>
+			</generator>
+		</id>
+		<property name="createdTime" type="timestamp" column="CREATEDTIME"/>
+		<property name="operationType" type="string" column="OPERATION_TYPE"/>
+		<property name="serialNumber" type="string" column="SERIAL_NUMBER"/>
+		<property name="oldState" type="VoucherStatusType" column="OLD_STATUS_ID"/>
+		<property name="newState" type="VoucherStatusType" column="NEW_STATUS_ID"/>
+		<property name="ipAddress" type="string" column="IPADDRESS"/>
+		<property name="msisdn" type="string" column="MSISDN"/>
+		<property name="remark" type="string" column="REMARK"/>
+		<many-to-one name="owningUser" class="User" column="USER_ID" cascade="none"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,114 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+		<wsa:To>https://mcel.provisioning.blackberry.com/ws-doc-literal/Provisioning
+		</wsa:To>
+		<wsa:MessageID>urn:uuid:E137D9D325C427C59C1333619520279
+		</wsa:MessageID>
+		<wsa:Action>http://www.blackberry.com/webservices/Provisioning/ProvisioningRequestWSPortType/submitSyncRequest
+		</wsa:Action>
+	</soapenv:Header>
+	<soapenv:Body>
+		<ns2:submitSync xmlns:ns2="http://www.blackberry.com/webservices/Provisioning">
+			<ns2:req>
+				<ns1:TransactionId xmlns:ns1="java:provision.control.ari.comm.soap">1755
+				</ns1:TransactionId>
+				<ns1:ProductType xmlns:ns1="java:provision.control.ari.comm.soap">BlackBerry
+				</ns1:ProductType>
+				<Body xmlns="java:provision.control.ari.comm.soap">
+					<Name>Subscriber</Name>
+					<Type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						xsi:nil="1" />
+					<SubEntities>
+						<Name>Service</Name>
+						<Type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+							xsi:nil="1" />
+						<Items>
+							<Name>ServiceName</Name>
+							<Data>Enterprise Plus B</Data>
+						</Items>
+					</SubEntities>
+					<Items>
+						<Name>IMSI</Name>
+						<Data>643012203411929</Data>
+					</Items>
+					<Items>
+						<Name>MSISDN</Name>
+						<Data>258823086864</Data>
+					</Items>
+				</Body>
+				<Header xmlns="java:provision.control.ari.comm.soap">
+					<TimeStamp>2012-04-05T11:52:00+0200</TimeStamp>
+					<TimeFormat>CCYY-MM-DDThh:mm:ssTZD</TimeFormat>
+					<Sender>
+						<Id>mCel</Id>
+						<Name>mCel</Name>
+						<LoginId>fatih</LoginId>
+						<Password>Password12</Password>
+						<Sapsoldto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+							xsi:nil="1" />
+					</Sender>
+				</Header>
+				<ns1:TransactionType xmlns:ns1="java:provision.control.ari.comm.soap">Modify
+				</ns1:TransactionType>
+				<ns1:Version xmlns:ns1="java:provision.control.ari.comm.soap">1.2</ns1:Version>
+				<ns1:Sapsoldto xmlns:ns1="java:provision.control.ari.comm.soap"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" />
+			</ns2:req>
+		</ns2:submitSync>
+	</soapenv:Body>
+</soapenv:Envelope>
+
+
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<env:Body>
+		<m:submitSyncResponse
+			xmlns:m="http://www.blackberry.com/webservices/Provisioning">
+			<m:return>
+				<java:TransactionId xmlns:java="java:provision.control.ari.comm.soap">1755
+				</java:TransactionId>
+				<java:ProductType xmlns:java="java:provision.control.ari.comm.soap">BlackBerry
+				</java:ProductType>
+				<java:TransactionType xmlns:java="java:provision.control.ari.comm.soap">Modify
+				</java:TransactionType>
+				<java:Version xmlns:java="java:provision.control.ari.comm.soap">1.2</java:Version>
+				<java:Header xmlns:java="java:provision.control.ari.comm.soap">
+					<java:TimeStamp>2012-04-05T09:52:01Z</java:TimeStamp>
+					<java:TimeFormat>CCYY-MM-DDThh:mm:ssTZD</java:TimeFormat>
+					<java:MajorErrCode xsi:nil="true" />
+					<java:MajorErrDesc xsi:nil="true" />
+					<java:Sender xsi:nil="true" />
+				</java:Header>
+				<java:Body xmlns:java="java:provision.control.ari.comm.soap">
+					<java:Name>Subscriber</java:Name>
+					<java:Type xsi:nil="true" />
+					<java:SubEntities>
+						<java:Name>Service</java:Name>
+						<java:Type xsi:nil="true" />
+						<java:ResultCode>
+							<java:ErrorCode>0</java:ErrorCode>
+							<java:ErrorDescription>Success</java:ErrorDescription>
+							<java:StatusCode xsi:nil="true" />
+							<java:StatusDescription xsi:nil="true" />
+						</java:ResultCode>
+						<java:Items>
+							<java:Name>ServiceName</java:Name>
+							<java:Data>Enterprise Plus B</java:Data>
+						</java:Items>
+					</java:SubEntities>
+					<java:ResultCode xsi:nil="true" />
+					<java:Items>
+						<java:Name>IMSI</java:Name>
+						<java:Data>643012203411929</java:Data>
+					</java:Items>
+					<java:Items>
+						<java:Name>MSISDN</java:Name>
+						<java:Data>258823086864</java:Data>
+					</java:Items>
+				</java:Body>
+			</m:return>
+		</m:submitSyncResponse>
+	</env:Body>
+</env:Envelope>
+
+

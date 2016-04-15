@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file was auto-generated from WSDL -->
+<!-- by the Apache Axis2 version: 1.5.1  Built on : Oct 19, 2009 (10:59:00 EDT) -->
+<serviceGroup>
+    <service name="PrepaidLoyaltyService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="com.bridge.loyalty.prepaid.server.PrepaidLoyaltyServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">com.bridge.loyalty.prepaid.server.PrepaidLoyaltyServiceImpl</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="adjustLoyaltyPoints" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.bridge.com/PrepaidLoyaltyService/">
+            <actionMapping>http://www.bridge.com/PrepaidLoyaltyService/adjustPoints</actionMapping>
+            <outputActionMapping>http://www.bridge.com/PrepaidLoyaltyService/PrepaidLoyaltyService/adjustLoyaltyPointsResponse</outputActionMapping>
+            <faultActionMapping faultName="faultResponse">http://www.bridge.com/PrepaidLoyaltyService/PrepaidLoyaltyService/adjustLoyaltyPoints/Fault/faultResponse</faultActionMapping>
+            <faultActionMapping faultName="loyaltyServiceFault">urn:adjustLoyaltyPointsloyaltyServiceFault</faultActionMapping>
+        </operation>
+        <operation name="queryLoyaltyPoints" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://www.bridge.com/PrepaidLoyaltyService/">
+            <actionMapping>http://www.bridge.com/PrepaidLoyaltyService/queryPoints</actionMapping>
+            <outputActionMapping>http://www.bridge.com/PrepaidLoyaltyService/PrepaidLoyaltyService/queryLoyaltyPointsResponse</outputActionMapping>
+            <faultActionMapping faultName="faultResponse">http://www.bridge.com/PrepaidLoyaltyService/PrepaidLoyaltyService/queryLoyaltyPoints/Fault/faultResponse</faultActionMapping>
+            <faultActionMapping faultName="loyaltyServiceFault">urn:queryLoyaltyPointsloyaltyServiceFault</faultActionMapping>
+        </operation>
+    </service>
+</serviceGroup>

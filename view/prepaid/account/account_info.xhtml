@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="#{msg.accountInformation}" styleClass="sectionPanel">
+		<h:panelGrid columns="4">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.msisdn}</ui:define>
+				<h:outputText value="#{prepaidAccountService.currentCustomer.msisdn}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.balance}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.mainAccountBalance}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.freeSMS}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.dedicatedAccounts[0].balance}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.freeMMS}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.dedicatedAccounts[1].balance}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.dataAccount}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.dedicatedAccounts[7].balance}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.language}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.currentLanguage}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.supervisionFeePeriod}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.supervisionDate}">
+					<s:convertDateTime dateStyle="medium" type="date"/>
+				</h:outputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.serviceFeePeriod}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.serviceFeeDate}">
+					<s:convertDateTime dateStyle="medium" type="date"/>
+				</h:outputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.activationDate}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.activationDate}">
+					<s:convertDateTime dateStyle="medium" type="date"/>
+				</h:outputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.refillUnbarredDate}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.refillUnbarDate}">
+					<s:convertDateTime dateStyle="medium" type="date"/>
+				</h:outputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.status}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.status}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.outgoingCallBarred}</ui:define>
+				<h:selectBooleanCheckbox value="#{prepaidAccountService.account.hlrBlockingStatus.outgoingCallBarred}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.serviceClass}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.currentServiceClass}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="prepaidAccountService.account.originServiceClass != null">
+				<ui:define name="label">#{msg.origServiceClass}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.originServiceClass}"/>
+			</s:decorate>
+		</h:panelGrid>
+	</rich:panel>
+</ui:composition>

@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.pukInfo}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.pukInfo}" styleClass="sectionPanel">
+			<h:form>
+				<div class="actionButtons">
+					<h:commandButton value="#{msg.retrievePUKInfo}" action="#{commonOperationsService.retrievePUKInfo}" />
+				</div>
+			</h:form>
+			<h:panelGrid columns="2" rendered="#{commonOperationsService.pukInfo != null}">
+				<s:decorate template="../display.xhtml">
+					<ui:define name="label">Status</ui:define>
+					<h:inputText value="#{commonOperationsService.pukInfo.status}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../display.xhtml">
+					<ui:define name="label">Valid From</ui:define>
+					<h:inputText value="#{commonOperationsService.pukInfo.validFrom}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../display.xhtml">
+					<ui:define name="label">PUK</ui:define>
+					<h:inputText value="#{commonOperationsService.pukInfo.puk}" readonly="true"/>
+				</s:decorate>
+				<s:decorate template="../display.xhtml">
+					<ui:define name="label">PUK 2</ui:define>
+					<h:inputText value="#{commonOperationsService.pukInfo.puk2}" readonly="true"/>
+				</s:decorate>
+			</h:panelGrid>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

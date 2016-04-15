@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<head>
+	<title>Implementation Calendar Report</title>
+	</head>
+	<body>
+	<table rules="all" border="1">
+		<caption>
+		<h3>IMPLEMENTATION CALENDAR REPORT</h3>
+		</caption>
+		<tbody>
+			<tr>
+				<th colspan="2"></th>
+			</tr>
+			<tr>
+				<th><h5> TAPCODE</h5></th>
+				<th><h5> Country Name</h5></th>
+				<th><h5> Agreement Type</h5></th>
+				<th><h5> Commitment Level</h5></th>
+				<th><h5> General Priority</h5></th>
+				<th><h5> Comm. Launch Date</h5></th>
+				<th><h5> Status</h5></th>
+				<th><h5> Test Cards Available?</h5></th>
+				<th><h5> Inboud Card Active?</h5></th>
+				<th><h5> Outboud Card Active?</h5></th>
+				<th><h5> Unix Impl. Status</h5></th>
+				<th><h5> BSCSIX Implm. Status</h5></th>
+				<th><h5> NSS Implm. End Date</h5></th>
+				<th><h5> GRX Implm. End Date</h5></th>
+				<th><h5> CGSN Implm. End Date</h5></th>
+				<th><h5> Platform</h5></th>
+			</tr>
+			<c:forEach items="#{calendarReportService.agreementScheduleList}" var="schedule">
+				<tr>
+					<td><h:outputText value="#{schedule.operatorCountry.operator.operatorCode}" /></td>
+					<td><h:outputText value="#{schedule.operatorCountry.country.countryName}" /></td>
+					<td><h:outputText value="#{schedule.scheduleType.label}" /></td>
+					<td><h:outputText value="#{schedule.commitmentLevel.value}" /></td>
+					<td><h:outputText value="#{schedule.generalPriority}" /></td>
+					<td><h:outputText value="#{schedule.commercialLaunchDate}" /></td>
+					<td><h:outputText value="#{schedule.status.description}" /></td>
+					<td><h:outputText value="#{schedule.testCardsAvailableBoth}" /></td>
+					<td><h:outputText value="#{schedule.cardInboundActive}" /></td>
+					<td><h:outputText value="#{schedule.cardOutboundActive}" /></td>
+					<td><h:outputText value="#{schedule.unixImplmStatus.label}" /></td>
+					<td><h:outputText value="#{schedule.bscsixImplmStatus.label}" /></td>
+					<td><h:outputText value="#{schedule.nssImplmDate}" /></td>
+					<td><h:outputText value="#{schedule.policyImplmEndDate}" /></td>
+					<td><h:outputText value="#{schedule.cgsnImplmStartDate}" /></td>
+					<td><h:outputText value="#{schedule.platform}" /></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	</body>
+</ui:composition>

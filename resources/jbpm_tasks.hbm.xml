@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<typedef name="ComplaintStatusType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.crm.complaintmng.domain.ComplaintStatus</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="SubscriptionType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.common.domain.SubscriptionType</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="ComplaintPhaseType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.crm.complaintmng.domain.ComplaintPhase</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<class name="csv.crm.complaintmng.domain.OpenComplaint" table="CRM_OPEN_COMPLAINTS">
+		<id name="complaintId" column="COMPLAINT_ID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="description" type="string" column="DESCRIPTION" length="2000" update="false"/>
+		<property name="enteredBy" type="string" column="ENTERED_BY" length="50"/>
+		<property name="openingDate" type="timestamp" column="OPENING_DATE"/>
+		<property name="customerMsisdn" type="string" column="CUSTOMER_MSISDN" length="9"/>
+		<property name="customerCode" type="string" column="CUSTOMER_CODE" length="20"/>
+		<property name="customerContactNumber" type="string" column="CUSTOMER_CONTACT_NUMBER" length="15"/>
+		<property name="customerName" type="string" column="CUSTOMER_NAME" length="100"/>
+		<property name="companyName" type="string" column="COMPANY_NAME" length="100"/>
+		<property name="assignedTo" type="string" column="ASSIGNED_TO" length="80" not-null="false"/>
+		<property name="assignedToUser" type="string" column="ASSIGNED_TO_USER" length="80" not-null="false"/>
+		<property name="status" type="ComplaintStatusType" column="STATUS" length="10"/>
+		<property name="phase" type="ComplaintPhaseType" column="PHASE" length="30"/>
+		<property name="subscriptionType" column="SUBSCRIPTION_TYPE" type="SubscriptionType" not-null="true" length="10"/>
+		<property name="province" column="PROVINCE" type="string" length="75" not-null="true"/>
+		<property name="district" column="DISTRICT" type="string" length="75" not-null="true"/>
+		<property name="destinationNumber" column="DEST_NUMBER" type="string" length="12" not-null="false"/>
+		<property name="dateOfOccurence" column="DATE_OF_OCCURENCE" type="timestamp" not-null="true"/>
+		<property name="displayInfo" column="DISPLAY_INFO" type="string" length="155" not-null="false"/>
+		<property name="attendanceRemark" column="ATTENDANCE_REMARK" type="string" length="155" not-null="false"/>
+		<many-to-one name="segment" class="csv.crm.complaintmng.domain.ComplaintSegment" column="SEGMENT_ID" outer-join="true" lazy="false" not-null="false"/>
+		<list name="iterations" inverse="false" lazy="false" table="CRM_OPEN_COMPLAINT_ITERATIONS" cascade="all" fetch="subselect">
+			<key column="COMPLAINT_ID" not-null="true" unique="false"/>
+			<index column="SEQUENCE_NO" type="integer"/>
+			<composite-element class="csv.crm.complaintmng.domain.OpenComplaintIteration">
+				<parent name="owningComplaint"/>
+				<property name="enteredBy" type="string" column="ENTERED_BY" not-null="true" length="50"/>
+				<property name="enteredOn" type="timestamp" column="ENTERED_ON" not-null="true"/>
+				<property name="comment" type="string" column="EXPLANATION" length="2000" update="false"/>	
+			</composite-element>
+		</list>
+	</class>
+	<class name="csv.crm.complaintmng.domain.ComplaintSegment" table="CRM_COMPLAINT_SEGMENTS" mutable="false">
+		<id name="id" column="ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="description" column="DESCRIPTION" type="string"/>
+	</class>
+	<class name="com.bridge.pm.bpm.SIMMigrationRequestState" table="PM_SIM_MIGRATION_REQUESTS" abstract="true">
+		<id name="requestId" column="REQUEST_ID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<discriminator column="PREPOS" type="string" length="10"/>
+		<property name="msisdn" column="MSISDN" type="string" length="12"/>
+		<property name="imsi" column="IMSI" type="string" length="20"/>
+		<property name="sim" column="SIM" type="string" length="20"/>
+		<property name="cardProfile" column="CARD_PROFILE" type="string" length="15"/>
+		<subclass name="com.bridge.pm.bpm.PrepaidToPostpaidMigrationRequestState" discriminator-value="PRETOPOS">
+			<property name="passedRiskAnalysis" column="PASSED_RISK_ANALYSIS" type="boolean"/>
+		</subclass>
+	</class>
+</hibernate-mapping>

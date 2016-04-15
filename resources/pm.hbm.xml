@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bridge.pm.domain.ActiveProvisioning" table="ACTIVE_PROVISIONINGS">
+		<id name="id" column="ID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" column="MSISDN" type="string" not-null="true"/>
+		<property name="imsi" column="IMSI" type="string" not-null="true"/>
+		<property name="sim" column="SIM" type="string" not-null="true"/>
+		<property name="activationDate" column="ACTIVATION_DATE" type="date" not-null="true"/>
+		<property name="businessPlan" column="BUSINESS_PLAN" type="integer" not-null="true"/>
+		<property name="sdp" column="SDP" type="string" not-null="true"/>
+		<property name="cardProfile" column="CARD_PROFILE" type="string" not-null="true"/>
+	</class>
+</hibernate-mapping>

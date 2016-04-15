@@ -1,0 +1,90 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../templateNoCustomer.xhtml">
+				
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.netmovelDuo}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.subscriptionStatus}" styleClass="sectionPanel">
+			<h:form>
+				<div class="actionButtons">
+					<h:commandButton action="#{netmovelService.checkBalance}" value="#{msg.getCurrentSubscriptionStatus}" />
+				</div>
+				<h:panelGrid columns="1" rendered="#{not netmovelService.netDuoAvailable}">
+					<h:outputText value="This subscriber cannot subscriber to Netmovel Duo service.." />
+				</h:panelGrid>
+				<h:panelGrid columns="1" rendered="#{netmovelService.currentBundleStatus != null and netmovelService.netDuoAvailable}">
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.accountExpiryDate}</ui:define>
+						<h:inputText value="#{netmovelService.currentBundleStatus.accountExpiryDate}" readonly="true">
+							<f:convertDateTime type="date" dateStyle="medium"/>
+						</h:inputText>	
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.balance}</ui:define>
+						<h:inputText value="#{netmovelService.currentBundleStatus.balance} Mts" readonly="true"/>
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.remainingVolume}</ui:define>
+						<h:inputText value="#{netmovelService.currentBundleStatus.remainingVolume}" readonly="true">
+							<f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+						</h:inputText>&nbsp;MB
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.currentPackage}</ui:define>
+						<h:inputText value="#{netmovelService.currentBundleStatus.currentActiveBundle}" readonly="true" rendered="#{netmovelService.currentBundleStatus.currentActiveBundle != null}"/>
+						<h:outputText value="#{msg.notSubscribed}" rendered="#{netmovelService.currentBundleStatus.currentActiveBundle == null}"/>
+					</s:decorate>
+				</h:panelGrid>
+			</h:form>
+			<h:form rendered="#{netmovelService.currentBundleStatus != null and netmovelService.netDuoAvailable}">
+				<h:panelGrid columns="1" rendered="#{netmovelService.currentBundleStatus.currentActiveBundle != null}">
+					<h:commandButton action="#{netmovelService.deactivateNTDuo}" value="#{msg.deactivateNTDuo}" rendered="#{loggedInUser.hasPermissionFor('Netmovel DUO - Update Activation')}"/>
+				</h:panelGrid>
+				<h:panelGrid columns="2" rendered="#{netmovelService.currentBundleStatus.currentActiveBundle == null and netmovelService.netDuoAvailable}">
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.contractValue}</ui:define>
+						<h:inputText value="#{netmovelService.contractValue}" required="true" size="5" maxlength="4">
+							<f:validateLongRange minimum="500"/>
+						</h:inputText>
+					</s:decorate>
+					<h:commandButton action="#{netmovelService.activateNTDuo}" value="#{msg.activateNTDuo}" rendered="#{loggedInUser.hasPermissionFor('Netmovel DUO - Update Activation')}"/>
+				</h:panelGrid>
+			</h:form>
+		</rich:panel>
+		<rich:panel header="#{msg.subscriptionHistory}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGroup>
+					<h:panelGrid columns="3">
+						<s:decorate template="../../edit.xhtml">
+							<ui:define name="label">#{msg.startDate}</ui:define>
+							<rich:calendar value="#{netmovelService.startDate}" direction="bottom-right" required="true"/>
+						</s:decorate>
+						<a:commandButton action="#{netmovelService.findNetmovelDuoActivations}" value="Retrieve Subscription History"
+							reRender="pnlHistory" onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Retrieve Subscription History'; this.disabled=false"/>
+						<a:commandButton action="#{netmovelService.findCDRHistory}" value="Retrieve Usage History" reRender="pnlHistory"
+							onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Retrieve Usage History'; this.disabled=false"/>
+					</h:panelGrid>
+					<a:outputPanel id="pnlHistory">
+						<rich:tabPanel switchType="client">
+							<rich:tab label="#{msg.subscriptionHistory}">
+								<ui:include src="/prepaid/netmovelduo/duo_activations.xhtml" />
+							</rich:tab>
+							<rich:tab label="#{msg.usageHistory}">
+								<ui:include src="/prepaid/netmovel/cdr_history.xhtml" />
+							</rich:tab>
+						</rich:tabPanel>
+					</a:outputPanel>
+				</h:panelGroup>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

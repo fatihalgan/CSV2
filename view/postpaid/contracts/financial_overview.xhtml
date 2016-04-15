@@ -1,0 +1,162 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:m="http://jboss.com/products/seam/mail"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.financialOverview}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.accountSummary}" styleClass="sectionPanel">
+			<h:panelGrid columns="2">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.currentBalance}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.currentBalance}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.totalOpenAmount}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.totalOpenAmount}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.previousBalance}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.previousBalance}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.lastBilledOn}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.lbcDate}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.unbilledAmount}</ui:define>
+					<h:inputText value="#{contractService.selectedAccount.unbilledAmount}" />
+				</s:decorate>
+				<s:link value="#{msg.returnToCustomerDetails}" view="/postpaid/contracts/postpaid_account_view.xhtml"/>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel header="#{msg.searchCriteria}" styleClass="sectionPanel" rendered="#{not empty contractService.selectedAccount.billingAccounts}">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.billingAccount}</ui:define>
+						<h:selectOneMenu value="#{contractService.selectedBillAccountId}">
+							<f:selectItem itemLabel="All" itemValue="0"/>
+							<s:selectItems var="item" value="#{contractService.selectedAccount.billingAccounts}" label="#{item.accountName}" itemValue="#{item.accountId}" />
+						</h:selectOneMenu>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton value="#{msg.search}" action="#{contractService.viewFinancialData}" />
+				</div>
+			</h:form>
+		</rich:panel>
+		<rich:panel header="#{msg.documents}" styleClass="sectionPanel" rendered="#{not empty contractService.selectedAccount.documents}">
+			<rich:dataTable value="#{contractService.selectedAccount.documents}" var="item">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.referenceNo}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.referenceDate}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.dueDate}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.totalAmount}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.openAmount}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.documentType}"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.referenceNo}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.referenceDate}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.dueDate}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.totalAmount}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.openAmount}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.documentType}"/>
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+		<rich:panel header="#{msg.payments}" styleClass="sectionPanel" rendered="#{not empty contractService.selectedAccount.payments}">
+			<rich:dataTable value="#{contractService.selectedAccount.payments}" var="item">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.referenceNo}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.documentReferenceNo}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.paymentType}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.entryDate}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.receiptDate}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.postingDate}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.amountPaid}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.comment}"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.referenceNo}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.documentReferenceNo}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.paymentType}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.entryDate}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.receiptDate}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.postingDate}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.amountPaid}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.comment}"/>
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+	</ui:define>			
+</ui:composition>

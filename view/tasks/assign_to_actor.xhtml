@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<rich:panel rendered="#{loggedInUser.supervisor}">
+		<h:panelGrid columns="1">
+			<s:decorate template="../display.xhtml">
+				<ui:define name="label">#{msg.assignTo}</ui:define>
+				<h:selectOneMenu value="#{assignPooledTask.assignToActor}" required="false">
+					<s:selectItems var="item" itemValue="#{item.username}" value="#{loggedInUser.supervisedUsersInGroup}" label="#{item.username}"/>					
+				</h:selectOneMenu>
+			</s:decorate>
+		</h:panelGrid>
+		<div class="actionButtons">
+			<h:commandButton action="#{assignPooledTask.assign(task.id)}" value="#{msg.assignTaskToUser}"></h:commandButton>	
+		</div>
+	</rich:panel>
+</ui:composition>

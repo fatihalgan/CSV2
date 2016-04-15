@@ -1,0 +1,113 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<script type="text/javascript" language="JavaScript" src="../field_restrictions.js"/>
+		<center>
+			<h3>#{msg.identityDocInfo}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.existingRegistrations}" styleClass="sectionPanel" rendered="#{not prepaidRegistrarService.newRegistration}">
+			<h:form>
+			<h:panelGrid>
+				<rich:dataTable id="tblSubscriptions" value="#{prepaidRegistrarService.newRegistrar.currentSubscriptionList}" var="item" rows="20">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.msisdn}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.registrationDate}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.registrationStatus}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.registrationType}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.unregisterNumber}" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.msisdn}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.registrationDate}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.status}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.registeredTo.registrarType}" />
+						</rich:column>
+						<rich:column>
+							<h:commandButton action="#{prepaidCustomerService.removeCellFromRegistrar}" value="#{msg.unregisterNumber}" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblSubscriptions" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+					</f:facet>
+				</rich:dataTable>
+			</h:panelGrid>
+			</h:form>
+		</rich:panel>
+		<rich:panel header="#{msg.enterCustomerDetails}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="3">
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.nationality}</ui:define>
+						<h:selectOneMenu value="#{prepaidRegistrarService.newRegistrar.nationality}">
+							<s:selectItems var="country" value="#{prepaidRegistrarService.countries}" label="#{country.countryName}"/>
+							<f:converter converterId="simRegEntityConverter"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.gender}</ui:define>
+						<h:selectOneMenu value="#{prepaidRegistrarService.newRegistrar.gender}">
+							<s:convertEnum/>
+							<s:selectItems value="#{allGenders}" var="gender" label="#{gender.label}"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.idDocType}</ui:define>
+						<h:selectOneMenu value="#{prepaidRegistrarService.newRegistrar.identityDocument.documentType}">
+							<s:convertEnum/>
+							<s:selectItems value="#{allIdentityDocTypes}" var="docType" label="#{docType.label}"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.idDocNumber}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.identityDocument.documentNo}" size="20" maxlength="20" onkeypress="event.returnValue=englishnospace(event);" required="true"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.issuedBy}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.identityDocument.issuedBy}" size="30" maxlength="30" onkeypress="event.returnValue=english(event);" required="true"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.issueDate}</ui:define>
+						<rich:calendar value="#{prepaidRegistrarService.newRegistrar.identityDocument.issueDate}" required="true"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.expiryDate}</ui:define>
+						<rich:calendar value="#{prepaidRegistrarService.newRegistrar.identityDocument.expiryDate}" required="true"/>
+					</s:decorate>
+				</h:panelGrid>
+				<h:panelGroup layout="block">
+					<div class="actionButtons">
+						<h:commandButton action="back" value="Back" immediate="true"/>
+						<h:commandButton action="next" value="Next" />
+					</div>
+				</h:panelGroup>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,14 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:m="http://jboss.com/products/seam/mail"
+           xmlns:ui="http://java.sun.com/jsf/facelets"
+           xmlns:h="http://java.sun.com/jsf/html">
+	<m:from name="MCEL SARL" address="csvAdmin@mcel.co.mz" />  
+    <m:to name="#{postpaidService.postpaidAccount.fullName}">#{postpaidService.postpaidAccount.email}</m:to>       
+	<m:subject>Factura mcel de #{postpaidService.invoiceInfo.period}</m:subject>
+	<m:attachment value="../../invoices/#{postpaidService.invoiceFileName}" /> 
+	<m:body>
+    	<p>Estimado Cliente,</p>
+        <p>Obrigado por escolher a mcel como a sua operadora de telefonia movel.
+	       Em anexo, por favor encontre a sua factura do mes #{postpaidService.invoiceInfo.period}</p>
+    </m:body>
+</m:message>

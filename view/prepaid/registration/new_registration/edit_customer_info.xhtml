@@ -1,0 +1,64 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<script type="text/javascript" language="JavaScript" src="../field_restrictions.js"/>
+		<center>
+			<h3>#{msg.registerNewSubscriber}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.enterCustomerDetails}" styleClass="sectionPanel">
+			<h:panelGrid columns="1">
+				<h:panelGrid columns="2">
+				<h:form>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.documentSource}</ui:define>
+						<h:selectOneMenu value="#{prepaidRegistrarService.newRegistrar.documentSource}">
+							<s:selectItems var="collector" value="#{prepaidRegistrarService.documentCollectors}" label="#{collector.collectorName}"/>
+							<f:converter converterId="simRegEntityConverter"/>
+						</h:selectOneMenu>
+					</s:decorate>
+				</h:form>
+				</h:panelGrid>
+				<h:form>
+					<a:outputPanel id="pnlNewRegistrar">
+						<h:panelGrid columns="3">
+							<s:decorate template="../../../edit.xhtml">
+								<ui:define name="label">#{msg.name}</ui:define>
+								<h:inputText value="#{prepaidRegistrarService.newRegistrar.name}" required="true" onkeypress="event.returnValue=english(event);" maxlength="30" size="30"/>
+							</s:decorate>
+							<s:decorate template="../../../edit.xhtml">
+								<ui:define name="label">#{msg.otherNames}</ui:define>
+								<h:inputTextarea value="#{prepaidRegistrarService.newRegistrar.otherNames}" required="false" onkeypress="event.returnValue=english(event);" />
+							</s:decorate>
+							<s:decorate template="../../../edit.xhtml">
+								<ui:define name="label">#{msg.surname}</ui:define>
+								<h:inputText value="#{prepaidRegistrarService.newRegistrar.surname}" required="true" onkeypress="event.returnValue=english(event);" maxlength="40" size="40"/>
+							</s:decorate>
+							<s:decorate template="../../../edit.xhtml">
+								<ui:define name="label">#{msg.birthDate}</ui:define>
+								<rich:calendar value="#{prepaidRegistrarService.newRegistrar.birthDate}" required="true"/>
+							</s:decorate>
+							<s:decorate template="../../../edit.xhtml">
+								<ui:define name="label">#{msg.birthPlace}</ui:define>
+								<h:inputText value="#{prepaidRegistrarService.newRegistrar.birthPlace}" required="true" onkeypress="event.returnValue=english(event);" maxlength="30" size="30"/>
+							</s:decorate>	
+						</h:panelGrid>
+					</a:outputPanel>
+					<h:panelGroup layout="block">
+						<div class="actionButtons">
+							<h:commandButton  action="back" value="Back" immediate="true"/>
+							<h:commandButton action="next" value="Next" />
+						</div>
+					</h:panelGroup>
+				</h:form>
+			</h:panelGrid>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

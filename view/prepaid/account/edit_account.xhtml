@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="#{msg.changeExpiryDates}" styleClass="sectionPanel" rendered="#{loggedInUser.hasPermissionFor('MINSAT Change Expiry Dates')}">
+		<h:panelGrid columns="2">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.newSupervisionPeriodExpiryDate}</ui:define>
+				<rich:calendar value="#{prepaidAccountService.newSupervisionPeriod}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.newServiceFeePeriodExpiryDate}</ui:define>
+				<rich:calendar value="#{prepaidAccountService.newServiceFeePeriod}"/>
+			</s:decorate>
+		</h:panelGrid>
+		<div class="actionButtons">
+			<h:commandButton action="#{prepaidAccountService.changeExpiryDates}" value="#{msg.changeExpiryDates}" />
+		</div>
+	</rich:panel>
+	<rich:panel header="#{msg.changeLanguage}" styleClass="sectionPanel" rendered="#{loggedInUser.hasPermissionFor('MINSAT Change Language')}">
+		<h:panelGrid columns="1">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.newLanguage}</ui:define>
+				<h:selectOneMenu value="#{prepaidAccountService.newLanguage}">
+					<s:convertEnum />
+					<s:selectItems value="#{allLanguages}" var="lang" label="#{lang.label}"/>
+				</h:selectOneMenu>
+			</s:decorate>
+		</h:panelGrid>
+		<div class="actionButtons">
+			<h:commandButton action="#{prepaidAccountService.changeLanguage}" value="#{msg.changeLanguage}" />
+		</div>
+	</rich:panel>
+	<rich:panel header="#{msg.changeServiceClass}" styleClass="sectionPanel" rendered="#{loggedInUser.hasPermissionFor('MINSAT Change Service Class')}">
+		<h:panelGrid columns="2">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.currentServiceClass}</ui:define>
+				<h:outputText value="#{prepaidAccountService.account.realServiceClass.label}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.newServiceClass}</ui:define>
+				<h:selectOneMenu value="#{prepaidAccountService.newServiceClass}">
+					<s:convertEnum />
+					<s:selectItems value="#{allServiceClasses}" var="sc" label="#{sc.label}"/>
+				</h:selectOneMenu>
+			</s:decorate>
+		</h:panelGrid>
+		<div class="actionButtons">
+			<h:commandButton action="#{prepaidAccountService.changeServiceClass}" value="#{msg.changeServiceClass}" />
+		</div>
+	</rich:panel>
+	<rich:panel header="#{msg.resetRefillBarring}" styleClass="sectionPanel" rendered="#{loggedInUser.hasPermissionFor('MINSAT Reset Refill Barring Status') &amp;&amp; prepaidAccountService.account.refillUnbarDate != null}">
+		<div class="actionButtons">
+			<h:commandButton action="#{prepaidAccountService.resetRefillBarringStatus}" value="#{msg.resetRefillBarring}" />
+		</div>
+	</rich:panel>                
+</ui:composition>

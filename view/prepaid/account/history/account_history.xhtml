@@ -1,0 +1,313 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:c="http://java.sun.com/jstl/core">
+	<rich:panel header="#{msg.accountHistory}" styleClass="sectionPanel">
+		<h:outputLabel value="#{msg.type}: "/>
+		<h:selectOneMenu id="cmbCRSEventType" value="#{prepaidAccountService.subscriptionHistory.selectedEventDescription}">
+			<a:support event="onchange" action="#{prepaidAccountService.changeEventDescriptionSelection}" reRender="allCRSEventsList"/>
+			<s:convertEnum />
+			<s:selectItems value="#{allCRSAccountEventDescriptions}" var="evt" label="#{evt.label}"/>
+		</h:selectOneMenu>
+		<rich:separator />
+		<rich:dataTable id="allCRSEventsList" rows="13" value="#{prepaidAccountService.subscriptionHistory.eventHistoryFiltered}" 
+			var="item" onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
+			onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+			columnClasses="aligncentercolumn,aligncentercolumn,alignrightcolumn,alignrightcolumn,alignrightcolumn" rendered="#{not empty prepaidAccountService.subscriptionHistory}">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="ID" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="OriginTransID"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Description" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Category" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.dateTime}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.calledNumber}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.country}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.duration}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.dataVolume}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.charge}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.balance}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Details" />
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="#{item.transactionId}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.originTransactionId}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.eventDescription}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.category}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.transactionDate}">
+						<s:convertDateTime type="both" dateStyle="medium" timeStyle="short" />
+					</h:outputText>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.otherPartyNumber}" rendered="#{item.eventType == 'UsageEvent'}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.country}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.duration}" rendered="#{item.eventType == 'UsageEvent'}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.dataVolume}" rendered="#{item.eventType == 'UsageEvent'}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.transactionAmount}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.balanceBefore}" />
+				</rich:column>
+				<rich:column>
+					<a:commandLink action="#{prepaidAccountService.retrieveCRSEventDetails(item)}" value="Show Details"
+						reRender="crsEventDetailPanel" 
+						oncomplete="Richfaces.showModalPanel('crsEventDetailsMp',{width:450, top:200})"/>
+				</rich:column>
+			</rich:columnGroup>
+			<f:facet name="footer">
+				<rich:datascroller for="allCRSEventsList" maxPages="20" boundaryControls="auto" fastControls="auto" />
+			</f:facet>
+		</rich:dataTable>				
+	</rich:panel>
+	
+	<rich:modalPanel id="crsEventDetailsMp" width="600" height="420" zindex="2000" style="overflow:auto" domElementAttachment="body">
+		<f:facet name="header">Details</f:facet>
+		<f:facet name="controls">
+        	<a href="#" onclick="Richfaces.hideModalPanel('crsEventDetailsMp')">X</a>
+     	</f:facet>
+     	<a:outputPanel id="crsEventDetailPanel" layout="inline">
+     		<rich:panel header="LifeCycle Info" rendered="#{prepaidAccountService.subscriptionHistory.currentViewedEvent.eventType =='Lifecycle Change'}">
+     			<c:set var="lfc" value="#{prepaidAccountService.subscriptionHistory.currentViewedEvent}"/>
+     			<h:panelGrid columns="2">
+     				<h:outputText value="Transaction Amount" styleClass="label"/>
+     				<h:outputText value="#{lfc.transactionAmount}"/>
+     				
+     				<h:outputText value="Cleared Credit Amount" styleClass="label"/>
+     				<h:outputText value="#{lfc.clearedCreditAmount}"/>
+     				
+     				<h:outputText value="Account Status" styleClass="label"/>
+     				<h:outputText value="#{lfc.accountStatus}"/>
+     				
+     				<h:outputText value="Adjustment Record Type" styleClass="label"/>
+     				<h:outputText value="#{lfc.adjustmentRecordType}"/>
+     				
+     				<h:outputText value="Credit Cleared" styleClass="label"/>
+     				<h:outputText value="#{lfc.creditCleared}"/>
+     				
+     				<h:outputText value="Disconnected" styleClass="label"/>
+     				<h:outputText value="#{lfc.disconnected}"/>
+     				
+     				<h:outputText value="Supervision Period Expiry Date" styleClass="label"/>
+     				<h:outputText value="#{lfc.supervisionPeriodExpiryDate}"/>
+     				
+     				<h:outputText value="Credit Clearence Grace Period" styleClass="label"/>
+     				<h:outputText value="#{lfc.creditClearanceGracePeriod}"/>
+     				
+     				<h:outputText value="Service Fee Period Expiry Date" styleClass="label"/>
+     				<h:outputText value="#{lfc.serviceFeePeriodExpiryDate}"/>
+     				
+     				<h:outputText value="Service Removal Grace Period" styleClass="label"/>
+     				<h:outputText value="#{lfc.serviceRemovalGracePeriod}"/>
+     				
+     				<h:outputText value="Supervision Period Expiry Date Before" styleClass="label"/>
+     				<h:outputText value="#{lfc.supervisionPeriodExpiryDateBefore}"/>
+     				
+     				<h:outputText value="Credit Clearence Grace Period Before" styleClass="label"/>
+     				<h:outputText value="#{lfc.creditClearanceGracePeriodBefore}"/>
+     				
+     				<h:outputText value="Service Fee Period Expiry Date Before" styleClass="label"/>
+     				<h:outputText value="#{lfc.serviceFeePeriodExpiryDateBefore}"/>
+     				
+     				<h:outputText value="Service Removal Grace Period Before" styleClass="label"/>
+     				<h:outputText value="#{lfc.serviceRemovalGracePeriodBefore}"/>
+     				
+     				<h:outputText value="Account Status Before" styleClass="label"/>
+     				<h:outputText value="#{lfc.accountStatusBefore}"/>
+     				
+     				<h:outputText value="Activation Date" styleClass="label"/>
+     				<h:outputText value="#{lfc.activationDate}"/>
+     				
+     				<h:outputText value="Initial Amount" styleClass="label"/>
+     				<h:outputText value="#{lfc.initialAmount}"/>
+     			</h:panelGrid>
+     		</rich:panel>
+     		
+     		<rich:panel header="Refill" rendered="#{prepaidAccountService.subscriptionHistory.currentViewedEvent.eventType =='Refill'}">
+     			<c:set var="rfl" value="#{prepaidAccountService.subscriptionHistory.currentViewedEvent}"/>
+     			<h:panelGrid columns="2">
+     				<h:outputText value="Refill Type" styleClass="label"/>
+     				<h:outputText value="#{rfl.refillType}"/>
+     				
+     				<h:outputText value="Nominal Amount" styleClass="label"/>
+     				<h:outputText value="#{rfl.nominalAmount}"/>
+     				
+     				<h:outputText value="Applied Amount" styleClass="label"/>
+     				<h:outputText value="#{rfl.appliedAmount}"/>
+     				
+     				<h:outputText value="Promotion PLan" styleClass="label"/>
+     				<h:outputText value="#{rfl.promotionPlanId}"/>
+     				
+     				<h:outputText value="Main Account Balance" styleClass="label"/>
+     				<h:outputText value="#{rfl.mainAccountBalance}"/>
+     				
+     				<h:outputText value="Account Status" styleClass="label"/>
+     				<h:outputText value="#{rfl.accountStatus}"/>
+     				
+     				<h:outputText value="Voucher Serial Number" styleClass="label"/>
+     				<h:outputText value="#{rfl.voucherSerialNumber}"/>
+     				
+     				<h:outputText value="Voucher Group" styleClass="label"/>
+     				<h:outputText value="#{rfl.voucherGroup}"/>
+     				
+     				<h:outputText value="Credit Clearence Grace Period" styleClass="label"/>
+     				<h:outputText value="#{rfl.creditClearenceGracePeriod}"/>
+     				
+     				<h:outputText value="Service Removal Grace Period" styleClass="label"/>
+     				<h:outputText value="#{rfl.serviceRemovalGracePeriod}"/>
+     				
+     				<h:outputText value="Supervision Period Expiry Date" styleClass="label"/>
+     				<h:outputText value="#{rfl.supervisionPeriodExpiryDate}"/>
+     				
+     				<h:outputText value="Supervision Period Days Extension" styleClass="label"/>
+     				<h:outputText value="#{rfl.supervisionPeriodDaysExtension}"/>
+     				
+     				<h:outputText value="Service Fee Period Expiry Date" styleClass="label"/>
+     				<h:outputText value="#{rfl.serviceFeePeriodExpiryDate}"/>
+     				
+     				<h:outputText value="Service Fee Period Days Extension" styleClass="label"/>
+     				<h:outputText value="#{rfl.serviceFeePeriodDaysExtension}"/>
+     				
+     				<h:outputText value="New Service Class ID" styleClass="label"/>
+     				<h:outputText value="#{rfl.newServiceClassId}"/>
+     				
+     				<h:outputText value="Service Class ID" styleClass="label"/>
+     				<h:outputText value="#{rfl.serviceClassId}"/>
+     				
+     				<h:outputText value="Account Group" styleClass="label"/>
+     				<h:outputText value="#{rfl.accountGroup}"/>
+     				
+     				<h:outputText value="Segmentation Id" styleClass="label"/>
+     				<h:outputText value="#{rfl.segmentationId}"/>
+     				
+     				<h:outputText value="Community ID 1" styleClass="label"/>
+     				<h:outputText value="#{rfl.communityId1}"/>
+     				
+     				<h:outputText value="Community ID 2" styleClass="label"/>
+     				<h:outputText value="#{rfl.communityId2}"/>
+     				
+     				<h:outputText value="Voucher Based" styleClass="label"/>
+     				<h:outputText value="#{rfl.voucherBased}"/>
+     			</h:panelGrid>
+     		</rich:panel>
+     		
+     		<c:set var="eventDetails" value="#{prepaidAccountService.subscriptionHistory.currentViewedEvent.transactionDetails}"/>
+     		<rich:panel header="Dedicated Account" rendered="#{eventDetails.dedicatedAccountContainerTD != null and eventDetails.dedicatedAccountContainerTD.dedicatedAccounts.size() != 0}">
+     			<rich:dataGrid value="#{eventDetails.dedicatedAccountContainerTD.dedicatedAccounts}" var="da" columns="2" first="0">
+     				<f:facet name="header">
+     					<h:outputText value="Dedicated Account Changes"/>
+     				</f:facet>
+     				<h:panelGrid columns="2">
+     					<h:outputText value="DA ID" styleClass="label"/>
+     					<h:outputText value="#{da.id}"/>
+     				
+     					<h:outputText value="Total Amount" styleClass="label"/>
+     					<h:outputText value="#{da.totalAmount}"/>
+     				
+     					<h:outputText value="Promotion Amount" styleClass="label"/>
+     					<h:outputText value="#{da.promotionAmount}"/>
+     				
+     					<h:outputText value="Cleared Amount" styleClass="label"/>
+     					<h:outputText value="#{da.clearedAmount}"/>
+     				
+     					<h:outputText value="Balance" styleClass="label"/>
+     					<h:outputText value="#{da.balance}"/>
+     				
+     					<h:outputText value="Expiry Date" styleClass="label"/>
+     					<h:outputText value="#{da.expiryDate}"/>
+     				
+     					<h:outputText value="Action" styleClass="label"/>
+     					<h:outputText value="#{da.action}"/>
+     				
+     					<h:outputText value="Start Date" styleClass="label"/>
+     					<h:outputText value="#{da.startDate}"/>
+     				
+     					<h:outputText value="Expiry Date Before" styleClass="label"/>
+     					<h:outputText value="#{da.expiryDateBefore}"/>
+     				
+     					<h:outputText value="Start Date Before" styleClass="label"/>
+     					<h:outputText value="#{da.startDateBefore}"/>
+     				
+     					<h:outputText value="Unit Type" styleClass="label"/>
+     					<h:outputText value="#{da.unitType}"/>
+     				
+     					<h:outputText value="Unit Balance" styleClass="label"/>
+     					<h:outputText value="#{da.unitBalance}"/>
+     				
+     					<h:outputText value="Total Unit" styleClass="label"/>
+     					<h:outputText value="#{da.totalUnit}"/>
+     				
+     					<h:outputText value="Promotion Unit" styleClass="label"/>
+     					<h:outputText value="#{da.promotionUnit}"/>
+     				
+     					<h:outputText value="Cleared Unit" styleClass="label"/>
+     					<h:outputText value="#{da.clearedUnit}"/>
+     				
+     					<h:outputText value="Balance Before" styleClass="label"/>
+     					<h:outputText value="#{da.balanceBefore}"/>
+     				</h:panelGrid>
+     			</rich:dataGrid>
+     		</rich:panel>
+     		<rich:panel header="Periodic Account Management" rendered="#{eventDetails.periodicAccountManagementTD != null}">
+     		
+     		</rich:panel>
+     		<rich:panel header="Offers" rendered="#{eventDetails.offersTD != null}">
+     		
+     		</rich:panel>
+     		<rich:panel header="Usage Counter Tresholds" rendered="#{eventDetails.usageCounterTresholdTD != null}">
+     		
+     		</rich:panel>
+     		<rich:panel header="Bandwidth Control" rendered="#{eventDetails.bandwithControlTD != null}">
+     		
+     		</rich:panel>
+     		<rich:panel header="Specified Consumption" rendered="#{eventDetails.specifiedConsumptionTD != null}">
+     		
+     		</rich:panel>
+     	</a:outputPanel>
+     </rich:modalPanel>
+</ui:composition>

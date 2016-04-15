@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.customerRegistration}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<h:form>
+			<rich:panel header="#{msg.customerRegistration}" styleClass="sectionPanel">
+				<h:panelGrid columns="3">
+					<a:commandButton id="btnRetrieveCurrentSubscription" action="#{prepaidCustomerService.retrieveCurrentSubscription}" value="Get Registration Info"
+						reRender="pnlCurrentSubscriptionInfo" 
+						onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Registration Info'; this.disabled=false"/>
+					<a:commandButton id="btnRetrieveSubscriptionHistory" action="#{prepaidCustomerService.retrieveSubscriptionHistory}" value="Get Subscription History"
+						reRender="tabSubscriptionHistory"
+						onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Subscription History'; this.disabled=false"/>	
+				</h:panelGrid>
+			</rich:panel>
+		</h:form>
+		<h:form>
+			<a:outputPanel id="pnlCurrentSubscriptionInfo">
+				<rich:tabPanel switchType="client" rendered="#{prepaidCustomerService.currentSubscription != null}">
+					<rich:tab label="#{msg.registrationInfo}">
+						<ui:include src="/prepaid/registration/registration_info.xhtml" />	
+					</rich:tab>
+					<rich:tab label="#{msg.companyInfo}" 
+						rendered="#{prepaidCustomerService.currentSubscription.registeredTo.registrarType.label == 'COMPANY'}">
+						<ui:include src="/prepaid/registration/company_info.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.customerInfo}">
+						<ui:include src="/prepaid/registration/customer_info.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.identityDocInfo}">
+						<ui:include src="/prepaid/registration/identity_info.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.addressInfo}">
+						<ui:include src="/prepaid/registration/address_info.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.workInfo}">
+						<ui:include src="/prepaid/registration/work_info.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.registeredNumbers}">
+						<ui:include src="/prepaid/registration/customer_registrations.xhtml" />
+					</rich:tab>
+					<rich:tab id="tabSubscriptionHistory" label="#{msg.registrationHistory}">
+						<ui:include src="/prepaid/registration/subscription_history.xhtml" />
+					</rich:tab>
+				</rich:tabPanel>
+			</a:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

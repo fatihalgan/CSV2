@@ -1,0 +1,45 @@
+<mail-templates>
+
+  <mail-template name="outbound-complaint-task-assign">
+    <actors>#{taskInstance.actorId}</actors>
+    <subject>New Customer Complaint From CSV: #{taskInstance.processInstance.key}</subject>
+    <text><![CDATA[You have a new customer complaint to be attended. The complaint number is #{taskInstance.processInstance.key}.
+		
+		Complaint Details
+			
+		MSISDN: #{taskInstance.variables['openComplaint'].customerMsisdn}
+		
+		Opened By: #{taskInstance.variables['openComplaint'].enteredBy}
+		
+		Opening Time: #{taskInstance.variables['openComplaint'].openingDate}
+		
+		Location: #{taskInstance.variables['openComplaint'].province} / #{taskInstance.variables['openComplaint'].district}
+		
+		Description: #{taskInstance.variables['openComplaint'].description}
+		
+		Task Id: #{taskInstance.id}
+		
+		]]></text>
+  </mail-template>
+
+  <mail-template name="task-reminder">
+    <actors>#{taskInstance.actorId}</actors>
+    <subject>CSV Task Reminder!</subject>
+    <text><![CDATA[You have, waiting tasks assigned to you that you have not attended yet. Please check CSV system and attend those tasks.
+       Complaint Details
+       
+       MSISDN: #{taskInstance.variables['openComplaint'].customerMsisdn}
+       
+       Opened By: #{taskInstance.variables['openComplaint'].enteredBy}
+	   
+	   Opening Time: #{taskInstance.variables['openComplaint'].openingDate}
+	   
+	   Location: #{taskInstance.variables['openComplaint'].province} / #{taskInstance.variables['openComplaint'].district}
+	   
+	   Description: #{taskInstance.variables['openComplaint'].description}
+	   
+	   Task Id: #{taskInstance.id}
+	   
+	   ]]></text>
+  </mail-template>
+</mail-templates>

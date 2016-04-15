@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<script type="text/javascript" language="JavaScript" src="../field_restrictions.js"/>
+		<center>
+			<h3>#{msg.workInfo}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.enterWorkInfoDetails}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="3">
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.title}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.workInfo.title}" onkeypress="event.returnValue=english(event);" size="20" maxlength="20"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.company}</ui:define>
+						<h:inputTextarea value="#{prepaidRegistrarService.newRegistrar.workInfo.company}" onkeypress="event.returnValue=english(event);" cols="20" rows="3"/>
+					</s:decorate>
+					<s:decorate template="../../../edit.xhtml">
+						<ui:define name="label">#{msg.place}</ui:define>
+						<h:inputText value="#{prepaidRegistrarService.newRegistrar.workInfo.place}" onkeypress="event.returnValue=english(event);" size="20" maxlength="20"/>
+					</s:decorate>
+				</h:panelGrid>
+				<h:panelGroup layout="block">
+					<div class="actionButtons">
+						<h:commandButton  action="back" value="Back" immediate="true"/>
+						<h:commandButton action="next" value="Next"/>
+					</div>
+				</h:panelGroup>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

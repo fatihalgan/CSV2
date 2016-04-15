@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<head>
+	<title>Commercial Report</title>
+	</head>
+	<body>
+	<table rules="all" border="1">
+		<caption>
+		<h3>COMMERCIAL REPORT</h3>
+		</caption>
+		<tbody>
+			<tr>
+				<th colspan="2"></th>
+			</tr>
+			<tr>
+				<th><h5> Continent Name</h5></th>
+				<th><h5> Country Name</h5></th>
+				<th><h5> Operator Name</h5></th>
+				<th><h5> Network Code</h5></th>
+				<th><h5> Operator Code</h5></th>
+				<th><h5> Country Code</h5></th>
+				<th><h5> Utc Time Diff. With Maputo</h5></th>
+				<th><h5> Utc End Time Diff. With Maputo</h5></th>
+				<th><h5> GSM Status</h5></th>
+				<th><h5> GPRS Status</h5></th>
+				<th><h5> 3G Status</h5></th>
+				<th><h5> CAMEL 1-2 Status</h5></th>
+				<th><h5> CAMEL 3 Status </h5></th>
+				<th><h5> MMS Status</h5></th>
+				<th><h5> Frequencies</h5></th>
+			</tr>
+			
+			<c:forEach items="#{commercialKPIReportService.commercialReportList}" var="comm">
+				<tr>
+					<td><h:outputText value="#{comm.continentName}" /></td>
+					<td><h:outputText value="#{comm.countryName}" /></td>
+					<td><h:outputText value="#{comm.operatorName}" /></td>
+					<td><h:outputText value="#{comm.networkCode}" /></td>
+					<td><h:outputText value="#{comm.operatorCode}" /></td>
+					<td><h:outputText value="#{comm.ccnc}" /></td>
+					<td><h:outputText value="#{comm.utcTimeDiff}" /></td>
+					<td><h:outputText value="#{comm.utcEndTimeDiff}" /></td>
+					<td><h:outputText value="#{comm.gsmStatus}" /></td>
+					<td><h:outputText value="#{comm.gprsStatus}" /></td>
+					<td><h:outputText value="#{comm.threegStatus}" /></td>
+					<td><h:outputText value="#{comm.camel12Status}" /></td>
+					<td><h:outputText value="#{comm.camel3Status}" /></td>
+					<td><h:outputText value="#{comm.mmsStatus}" /></td>
+					<td><h:outputText value="#{comm.frequencies}" /></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	</body>
+</ui:composition>

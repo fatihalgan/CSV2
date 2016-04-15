@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="#{msg.pooledTasks}" rendered="#{not empty pooledTaskInstanceList}">
+		<h:form>
+		<ui:include src="./pooled_tasks_filter.xhtml" />
+		<rich:dataGrid id="pooledTasksGrid" value="#{filterableTaskInstanceList.pooledTaskInstanceList}" var="task" columns="2" elements="2" first="0">
+			<s:decorate template="./complaint_management/complaint_details.xhtml" rendered="#{task.processInstance.processDefinition.name == 'ComplaintManagement'
+				or task.processInstance.processDefinition.name == 'CorporateComplaintManagement'}">
+				<s:button action="#{assignPooledTask.assignToCurrentActor}" taskInstance="#{task}" value="#{msg.assignTaskToMe}"/>
+			</s:decorate>			
+			<s:decorate template="./sim_migration/migration_details.xhtml" rendered="#{task.processInstance.processDefinition.name == 'PrepaidToPostpaidMigration'}">
+				<s:button action="#{assignPooledTask.assignToCurrentActor}" taskInstance="#{task}" value="#{msg.assignTaskToMe}"/>
+			</s:decorate>
+			<ui:include src="/tasks/assign_to_actor.xhtml" />    					
+			<f:facet name="footer">
+				<rich:datascroller for="pooledTasksGrid" maxPages="10" boundaryControls="auto" fastControls="auto" ignoreDupResponses="false"
+					/>
+			</f:facet>
+		</rich:dataGrid>
+		</h:form>
+	</rich:panel>
+
+</ui:composition>

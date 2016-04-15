@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.myCurrentTask}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.myCurrentTask}" rendered="#{taskInstance != null}">
+			<h:form>
+				<rich:dataGrid id="currentTaskGrid" value="#{taskInstance}" var="task" columns="2">
+					<s:decorate template="./complaint_management/complaint_details.xhtml" rendered="#{task.processInstance.processDefinition.name == 'ComplaintManagement'
+						or task.processInstance.processDefinition.name == 'CorporateComplaintManagement'}">
+						<ui:include src="/tasks/complaint_iteration/complaint_iterations_history.xhtml" />
+						<ui:include src="/tasks/complaint_management/complaint_attachments.xhtml" />
+						<ui:include src="/tasks/complaint_management/complaint_display_info.xhtml" />
+						<ui:include src="/tasks/complaint_management/complaint_status_remark.xhtml" />
+					</s:decorate>
+				</rich:dataGrid>
+			</h:form>
+		</rich:panel>
+	</ui:define>			
+</ui:composition>

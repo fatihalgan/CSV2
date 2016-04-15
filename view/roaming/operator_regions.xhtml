@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="operatorRegionsRegion">
+		<h:form id="operatorRegionForm">
+			<table>
+				<tr>
+					<td><rich:panel>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">Edit Operator Countries</ui:define>
+							<rich:listShuttle var="item"
+								sourceValue="#{operatorRegionListAction.unselectedCountries}"
+								targetValue="#{operatorRegionListAction.selectedCountries}"
+								converter="#{operatorRegionListAction.countryListShuttleConverter}"
+								required="false">
+								<f:facet name="sourceCaption">
+									<h:outputText value="Unselected Countries" />
+								</f:facet>
+								<f:facet name="targetCaption">
+									<h:outputText value="Selected Countries" />
+								</f:facet>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Country" />
+									</f:facet>
+									<h:outputText value="#{item.countryName}" />
+								</h:column>
+							</rich:listShuttle>
+						</s:decorate>
+						<div class="saveButton"><h:commandButton id="btnSaveCnts"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail Save')}"
+							value="Save"
+							action="#{operatorRegionListAction.saveOperatorCountries}" /></div>
+					</rich:panel></td>
+				</tr>
+			</table>
+		</h:form>
+	</h:panelGroup>
+</ui:composition>

@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<s0:definitions name="BlackberryProvisioningService"
+	targetNamespace="http://www.blackberry.com/webservices/Provisioning"
+	xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://www.blackberry.com/webservices/Provisioning"
+	xmlns:s2="java:provision.control.ari" xmlns:s3="http://schemas.xmlsoap.org/wsdl/soap/">
+	<s0:types>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="java:provision.control.ari.comm.soap"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:complexType name="ProvisionSender">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This class defines the sender of the provisioning request or response.
+						The Bean specification is followed here to permit SOAP serialization and deserialization of the object.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="Id" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets optional sender id.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Name" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets optional sender name.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="LoginId" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the login id.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Password" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the password for the login.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Sapsoldto" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the sapsoldto for the login.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets optional token value pairs not
+								currently in use for version "1.0"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ReservedToken">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This class defines a name/value mapping
+						that may be used to convey
+						additional or optional information for future ARI interface versions.
+						This class follows the Bean specification to permit SOAP
+						serialization and deserialization.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="Name" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns the tokens name.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Value" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the token value.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProvisionReply">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This class represents a single SOAP
+						response. The class adheres to the
+						Bean specification to permit serailization by SOAP. This class is the
+						top class in a series of nested objects that describe the response
+						data.
+						This soap class is analagous to the ProvisioningReply.dtd grammer.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap" />
+					<xs:element minOccurs="1" name="TransactionId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="1" name="ProductType" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="1" name="TransactionType"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="1" name="Version" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="1" name="Header" nillable="true"
+						type="java:ProvisionReplyHeader" xmlns:java="java:provision.control.ari.comm.soap" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="Body"
+						nillable="true" type="java:ProvisionReplyEntity" xmlns:java="java:provision.control.ari.comm.soap" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProvisionReplyHeader">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This class contains the reply header soap
+						fields. This class adheres to the
+						Bean specification to permit serialization by SOAP.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>This method returns optional tokens for
+								future use.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="TimeStamp" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns the ISO date time.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="TimeFormat" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns the ISO datetime format in use.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="MajorErrCode" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns the major error code associated
+								with all line items.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="MajorErrDesc" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the major error code description
+								associated with all line items (entities).</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Sender" nillable="true"
+						type="java:ProvisionSender" xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the sender object describing sender
+								and login information.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="ResultCodes" nillable="true" type="java:TransactionCode"
+						xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns an array of all error codes
+								contained within the body of the response.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="TransactionCode">
+				<xs:annotation>
+					<xs:documentation>&lt;p>TransactionCode contains details about the
+						outcome of a provisioning
+						request. This class adheres to the Bean interface to permit serialization
+						and deserialization by SOAP.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets optional tokens that are reserved
+								for future use.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="ErrorCode" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the result code of the provisioning
+								request.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="ErrorDescription"
+						nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the result code textual description.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="StatusCode" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the status code of the provisioning
+								request.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="StatusDescription"
+						nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the status code textual description.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProvisionReplyEntity">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This class provides information about a
+						single line item in the
+						request. This soap class follows the Bean specification to
+						permit serialization by SOAP.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="Name" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the entity name.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Type" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the entity type.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns the array of optional tokens.
+								This is reserved for
+								future use.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="SubEntities" nillable="true" type="java:ProvisionReplyEntity"
+						xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the sub elements.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="ResultCode" nillable="true"
+						type="java:TransactionCode" xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns the transaction code resulting
+								from processing of
+								this line item.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="Items"
+						nillable="true" type="java:ProvisionDataItem" xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>This method returns the data items on
+								this entity.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProvisionDataItem">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This class represents a single data item
+						within a soap provisioning request
+						or response. This class adheres to the Bean specification to permit
+						serialization by SOAP.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets future tokens.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Name" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the data item name.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Data" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the data associated with the data
+								item.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProvisionReqHeader">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This soap class contains fields necessary
+						to describe the
+						request header element. This class adheres to the Bean specification
+						to permit serialization by SOAP.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="TimeStamp" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the ISO datetime value.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="TimeFormat" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the ISO date time format in use.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="Sender" nillable="true"
+						type="java:ProvisionSender" xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the sender of this request.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns optional token value pairs for
+								future use.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProvisionRequest">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This is the main SOAP class for submitting
+						a provisioning request.
+						This class adheres to the Bean specification to permit serialization
+						by
+						SOAP.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="TransactionId" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="1" name="ProductType" nillable="true"
+						type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="Body"
+						nillable="true" type="java:ProvisionReqEntity" xmlns:java="java:provision.control.ari.comm.soap" />
+					<xs:element minOccurs="1" name="Header" nillable="true"
+						type="java:ProvisionReqHeader" xmlns:java="java:provision.control.ari.comm.soap" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap" />
+					<xs:element minOccurs="1" name="TransactionType"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="1" name="Version" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="1" name="Sapsoldto" nillable="true"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ProvisionReqEntity">
+				<xs:annotation>
+					<xs:documentation>&lt;p>The request entity describes a single
+						request item within the ProvisioningRequest
+						framework. This class adheres to the Bean specification to permit
+						serialization by
+						SOAP.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="Name" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="1" name="Type" nillable="true"
+						type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="SubEntities" nillable="true" type="java:ProvisionReqEntity"
+						xmlns:java="java:provision.control.ari.comm.soap" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="Items"
+						nillable="true" type="java:ProvisionDataItem" xmlns:java="java:provision.control.ari.comm.soap" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="OptionalTokens" nillable="true" type="java:ReservedToken"
+						xmlns:java="java:provision.control.ari.comm.soap" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema attributeFormDefault="unqualified"
+			elementFormDefault="qualified"
+			targetNamespace="http://www.blackberry.com/webservices/Provisioning"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:import namespace="java:provision.control.ari.comm.soap" />
+			<xs:element name="echoTest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="req" type="java:ProvisionRequest"
+							xmlns:java="java:provision.control.ari.comm.soap" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="echoTestResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="java:ProvisionReply"
+							xmlns:java="java:provision.control.ari.comm.soap" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="submitSync">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="req" type="java:ProvisionRequest"
+							xmlns:java="java:provision.control.ari.comm.soap" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="submitSyncResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return" type="java:ProvisionReply"
+							xmlns:java="java:provision.control.ari.comm.soap" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+		<xs:schema attributeFormDefault="unqualified"
+			elementFormDefault="qualified" targetNamespace="java:provision.control.ari"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:complexType name="ARIProcessingException">
+				<xs:annotation>
+					<xs:documentation>&lt;p>This class conveys information about a
+						processing error from
+						within the ARIController.
+					</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element minOccurs="1" name="ErrorCode" nillable="true"
+						type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Returns the error code from this
+								exception.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="1" name="ErrorDescription"
+						nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>&lt;p>Gets the error description.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ARIProcessingException" type="java:ARIProcessingException"
+				xmlns:java="java:provision.control.ari" />
+		</xs:schema>
+	</s0:types>
+	<s0:message name="echoTest">
+		<s0:part element="s1:echoTest" name="parameters" />
+	</s0:message>
+	<s0:message name="echoTestResponse">
+		<s0:part element="s1:echoTestResponse" name="parameters" />
+	</s0:message>
+	<s0:message name="ARIProcessingException">
+		<s0:part element="s2:ARIProcessingException" name="ARIProcessingException" />
+	</s0:message>
+	<s0:message name="submitSync">
+		<s0:part element="s1:submitSync" name="parameters" />
+	</s0:message>
+	<s0:message name="submitSyncResponse">
+		<s0:part element="s1:submitSyncResponse" name="parameters" />
+	</s0:message>
+	<s0:portType name="ProvisioningRequestWSPortType">
+		<s0:operation name="echoTest" parameterOrder="parameters">
+			<s0:input message="s1:echoTest" />
+			<s0:output message="s1:echoTestResponse" />
+			<s0:fault message="s1:ARIProcessingException" name="ARIProcessingException" />
+		</s0:operation>
+		<s0:operation name="submitSync" parameterOrder="parameters">
+			<s0:input message="s1:submitSync" />
+			<s0:output message="s1:submitSyncResponse" />
+			<s0:fault message="s1:ARIProcessingException" name="ARIProcessingException" />
+		</s0:operation>
+	</s0:portType>
+	<s0:binding name="ProvisioningSoapBinding" type="s1:ProvisioningRequestWSPortType">
+		<s3:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<s0:operation name="echoTest">
+			<s3:operation soapAction="" style="document" />
+			<s0:input>
+				<s3:body parts="parameters" use="literal" />
+			</s0:input>
+			<s0:output>
+				<s3:body parts="parameters" use="literal" />
+			</s0:output>
+			<s0:fault name="ARIProcessingException">
+				<s3:fault name="ARIProcessingException" use="literal" />
+			</s0:fault>
+		</s0:operation>
+		<s0:operation name="submitSync">
+			<s3:operation soapAction="" style="document" />
+			<s0:input>
+				<s3:body parts="parameters" use="literal" />
+			</s0:input>
+			<s0:output>
+				<s3:body parts="parameters" use="literal" />
+			</s0:output>
+			<s0:fault name="ARIProcessingException">
+				<s3:fault name="ARIProcessingException" use="literal" />
+			</s0:fault>
+		</s0:operation>
+	</s0:binding>
+	<s0:service name="BlackberryProvisioningService">
+		<s0:port binding="s1:ProvisioningSoapBinding" name="BlackberryProvisioningServiceSOAP">
+			<s3:address location="http://provisioning.etr.blackberry.net:80/ws-doc-literal/Provisioning" />
+		</s0:port>
+	</s0:service>
+</s0:definitions>

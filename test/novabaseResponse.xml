@@ -1,0 +1,56 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+	<s:Header>
+		<o:Security s:mustUnderstand="1"
+			xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+			<u:Timestamp u:Id="uuid-d8d9e68a-4668-46c1-b0c2-ad326daee3a0-55">
+				<u:Created>2010-09-09T14:27:03.656Z</u:Created>
+				<u:Expires>2010-09-09T14:32:03.656Z</u:Expires>
+			</u:Timestamp>
+			<e:EncryptedKey Id="_0" xmlns:e="http://www.w3.org/2001/04/xmlenc#">
+				<e:EncryptionMethod
+					Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p">
+					<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"
+						xmlns="http://www.w3.org/2000/09/xmldsig#" />
+				</e:EncryptionMethod>
+				<KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+					<o:SecurityTokenReference>
+						<X509Data>
+							<X509IssuerSerial>
+								<X509IssuerName>CN=Root Agency</X509IssuerName>
+								<X509SerialNumber>-165888159809941912584177837961621894673
+								</X509SerialNumber>
+							</X509IssuerSerial>
+						</X509Data>
+					</o:SecurityTokenReference>
+				</KeyInfo>
+				<e:CipherData>
+					<e:CipherValue>X9n6Kkb29CJytzapvweiysMgQHYqhIy8OUyXWS45ZuZoqy9CJHK9CGEB7HHPfE0Q9QRwCXv1hQGq+y9O19BgoFv31TFePeEfrMGWocEdxqtN1D7Cmos2sZiYZKRRYPkTvGmEmIPyl2eyeoqau3EpY1l7xEvu/XXo/tyzEC4dW3w=
+					</e:CipherValue>
+				</e:CipherData>
+				<e:ReferenceList>
+					<e:DataReference URI="#_2" />
+					<e:DataReference URI="#_3" />
+				</e:ReferenceList>
+			</e:EncryptedKey>
+			<e:EncryptedData Id="_3"
+				Type="http://www.w3.org/2001/04/xmlenc#Element" xmlns:e="http://www.w3.org/2001/04/xmlenc#">
+				<e:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+				<e:CipherData>
+					<e:CipherValue>J96nTiz4kN3PQdKtejaX15QfqXUNWon75bmNOd3NfAi5AlslBhz0FcdmfnWkTOk2Z5AwmWiMDmaMxqyubYx5AbRY8PVraQNR67FGVoqq0Sp3s/8K8qcugvfDF7Q4CciLaruFfD5ldUd5jj6vfwiYtxKSlKRQqtBfCVXkyc6kn5NOcKcHhvdXAM62J4ZU04xxumTHu5pgVP7frpKtvZVLSRjG6lKP7oP18BGQZyJ39n8NnkVcJomCp70uqwloJMHtT9InTl+GZnJ5ysPDiFBiqm1RamIawQLKtddK77nXxVq1dXd9jm7AM5aRIX6lPe9SztBcJXYnbpPSCsaXTx1LVYEmSTzIuXUPlIXy/u0El7aSitFgNe6GM6DM9wcKgvMH5kJrRqXJ0RCaxeGDylq19gHmXDtVfD9ea4Jdh2HnMT4VGqVJwB0ZsPLTys1nvx/l3ko+KZme1g/WKTZNbiB7GyVUtwg4O32Du2Uv+XIshY2P1Ada9w0lOQliwtlShK+AS4cEFGs/D1TXv/PyvGQGtMSIEIyin8YofRJrCT/4tvoWd+jpzeTRcvGyq5bBmKVXDVDvczaMkY7mGTCLaainK2h1PZMaSPJOdLou080DAIhNfTaJkvRW0wxFCYj3i2CoJBL8nOPHF5ogbuNyZSw/zwOAft/gHtbm58z09vhv0+kZ9cN29UGUznawrU+fIqrh4sF/uXmzx4rkPM+ya3+rscLcyTVRtmwWbdAlKw9zYjx7paugS2z/7HvYJoKCWQmDorCtAqJFu1P24VC2uwJDOaZsZYFlKYFTFF+k1NkDGnSeboOJc1spBQH7nZxZEjFy4dFWLTTkok1c6O1hmmemlmbNFi7BjRIp0Ayk3J4H1k2QJzFQlBMfOB9gAEaiQkaEgvywkxqjEi16AtH6ISZFO5XDlGM2H3JLSx8GVjPtl1iOydUnKq2CCTHUkQWWIeE7+ZOvSkDKKKEaZar5XLjwhIiA39tMsnM0ac2fLPS1HvuvcemIPFxpouF9oJNq+VU9MmEnZyj/nwedab/sZGjS7J36a66lpqHnMFMaIeX5k+4x8Yk8f15AaGQD3bcfDjprqitzDNJtBu87GZTeHnCLZpyNR3bKhdpreowQh2v5YcGjXnbf7VeVdsvumSEZdyvxVcEzvg4QJ7+hsK8gZqnPTarWFBGE+D9gWCPjzNXXY9DypJqdfDbmOqPZR//y4xYk0JeSRiRAHu3ABV0mlTaMSUTLDpATzQg27jYsHjTxpxO0oUNb67KPoURgE4dBHiDHDgAJhrgxblLRbztRy0KHhruQQ8GM6ZrnxLd23iozzQ7Xi0D8nM22Dxg3S0Zcone1d9+UB/+SEKj0tHorpvmXOoR2g/W8JuTocZHGTp1G2OaLM1509RobP6lRHhH/qsiBKOz0ID5JWFmzoUDd/v5zFkd2drnIqkcpZrXD1uiUedKTkaRRAksZW09YRem+frzmsMso4h3gLlkMqg8tUgkdFbh3qMwiCRtZ3PKr8uRAUBz0PTS07i7uQVXfngjd2nzrKTFRya2/ixret2/CvulxpVQB6dzXOieJH//DheC89lIeAMyG4WeufZEvCiGciHG5dwf1HP+5+dzia3DDv61Hi6eXChY28Pdccho2n6H32vro4aOUiZz88YIKDXhCZYh3DiDwHq9832lL3cXc6+3V8wg7dgSTTAK/2Gs4pF4EooUAo6vc/GVRu7wymIPFInW6uHViRiqMGc2lCl/uM05Cvl675UpwvzgTAbWhO6lXJHVlGtMrGoqmsSw/R93SV9jT
+					</e:CipherValue>
+				</e:CipherData>
+			</e:EncryptedData>
+		</o:Security>
+	</s:Header>
+	<s:Body u:Id="_1">
+		<e:EncryptedData Id="_2"
+			Type="http://www.w3.org/2001/04/xmlenc#Content" xmlns:e="http://www.w3.org/2001/04/xmlenc#">
+			<e:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
+			<e:CipherData>
+				<e:CipherValue>lCzdA9f1jcbdqO0Uvmxhw8fvopIgupFdZOxdi+W5MKABUkQlF0FFRY8kxkHyVpn6GmL63v5wxhp2cnSuRvSnMQ6PNPhjavaNmdsPBHQpss/NTb2A9UI/i9I70CWGawL6rZaA0DGjuKP9BdxrUWnly35g61rT1Mibv/LqILnVuDJW3XRUcea48z/m4LLPmXo7sP3f2/gTVZvYnOM0BlAVhbk/Y0+mLvL5jXHs8TtN/OutmgpdZdkWVwKAbRym5qfyaPFw4gE1LwVlgS+cYtnQiJ0rm01LGSh4l4/175DuRAUr76DLlOniNm8sqUt5LdlheGY6SuNHqtGfSdj8Bx5QlrKLfFgo40ekY3M419F42/axcSmwk5YuoZWdHDvBSPgv7CnHqPIuqWtwxgZSDN4luMVcLMjzUlNf++UuCIGttJLeCo/wxF2DUjMxOU4WBOoNaaU67amyKR7NyY+AxEohMny0l5jHK9oIG5MAWqpN8SOb3KmiuSn14AhCamS5VCVUTCy7BkL3NAJLIx/ey3ZhZg==
+				</e:CipherValue>
+			</e:CipherData>
+		</e:EncryptedData>
+	</s:Body>
+</s:Envelope>

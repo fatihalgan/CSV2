@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.bridge.com/pm/types" 
+	xmlns:tns="http://www.bridge.com/pm/types"
+	xmlns:co="http://co.mcel.mz/types/common"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified">
+	
+	<import namespace="http://co.mcel.mz/types/common" schemaLocation="mcel_types.xsd"/>
+	<xsd:complexType name="swapInfoType">
+		<xsd:sequence>
+			<xsd:element name="currentMsisdn" type="co:msisdnType" nillable="false"/>
+			<xsd:element name="currentImsi" type="xsd:string" nillable="false"/>
+			<xsd:element name="currentSim" type="xsd:string" nillable="true"/>
+			<xsd:element name="currentCardProfile" type="tns:cardProfile" nillable="true"/>
+			<xsd:element name="newMsisdn" type="co:msisdnType" nillable="true"/>
+			<xsd:element name="newImsi" type="xsd:string" nillable="true"/>
+			<xsd:element name="newSim" type="xsd:string" nillable="true"/>
+			<xsd:element name="newCardProfile" type="tns:cardProfile" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="disconnectInfoType">
+		<xsd:sequence>
+			<xsd:element name="msisdn" type="co:msisdnType" nillable="false"/>
+			<xsd:element name="imsi" type="xsd:string" nillable="true"/>
+			<xsd:element name="sim" type="xsd:string" nillable="true"/>
+			<xsd:element name="cardProfile" type="tns:cardProfile" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="unbarInfoType">
+		<xsd:sequence>
+			<xsd:element name="msisdn" type="co:msisdnType" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="hlrInfoType">
+		<xsd:sequence>
+			<xsd:element name="msisdn" type="co:msisdnType" nillable="false"/>
+			<xsd:element name="imsi" type="xsd:string" nillable="false"/>
+			<xsd:element name="sim" type="xsd:string" nillable="false"/>
+			<xsd:element name="businessPlan" type="xsd:int" nillable="false"/>
+			<xsd:element name="sdp" type="xsd:string" nillable="true"/>
+			<xsd:element name="masterSubscriberNumber" type="co:msisdnType" nillable="false"/>
+			<xsd:element name="tempBlockingStatus" type="xsd:string" nillable="false"/>
+			<xsd:element name="organizationId" type="xsd:int" nillable="false"/>
+			<xsd:element name="cardProfile" type="tns:cardProfile" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="aucInfoType">
+		<xsd:sequence>
+			<xsd:element name="imsi" type="xsd:string" nillable="false"/>
+			<xsd:element name="ki" type="xsd:string" nillable="false"/>
+			<xsd:element name="a38" type="xsd:int" nillable="false"/>
+			<xsd:element name="a4" type="xsd:int" nillable="false"/>
+			<xsd:element name="adKey" type="xsd:int" nillable="false"/>
+			<xsd:element name="akaType" type="xsd:int" nillable="false"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="accountInfoType">
+		<xsd:sequence>
+			<xsd:element name="msisdn" type="co:msisdnType" nillable="false"/>
+			<xsd:element name="originServiceClass" type="xsd:int" nillable="false"/>
+			<xsd:element name="mainAccountBalance" type="xsd:float" nillable="false"/>
+			<xsd:element name="supervisionPeriodExpiryDate" type="xsd:date" nillable="false"/>
+			<xsd:element name="serviceFeePeriodExpiryDate" type="xsd:date" nillable="false"/>
+			<xsd:sequence>
+				<xsd:element name="dedicatedAccounts" type="tns:dedicatedAccount" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="dedicatedAccount">
+		<xsd:sequence>
+			<xsd:element name="id" type="xsd:int" nillable="false"/>
+			<xsd:element name="balance" type="xsd:float" nillable="false"/>
+			<xsd:element name="expiryDate" type="xsd:date" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="cardProfile">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="M-Kesh"/>
+			<xsd:enumeration value="Prepaid-card"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</schema>

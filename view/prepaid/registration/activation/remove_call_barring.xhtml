@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.newPrepaidSIMActivation}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:simpleTogglePanel opened="true" switchType="server">
+			<f:facet name="header">#{msg.unbarSingleSIMCardOnline}</f:facet>
+			<rich:panel header="#{msg.enterSIMNumber}" styleClass="sectionPanel">
+				<h:form>
+					<h:panelGrid columns="3">
+						<s:decorate template="../../../edit.xhtml">
+							<ui:define name="label">#{msg.simNumber}</ui:define>
+							<h:inputText value="#{simActivationService.storageMediumNo}" required="true" size="22" maxlength="20"/>
+						</s:decorate>
+						<rich:spacer width="5"/>
+						<h:commandButton action="#{simActivationService.retrieveMSISDNFromSIM}" value="#{msg.retrieveMSISDN}" />
+					</h:panelGrid>
+				</h:form>
+			</rich:panel>
+			<rich:panel header="#{msg.msisdn}" styleClass="sectionPanel">
+				<h:form>
+					<h:panelGrid columns="4">
+						<s:decorate template="../../../display.xhtml">
+							<ui:define name="label">#{msg.msisdn}</ui:define>
+							<h:outputText value="#{simActivationService.msisdn}"/>
+						</s:decorate>
+						<s:decorate template="../../../edit.xhtml">
+							<ui:define name="label">#{msg.dealer}</ui:define>
+							<h:selectOneMenu value="#{simActivationService.selectedDealer}" required="true">
+								<s:selectItems var="item" value="#{simActivationService.dealerList}" label="#{item.dealerName}" noSelectionLabel="Please Select Dealer"/>
+								<f:converter converterId="simRegEntityConverter"/>
+							</h:selectOneMenu>
+						</s:decorate>
+						<rich:spacer width="5"/>
+						<h:commandButton action="#{simActivationService.unbarSIMCard}" value="#{msg.unbarSIMCard}" rendered="#{simActivationService.msisdn != null}"/>
+					</h:panelGrid>
+				</h:form>
+			</rich:panel>
+		</rich:simpleTogglePanel>
+		<rich:spacer height="30"/>
+		<rich:simpleTogglePanel opened="true" switchType="server">
+			<f:facet name="header">#{msg.scheduleBulkUnbarringForRange}</f:facet>
+			<rich:panel header="#{msg.enterSIMNumberInterval}" styleClass="sectionPanel">
+				<h:form>
+					<h:panelGrid columns="5">
+						<s:decorate template="../../../edit.xhtml">
+							<ui:define name="label">#{msg.simNumberStart}</ui:define>
+							<h:inputText value="#{simActivationService.storageMediumNo}" required="true" size="22" maxlength="20"/>
+						</s:decorate>
+						<rich:spacer width="5"/>
+						<s:decorate template="../../../edit.xhtml">
+							<ui:define name="label">#{msg.simNumberEnd}</ui:define>
+							<h:inputText value="#{simActivationService.storageMediumNoEnd}" required="true" size="22" maxlength="20"/>
+						</s:decorate>
+						<rich:spacer width="10"/>
+						<h:commandButton action="#{simActivationService.scheduleBalkUnbarSIMCard}" value="#{msg.submit}"/>		
+					</h:panelGrid>
+				</h:form>
+			</rich:panel>	
+		</rich:simpleTogglePanel>
+	</ui:define>				
+</ui:composition>

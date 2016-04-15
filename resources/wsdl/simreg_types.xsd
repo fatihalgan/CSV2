@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:co="http://co.mcel.mz/types/common" xmlns:tns="http://www.bridge.com/simreg" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.bridge.com/simreg">
+    <import namespace="http://co.mcel.mz/types/common" schemaLocation="mcel_types.xsd"/>
+    <element name="addCellToExistingSubscriberRequest" type="tns:addCellToExistingSubscriberRequestType"/>
+    <element name="fastActivationRequest" type="tns:fastActivationRequestType"/>
+    <element name="createNewPersonalRegistrationWithImagesRequest" type="tns:createNewPersonalRegistrationWithImagesRequestType"/>
+    <element name="createNewPersonalRegistrationRequest" type="tns:createNewPersonalRegistrationRequestType"/>
+    <element name="updateIDImageOnlyRequest" type="tns:updateIDImageOnlyRequestType"/>
+    <element name="updateFormImageOnlyRequest" type="tns:updateFormImageOnlyRequestType"/>
+    <element name="retrieveVerificationDataRequest" type="tns:retrieveVerificationDataRequestType"/>
+    <element name="addCellToExistingSubscriberResponse" type="tns:addCellToExistingSubscriberResponseType"/>
+    <element name="fastActivationResponse" type="tns:fastActivationResponseType"/>
+    <element name="createNewPersonalRegistrationResponse" type="tns:createNewPersonalRegistrationResponseType"/>
+    <element name="updateIDImageOnlyResponse" type="tns:updateIDImageOnlyResponseType"/>
+    <element name="updateFormImageOnlyResponse" type="tns:updateFormImageOnlyResponseType"/>
+    <element name="retrieveVerificationDataResponse" type="tns:retrieveVerificationDataResponseType"/>
+    <element name="checkRegistrationStatusRequest" type="tns:checkRegistrationStatusRequestType"/>
+    <element name="checkRegistrationStatusResponse" type="tns:checkRegistrationStatusResponseType"/>
+    <complexType name="checkRegistrationStatusRequestType">
+    	<sequence>
+    		<element name="cellNumber" type="co:msisdnType"/>
+    		<element name="authInfo" type="tns:authenticationEntityType"/>
+    	</sequence>
+    </complexType>
+    <complexType name="checkRegistrationStatusResponseType">
+    	<sequence>
+    		<element name="operationResult" type="tns:operationResultType"/>
+    	</sequence>
+    </complexType>
+    <complexType name="addCellToExistingSubscriberRequestType">
+        <sequence>
+            <element name="requestId" type="integer"/>
+            <element name="requestTimestamp" type="dateTime"/>
+            <element name="cellNumber" type="co:msisdnType"/>
+            <element name="subscriberInfoId" type="integer"/>
+            <element name="authInfo" type="tns:authenticationEntityType"/>
+        </sequence>
+    </complexType>
+    <complexType name="fastActivationRequestType">
+        <sequence>
+            <element name="fastActivationInfo" type="tns:fastActivationInfoType"/>
+        </sequence>
+    </complexType>
+    <complexType name="createNewPersonalRegistrationWithImagesRequestType">
+        <sequence>
+            <element name="createNewPersonalRegistrationRequest" type="tns:createNewPersonalRegistrationRequestType"/>
+            <element name="identityDocumentImage" type="base64Binary"/>
+            <element name="registrationFormCopy" type="base64Binary"/>
+        </sequence>
+    </complexType>
+    <complexType name="createNewPersonalRegistrationRequestType">
+        <sequence>
+            <element name="requestId" type="integer"/>
+            <element name="requestTimestamp" type="dateTime"/>
+            <element name="cellNumber" type="co:msisdnType"/>
+            <element name="identityDocument" type="tns:identityDocType"/>
+            <element name="personInfo" type="tns:personInfoType"/>
+            <element name="address" type="tns:addressType"/>
+            <element name="workInfo" type="tns:workInfoType"/>
+            <element name="mKeshQuestion" type="integer"/>
+            <element name="authInfo" type="tns:authenticationEntityType"/>
+            <element name="locationCodes" type="tns:locationCodesType"/>
+        </sequence>
+    </complexType>
+    <complexType name="updateIDImageOnlyRequestType">
+        <sequence>
+            <element name="verificationData" type="tns:verificationDataType"/>
+            <element name="identityDocumentImage" type="base64Binary"/>
+        </sequence>
+    </complexType>
+    <complexType name="updateFormImageOnlyRequestType">
+        <sequence>
+            <element name="verificationData" type="tns:verificationDataType"/>
+            <element name="registrationFormCopy" type="base64Binary"/>
+        </sequence>
+    </complexType>
+    <complexType name="retrieveVerificationDataRequestType">
+    	<sequence>
+    		<element name="verificationData" type="tns:verificationDataType"/>
+    	</sequence>
+    </complexType>
+    <complexType name="addCellToExistingSubscriberResponseType">
+        <sequence>
+            <element name="operationResult" type="tns:operationResultType"/>
+        </sequence>
+    </complexType>
+    <complexType name="fastActivationResponseType">
+        <sequence>
+            <element name="operationResult" type="tns:operationResultType"/>
+        </sequence>
+    </complexType>
+    <complexType name="createNewPersonalRegistrationResponseType">
+        <sequence>
+            <element name="operationResult" type="tns:operationResultType"/>
+            <element name="subscriberInfoId" nillable="true" type="integer"/>
+        </sequence>
+    </complexType>
+    <complexType name="updateIDImageOnlyResponseType">
+        <sequence>
+            <element name="operationResult" type="tns:operationResultType"/>
+        </sequence>
+    </complexType>
+    <complexType name="updateFormImageOnlyResponseType">
+        <sequence>
+            <element name="operationResult" type="tns:operationResultType"/>
+        </sequence>
+    </complexType>
+    <complexType name="retrieveVerificationDataResponseType">
+    	<sequence>
+    		<element name="verificationData" type="tns:verificationDataType"/>
+    		<element name="subscriberInfoId" type="integer" nillable="true"/>
+    		<element name="operationResult" type="tns:operationResultType"/>
+    	</sequence>
+    </complexType>
+    <complexType name="fastActivationInfoType">
+        <sequence>
+            <element name="requestId" type="integer"/>
+            <element name="requestTimestamp" type="dateTime"/>
+            <element name="cellNumber" type="co:msisdnType"/>
+            <element name="documentType" type="string"/>
+            <element name="documentNo" type="string"/>
+            <element name="place" nillable="true" type="string"/>
+            <element name="name" type="string"/>
+            <element name="surname" type="string"/>
+            <element name="authInfo" type="tns:authenticationEntityType"/>
+        </sequence>
+    </complexType>
+    <complexType name="personInfoType">
+        <sequence>
+            <element name="name" type="string"/>
+            <element name="surname" type="string"/>
+            <element name="otherNames" nillable="true" type="string"/>
+            <element name="birthDate" type="date"/>
+            <element name="birthPlace" type="string"/>
+            <element name="gender" type="string"/>
+            <element name="nationality" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="workInfoType">
+        <sequence>
+            <element name="company" nillable="true" type="string"/>
+            <element name="place" nillable="true" type="string"/>
+            <element name="title" nillable="true" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="addressType">
+        <sequence>
+            <element name="street" type="string"/>
+            <element name="no" type="integer"/>
+            <element name="floor" nillable="true" type="string"/>
+            <element name="flat" nillable="true" type="integer"/>
+            <element name="block" nillable="true" type="string"/>
+            <element name="nuit" nillable="true" type="string"/>
+            <element name="city" nillable="true" type="string"/>
+            <element name="district" type="string"/>
+            <element name="province" type="string"/>
+            <element name="neighborhood" nillable="true" type="string"/>
+            <element name="email" nillable="true" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="identityDocType">
+        <sequence>
+            <element name="documentType" type="string"/>
+            <element name="documentNo" type="string"/>
+            <element name="expiryDate" type="date"/>
+            <element name="issueDate" type="date"/>
+            <element name="issuedBy" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="verificationDataType">
+        <sequence>
+            <element name="requestId" type="integer" nillable="true"/>
+            <element name="requestTimestamp" type="dateTime"/>
+            <element name="cellNumber" type="co:msisdnType" nillable="true" minOccurs="0"/>
+            <element name="documentNo" type="string" nillable="true" minOccurs="0"/>
+            <element name="verificationData1" type="string"/>
+            <element name="verificationData2" type="date"/>
+            <element name="authInfo" type="tns:authenticationEntityType"/>
+        </sequence>
+    </complexType>
+    <complexType name="authenticationEntityType">
+        <sequence>
+            <element name="clientId" type="string"/>
+            <element name="saveUser" type="string"/>
+            <element name="password" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="operationResultType">
+        <sequence>
+            <element name="returnCode" type="integer"/>
+            <element name="error" nillable="true" type="string"/>
+            <element name="warningCode" type="integer"/>
+            <element name="warning" nillable="true" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="locationCodesType">
+        <sequence>
+            <element name="districtCode" type="integer"/>
+            <element name="provinceCode" type="integer"/>
+            <element name="birthPlaceCode" type="integer"/>
+            <element name="countryCode" type="integer"/>
+        </sequence>
+    </complexType>
+</schema>

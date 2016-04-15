@@ -1,0 +1,21 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:m="http://jboss.com/products/seam/mail"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+	<m:from name="MCEL SARL" address="csvAdmin@mcel.co.mz" />
+	<m:to>fpioris@mcel.co.mz</m:to>
+	<m:to>falgan@mcel.co.mz</m:to>
+	<m:to>cchiche@mcel.co.mz</m:to>
+	<m:to>tsambo@mcel.co.mz</m:to>
+	<m:to>dabiatar@mcel.co.mz</m:to>
+	<m:subject>Daily CSV Usage Report #{reportingService.startDate}</m:subject>
+	<m:attachment fileName="CSV_Daily_Usage_Report.xls">
+		<html>
+			<ui:include src="/reports/daily_csv_usage_content.xhtml" />
+		</html>
+	</m:attachment>
+	<m:body>
+		<p>Please find report of daily CSV usage on date
+		#{reportingService.startDate} attached.</p>
+	</m:body>
+</m:message>

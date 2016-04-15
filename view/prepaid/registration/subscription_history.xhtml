@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+                
+	<rich:panel header="#{msg.registrationHistory}" styleClass="sectionPanel" rendered="#{not empty prepaidCustomerService.subscriptionHistory}">
+    	<rich:dataTable id="tblSubscriptionHistory" value="#{prepaidCustomerService.subscriptionHistory}" var="item" rows="10">
+    		<f:facet name="header">
+    			<rich:columnGroup>
+    				<rich:column>
+    					<h:outputText value="#{msg.msisdn}" />
+    				</rich:column>
+    				<rich:column>
+    					<h:outputText value="#{msg.unregisterDate}" />
+    				</rich:column>
+    				<rich:column>
+    					<h:outputText value="#{msg.unregisterReason}" />
+    				</rich:column>
+    				<rich:column>
+    					<h:outputText value="#{msg.unregisteredBy}" />
+    				</rich:column>
+    				<rich:column>
+    					<h:outputText value="#{msg.registrationStatus}" />
+    				</rich:column>
+    			</rich:columnGroup>
+    		</f:facet>
+    		<rich:columnGroup>
+    			<rich:column>
+    				<h:outputText value="#{item.msisdn}" />
+    			</rich:column>
+    			<rich:column>
+    				<h:outputText value="#{item.unregisterDate}">
+    					<f:convertDateTime type="date" dateStyle="medium"/>
+    				</h:outputText>
+    			</rich:column>
+    			<rich:column>
+    				<h:outputText value="#{item.unregisterReason}" />
+    			</rich:column>
+    			<rich:column>
+    				<h:outputText value="#{item.unregisteredBy}" />
+    			</rich:column>
+    			<rich:column>
+    				<h:outputText value="#{item.status.label}" />
+    			</rich:column>
+    		</rich:columnGroup>
+    		<f:facet name="footer">
+				<rich:datascroller for="tblSubscriptionHistory" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+			</f:facet>
+    	</rich:dataTable>
+    </rich:panel>            
+</ui:composition>

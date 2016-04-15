@@ -1,0 +1,170 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.manageOpenComplaints}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.searchCriteria}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="3">
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.complaintID}</ui:define>
+						<h:inputText value="#{searchOpenComplaint.complaintId}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.subscriberNumber}</ui:define>
+						<h:inputText value="#{searchOpenComplaint.customerMsisdn}" />
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.customerCode}</ui:define>
+						<h:inputText value="#{searchOpenComplaint.customerCode}" size="20"/>
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.subscriptionType}</ui:define>
+						<h:selectOneMenu value="#{searchOpenComplaint.subscriptionType}">
+							<s:selectItems value="#{allSubscriptionTypes}" var="type" label="#{type.label}" noSelectionLabel="#{msg.subscriptionType}.."/>
+							<s:convertEnum/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.status}</ui:define>
+						<h:selectOneMenu value="#{searchOpenComplaint.status}">
+							<s:selectItems value="#{allComplaintStatusesWithCancel}" var="status" label="#{status.label}" noSelectionLabel="#{msg.status}.."/>
+							<s:convertEnum />
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.openedAfter}</ui:define>
+						<rich:calendar value="#{searchOpenComplaint.openingDate}" direction="bottom-right" enableManualInput="true"/>
+					</s:decorate>
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.segment}</ui:define>
+						<h:selectOneMenu value="#{openComplaintAction.segmentFilter}" required="false">
+							<s:selectItems var="item" value="#{complaintSegmentList}" label="#{item.description}" noSelectionLabel="Select Segment..." itemValue="#{item.id}"/>
+						</h:selectOneMenu>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton action="#{openComplaintAction.retrieveOpenComplaintList}" value="#{msg.search}"/>
+					<h:commandButton action="#{openComplaintAction.exportComplaintListToExcel}" value="#{msg.exportToExcel}" disabled="#{empty openComplaintAction.openComplaintList}"/>
+				</div>
+			</h:form>
+		</rich:panel>
+		<rich:panel header="#{msg.openComplaints}" styleClass="sectionPanel">
+			<h:form>
+				<rich:dataTable id="complaintsList" rows="10" var="item" value="#{openComplaintAction.openComplaintList}"
+					onRowMouseOver="this.style.backgroundColor='yellow'"
+					onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.complaintID}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.openingDate}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.createdBy}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.subscriberNumber}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.name}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.contactNumber}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.status}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.phase}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.assignedTo}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{msg.viewHistory}" />
+							</rich:column>
+							<rich:column rendered="#{loggedInUser.hasPermissionFor('Kill Open Complaint')}">
+								<h:outputText value="#{msg.suspend}" />
+							</rich:column>
+							<rich:column rendered="#{loggedInUser.hasPermissionFor('Kill Open Complaint')}">
+								<h:outputText value="#{msg.resume}" />
+							</rich:column>
+							<rich:column rendered="#{loggedInUser.hasPermissionFor('Kill Open Complaint')}">
+								<h:outputText value="#{msg.kill}" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.complaintId}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.openingDate}">
+								<s:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.enteredBy}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.customerMsisdn}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.customerName}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.customerContactNumber}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.status.label}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.phase.label}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.assignedTo}" rendered="#{item.assignedTo != null}"/>
+							<h:outputText value=" / " /> 
+							<h:outputText value="#{item.assignedToUser}" rendered="#{item.assignedToUser != null}"/>
+						</rich:column>
+						<rich:column>
+							<a:commandLink action="#{openComplaintAction.retrieveOpenComplaintHistory(item)}" value="#{msg.complaintDetails}"
+							reRender="complaintDetailPanel" 
+							oncomplete="Richfaces.showModalPanel('complaintDetailsMp',{width:450, top:100})"/>
+						</rich:column>
+						<rich:column rendered="#{loggedInUser.hasPermissionFor('Kill Open Complaint')}">
+							<h:commandLink action="#{openComplaintAction.cancelOpenComplaint(item.complaintId)}" value="#{msg.suspend}"
+							rendered="#{item.status.label == 'Open'}"/>
+						</rich:column>
+						<rich:column rendered="#{loggedInUser.hasPermissionFor('Kill Open Complaint')}">
+							<h:commandLink action="#{openComplaintAction.resumeOpenComplaint(item.complaintId)}" value="#{msg.resume}"
+							rendered="#{item.status.label == 'Suspended'}"/>
+						</rich:column>
+						<rich:column rendered="#{loggedInUser.hasPermissionFor('Kill Open Complaint')}">
+							<h:commandLink action="#{openComplaintAction.killOpenComplaint(item.complaintId)}" value="#{msg.kill}"
+							rendered="#{item.status.label == 'Open'}"/>
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="complaintsList" maxPages="20" boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+			</h:form>
+		</rich:panel>
+		
+		<ui:include src="/tasks/complaint_management/open_complaint_description.xhtml" />
+		
+		
+	</ui:define>
+</ui:composition>

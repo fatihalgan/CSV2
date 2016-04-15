@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<h:panelGroup layout="vertical" id="moduleSelectionRegion">
+			<rich:panel header="Edit Module" rendered="#{moduleListAction.selectedModule != null}">
+				<h:form id="frmEditModule">
+					<h:panelGrid columns="1">
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">Modulename</ui:define>
+							<h:inputText value="#{moduleListAction.selectedModule.moduleName}" required="true"/>
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">Description</ui:define>
+							<h:inputText value="#{moduleListAction.selectedModule.description}" required="true" />
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons">
+						<h:commandButton id="btnSave" value="Save" action="#{moduleListAction.saveModule}"/>
+						<h:commandButton id="btnDelete" value="Delete Module" action="#{moduleListAction.deleteModule}"/>
+					</div>
+				</h:form>	
+			</rich:panel>
+						
+			<rich:panel header="Modules">
+				<h:form id="moduleList">
+					<rich:dataTable id="tblModules" value="#{moduleListAction.moduleList}" var="item" rows="20">
+						<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="Modulename" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Description" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+						</rich:columnGroup>
+						</f:facet>
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{item.moduleName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.description}" />
+							</rich:column>
+							<rich:column>
+								<a:commandButton action="#{moduleListAction.editModule(item)}" value="Edit" reRender="moduleSelectionRegion"/>
+							</rich:column>
+						</rich:columnGroup>
+						<f:facet name="footer">
+							<rich:datascroller for="tblModules" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+						</f:facet>
+					</rich:dataTable>
+					<div class="actionButtons">
+						<h:commandButton id="btnNewModule" value="Create New Module" action="#{moduleListAction.newModule}"/>
+					</div>
+				</h:form>
+			</rich:panel>
+		</h:panelGroup>
+	</ui:define>			
+</ui:composition>

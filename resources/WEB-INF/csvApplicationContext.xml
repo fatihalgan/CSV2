@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:seam="http://jboss.com/products/seam/spring-seam" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+       http://jboss.com/products/seam/spring-seam http://jboss.com/products/seam/spring-seam-2.2.xsd">
+	<bean id="minsatCommandFactory" class="com.bridge.arete.minsat.command.CommandFactory">
+   		<constructor-arg type="java.lang.String" value="10.254.3.68"/>
+   		<constructor-arg type="int" value="7020"/>
+   		<constructor-arg type="java.lang.String" value="app3"/>
+   		<constructor-arg type="java.lang.String" value="csv2014"/>
+   		<constructor-arg type="int" value="15"/>
+   		<constructor-arg type="int" value="1"/>
+    </bean>
+    <bean id="airXMLRPCClient" class="com.bridge.ena.xmlrpc.XMLRPCClient" scope="prototype">
+   		<constructor-arg type="java.lang.String" value="http://10.255.0.163:10010/Air"/>
+   		<constructor-arg type="int" value="12000"/>
+   		<constructor-arg type="java.lang.String" value="TUM/4.2/1.0"/>
+   		<constructor-arg type="java.lang.String" value="Basic dHVtdXNlcjp0dW11c2Vy"/>
+   		<constructor-arg type="int" value="5"/>
+   		<constructor-arg type="int" value="3000"/>
+   </bean>
+   <bean id="airAdjustmentCommandFactory" class="com.bridge.ena.cs3cp6.command.CommandFactory">
+   		<property name="xmlRpcClient" ref="airXMLRPCClient"/>
+   		<property name="originHostName" value="MCELCSVADJUSTMENT"/>
+   		<property name="subscriberNoPrefix" value="258"/>
+   		<property name="subscriberNumberNAI" value="1"/>
+   </bean>
+   <bean id="airVoucherRefillCommandFactory" class="com.bridge.ena.cs3cp6.command.CommandFactory">
+   		<property name="xmlRpcClient" ref="airXMLRPCClient"/>
+   		<property name="originHostName" value="CSVVOUCHERREFILL"/>
+   		<property name="subscriberNoPrefix" value="258"/>
+   		<property name="subscriberNumberNAI" value="1"/>
+   </bean>
+   <bean id="airNetmovelPrepagoCommandFactory" class="com.bridge.ena.cs3cp6.command.CommandFactory">
+   		<property name="xmlRpcClient" ref="airXMLRPCClient"/>
+   		<property name="originHostName" value="Netmovel"/>
+   		<property name="subscriberNoPrefix" value="258"/>
+   		<property name="subscriberNumberNAI" value="1"/>
+   </bean>
+   <bean id="airBB4PCommandFactory" class="com.bridge.ena.cs3cp6.command.CommandFactory">
+   		<property name="xmlRpcClient" ref="airXMLRPCClient"/>
+   		<property name="originHostName" value="BB4P"/>
+   		<property name="subscriberNoPrefix" value="258"/>
+   		<property name="subscriberNumberNAI" value="1"/>
+   </bean>
+   <bean id="vsClient" class="com.bridge.ena.xmlrpc.XMLRPCClient" scope="prototype">
+   		<constructor-arg type="java.lang.String" value="http://192.168.40.61:10020/VoucherAdmin"/>
+   		<constructor-arg type="int" value="12000"/>
+   		<constructor-arg type="java.lang.String" value="UGw Server/2.1/1.0"/>
+   		<constructor-arg type="java.lang.String" value="app_voucher"/>
+   		<constructor-arg type="java.lang.String" value="vsexec"/>
+   		<constructor-arg type="int" value="0"/>
+   		<constructor-arg type="int" value="3000"/>
+   </bean>   
+   <bean id="vsCommandFactory" class="com.bridge.ena.vs.command.CommandFactory">
+   		<property name="xmlRpcClient" ref="vsClient"/>
+   		<property name="originHostName" value="MCEL_CSV_ADJUSTMENT"/>
+   </bean>
+   <!-- 
+   <bean id="reflectionCommandFactory" class="com.bridge.arete.reflection.command.CommandFactory">
+   		<constructor-arg type="java.lang.String" value="192.168.1.16"/>
+   		<constructor-arg type="int" value="23"/>
+   		<constructor-arg type="java.lang.String" value="prvision"/>
+   		<constructor-arg type="java.lang.String" value="Trmtrm"/>
+   		<constructor-arg type="int" value="1"/>
+   		<constructor-arg type="int" value="1"/>
+   </bean>
+    -->
+   <bean id="voiceCommandFactory" class="com.bridge.arete.voicemail.command.CommandFactory">
+   		<constructor-arg type="java.lang.String" value="172.17.3.6"/>
+   		<constructor-arg type="int" value="22"/>
+   		<constructor-arg type="java.lang.String" value="prvision"/>
+   		<constructor-arg type="java.lang.String" value="@Cmd4sUb"/>
+   		<constructor-arg type="int" value="1"/>
+   		<constructor-arg type="int" value="1"/>
+   		<constructor-arg type="int" value="30000"/>
+   </bean>
+   <bean id="emaCommandFactory" class="com.bridge.arete.ema.command.CommandFactory">
+   		<constructor-arg type="java.lang.String" value="10.1.27.5"/>
+   		<constructor-arg type="int" value="3300"/>
+   		<constructor-arg type="java.lang.String" value="ccemalight"/>
+   		<constructor-arg type="java.lang.String" value="mcel1234"/>
+   		<constructor-arg type="int" value="7"/>
+   		<constructor-arg type="int" value="1"/>
+   </bean>
+   <bean id="smscCommandFactory" class="com.bridge.arete.smsc.command.CommandFactory">
+   		<constructor-arg type="java.lang.String" value="172.17.82.203"/>
+   		<constructor-arg type="int" value="23"/>
+   		<constructor-arg type="java.lang.String" value="smsc"/>
+   		<constructor-arg type="java.lang.String" value="sfe1a"/>
+   		<constructor-arg type="int" value="1"/>
+   		<constructor-arg type="int" value="1"/>
+   </bean>
+   <bean id="bb4pCommandFactory" class="com.bridge.likya.bbfp.command.CommandFactory">
+   		<constructor-arg type="java.lang.String" value="http://172.16.5.34:8083/bb4prepaidcc/"/>
+   </bean>
+   
+   <bean id="crsCommandFactory" class="com.bridge.crs.command.CommandFactory">
+   		<constructor-arg type="java.lang.String" value="http://10.254.3.69:80"/>
+   		<constructor-arg type="java.lang.String" value="10.254.3.69"/>
+   		<constructor-arg type="java.lang.String" value="Minsat/3.4/1.0"/>
+   		<constructor-arg type="java.lang.String" value="Basic:Y3N2dXNlcjpjc3Z1c2Vy"/>	
+   </bean>
+   
+   <bean id="axisClientConfigurator" class="csv.util.soap.AxisClientConfigurator">
+   		<property name="clientRepositoryPath" value="/WEB-INF"/>
+		<property name="axisConfigPath" value="/WEB-INF/conf/axis2.xml"/>
+		<property name="netmovelServiceEndpointAddress" value="http://192.168.7.170:8080/Netmovel/services/NetmovelService"/>
+		<property name="provisionManagerServiceEndpointAddress" value="http://localhost:8081/services/pm"/>
+		<property name="cctUserRepoServiceEndpointAddress" value="http://192.168.0.233/WSmCelCCS2/Service1.svc"/>
+		<property name="blackberryProvisioningServiceEndpointAddress" value="https://mcel.provisioning.blackberry.com/ws-doc-literal/Provisioning"/>
+		<property name="simRegServiceEndpointAddress" value="http://10.100.57.22:8080/SIMRegistrationService/services/SimRegistrationService"/>
+		<!-- <property name="blackberryProvisioningServiceEndpointAddress" value="http://localhost:9090/ws-doc-literal/Provisioning"/>  -->
+		<property name="cctUserRepoServiceSecurityPolicyConfigFile" value="/WEB-INF/clients/cct_user_repo_policy_config.xml"/>
+   </bean>
+   <bean id="invoiceConverter" class="csv.util.invoices.InvoiceConverter" scope="prototype" init-method="init">
+   		<constructor-arg index="0" value="/invoices"/>
+   </bean>
+   <bean id="bscsFTPHelper" class="csv.util.bscs.ftp.BSCSFTPHelper">
+   		<constructor-arg index="0" value="10.1.20.30"/>
+   		<constructor-arg index="1" value="developer"/>
+   		<constructor-arg index="2" value="developer"/>
+   		<constructor-arg index="3" value="10.1.20.21"/>
+   		<constructor-arg index="4" value="bscsprod"/>
+   		<constructor-arg index="5" value="mcel1bill"/>	
+   </bean>
+   <bean id="strongEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="algorithm">
+            <value>PBEWITHMD5ANDDES</value>
+        </property>
+        <property name="password">
+            <value>mcel2010</value>
+        </property>
+    </bean>
+    <bean id="hibernateStringEncryptor" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName">
+            <value>strongHibernateStringEncryptor</value>
+        </property>
+        <property name="encryptor">
+            <ref bean="strongEncryptor" />
+        </property>
+    </bean>
+</beans>

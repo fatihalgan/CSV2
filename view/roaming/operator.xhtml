@@ -1,0 +1,158 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>#{msg.roamingOperator}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<h:panelGroup layout="vertical" id="operatorSelectionRegion">
+			<rich:panel header="#{msg.roamingEditOperator}"
+				rendered="#{operatorListAction.selectedOperator != null}">
+				<h:form id="frmEditOperator">
+					<h:panelGrid columns="3">
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingOperatorName}</ui:define>
+							<h:inputText
+								value="#{operatorListAction.selectedOperator.operatorName}"
+								required="true" size="100" />
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingNetworkName}</ui:define>
+							<h:inputText
+								value="#{operatorListAction.selectedOperator.networkName}" />
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingDisplayName}</ui:define>
+							<h:inputText
+								value="#{operatorListAction.selectedOperator.displayName}" />
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingNetworkCode}</ui:define>
+							<h:inputText
+								value="#{operatorListAction.selectedOperator.networkCode}"
+								readonly="#{!loggedInUser.hasPermissionFor('Roaming-Update Operator Codes')}" />
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingOperatorCode}</ui:define>
+							<h:inputText
+								value="#{operatorListAction.selectedOperator.operatorCode}"
+								readonly="#{!loggedInUser.hasPermissionFor('Roaming-Update Operator Codes')}" />
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingCcnc}</ui:define>
+							<h:inputText value="#{operatorListAction.selectedOperator.ccnc}"
+								readonly="#{!loggedInUser.hasPermissionFor('Operator-Update Operator Codes')}" />
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons"><h:commandButton id="btnSave"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Save')}"
+						value="Save" action="#{operatorListAction.saveOperator}" /> <h:commandButton
+						id="btnDelete" value="Delete Operator"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Delete')}"
+						action="#{operatorListAction.deleteOperator}" /></div>
+				</h:form>
+			</rich:panel>
+
+			<rich:panel header="Operators">
+				<h:form id="operatorList">
+					<h:panelGrid columns="3">
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">Operator Name</ui:define>
+							<h:inputText value="#{operatorListAction.operatorName}" />
+						</s:decorate>
+						<h:commandButton id="search" value="Search"
+							action="#{operatorListAction.searchOperatorsByName}" />
+						<h:commandButton id="clear" value="Clear Search"
+							action="#{operatorListAction.searchOperator}" />
+					</h:panelGrid>
+					<rich:dataTable id="tblOperators"
+						value="#{operatorListAction.operatorList}" var="item" rows="20">
+						<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="#{msg.roamingOperatorName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingNetworkName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingDisplayName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingNetworkCode}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingOperatorCode}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingCcnc}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Edit" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Edit Details" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{item.operatorName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.networkName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.displayName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.networkCode}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.operatorCode}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.ccnc}" />
+							</rich:column>
+							<rich:column>
+								<a:commandButton
+									action="#{operatorListAction.editOperator(item)}"
+									value="Edit Operator" reRender="operatorSelectionRegion" />
+							</rich:column>
+							<rich:column>
+								<h:commandButton id="btnSearch" value="Search Details"
+									action="#{operatorListAction.searchDetails(item)}" />
+							</rich:column>
+						</rich:columnGroup>
+						<f:facet name="footer">
+							<rich:datascroller for="tblOperators" maxPages="20"
+								boundaryControls="auto" fastControls="auto" />
+						</f:facet>
+					</rich:dataTable>
+					<div class="actionButtons"><h:commandButton
+						id="btnNewOperator" value="Create New Operator"
+						action="#{operatorListAction.newOperator}" /></div>
+				</h:form>
+			</rich:panel>
+
+			<rich:panel header="Operator Details">
+				<rich:tabPanel switchType="ajax">
+					<rich:tab label="#{msg.roamingOperatorCountry}">
+						<ui:include src="/roaming/operator_regions.xhtml" />
+					</rich:tab>
+					<rich:tab label="#{msg.roamingOperatorPrefix}">
+						<ui:include src="/roaming/operator_prefix.xhtml" />
+					</rich:tab>
+				</rich:tabPanel>
+			</rich:panel>
+
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

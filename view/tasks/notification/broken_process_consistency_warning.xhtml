@@ -1,0 +1,14 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:m="http://jboss.com/products/seam/mail"
+           xmlns:ui="http://java.sun.com/jsf/facelets"
+           xmlns:f="http://java.sun.com/jsf/core"
+           xmlns:h="http://java.sun.com/jsf/html">
+	<m:from name="MCEL SARL" address="csvAdmin@mcel.co.mz" />  
+	<m:to>falgan@mcel.co.mz</m:to>
+	<m:subject>CSV - Broken Process Variable Consistency Warning:  #{processKeyResolver.getProcessKey()}</m:subject>
+	 <m:body>
+    	<html>
+    	<p> Seam Injected Process Variable is: #{openComplaint.complaintId}</p>
+    	</html>
+     </m:body>
+</m:message>

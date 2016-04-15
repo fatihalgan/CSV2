@@ -1,0 +1,16 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich">
+	<font color="#058E94" style="font-style: italic; font-weight: bold;" >
+		<h:panelGrid columns="1">
+			<h:outputText value="Welcome, #{loggedInUser.username}"/>
+			<h:outputText value="Your memberships are:" />
+			<ui:repeat var="group" value="#{loggedInUser.membershipList}">
+				<h:outputText value="&nbsp;|&nbsp;#{group.groupName}&nbsp;|&nbsp;" />
+			</ui:repeat>
+		</h:panelGrid>
+	</font>
+</ui:composition>

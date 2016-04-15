@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.bridge.com/pm" 
+	xmlns:co="http://co.mcel.mz/types/common"
+	xmlns:pm="http://www.bridge.com/pm/types" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	name="ProvisionManagerService"
+	targetNamespace="http://www.bridge.com/pm">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.bridge.com/pm">
+			<xsd:import namespace="http://www.bridge.com/pm/types" schemaLocation="provision_manager_types.xsd"/>
+			<xsd:element name="activateSimRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="hlrInfo" type="pm:hlrInfoType" nillable="false"/>
+						<xsd:element name="aucInfo" type="pm:aucInfoType" nillable="false"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="activateSimResponse" type="xsd:long"/>
+			<xsd:element name="swapSimRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="swapInfo" type="pm:swapInfoType" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="swapSimResponse" type="xsd:long"/>
+			<xsd:element name="swapMsisdnRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="swapInfo" type="pm:swapInfoType" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="swapMsisdnResponse" type="xsd:long"/>
+			<xsd:element name="deactivateSimRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="disconnectInfo" type="pm:disconnectInfoType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="deactivateSimResponse" type="xsd:long"/>
+			<xsd:element name="migratePrepaidToPostpaidRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="requestId" type="xsd:long" nillable="false"/>
+						<xsd:element name="hlrInfo" type="pm:hlrInfoType" nillable="false"/>
+						<xsd:element name="disconnectInfo" type="pm:disconnectInfoType" nillable="false"/>
+						<xsd:element name="accountInfo" type="pm:accountInfoType" nillable="false"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="migratePrepaidToPostpaidResponse" type="xsd:long"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="activateSimRequest">
+		<wsdl:part element="tns:activateSimRequest" name="activateSimRequest"/>
+	</wsdl:message>
+	<wsdl:message name="activateSimResponse">
+		<wsdl:part element="tns:activateSimResponse" name="activateSimResponse"/>
+	</wsdl:message>
+	<wsdl:message name="swapSimRequest">
+		<wsdl:part element="tns:swapSimRequest" name="swapSimRequest"/>
+	</wsdl:message>
+	<wsdl:message name="swapSimResponse">
+		<wsdl:part element="tns:swapSimResponse" name="swapSimResponse"/>
+	</wsdl:message>
+	<wsdl:message name="swapMsisdnRequest">
+		<wsdl:part element="tns:swapMsisdnRequest" name="swapMsisdnRequest"/>
+	</wsdl:message>
+	<wsdl:message name="swapMsisdnResponse">
+		<wsdl:part element="tns:swapMsisdnResponse" name="swapMsisdnResponse"/>
+	</wsdl:message>
+	<wsdl:message name="deactivateSimRequest">
+		<wsdl:part element="tns:deactivateSimRequest" name="deactivateSimRequest"/>
+	</wsdl:message>
+	<wsdl:message name="deactivateSimResponse">
+		<wsdl:part element="tns:deactivateSimResponse" name="deactivateSimResponse"/>
+	</wsdl:message>
+	<wsdl:message name="migratePrepaidToPostpaidRequest">
+		<wsdl:part element="tns:migratePrepaidToPostpaidRequest" name="migratePrepaidToPostpaidRequest"/>
+	</wsdl:message>
+	<wsdl:message name="migratePrepaidToPostpaidResponse">
+		<wsdl:part element="tns:migratePrepaidToPostpaidResponse" name="migratePrepaidToPostpaidResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ProvisionManagerService">
+		<wsdl:operation name="ActivateSim">
+			<wsdl:input message="tns:activateSimRequest"/>
+			<wsdl:output message="tns:activateSimResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SwapSim">
+			<wsdl:input message="tns:swapSimRequest" />
+			<wsdl:output message="tns:swapSimResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SwapMsisdn">
+			<wsdl:input message="tns:swapMsisdnRequest"/>
+			<wsdl:output message="tns:swapMsisdnResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeactivateSim">
+			<wsdl:input message="tns:deactivateSimRequest"/>
+			<wsdl:output message="tns:deactivateSimResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="MigratePrepaidToPostpaid">
+			<wsdl:input message="tns:migratePrepaidToPostpaidRequest"/>
+			<wsdl:output message="tns:migratePrepaidToPostpaidResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ProvisionManagerServiceSOAP" type="tns:ProvisionManagerService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="ActivateSim">
+			<soap:operation soapAction="http://www.bridge.com/pm/activateSim"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="activateSimRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="activateSimResponse"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SwapSim">
+			<soap:operation soapAction="http://www.bridge.com/pm/swapSim" />
+			<wsdl:input>
+				<soap:body use="literal" parts="swapSimRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="swapSimResponse"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SwapMsisdn">
+			<soap:operation soapAction="http://www.bridge.com/pm/swapMsisdn"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="swapMsisdnRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="swapMsisdnResponse"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeactivateSim">
+			<soap:operation soapAction="http://www.bridge.com/pm/DeactivateSim"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="deactivateSimRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="deactivateSimResponse"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="MigratePrepaidToPostpaid">
+			<soap:operation soapAction="http://www.bridge.com/pm/MigratePrepaidToPostpaid"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="migratePrepaidToPostpaidRequest"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="migratePrepaidToPostpaidResponse"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ProvisionManagerService">
+		<wsdl:port binding="tns:ProvisionManagerServiceSOAP" name="ProvisionManagerServiceSOAP">
+			<soap:address location="http://localhost:8081/services/pm" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

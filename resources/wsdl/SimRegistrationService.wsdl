@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SimRegistrationService" targetNamespace="http://www.bridge.com/simreg" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:co="http://co.mcel.mz/types/common" xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.bridge.com/simreg" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-utility-1.0.xsd">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.bridge.com/simreg">
+ 			<xsd:include schemaLocation="simreg_types.xsd"/>
+ 		</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="checkRegistrationStatusRequest">
+  	<wsdl:part name="checkRegistrationStatusRequest" element="tns:checkRegistrationStatusRequest"/>
+  </wsdl:message>
+  <wsdl:message name="checkRegistrationStatusResponse">
+  	<wsdl:part name="checkRegistrationStatusResponse" element="tns:checkRegistrationStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="updateFormImageOnlyRequest">
+    <wsdl:part name="updateFormImageOnlyRequest" element="tns:updateFormImageOnlyRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createNewPersonalRegistrationWithImagesRequest">
+    <wsdl:part name="createNewPersonalRegistrationWithImagesRequest" element="tns:createNewPersonalRegistrationWithImagesRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateIDImageOnlyResponse">
+    <wsdl:part name="updateIDImageOnlyResponse" element="tns:updateIDImageOnlyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="fastActivationRequest">
+    <wsdl:part name="fastActivationRequest" element="tns:fastActivationRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateIDImageOnlyRequest">
+    <wsdl:part name="updateIDImageOnlyRequest" element="tns:updateIDImageOnlyRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retrieveVerificationDataRequest">
+  	<wsdl:part name="retrieveVerificationDataRequest" element="tns:retrieveVerificationDataRequest"/>
+  </wsdl:message>
+  <wsdl:message name="createNewPersonalRegistrationResponse">
+    <wsdl:part name="createNewPersonalRegistrationResponse" element="tns:createNewPersonalRegistrationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateFormImageOnlyResponse">
+    <wsdl:part name="updateFormImageOnlyResponse" element="tns:updateFormImageOnlyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createNewPersonalRegistrationRequest">
+    <wsdl:part name="createNewPersonalRegistrationRequest" element="tns:createNewPersonalRegistrationRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="fastActivationResponse">
+    <wsdl:part name="fastActivationResponse" element="tns:fastActivationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addCellToExistingSubscriberResponse">
+    <wsdl:part name="addCellToExistingSubscriberResponse" element="tns:addCellToExistingSubscriberResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addCellToExistingSubscriberRequest">
+    <wsdl:part name="addCellToExistingSubscriberRequest" element="tns:addCellToExistingSubscriberRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="retrieveVerificationDataResponse">
+  	<wsdl:part name="retrieveVerificationDataResponse" element="tns:retrieveVerificationDataResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="SimRegistrationService">
+    <wsdl:operation name="checkRegistrationStatus">
+    	<wsdl:input message="tns:checkRegistrationStatusRequest"/>
+    	<wsdl:output message="tns:checkRegistrationStatusResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addCellToExistingSubscriber">
+      <wsdl:input message="tns:addCellToExistingSubscriberRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:addCellToExistingSubscriberResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fastActivation">
+      <wsdl:input message="tns:fastActivationRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:fastActivationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createNewPersonalRegistration">
+      <wsdl:input message="tns:createNewPersonalRegistrationRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:createNewPersonalRegistrationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createNewPersonalRegistrationWithImages">
+      <wsdl:input message="tns:createNewPersonalRegistrationWithImagesRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:createNewPersonalRegistrationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateIDImageOnly">
+      <wsdl:input message="tns:updateIDImageOnlyRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:updateIDImageOnlyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateFormImageOnly">
+      <wsdl:input message="tns:updateFormImageOnlyRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:updateFormImageOnlyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveVerificationData">
+    	<wsdl:input message="tns:retrieveVerificationDataRequest"/>
+    	<wsdl:output message="tns:retrieveVerificationDataResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveVerificationDataByDocumentNo">
+    	<wsdl:input message="tns:retrieveVerificationDataRequest"/>
+    	<wsdl:output message="tns:retrieveVerificationDataResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SimRegistrationServiceSOAP" type="tns:SimRegistrationService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="checkRegistrationStatus">
+    	<soap:operation soapAction="http://www.bridge.com/simreg/checkRegistrationStatus"/>
+    	<wsdl:input>
+    		<soap:body parts="checkRegistrationStatusRequest" use="literal"/>
+    	</wsdl:input>
+    	<wsdl:output>
+    		<soap:body parts="checkRegistrationStatusResponse" use="literal"/>
+    	</wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addCellToExistingSubscriber">
+      <soap:operation soapAction="http://www.bridge.com/simreg/addCellToExistingSubscriber"/>
+      <wsdl:input>
+        <soap:body parts="addCellToExistingSubscriberRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="addCellToExistingSubscriberResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fastActivation">
+      <soap:operation soapAction="http://www.bridge.com/simreg/fastActivation"/>
+      <wsdl:input>
+        <soap:body parts="fastActivationRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="fastActivationResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createNewPersonalRegistration">
+      <soap:operation soapAction="http://www.bridge.com/simreg/createNewPersonalRegistration"/>
+      <wsdl:input>
+        <soap:body parts="createNewPersonalRegistrationRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="createNewPersonalRegistrationResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createNewPersonalRegistrationWithImages">
+      <soap:operation soapAction="http://www.bridge.com/simreg/createNewPersonalRegistrationWithImages"/>
+      <wsdl:input>
+        <soap:body parts="createNewPersonalRegistrationWithImagesRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="createNewPersonalRegistrationResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateIDImageOnly">
+      <soap:operation soapAction="http://www.bridge.com/simreg/updateIDImageOnly"/>
+      <wsdl:input>
+        <soap:body parts="updateIDImageOnlyRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="updateIDImageOnlyResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateFormImageOnly">
+      <soap:operation soapAction="http://www.bridge.com/simreg/updateFormImageOnly"/>
+      <wsdl:input>
+        <soap:body parts="updateFormImageOnlyRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="updateFormImageOnlyResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveVerificationData">
+    	<soap:operation soapAction="http://www.bridge.com/simreg/retrieveVerificationData"/>
+    	<wsdl:input>
+    		<soap:body parts="retrieveVerificationDataRequest" use="literal"/>
+    	</wsdl:input>
+    	<wsdl:output>
+    		<soap:body parts="retrieveVerificationDataResponse" use="literal"/>
+    	</wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveVerificationDataByDocumentNo">
+    	<soap:operation soapAction="http://www.bridge.com/simreg/retrieveVerificationDataByDocumentNo"/>
+    	<wsdl:input>
+    		<soap:body parts="retrieveVerificationDataRequest" use="literal"/>
+    	</wsdl:input>
+    	<wsdl:output>
+    		<soap:body parts="retrieveVerificationDataResponse" use="literal"/>
+    	</wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SimRegistrationService">
+    <wsdl:port name="SimRegistrationServiceSOAP" binding="tns:SimRegistrationServiceSOAP">
+      <soap:address location="http://localhost:8080/SIMRegistrationService/services/SimRegistrationService"/>
+    </wsdl:port>
+  </wsdl:service>
+    <wsp:Policy wsu:Id="simregSec">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:AsymmetricBinding>
+					<wsp:Policy>
+						<sp:InitiatorToken>
+							<wsp:Policy>
+								<sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference/>
+										<sp:WssX509V3Token10/>
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:InitiatorToken>
+						<sp:RecipientToken>
+							<wsp:Policy>
+								<sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+									<wsp:Policy>
+										<sp:RequireThumbprintReference/>
+										<sp:WssX509V3Token10/>
+									</wsp:Policy>
+								</sp:X509Token>
+							</wsp:Policy>
+						</sp:RecipientToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:TripleDesRsa15/>
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+					</wsp:Policy>
+				</sp:AsymmetricBinding>
+				<sp:Wss10>
+					<wsp:Policy>
+						<sp:MustSupportRefKeyIdentifier/>
+						<sp:MustSupportRefIssuerSerial/>
+					</wsp:Policy>
+				</sp:Wss10>
+				<sp:SignedParts>
+					<sp:Body/>
+				</sp:SignedParts>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+</wsdl:definitions>

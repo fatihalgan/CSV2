@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="operatorPrefixSelectionRegion">
+		<table>
+			<tr>
+				<td valign="top" rowspan="2"><rich:panel
+					header="Operator Prefixes">
+					<h:form id="operatorPrefixList">
+						<rich:dataTable id="tblOperatorPrefixes"
+							value="#{operatorPrefixListAction.operatorPrefixList}" var="item"
+							rows="20">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column>
+										<h:outputText value="#{msg.operatorName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.roamingOperatorPrefix}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Edit" />
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="#{item.operator.operatorName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.prefix}" />
+								</rich:column>
+								<rich:column>
+									<a:commandButton
+										action="#{operatorPrefixListAction.editOperatorPrefix(item)}"
+										value="Edit" reRender="operatorPrefixSelectionRegion" />
+								</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+								<rich:datascroller for="tblOperatorPrefixes" maxPages="20"
+									boundaryControls="auto" fastControls="auto" />
+							</f:facet>
+						</rich:dataTable>
+						<div class="actionButtons"><h:commandButton id="btnNewOpPrf"
+							value="Create New"
+							action="#{operatorPrefixListAction.newOperatorPrefix}" /><h:commandButton
+							id="btnNewOpPrefList" value="Create Interval"
+							action="#{operatorPrefixListAction.showIntervalFrame}" /></div>
+					</h:form>
+				</rich:panel></td>
+				<td><rich:panel header="#{msg.roamingEditOperatorPrefix}"
+					rendered="#{operatorPrefixListAction.selectedOperatorPrefix != null}">
+					<h:form id="frmEditOperatorPrefix">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingOperatorPrefix}</ui:define>
+								<h:inputText
+									value="#{operatorPrefixListAction.selectedOperatorPrefix.prefix}"
+									required="true" />
+							</s:decorate>
+						</h:panelGrid>
+						<div class="actionButtons"><h:commandButton
+							id="btnSaveOpPrf" value="Save"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Save')}"
+							action="#{operatorPrefixListAction.saveOperatorPrefix}"
+							reRender="operatorPrefixSelectionRegion" /> <h:commandButton
+							id="btnDeleteOpPrf" value="Delete Operator Prefix"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Delete')}"
+							action="#{operatorPrefixListAction.deleteOperatorPrefix}"
+							reRender="operatorPrefixSelectionRegion" /></div>
+					</h:form>
+				</rich:panel></td>
+				<td><rich:panel header="#{msg.roamingEditOperatorPrefix}"
+					rendered="#{operatorPrefixListAction.intervalFrameShowed}">
+					<h:form id="frmEditOperatorPrefixInterval">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">First Value</ui:define>
+								<h:inputText value="#{operatorPrefixListAction.intervalFirst}"
+									required="true" />
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">Last Value</ui:define>
+								<h:inputText value="#{operatorPrefixListAction.intervalLast}"
+									required="true" />
+							</s:decorate>
+						</h:panelGrid>
+						<div class="actionButtons"><h:commandButton
+							id="btnSaveOpPrfInt" value="Create"
+							action="#{operatorPrefixListAction.createOperatorPrefixesInterval}"
+							reRender="operatorPrefixSelectionRegion" /></div>
+					</h:form>
+				</rich:panel></td>
+			</tr>
+		</table>
+	</h:panelGroup>
+</ui:composition>

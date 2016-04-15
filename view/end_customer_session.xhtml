@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" infoClass="info"/>
+		<rich:panel rendered="#{currentServedCustomer.customerValid}"
+			styleClass="sectionPanel" header="#{msg.finishComplaintEntry}">
+			<h:form>
+				<ui:include src="/complaints/complaint_entry_form.xhtml" />
+				<h:panelGrid columns="2" columnClasses="widthFiftyPercent" styleClass="widthFull">
+					<s:decorate template="./edit.xhtml">
+						<ui:define name="label">Complaint Status</ui:define>
+						<h:selectOneRadio value="#{complaintManagementService.newComplaint.status}" required="true">
+							<s:convertEnum/>
+							<s:selectItems value="#{allComplaintStatuses}" var="status" label="#{status.label}" />
+						</h:selectOneRadio>
+					</s:decorate>
+					<s:decorate template="./edit.xhtml">
+						<ui:define name="label">#{msg.attachments}</ui:define>
+						<rich:fileUpload fileUploadListener="#{complaintManagementService.attachmentAdded}" maxFilesQuantity="3"
+							immediateUpload="false" allowFlash="false" listHeight="105px">
+						</rich:fileUpload>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton value="#{msg.saveComplaint}" action="#{complaintManagementService.saveComplaintEndCustomerSession}" />
+					<rich:spacer width="10px;" />
+					<h:commandButton value="#{msg.exitWithoutSave}"  action="#{currentServedCustomer.endCustomerSession}" immediate="true"
+						rendered="#{not loggedInUser.customerCareAgentOrShop}"/>
+				</div>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

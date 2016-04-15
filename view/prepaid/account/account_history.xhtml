@@ -1,0 +1,175 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	
+	<rich:panel header="#{msg.accountHistory}" styleClass="sectionPanel" rendered="#{prepaidAccountService.dwsAccount != null}">
+		<h:outputLabel value="#{msg.type}: "/>
+		<h:selectOneMenu id="cmbPrepaidEventType" value="#{prepaidAccountService.dwsAccount.selectedEventDescription}">
+			<a:support event="onchange" action="#{prepaidAccountService.changeEventDescriptionSelection}" reRender="allEventsList"/>
+			<s:convertEnum />
+			<s:selectItems value="#{allAccountEventDescriptions}" var="evt" label="#{evt.label}"/>
+		</h:selectOneMenu>				
+		<rich:separator />
+		<rich:dataTable id="allEventsList" rows="13" value="#{prepaidAccountService.dwsAccount.eventHistoryFiltered}" 
+			var="item" onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
+			onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+			columnClasses="aligncentercolumn,aligncentercolumn,alignrightcolumn,alignrightcolumn,alignrightcolumn">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="ID" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Description" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.dateTime}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.calledNumber}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.calledCountry}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.duration}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.charge}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.balanceBefore}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.balanceAfter}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.category}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Details" />
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="#{item.eventId}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.eventDescription}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.utcTimestamp}">
+						<s:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+					</h:outputText>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.calledNumber}" rendered="#{item.eventType == 'UsageEvent'}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.calledCountry}" rendered="#{item.eventType == 'UsageEvent'}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.duration}" rendered="#{item.eventType == 'UsageEvent'}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.usageAmount}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.balanceBefore}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.balanceAfter}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.categoryName}" rendered="#{item.eventType == 'UsageEvent'}"/>
+				</rich:column>
+				<rich:column>
+					<a:commandLink action="#{prepaidAccountService.retrieveEventDetails(item)}" value="Show Details"
+						reRender="eventDetailPanel" 
+						oncomplete="Richfaces.showModalPanel('eventDetailsMp',{width:450, top:200})"/>
+				</rich:column>
+			</rich:columnGroup>
+			<f:facet name="footer">
+				<rich:datascroller for="allEventsList" maxPages="20" boundaryControls="auto" fastControls="auto" />
+			</f:facet>
+		</rich:dataTable>
+	</rich:panel>
+	
+	<rich:modalPanel id="eventDetailsMp" width="400" height="420" zindex="2000">
+		<f:facet name="header">Details</f:facet>
+		<f:facet name="controls">
+        	<a href="#" onclick="Richfaces.hideModalPanel('eventDetailsMp')">X</a>
+     	</f:facet>
+		<a:outputPanel id="eventDetailPanel" layout="inline">
+			
+			<rich:dataGrid value="#{prepaidAccountService.dwsAccount.currentViewedEvent.cashAccountChanges}" var="item" columns="2" elements="5" first="0"
+				rendered="#{prepaidAccountService.dwsAccount.currentViewedEvent.eventType == 'AccountEvent' and prepaidAccountService.dwsAccount.currentViewedEvent.cashAccountChanges.size() != 0}">
+				<f:facet name="header">
+					<h:outputText value="Balance Changes"></h:outputText>
+				</f:facet>
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{item.cashAccountName}"/>
+					</f:facet>
+					<h:panelGrid columns="2">
+						<h:outputText value="Amount" styleClass="label"/>
+						<h:outputText value="#{item.amount}" />
+						<h:outputText value="Balance Before" styleClass="label"/>
+						<h:outputText value="#{item.balanceBefore}" />
+						<h:outputText value="BalanceAfter" styleClass="label"/>
+						<h:outputText value="#{item.balanceAfter}" />
+					</h:panelGrid>
+				</rich:panel>
+			</rich:dataGrid>
+			
+			<rich:dataGrid value="#{prepaidAccountService.dwsAccount.currentViewedEvent.lifeCycleChanges}" var="item" columns="2" elements="5" first="0"
+				rendered="#{prepaidAccountService.dwsAccount.currentViewedEvent.eventType == 'AccountEvent' and prepaidAccountService.dwsAccount.currentViewedEvent.lifeCycleChanges.size() != 0}">
+				<f:facet name="header">
+					<h:outputText value="LifeCycle Changes"></h:outputText>
+				</f:facet>
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="Event Name">#{item.eventName}</h:outputText>
+					</f:facet>
+					<h:panelGrid columns="2">
+						<h:outputText value="Event Value Before" styleClass="label"/>
+						<h:outputText value="#{item.eventValueBefore}" />
+						<h:outputText value="Event Value After" styleClass="label"/>
+						<h:outputText value="#{item.eventValueAfter}" />
+					</h:panelGrid>
+				</rich:panel>
+			</rich:dataGrid>
+			
+			<rich:panel header="Balance Changes" rendered="#{prepaidAccountService.dwsAccount.currentViewedEvent.eventType == 'UsageEvent'}">
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText>Main Account</h:outputText>
+					</f:facet>
+					<h:panelGrid columns="2">
+						<h:outputText value="Balance Before" styleClass="label"/>
+						<h:outputText value="#{prepaidAccountService.dwsAccount.currentViewedEvent.balanceBefore}" />
+						<h:outputText value="Balance After" styleClass="label"/>
+						<h:outputText value="#{prepaidAccountService.dwsAccount.currentViewedEvent.balanceAfter}" />
+					</h:panelGrid>
+				</rich:panel>
+				
+				<rich:panel rendered="#{prepaidAccountService.dwsAccount.currentViewedEvent.cashAccountName != null}">
+					<f:facet name="header">
+						<h:outputText>#{prepaidAccountService.dwsAccount.currentViewedEvent.cashAccountName}</h:outputText>
+					</f:facet>
+					<h:panelGrid columns="2">
+						<h:outputText value="Balance Before" styleClass="label"/>
+						<h:outputText value="#{prepaidAccountService.dwsAccount.currentViewedEvent.dedicatedAccountBeforeCall}" />
+						<h:outputText value="Balance After" styleClass="label"/>
+						<h:outputText value="#{prepaidAccountService.dwsAccount.currentViewedEvent.dedicatedAccountAfterCall}" />
+					</h:panelGrid>
+				</rich:panel>
+			</rich:panel>
+		</a:outputPanel>
+	</rich:modalPanel>                
+</ui:composition>

@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="#{msg.registeredNumbersOfCustomer}" styleClass="sectionPanel" rendered="#{prepaidCustomerService.currentSubscription != null}">
+		<h:panelGrid>
+		<rich:dataTable id="tblSubscriptions" value="#{prepaidCustomerService.currentSubscription.registeredTo.currentSubscriptionList}" var="item"
+			rows="20">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{msg.msisdn}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.registrationDate}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.registrationStatus}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.registrationType}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.unregisterNumber}" />
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="#{item.msisdn}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.registrationDate}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.status}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.registeredTo.registrarType}" />
+				</rich:column>
+				<rich:column>
+					<h:commandButton action="#{prepaidCustomerService.removeCellFromRegistrar}" value="#{msg.unregisterNumber}" />
+				</rich:column>
+			</rich:columnGroup>
+			<f:facet name="footer">
+				<rich:datascroller for="tblSubscriptions" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+			</f:facet>
+		</rich:dataTable>
+		</h:panelGrid>
+	</rich:panel>                
+</ui:composition>

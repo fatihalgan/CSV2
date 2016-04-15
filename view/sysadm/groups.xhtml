@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="Groups" styleClass="sectionPanel">
+			<h:form id="groupList">
+			<rich:dataTable id="tblGroups" value="#{groupList}" var="item" rows="20">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Groupname" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Description" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Supervisor" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Group Type" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Edit" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Delete"/>
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.groupName}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.description}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.parentGroup.groupName}" rendered="#{item.parentGroup != null}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.groupType.label}" rendered="#{item.groupType != null}"/>
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{groupHomeAction.editGroup(item)}" value="Edit" />
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{groupListAction.deleteGroup}" value="Delete"/>
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="tblGroups" maxPages="20" boundaryControls="auto" fastControls="auto"/>
+				</f:facet>
+			</rich:dataTable>
+			<div class="actionButtons">
+				<h:commandButton id="btnNewGroup" value="Create New Group" action="#{groupHomeAction.newGroup}"/>
+			</div>
+			</h:form>
+		</rich:panel>
+	</ui:define>			
+</ui:composition>

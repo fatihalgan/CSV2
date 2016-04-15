@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="#{msg.filterTasks}">
+		<h:outputLabel value="#{msg.msisdn}" styleClass="compact-name"/> 
+		<h:inputText value="#{filterableTaskInstanceList.msisdn}" size="10" maxlength="9"/>
+		<rich:spacer width="10"/>
+		<h:outputLabel value="#{msg.openedAfter}" styleClass="compact-name"/>
+		<rich:calendar value="#{filterableTaskInstanceList.openingDate}" direction="bottom-right" datePattern="dd/MM/yyyy HH:mm" showWeekDaysBar="true"/>
+		<rich:spacer width="10"/>
+		<h:outputLabel value="#{msg.postedAfter}" styleClass="compact-name"/>
+		<rich:calendar value="#{filterableTaskInstanceList.postingDate}" direction="bottom-right" datePattern="dd/MM/yyyy HH:mm" showWeekDaysBar="true"/>
+		<h:outputLabel value="#{msg.segment}" styleClass="compact-name"/>
+		<h:selectOneMenu value="#{filterableTaskInstanceList.filteredSegment}" required="false">
+			<s:selectItems var="item" value="#{complaintSegmentList}" label="#{item.description}" noSelectionLabel="Select Segment..." itemValue="#{item.id}"/>
+		</h:selectOneMenu>
+		<a:commandButton action="#{filterableTaskInstanceList.refreshTaskList}" reRender="assignedTasksGrid" value="#{msg.refreshTaskList}"/>
+	</rich:panel>                
+</ui:composition>

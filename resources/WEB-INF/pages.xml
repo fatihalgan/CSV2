@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages login-view-id="/login_error.xhtml"
+ no-conversation-view-id="/main.xhtml"
+ xmlns="http://jboss.com/products/seam/pages"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+ <!-- ************************ General Pages *********************** -->
+ <page login-required="true" view-id="*">
+  <navigation>
+   <rule if-outcome="home">
+    <redirect view-id="/main.xhtml"/>
+   </rule>
+   <rule if-outcome="users">
+    <redirect view-id="/sysadm/users.xhtml"/>
+   </rule>
+   <rule if-outcome="groups">
+    <redirect view-id="/sysadm/groups.xhtml"/>
+   </rule>
+   <rule if-outcome="operations">
+    <redirect view-id="/sysadm/operations.xhtml"/>
+   </rule>
+   <rule if-outcome="modules">
+    <redirect view-id="/sysadm/modules.xhtml"/>
+   </rule>
+   <rule if-outcome="complaintSegments">
+    <redirect view-id="/sysadm/complaint_segments.xhtml"/>
+   </rule>
+   <rule if-outcome="prepaidEnquiry">
+    <redirect view-id="/prepaid/prepaid_enquiry.xhtml"/>
+   </rule>
+   <rule if-outcome="newPrepaidRegistration">
+    <redirect view-id="/prepaid/registration/new_registration/edit_subscription.xhtml"/>
+   </rule>
+   <rule if-outcome="searchPrepaidRegistration">
+    <redirect view-id="/prepaid/registration/search_registration.xhtml"/>
+   </rule>
+   <rule if-outcome="prepaidSIMActivation">
+    <redirect view-id="/prepaid/registration/activation/remove_call_barring.xhtml"/>
+   </rule>
+   <rule if-outcome="voucherStatus">
+    <redirect view-id="/prepaid/voucher/voucher_status.xhtml"/>
+   </rule>
+   <rule if-outcome="netmovelPrepago">
+    <redirect view-id="/prepaid/netmovel/netmovel_prepago.xhtml"/>
+   </rule>
+   <rule if-outcome="netmovelDuo">
+   	<redirect view-id="/prepaid/netmovelduo/netmovel_duo.xhtml"/>
+   </rule>
+   <rule if-outcome="netmovelVoiceAddOn">
+   	<redirect view-id="/prepaid/netmovelvoice/netmovel_voice_addon.xhtml"/>
+   </rule>
+   <rule if-outcome="bb4p">
+    <redirect view-id="/prepaid/blackberry/blackberry_prepaid.xhtml"/>
+   </rule>
+   <rule if-outcome="prepaidSimSwap">
+    <redirect view-id="/prepaid/sim/sim_swap.xhtml"/>
+   </rule>
+   <rule if-outcome="prepaidToPostpaidMigration">
+    <redirect view-id="/prepaid/sim/migration/validate_card_info.xhtml"/>
+   </rule>
+   <rule if-outcome="imeiRecords">
+    <redirect view-id="/common/imei_records.xhtml"/>
+   </rule>
+   <rule if-outcome="failedCalls">
+    <redirect view-id="/common/failed_calls.xhtml"/>
+   </rule>
+   <rule if-outcome="pukInformation">
+    <redirect view-id="/common/puk_info.xhtml"/>
+   </rule>
+   <rule if-outcome="sendsms">
+    <redirect view-id="/common/send_sms.xhtml"/>
+   </rule>
+   <rule if-outcome="tomala">
+    <redirect view-id="/common/tomala/tomala.xhtml"/>
+   </rule>
+   <rule if-outcome="voiceMail">
+    <redirect view-id="/common/voicemail/voice_mail.xhtml"/>
+   </rule>
+   <rule if-outcome="smscManage">
+    <redirect view-id="/common/smsc/smsc_manage.xhtml"/>
+   </rule>
+   <rule if-outcome="ddsTariff">
+    <redirect view-id="/common/dds/dds_tariff.xhtml"/>
+   </rule>
+   <rule if-outcome="emaStatus">
+    <redirect view-id="/common/ema/ema_status.xhtml"/>
+   </rule>
+   <rule if-outcome="invoiceView">
+    <redirect view-id="/postpaid/invoice/invoice_view.xhtml"/>
+   </rule>
+   <rule if-outcome="callsView">
+    <redirect view-id="/postpaid/history/call_view.xhtml"/>
+   </rule>
+   <rule if-outcome="contractEnquiry">
+    <redirect view-id="/postpaid/contracts/search_contract.xhtml"/>
+   </rule>
+   <rule if-outcome="accountEnquiry">
+    <redirect view-id="/postpaid/contracts/account_overview.xhtml"/>
+   </rule>
+   <rule if-outcome="myCorporateClients">
+    <redirect view-id="/corporate/my_corporate_clients.xhtml"/>
+   </rule>
+   <rule if-outcome="myActions">
+    <redirect view-id="/system/my_actions.xhtml"/>
+   </rule>
+   <rule if-outcome="changePassword">
+    <redirect view-id="/system/change_password.xhtml"/>
+   </rule>
+   <rule if-outcome="userAudit">
+    <redirect view-id="/reports/user_audit.xhtml"/>
+   </rule>
+   <rule if-outcome="adjustmentsReport">
+    <redirect view-id="/reports/daily_adjustments.xhtml"/>
+   </rule>
+   <rule if-outcome="CSVUsageReport">
+    <redirect view-id="/reports/daily_csv_usage.xhtml"/>
+   </rule>
+   <rule if-outcome="emaReport">
+    <redirect view-id="/reports/daily_ema_operations.xhtml"/>
+   </rule>
+   <rule if-outcome="bscsCallViewUsageReport">
+    <redirect view-id="/reports/postpaid_call_view.xhtml"/>
+   </rule>
+   <rule if-outcome="bscsInvoiceViewUsageReport">
+    <redirect view-id="/reports/postpaid_invoice_view.xhtml"/>
+   </rule>
+   <rule if-outcome="operationsLogReport">
+    <redirect view-id="/reports/operations_log.xhtml"/>
+   </rule>
+   <rule if-outcome="smsReport">
+    <redirect view-id="/reports/sms_log.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingParams">
+    <redirect view-id="/roaming/roam_parameters.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingOperator">
+    <redirect view-id="/roaming/operator.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingOperatorDetails">
+    <redirect view-id="/roaming/operator_region_details.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingAgreement">
+    <redirect view-id="/roaming/main_agreement.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingSchedule">
+    <redirect view-id="/roaming/main_agreement_schedule.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingTariff">
+    <redirect view-id="/roaming/tariff_calculation.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingTariffTransfer">
+    <redirect view-id="/roaming/monthly_tariff_transfer.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingTest">
+    <redirect view-id="/roaming/roaming_test.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingServiceTariff">
+    <redirect view-id="/roaming/roaming_service_tariffs.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingTransfer">
+    <redirect view-id="/roaming/operator_transfer.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingScheduleReport">
+    <redirect view-id="/roaming/reports/schedule_report.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingCalendarReport">
+    <redirect view-id="/roaming/reports/calendar_reports.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingCommercialReport">
+    <redirect view-id="/roaming/reports/commercial_report.xhtml"/>
+   </rule>
+   <rule if-outcome="roamingTariffReport">
+    <redirect view-id="/roaming/reports/tariff_params_report.xhtml"/>
+   </rule>
+   <rule if-outcome="myCurrentTask">
+    <redirect view-id="/tasks/my_current_task.xhtml"/>
+   </rule>
+   <rule if-outcome="manageOpenTasks">
+    <redirect view-id="/tasks/manage_open_tasks.xhtml"/>
+   </rule>
+   <rule if-outcome="manageAllOpenTasksForSystemAdmin">
+   	<redirect view-id="/tasks/sysadmin/manage_open_tasks.xhtml"/>	
+   </rule>
+   <rule if-outcome="manageOpenComplaints">
+    <redirect view-id="/tasks/complaint_management/manage_open_complaints.xhtml"/>
+   </rule>
+   <rule if-outcome="newCorporateCustomerSession">
+    <redirect view-id="/corporate/start_customer_session.xhtml"/>
+   </rule>
+   <rule if-outcome="logout">
+    <redirect view-id="/loggedOut.xhtml"/>
+   </rule>
+  </navigation>
+  <navigation from-action="#{currentServedCustomer.newCustomer}">
+   <redirect view-id="/start_customer_session.xhtml"/>
+  </navigation>
+  <navigation from-action="#{currentServedCustomer.dismissCurrentCustomer}">
+   <rule if="#{attendOpenComplaintTask.initialComplaintEntry}">
+    <redirect view-id="/end_customer_session.xhtml"/>
+   </rule>
+   <rule if="#{not attendOpenComplaintTask.initialComplaintEntry}">
+    <redirect view-id="/tasks/complaint_management/end_complaint_attendance.xhtml"/>
+   </rule>
+  </navigation>
+ </page>
+ <page login-required="false" view-id="/loggedOut.xhtml">
+  <action execute="#{authenticator.logout}"/>
+ </page>
+ <page action="#{currentServedCustomer.initCallerMsisdn}" view-id="/main.xhtml">
+  <description>New Workspace</description>
+ </page>
+ <!-- **************************** Attend Open Complaint Task ****************-->
+ <page view-id="/tasks/complaint_management/start_complaint_attendance.xhtml">
+  <description>Open Complaint: #{currentServedCustomer.customerIdentifier}</description>
+ </page>
+ <page conversation-required="true" view-id="/tasks/complaint_management/end_complaint_attendance.xhtml">
+   <navigation from-action="#{attendOpenComplaintTask.endAttendOpenComplaint}">
+   	<rule if-outcome="attendanceComplete">
+    	<redirect view-id="/main.xhtml"/>
+    </rule>
+  </navigation>
+ </page>
+ <!-- ***************************** Customer Complaint Entry ****************** -->
+ <page conversation-required="true" view-id="/start_customer_session.xhtml">
+  <description>Serve Customer: #{currentServedCustomer.customerIdentifier}</description>
+  <action execute="#{complaintManagementService.loadComplaintOwner}" if="#{complaintManagementService.complaintOwner == null}"/>
+  <action execute="#{complaintManagementService.loadComplaintHistory}" if="#{empty complaintManagementService.complaintHistory}"/>
+  <navigation from-action="#{complaintManagementService.rememberInitialComplaintEntry}">
+   <redirect view-id="/new_session.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="true" view-id="/end_customer_session.xhtml">
+  <description>End Customer Session: #{currentServedCustomer.customerIdentifier}</description>
+  <navigation from-action="#{complaintManagementService.saveComplaintEndCustomerSession}">
+   <redirect view-id="/main.xhtml"/>
+  </navigation>
+  <navigation from-action="#{currentServedCustomer.endCustomerSession}">
+   <redirect view-id="/main.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="false" view-id="/corporate/start_customer_session.xhtml">
+  <description>Serve Customer: #{currentServedCustomer.customerIdentifier}</description>
+  <begin-conversation flush-mode="manual" join="true"/>
+  <action
+   execute="#{complaintManagementService.loadCorporateComplaintOwner}" if="#{currentServedCustomer.customerValid and complaintManagementService.complaintOwner == null}"/>
+  <action execute="#{complaintManagementService.loadComplaintHistory}" if="#{empty complaintManagementService.complaintHistory and complaintManagementService.complaintOwner != null}"/>
+  <navigation from-action="#{complaintManagementService.rememberInitialComplaintEntry}">
+   <redirect view-id="/new_session.xhtml"/>
+  </navigation>
+  <navigation from-action="#{complaintManagementService.saveComplaintEndCustomerSession}">
+   <redirect view-id="/main.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="true" view-id="/corporate/edit_complaint_owner_company.xhtml">
+  <action execute="#{corporateClientListAction.retrieveAllCorporateClients}"/>
+  <navigation from-action="#{complaintManagementService.updateCompanyInfo}">
+   <redirect view-id="/corporate/start_customer_session.xhtml"/>
+  </navigation>
+ </page>
+ <!-- ******************************* Manage Complaints ************** -->
+ <page view-id="/tasks/complaint_management/manage_open_complaints.xhtml">
+ 	<navigation from-action="#{openComplaintAction.exportComplaintListToExcel}">
+ 		<redirect view-id="/reports/export_complaint_list_result.xhtml"/>
+ 	</navigation>
+ </page>
+ <!-- *******************************Admin Module ******************** -->
+ <page view-id="/sysadm/users.xhtml">
+  <navigation from-action="#{userHomeAction.editUser(item)}">
+   <redirect view-id="/sysadm/edit_user.xhtml"/>
+  </navigation>
+  <navigation from-action="#{userHomeAction.newUser}">
+   <redirect view-id="/sysadm/edit_user.xhtml"/>
+  </navigation>
+ </page>
+ <page view-id="/sysadm/edit_user.xhtml">
+  <description>Edit User: #{userHomeAction.selectedUser.username}</description>
+  <navigation from-action="#{userHomeAction.saveUser}">
+   <redirect view-id="/sysadm/users.xhtml"/>
+  </navigation>
+  <navigation from-action="#{userHomeAction.changePassword}">
+   <redirect view-id="/sysadm/users.xhtml"/>
+  </navigation>
+  <navigation from-action="#{userHomeAction.resetPassword}">
+   <redirect view-id="/sysadm/users.xhtml"/>
+  </navigation>
+  <navigation from-action="#{userHomeAction.cancelSave}">
+   <redirect view-id="/sysadm/users.xhtml"/>
+  </navigation>
+ </page>
+ <page action="#{groupListAction.searchGroups}" view-id="/sysadm/groups.xhtml">
+  <navigation from-action="#{groupHomeAction.editGroup(item)}">
+   <redirect view-id="/sysadm/edit_group.xhtml"/>
+  </navigation>
+  <navigation from-action="#{groupHomeAction.newGroup}">
+   <redirect view-id="/sysadm/edit_group.xhtml"/>
+  </navigation>
+ </page>
+ <page view-id="/sysadm/edit_group.xhtml">
+  <description>Edit Group: #{groupHomeAction.selectedGroup.groupName}</description>
+  <navigation from-action="#{groupHomeAction.saveGroup}">
+   <redirect view-id="/sysadm/groups.xhtml"/>
+  </navigation>
+  <navigation from-action="#{groupHomeAction.cancelSave}">
+   <redirect view-id="/sysadm/groups.xhtml"/>
+  </navigation>
+ </page>
+ <page view-id="/sysadm/operations.xhtml">
+  <description>Manage Operations</description>
+  <action execute="#{operationListAction.searchModules}" if="#{operationListAction.moduleList == null}"/>
+  <navigation from-action="#{operationHomeAction.editOperation(item)}">
+   <redirect view-id="/sysadm/edit_operation.xhtml"/>
+  </navigation>
+  <navigation from-action="#{operationHomeAction.newOperation}">
+   <redirect view-id="/sysadm/edit_operation.xhtml"/>
+  </navigation>
+ </page>
+ <page view-id="/sysadm/edit_operation.xhtml">
+  <description>Edit Operation: #{operationHomeAction.selectedOperation.operationName}</description>
+  <navigation from-action="#{operationHomeAction.saveOperation}">
+   <redirect view-id="/sysadm/operations.xhtml"/>
+  </navigation>
+  <navigation from-action="#{operationHomeAction.cancelSave}">
+   <redirect view-id="/sysadm/operations.xhtml"/>
+  </navigation>
+ </page>
+ <page action="#{moduleListAction.searchModules}" view-id="/sysadm/modules.xhtml">
+  <description>Manage Modules</description>
+ </page>
+ <page view-id="/sysadm/complaint_segments.xhtml">
+  <description>Manage Complaint Segments</description>
+  <navigation from-action="#{complaintSegmentHomeAction.editComplaintSegment(item)}">
+   <redirect view-id="/sysadm/edit_complaint_segment.xhtml"/>
+  </navigation>
+  <navigation from-action="#{complaintSegmentHomeAction.newComplaintSegment}">
+   <redirect view-id="/sysadm/edit_complaint_segment.xhtml"/>
+  </navigation>
+ </page>
+ <page view-id="/sysadm/edit_complaint_segment.xhtml">
+  <description>Edit Complaint Segment</description>
+  <navigation from-action="#{complaintSegmentHomeAction.saveComplaintSegment}">
+   <redirect view-id="/sysadm/complaint_segments.xhtml"/>
+  </navigation>
+  <navigation from-action="#{complaintSegmentHomeAction.cancelSave}">
+   <redirect view-id="/sysadm/complaint_segments.xhtml"/>
+  </navigation>
+ </page>
+ <!-- ******************************Prepaid Module *******************
+-->
+ <page conversation-required="true" view-id="/prepaid/prepaid_enquiry.xhtml">
+  <action execute="#{prepaidAccountService.retrieveAccountInformation}" if="#{prepaidAccountService.account == null}"/>
+ </page>
+ <page conversation-required="true" view-id="/prepaid/registration/search_registration.xhtml"/>
+ <page conversation-required="false" view-id="/prepaid/registration/new_registration/edit_subscription.xhtml">
+  <description>INCM Registration</description>
+  <begin-conversation flush-mode="manual" join="false" pageflow="registerNewPrepaidSubscription"/>
+ </page>
+ <page conversation-required="false" view-id="/prepaid/registration/activation/remove_call_barring.xhtml">
+  <description>New SIM Activation</description>
+  <action execute="#{simActivationService.retrieveDealers}" if="#{empty simActivationService.dealerList}"/>
+ </page>
+ <page conversation-required="true" view-id="/prepaid/voucher/voucher_status.xhtml"/>
+ <page conversation-required="true" view-id="/prepaid/netmovel/netmovel_prepago.xhtml"/>
+ <page conversation-required="true" view-id="/prepaid/netmovelduo/netmovel_duo.xhtml"/>
+ <page conversation-required="true" view-id="/prepaid/netmovelvoice/netmovel_voice_addon.xhtml"/>
+ <page conversation-required="true" view-id="/prepaid/blackberry/blackberry_prepaid.xhtml"/>
+ <page conversation-required="true" view-id="/prepaid/sim/sim_swap.xhtml">
+  <action execute="#{prepaidCustomerService.retrieveCurrentSubscription}"/>
+  <action execute="#{SIMSwapService.loadProvisioningInfo}"/>
+ </page>
+ <page conversation-required="true" view-id="/prepaid/sim/migration/validate_card_info.xhtml">
+  <action execute="#{postpaidMigrationService.loadProvisioningInfo}"/>
+ </page>
+ <!-- ******************************Common Operations Module *****************
+-->
+ <page conversation-required="true" view-id="/common/imei_records.xhtml"/>
+ <page conversation-required="true" view-id="/common/failed_calls.xhtml"/>
+ <page conversation-required="true" view-id="/common/puk_info.xhtml"/>
+ <page view-id="/common/send_sms.xhtml"/>
+ <page conversation-required="true" view-id="/common/tomala/tomala.xhtml"/>
+ <page conversation-required="true" view-id="/common/voicemail/voice_mail.xhtml"/>
+ <page conversation-required="true" view-id="/common/smsc/smsc_manage.xhtml"/>
+ <page conversation-required="false" view-id="/common/dds/dds_tariff.xhtml"/>
+ <page conversation-required="true" view-id="/common/ema/ema_status.xhtml"/>
+ <!-- ******************************Postpaid Module ***************** -->
+ <page conversation-required="false" view-id="/postpaid/invoice/invoice_view.xhtml">
+  <action execute="#{postpaidService.retrieveCurrentCustomerDetails}" on-postback="false"/>
+ </page>
+ <page conversation-required="true" view-id="/postpaid/history/call_view.xhtml"/>
+ <page conversation-required="false" view-id="/postpaid/contracts/search_contract.xhtml">
+  <action execute="#{contractService.tryInitSearchCriteria}"/>
+  <navigation from-action="#{contractService.viewAccountDetails(item)}">
+   <redirect view-id="/postpaid/contracts/postpaid_account_view.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="true" view-id="/postpaid/contracts/postpaid_account_view.xhtml">
+  <navigation from-action="#{contractService.viewContractDetails(item)}">
+   <redirect view-id="/postpaid/contracts/contract_overview.xhtml"/>
+  </navigation>
+  <navigation from-action="#{contractService.viewContractHistory(item)}">
+   <redirect view-id="/postpaid/contracts/contract_history.xhtml"/>
+  </navigation>
+  <navigation from-action="#{contractService.viewPaymentArrangement}">
+   <redirect view-id="/postpaid/contracts/payment_arrangement.xhtml"/>
+  </navigation>
+  <navigation from-action="#{contractService.viewPromotionPackages}">
+   <redirect view-id="/postpaid/contracts/promotions.xhtml"/>
+  </navigation>
+  <navigation from-action="#{contractService.viewMemos}">
+   <redirect view-id="/postpaid/contracts/memos.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="true" view-id="/postpaid/contracts/payment_arrangement.xhtml"/>
+ <page conversation-required="true" view-id="/postpaid/contracts/financial_overview.xhtml"/>
+ <page conversation-required="true" view-id="/postpaid/contracts/contract_overview.xhtml"/>
+ <page conversation-required="true" view-id="/postpaid/contracts/promotions.xhtml"/>
+ <page conversation-required="true" view-id="/postpaid/contracts/memos.xhtml"/>
+ <!-- ******************************Corporate Module ***************** -->
+ <page conversation-required="false" view-id="/corporate/my_corporate_clients.xhtml">
+  <description>Corporate Clients</description>
+  <navigation from-action="#{corporateClientHomeAction.newClient}">
+   <redirect view-id="/corporate/edit_corporate_client.xhtml"/>
+  </navigation>
+  <navigation from-action="#{corporateClientHomeAction.editClient(item)}">
+   <redirect view-id="/corporate/edit_corporate_client.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="true" view-id="/corporate/edit_corporate_client.xhtml">
+  <description>Edit Corporate Client</description>
+  <navigation from-action="#{corporateClientHomeAction.saveClient}">
+   <redirect view-id="/corporate/my_corporate_clients.xhtml"/>
+  </navigation>
+  <navigation from-action="#{corporateClientHomeAction.cancel}">
+   <redirect view-id="/corporate/my_corporate_clients.xhtml"/>
+  </navigation>
+ </page>
+ <!-- ******************************Reports Module ***************** -->
+ <page conversation-required="false" view-id="/reports/user_audit.xhtml"/>
+ <page conversation-required="false" view-id="/reports/daily_adjustments.xhtml">
+  <navigation from-action="#{reportingService.retrieveDailyAdjustments}">
+   <redirect view-id="/reports/daily_adjustment_result.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="false" view-id="/reports/daily_csv_usage.xhtml">
+  <navigation from-action="#{reportingService.retrieveDailyCSVUsage}">
+   <redirect view-id="/reports/daily_csv_usage_result.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="false" view-id="/reports/daily_ema_operations.xhtml">
+  <navigation from-action="#{reportingService.retrieveDailyEMAOperations}">
+   <redirect view-id="/reports/daily_ema_operations_result.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="false" view-id="/reports/postpaid_call_view.xhtml">
+  <navigation from-action="#{reportingService.retrievePostpaidCallViewOperations}">
+   <redirect view-id="/reports/postpaid_call_view_result.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="false" view-id="/reports/postpaid_invoice_view.xhtml">
+  <navigation from-action="#{reportingService.retrievePostpaidInvoiceViewOperations}">
+   <redirect view-id="/reports/postpaid_invoice_view_result.xhtml"/>
+  </navigation>
+ </page>
+ <page conversation-required="true" view-id="/reports/operations_log.xhtml"/>
+ <page conversation-required="true" view-id="/reports/sms_log.xhtml"/>
+ <page view-id="/roaming/roam_parameters.xhtml">
+  <description>Roaming Parameters</description>
+  <action execute="#{countryListAction.searchCountries}" if="#{empty countryListAction.countryList}"/>
+  <action execute="#{continentListAction.searchContinents}" if="#{empty continentListAction.continentList}"/>
+  <action execute="#{roamingServiceListAction.searchRoamingService}" if="#{empty roamingServiceListAction.roamingServiceList}"/>
+  <action execute="#{agreementStatusListAction.searchAgreementStatus}" if="#{empty agreementStatusListAction.agreementStatusList}"/>
+  <action execute="#{contactTypeListAction.searchContactTypes}" if="#{empty contactTypeListAction.contactTypeList}"/>
+  <action execute="#{iregStatusListAction.searchIregStatus}" if="#{empty iregStatusListAction.iregStatusList}"/>
+  <action execute="#{tadigStatusListAction.searchTadigStatus}" if="#{empty tadigStatusListAction.tadigStatusList}"/>
+  <action execute="#{currencyListAction.searchCurrencies}" if="#{empty currencyListAction.currencyList}"/>
+  <action execute="#{mccmncListAction.searchMccmncs}" if="#{empty mccmnsListAction.mccmncList}"/>
+  <action execute="#{tapcodeListAction.searchTapcodes}" if="#{empty tapcodeListAction.tapcodeList}"/>
+ </page>
+ <page view-id="/roaming/operator_region_details.xhtml">
+  <description>Roaming Operator Details</description>
+  <action execute="#{operatorRegionDetailsListAction.findContinentList}" if="#{empty operatorRegionDetailsListAction.continentList}"/>
+ </page>
+ <page view-id="/roaming/operator.xhtml">
+  <description>Roaming Operator</description>
+  <action execute="#{operatorListAction.searchOperator}" if="#{empty operatorListAction.operatorList}"/>
+ </page>
+ <page view-id="/roaming/main_agreement.xhtml">
+  <description>Main Agreement</description>
+  <action execute="#{mainAgreementListAction.searchMainAgreement}" if="#{empty mainAgreementListAction.mainAgreementList}"/>
+ </page>
+ <page view-id="/roaming/operator_service.xhtml">
+  <description>Operator Service</description>
+  <action execute="#{operatorServiceListAction.findContinentList}" if="#{empty operatorServiceListAction.continentList}"/>
+ </page>
+ <page view-id="/roaming/main_agreement_schedule.xhtml">
+  <description>Agreement Schedule</description>
+  <action
+   execute="#{mainAgreementScheduleListAction.searchMainAgreementList}" if="#{empty mainAgreementScheduleListAction.mainAgreementList}"/>
+ </page>
+ <page view-id="/roaming/tariff_calculation.xhtml">
+  <description>Tariff Calc. Params</description>
+  <action
+   execute="#{tariffCalculationListAction.searchMainAgreementList}" if="#{empty tariffCalculationListAction.mainAgreementList}"/>
+ </page>
+ <page view-id="/roaming/operator_transfer.xhtml">
+  <description>Roaming Test</description>
+  <action
+   execute="#{operatorRegionTransferListAction.findContinentList}" if="#{empty operatorRegionTransferListAction.continentList}"/>
+ </page>
+ <page conversation-required="false" view-id="/roaming/reports/schedule_report.xhtml">
+  <action execute="#{roamingReportingService.findStatusList}" if="#{empty roamingReportingService.statusList}"/>
+  <navigation evaluate="#{roamingReportingService.evaluateSchedule()}" from-action="#{roamingReportingService.retrieveMainAgreementScheduleReport}">
+   <rule if-outcome="1">
+    <redirect view-id="/roaming/reports/schedule_gsm_result.xhtml"/>
+   </rule>
+   <rule if-outcome="2">
+    <redirect view-id="/roaming/reports/schedule_gprs_result.xhtml"/>
+   </rule>
+   <rule if-outcome="3">
+    <redirect view-id="/roaming/reports/schedule_threeg_result.xhtml"/>
+   </rule>
+   <rule if-outcome="4">
+    <redirect view-id="/roaming/reports/schedule_camel12_result.xhtml"/>
+   </rule>
+   <rule if-outcome="5">
+    <redirect view-id="/roaming/reports/schedule_camel3_result.xhtml"/>
+   </rule>
+   <rule if-outcome="6">
+    <redirect view-id="/roaming/reports/schedule_mmsi_result.xhtml"/>
+   </rule>
+   <rule if-outcome="99">
+    <redirect view-id="/roaming/reports/schedule_all_result.xhtml"/>
+   </rule>
+  </navigation>
+ </page>
+ <page conversation-required="false" view-id="/roaming/reports/calendar_reports.xhtml">
+  <action execute="#{calendarReportService.findStatusList}" if="#{calendarReportService.BILATERAL==null}"/>
+  <navigation evaluate="#{calendarReportService.evaluateReportType()}" from-action="#{calendarReportService.retrieveCalendarReport}">
+   <rule if-outcome="1">
+    <redirect view-id="/roaming/reports/impl_cal_result.xhtml"/>
+   </rule>
+   <rule if-outcome="2">
+    <redirect view-id="/roaming/reports/impl_cal_kpi_result.xhtml"/>
+   </rule>
+   <rule if-outcome="3">
+    <redirect view-id="/roaming/reports/negotiation_cal_result.xhtml"/>
+   </rule>
+   <rule if-outcome="4">
+    <redirect view-id="/roaming/reports/negotiation_cal_kpi_result.xhtml"/>
+   </rule>
+   <rule if-outcome="5">
+    <redirect view-id="/roaming/reports/comm_cal_kpi_result.xhtml"/>
+   </rule>
+  </navigation>
+ </page>
+ <page conversation-required="false" view-id="/roaming/reports/commercial_report.xhtml">
+  <action execute="#{commercialKPIReportService.findContinentList}" if="#{empty commercialKPIReportService.continentList}"/>
+  <navigation from-action="#{commercialKPIReportService.retrieveCommercialReport}">
+   <redirect view-id="/roaming/reports/commercial_report_result.xhtml"/>
+  </navigation>
+  <navigation from-action="#{commercialKPIReportService.retrieveAgreementKPIReport}">
+   <redirect view-id="/roaming/reports/commercial_kpi_result.xhtml"/>
+  </navigation>
+ </page>
+ <page view-id="/roaming/roaming_service_tariffs.xhtml">
+  <description>Roaming Service Tariff</description>
+  <action
+   execute="#{roamingServiceTariffListAction.searchRoamingServiceList}" if="#{empty roamingServiceTariffListAction.roamingServiceList}"/>
+ </page>
+ <page conversation-required="false" view-id="/roaming/reports/tariff_params_report.xhtml">
+  <navigation from-action="#{roamingReportingService.retriveTariffParamsReport}">
+   <redirect view-id="/roaming/reports/tariff_params_result.xhtml"/>
+  </navigation>
+ </page>
+ <exception class="org.jboss.seam.security.AuthorizationException">
+  <redirect view-id="/notAuthorized.xhtml"/>
+ </exception>
+ <exception class="javax.faces.application.ViewExpiredException">
+  <redirect view-id="/loggedOut.xhtml">
+   <message>Your session has timed out.. Please login again</message>
+  </redirect>
+ </exception>
+ <exception class="org.jboss.seam.security.NotLoggedInException">
+  <redirect view-id="/login_error.xhtml">
+   <message>There was a problem during logging you into the system..</message>
+  </redirect>
+ </exception>
+ <exception class="csv.common.domain.CustomerSessionExpiredException">
+  <redirect view-id="/main.xhtml">
+   <message>The customer session has expired due to long inactivity time.. You have been redirected to the main page..</message>
+  </redirect>
+ </exception>
+</pages>

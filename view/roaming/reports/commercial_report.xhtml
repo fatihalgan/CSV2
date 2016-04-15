@@ -1,0 +1,60 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>Commercial Report</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<rich:panel>
+			<h:form id="frmCommercialReport">
+				<h:panelGrid columns="2">
+					<rich:panel header="Commercial Report">
+						<h:panelGrid columns="2">
+							<s:decorate template="../../edit.xhtml">
+								<ui:define name="label">#{msg.roamingContinent}</ui:define>
+								<h:selectOneMenu id="crContinentSelOne"
+									value="#{commercialKPIReportService.selectedContinent}">
+									<a:support event="onblur"
+										action="#{commercialKPIReportService.findCountryList}"
+										ajaxSingle="true" reRender="crCountrySelOne_2" />
+									<s:selectItems noSelectionLabel="All"
+										value="#{commercialKPIReportService.continentList}" var="cnt"
+										label="#{cnt.name}" />
+									<f:converter converterId="roamingEntityConverter" />
+								</h:selectOneMenu>
+							</s:decorate>
+							<s:decorate template="../../edit.xhtml">
+								<ui:define name="label">#{msg.roamingCountryName}</ui:define>
+								<h:selectOneMenu id="crCountrySelOne_2"
+									value="#{commercialKPIReportService.selectedCountry}">
+									<s:selectItems
+										value="#{commercialKPIReportService.countryList}"
+										noSelectionLabel="All" var="country"
+										label="#{country.countryName}" />
+									<f:converter converterId="roamingEntityConverter" />
+								</h:selectOneMenu>
+							</s:decorate>
+							<h:commandButton id="btnRep" value="Get Report"
+								action="#{commercialKPIReportService.retrieveCommercialReport}" />
+						</h:panelGrid>
+					</rich:panel>
+					<rich:panel header="KPI Commercial Report">
+						<h:panelGrid columns="1">
+							<h:commandButton id="btnKpiRep" value="Get KPI Report"
+								action="#{commercialKPIReportService.retrieveAgreementKPIReport}" />
+						</h:panelGrid>
+					</rich:panel>
+				</h:panelGrid>
+
+
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

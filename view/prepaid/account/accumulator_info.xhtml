@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+
+	<rich:panel header="#{msg.accumulators}" styleClass="sectionPanel">
+		<rich:dataTable value="#{prepaidAccountService.account.accumulators}" var="item" rendered="#{prepaidAccountService.account != null &amp;&amp; prepaidAccountService.account.accumulators != null}">
+			<f:facet name="header">
+				<rich:columnGroup>								
+					<rich:column>
+						<h:outputText value="#{msg.id}"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.description}"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.startDate}"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.resetDate}"></h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.value}"></h:outputText>
+					</rich:column>								
+				</rich:columnGroup>
+			</f:facet>
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="#{item.id}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.description}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.startDate}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.resetDate}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.value}"/>
+				</rich:column>
+			</rich:columnGroup>
+		</rich:dataTable>
+	</rich:panel>
+</ui:composition>

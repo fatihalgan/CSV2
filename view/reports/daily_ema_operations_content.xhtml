@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<head>
+	<title>Daily Ema Report</title>
+	</head>
+	<body>
+	<table rules="all" border="1">
+		<caption>
+		<h3>DAILY EMA FROM CUSTOMER SINGLE VIEW</h3>
+		</caption>
+		<tbody>
+			<tr>
+				<th colspan="9" align="left">
+				<h4>Date Of Report: <h:outputText
+					value="#{reportingService.startDate}">
+					<f:convertDateTime type="date" dateStyle="medium" timeZone="GMT+2"/>
+				</h:outputText></h4>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="9"></th>
+			</tr>
+			<tr>
+				<th>
+				<h4>User</h4>
+				</th>
+				<th>
+				<h4>MSISDN</h4>
+				</th>
+				<th>
+				<h4>Operation</h4>
+				</th>
+				<th>
+				<h4>Remark</h4>
+				</th>
+				<th>
+				<h4>Reason</h4>
+				</th>
+				<th>
+				<h4>Ip Address</h4>
+				</th>
+				<th>
+				<h4>Forward</h4>
+				</th>
+			</tr>
+			<c:set var="blankVar" value=""></c:set>
+			<c:forEach items="#{reportingService.emaOperations}" var="entry">
+				<tr>
+					<td><h:outputText value="#{entry.owningUser.fullName}"></h:outputText></td>
+					<td>${'-'}${entry.msisdn}${'-'}</td>
+					<td><h:outputText value="#{entry.operationType}"></h:outputText></td>
+					<td><h:outputText value="#{entry.remark}"></h:outputText></td>
+					<td><h:outputText value="#{entry.reason}"></h:outputText></td>
+					<td><h:outputText value="#{entry.ipAddress}"></h:outputText></td>
+					<td><h:outputText value="#{entry.forwardMsisdn}"></h:outputText></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	</body>
+</ui:composition>

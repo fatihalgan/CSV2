@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="csv.prepaid.domain.history">
+	<class name="Account" mutable="false">
+		<id name="id" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="msisdn" type="string"/>
+		<property name="subscriberId" type="long"/>
+		<property name="subscriberType" type="string"/>
+		<property name="sdpCreationTime" type="date"/>
+		<property name="sdpRemovalTime" type="date"/>
+		<property name="allocationEndTime" type="date"/>
+		<property name="activationDate" type="date"/>
+		<loader query-ref="loadDWSAccount"/>
+	</class>
+	<class name="AccountEvent" mutable="false">
+		<id name="eventId" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="originTimestamp" type="timestamp"/>
+		<property name="utcTimestamp" type="timestamp"/>
+		<property name="originDrId" type="string"/>
+		<property name="originNodeId" type="string"/>
+		<property name="originTransactionId" type="string"/>
+		<property name="balanceBefore" type="float"/>
+		<property name="balanceAfter" type="float"/>
+		<loader query-ref="loadDWSAccountEvents"/>
+	</class>
+	<class name="CashAccountChangeInfo" mutable="false">
+		<composite-id>
+			<key-property name="accountEventId"/>
+			<key-property name="cashAccountId"/>
+		</composite-id>	
+		<property name="amount"/>
+		<property name="balanceBefore"/>
+		<property name="balanceAfter"/>
+		<loader query-ref="loadCashAccountChanges"/>
+	</class>
+	<class name="LifeCycleChangeInfo" mutable="false">
+		<composite-id>
+			<key-property name="accountEventId"/>
+			<key-property name="eventName"/>
+		</composite-id>
+		<property name="eventValueBefore"/>
+		<property name="eventValueAfter"/>
+		<loader query-ref="loadLifeCycleInfoChanges"/>
+	</class>
+	<class name="UsageEvent" mutable="false">
+		<id name="eventId" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="utcTimestamp" type="timestamp"/>
+		<property name="originTimestamp" type="timestamp"/>
+		<property name="balanceBefore" type="float"/>
+		<property name="balanceAfter" type="float"/>
+		<property name="teleServiceName" type="string"/>
+		<property name="serviceProviderId" type="string"/>
+		<property name="usageAmount" type="float"/>
+		<property name="calledNumber" type="string"/>
+		<property name="calledCountry" type="string"/>
+		<property name="duration" type="integer"/>
+		<property name="dedicatedAccountId" type="integer"/>
+		<property name="dedicatedAccountBeforeCall" type="float"/>
+		<property name="dedicatedAccountAfterCall" type="float"/>
+		<property name="trafficDirection" type="string"/>
+		<property name="categoryName" type="string"/>
+		<property name="locationNumber" type="string"/>
+		<loader query-ref="loadDWSUsageEvents"/>
+	</class>
+	<class name="FaFEntry" mutable="false">
+		<id name="accountEventID" type="long">
+			<generator class="assigned"/>
+		</id>
+		<property name="accountId" type="long"/>
+		<property name="fafNumber" type="string"/>
+		<property name="subscriberID" type="long"/>
+		<property name="creationTime" type="timestamp"/>
+	</class>
+	<sql-query name="loadDWSAccount">
+		<return alias="acct" class="Account" lock-mode="read"/>
+		SELECT 
+			AMLV.MSISDN AS {acct.msisdn}, 
+			AMLV.ACCOUNT_ID AS {acct.id}, 
+			AMLV.SUBSCRIBER_ID AS {acct.subscriberId}, 
+			AMLV.SUBSCRIBER_TYPE AS {acct.subscriberType}, 
+			AMLV.SDP_CREATION_TIME_ORIGINAL AS {acct.sdpCreationTime}, 
+			AMLV.SDP_REMOVAL_TIME_ORIGINAL AS {acct.sdpRemovalTime}, 
+			AMLV.ALLOCATION_END_TIME_UTC AS {acct.allocationEndTime},
+			ALCE.UTC_TIMESTAMP as {acct.activationDate}
+			FROM AHR_MSISDN_LIST_VIEW AMLV, 
+			account_life_cycle_events ALCE 
+			WHERE AMLV.MSISDN = ? and 
+			ALCE.ACCOUNT_ID = AMLV.ACCOUNT_ID 
+			and ALCE.lc_event_type_id= 1 and 
+			ALCE.event_value_after= 'ACTIVATED' 
+			ORDER BY AMLV.ALLOCATION_END_TIME_UTC DESC
+	</sql-query>
+	<sql-query name="loadDWSAccountEvents">
+		<return alias="evt" class="AccountEvent" lock-mode="read"/>
+		SELECT SDP.ACCOUNT_EVENT_ID AS {evt.eventId}, 
+        SDP.UTC_TIMESTAMP AS {evt.utcTimestamp},
+		SDP.ORIGINAL_DR_ID AS {evt.originDrId},
+		SDP.ORIGINAL_NODE_ID AS {evt.originNodeId},
+		SDP.ORIGINAL_TIMESTAMP AS {evt.originTimestamp},
+		SDP.ORIGINAL_TRANSACTION_ID AS {evt.originTransactionId},
+        AB.BALANCE_BEFORE_EVENT AS {evt.balanceBefore},
+        AB.BALANCE_AFTER_EVENT AS {evt.balanceAfter}
+        FROM 
+		SDP_ACCOUNT_EVENTS SDP, (SELECT * FROM ACC_ACCOUNT_BALANCES
+		WHERE CASH_ACCOUNT_ID = 0) AB
+		WHERE
+		sdp.account_event_id = ab.account_event_id(+) and
+		sdp.subscriber_id=? and sdp.UTC_TIMESTAMP &gt;= ? and TRUNC(sdp.UTC_TIMESTAMP) &lt;= ? 
+		order by sdp.UTC_TIMESTAMP desc 
+	</sql-query>
+	<sql-query name="loadCashAccountChanges">
+		<return alias="ca" class="CashAccountChangeInfo" lock-mode="read"/>
+		SELECT
+		SJE.ACCOUNT_EVENT_ID AS {ca.accountEventId},
+		SJE.CASH_ACCOUNT_ID AS {ca.cashAccountId},
+		SJE.AMOUNT AS {ca.amount}, 
+		AB.BALANCE_BEFORE_EVENT AS {ca.balanceBefore}, 
+		AB.BALANCE_AFTER_EVENT AS {ca.balanceAfter}
+    	FROM
+    	SDP_JOURNAL_ENTRIES SJE, ACC_ACCOUNT_BALANCES AB 
+    	WHERE 
+    	SJE.ACCOUNT_EVENT_ID = ?
+    	AND AB.ACCOUNT_EVENT_ID = SJE.ACCOUNT_EVENT_ID 
+    	AND AB.CASH_ACCOUNT_ID = SJE.CASH_ACCOUNT_ID
+	</sql-query>
+	<sql-query name="loadLifeCycleInfoChanges">
+		<return alias="lc" class="LifeCycleChangeInfo" lock-mode="read"/>
+		SELECT 
+		ALCE.ACCOUNT_EVENT_ID AS {lc.accountEventId},
+		LCET.LC_EVENT_NAME AS {lc.eventName}, 
+		ALCE.EVENT_VALUE_BEFORE AS {lc.eventValueBefore}, 
+		ALCE.EVENT_VALUE_AFTER AS {lc.eventValueAfter}
+		FROM ACCOUNT_LIFE_CYCLE_EVENTS ALCE, 
+		LIFE_CYCLE_EVENT_TYPES LCET 
+		WHERE ALCE.ACCOUNT_EVENT_ID=? 
+		AND ALCE.LC_EVENT_TYPE_ID = LCET.LC_EVENT_TYPE_ID
+		UNION ALL
+		SELECT
+		SLCE.ACCOUNT_EVENT_ID AS {lc.accountEventId},
+		LCET.LC_EVENT_NAME AS {lc.eventName},
+		SLCE.EVENT_VALUE_BEFORE AS {lc.eventValueBefore},
+		SLCE.EVENT_VALUE_AFTER AS {lc.eventValueAfter}
+		FROM SUBSCRIBER_LIFE_CYCLE_EVENTS SLCE, LIFE_CYCLE_EVENT_TYPES LCET
+		WHERE SLCE.ACCOUNT_EVENT_ID=?
+		AND SLCE.LC_EVENT_TYPE_ID = LCET.LC_EVENT_TYPE_ID
+	</sql-query>
+	<sql-query name="loadDWSUsageEvents">
+		<return alias="evt" class="UsageEvent" lock-mode="read"/>
+			SELECT 
+			USAGE_EVENT_ID AS {evt.eventId},
+			UTC_TIMESTAMP AS {evt.utcTimestamp},
+			ORIGINAL_TIMESTAMP AS {evt.originTimestamp},
+			MAIN_ACC_BEF_CALL AS {evt.balanceBefore},
+			MAIN_ACC_AFT_CALL AS {evt.balanceAfter},
+			TELE_SERVICE_NAME AS {evt.teleServiceName},
+			SERVICE_PROVIDER_ID  AS {evt.serviceProviderId},
+			USAGE_AMOUNT AS {evt.usageAmount},
+			CALLED_NUMBER AS {evt.calledNumber},
+			CALLED_COUNTRY AS {evt.calledCountry},
+			DURATION AS {evt.duration},
+			DA_ACCOUNT_ID AS {evt.dedicatedAccountId},
+			DED_ACC_BEF_CALL AS {evt.dedicatedAccountBeforeCall},
+			DED_ACC_AFT_CALL AS {evt.dedicatedAccountAfterCall},
+			TRAFFIC_DIRECTION AS {evt.trafficDirection},
+			CH_CATEGORY_NAME AS {evt.categoryName},
+			LOCATION_NUMBER AS {evt.locationNumber} 
+			FROM AHR_USAGE_VIEW2
+			WHERE ACCOUNT_ID=? and TIME_HOUR_ID &gt;= ? and 
+			TIME_HOUR_ID  &lt;= ? order by UTC_TIMESTAMP desc
+	</sql-query>
+	<sql-query name="loadFaFHistory">
+		<return alias="faf" class="FaFEntry" lock-mode="read"/>
+			SELECT 
+			ACCOUNT_EVENT_ID as {faf.accountEventID},
+			ACCOUNT_ID as {faf.accountId},
+			FAF_NUMBER as {faf.fafNumber},
+			SUBSCRIBER_ID as {faf.subscriberID},
+			UTC_TIMESTAMP as {faf.creationTime}
+			FROM FAF_ENTRIES
+			WHERE SUBSCRIBER_ID=? and UTC_TIMESTAMP &gt;= ?
+			and UTC_TIMESTAMP &lt;= ? order by UTC_TIMESTAMP desc
+	</sql-query>
+</hibernate-mapping>

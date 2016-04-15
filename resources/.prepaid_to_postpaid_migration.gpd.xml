@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="PrepaidToPostpaidMigration" width="807" height="570">
+  <node name="Request Migration" x="69" y="45" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Passed Risk Analysis?" x="363" y="146" width="168" height="36">
+    <edge>
+      <label x="-45" y="-6"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Perform Risk Analysis" x="21" y="146" width="229" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Collect Payment For New Rate Plan" x="18" y="345" width="233" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Create Contract" x="68" y="242" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Create Subscriber As Postpaid" x="328" y="429" width="211" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Delete From Prepaid Network" x="337" y="241" width="218" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Insert Fee Into BSCS" x="327" y="533" width="213" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Create Service" x="367" y="344" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="Rejected" x="381" y="45" width="132" height="36"/>
+  <node name="Finish" x="674" y="533" width="132" height="36"/>
+</root-container>

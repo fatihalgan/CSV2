@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.blackberryPrepaid}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel styleClass="sectionPanel" header="#{msg.getAccountInfo}">
+			<h:panelGrid columns="1">
+			<s:decorate template="date_interval.xhtml">
+				<h:panelGroup>
+					<a:commandButton id="btnAccountInfo" action="#{bb4pCustomerCareService.retrieveAccountInfo}" value="Get Account Info" 
+						reRender="bb4pPnl" onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Account Info'; this.disabled=false"/>
+					<rich:spacer width="5"/>
+					<a:commandButton id="btnAccountHistory" action="#{bb4pCustomerCareService.retrieveTicketsHistory}" value="Retrieve Tickets History" 
+						reRender="bb4pPnl" onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Retrieve Tickets History'; this.disabled=false"/>
+					<rich:spacer width="5"/>
+					<a:commandButton id="btnPendingReservations" action="#{bb4pCustomerCareService.retrievePendingReservations}" value="Show Pending Reservations" 
+					   reRender="bb4pPnl" onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Show Pending Reservations'; this.disabled=false"/>
+				</h:panelGroup>
+			</s:decorate>	
+			</h:panelGrid>
+		</rich:panel>
+		<h:form>
+			<a:outputPanel id="bb4pPnl">
+			<rich:tabPanel switchType="client">
+				<rich:tab label="#{msg.activateAccount}" rendered="#{bb4pCustomerCareService.accountInfo == null || bb4pCustomerCareService.accountInfo.status.label != 'Active'}" immediate="true">
+					<ui:include src="activate_account.xhtml" />
+				</rich:tab>
+				<rich:tab label="#{msg.accountInfo}" rendered="#{bb4pCustomerCareService.accountInfo != null}" immediate="true">
+					<ui:include src="account_info.xhtml" />	
+				</rich:tab>
+				<rich:tab label="#{msg.accountHistory}" rendered="#{not empty bb4pCustomerCareService.ticketsHistory}" immediate="true">
+					<ui:include src="tickets_history.xhtml" />
+				</rich:tab>
+				<rich:tab label="#{msg.pendingReservations}" rendered="#{not empty bb4pCustomerCareService.pendingReservations}" immediate="true">
+					<ui:include src="pending_reservations.xhtml" />			
+				</rich:tab>
+			</rich:tabPanel>
+			</a:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

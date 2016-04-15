@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+		<head>
+		<title>Daily Adjustments Report</title>
+		</head>
+		<body>
+		<table rules="all" border="1">
+			<caption>
+				<h3>Complaint List</h3>
+			</caption>
+			<tbody>
+				<tr>
+					<th><h4>Complaint ID</h4></th>
+					<th><h4>Subscription Type</h4></th>
+					<th><h4>Created By</h4></th>
+					<th><h4>Assigned To</h4></th>
+					<th><h4>Opening Date</h4></th>
+					<th><h4>Subscriber Number</h4></th>
+					<th><h4>Alternative Number</h4></th>
+					<th><h4>Status</h4></th>
+					<th><h4>Location</h4></th>
+					<th><h4>Segment</h4></th>
+					<th><h4>Description</h4></th>
+				</tr>
+				<c:forEach items="#{openComplaintAction.openComplaintList}" var="item">
+					<tr>
+						<td><h:outputText value="#{item.complaintId}"/></td>
+						<td><h:outputText value="#{item.subscriptionType}"/></td>
+						<td><h:outputText value="#{item.enteredBy}"/></td>
+						<td><h:outputText value="#{item.assignedTo}"/></td>
+						<td><h:outputText value="#{item.openingDate}">
+								<f:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>	
+							</h:outputText>
+						</td>
+						<td>#{'-'}#{item.customerMsisdn}#{'-'}</td>
+						<td>#{'-'}#{item.customerContactNumber}#{'-'}</td>
+						<td><h:outputText value="#{item.status}" /> </td>
+						<td>#{item.province}#{' / '}#{item.district}</td>
+						<td><h:outputText value="#{item.segment.description}" /> </td>
+						<td>
+							<div><h:outputText value="#{item.description}" escape="false"/> </div>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		</body>
+</ui:composition>

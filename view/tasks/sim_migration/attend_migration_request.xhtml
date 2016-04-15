@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="../../templateNoCustomer.xhtml">
+				
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.attendMigrationTask}: #{taskInstance.processInstance.processDefinition.name}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.migrationDetails}" styleClass="sectionPanel">
+			<h:panelGrid columns="2">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.requestID}</ui:define>
+					<h:outputText value="#{postpaidMigrationService.simMigrationState.requestId}" />			
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.migrationType}</ui:define>
+					<h:outputText value="#{postpaidMigrationService.simMigrationState.migrationType}" />			
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.msisdn}</ui:define>
+					<h:outputText value="#{postpaidMigrationService.simMigrationState.msisdn}" />			
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.currentImsi}</ui:define>
+					<h:outputText value="#{postpaidMigrationService.simMigrationState.imsi}" />			
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.currentSim}</ui:define>
+					<h:outputText value="#{postpaidMigrationService.simMigrationState.sim}" />			
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.passedRiskAnalysis}</ui:define>
+					<h:outputText value="#{postpaidMigrationService.simMigrationState.passedRiskAnalysis}" />			
+				</s:decorate>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel header="#{msg.performRiskAnalysis}" styleClass="sectionPanel" rendered="#{taskInstance.name == 'Asses Customer Risk'}">
+			<h:form>
+				<div class="actionButtons">
+					<h:commandButton action="#{postpaidMigrationService.passRiskAnalysis}" value="#{msg.confirmRiskAnalysis}" />
+					<rich:spacer width="10"/>
+					<h:commandButton action="#{postpaidMigrationService.rejectRiskAnalysis}" value="#{msg.rejectRiskAnalysis}" />
+				</div>
+			</h:form>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

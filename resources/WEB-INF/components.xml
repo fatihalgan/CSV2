@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components xmlns="http://jboss.com/products/seam/components"
+	xmlns:core="http://jboss.com/products/seam/core" 
+	xmlns:persistence="http://jboss.com/products/seam/persistence"
+	xmlns:security="http://jboss.com/products/seam/security"
+	xmlns:transaction="http://jboss.com/products/seam/transaction"
+	xmlns:mail="http://jboss.com/products/seam/mail" xmlns:spring="http://jboss.com/products/seam/spring"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="http://jboss.com/products/seam/ui"
+	xmlns:async="http://jboss.com/products/seam/async" xmlns:document="http://jboss.com/products/seam/document"
+	xmlns:excel="http://jboss.com/products/seam/excel" xmlns:bpm="http://jboss.com/products/seam/bpm"
+	xmlns:web="http://jboss.com/products/seam/web" xmlns:int="http://jboss.com/products/seam/international"
+	xsi:schemaLocation="http://jboss.com/products/seam/core http://jboss.com/products/seam/core-2.2.xsd 
+                 http://jboss.com/products/seam/persistence http://jboss.com/products/seam/persistence-2.2.xsd
+                 http://jboss.com/products/seam/security http://jboss.com/products/seam/security-2.2.xsd
+                 http://jboss.com/products/seam/transaction http://jboss.com/products/seam/transaction-2.2.xsd
+                 http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.2.xsd
+                 http://jboss.com/products/seam/ui http://jboss.com/products/seam/ui-2.2.xsd
+                 http://jboss.com/products/seam/mail http://jboss.com/products/seam/mail-2.2.xsd
+                 http://jboss.com/products/seam/spring http://jboss.com/products/seam/spring-2.2.xsd
+                 http://jboss.com/products/seam/async http://jboss.com/products/seam/async-2.2.xsd
+                 http://jboss.com/products/seam/document http://jboss.com/products/seam/document-2.2.xsd
+                 http://jboss.com/products/seam/excel http://jboss.com/products/seam/excel-2.2.xsd
+                 http://jboss.com/products/seam/bpm http://jboss.com/products/seam/bpm-2.2.xsd
+                 http://jboss.com/products/seam/web http://jboss.com/products/seam/web-2.2.xsd
+                 http://jboss.com/products/seam/international http://jboss.com/products/seam/international-2.2.xsd">
+
+	<core:init jndi-pattern="CSV/#{ejbName}/local" debug="false" />
+	<core:manager concurrent-request-timeout="5000"
+		conversation-timeout="700000" conversation-id-parameter="cid"
+		parent-conversation-id-parameter="pid" />
+
+	<web:hot-deploy-filter installed="false" disabled="true" url-pattern="*.seam"/>
+	<spring:context-loader config-locations="/WEB-INF/csvApplicationContext.xml" />
+
+	<persistence:managed-persistence-context
+		name="csvEntityManager" auto-create="true" persistence-unit-jndi-name="java:/csvEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="simRegEntityManager" auto-create="true" persistence-unit-jndi-name="java:/simRegEntityManagerFactory"/>
+	<persistence:managed-persistence-context
+		name="dwsEntityManager" auto-create="true" persistence-unit-jndi-name="java:/dwsEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="cdrliveEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/cdrliveEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="bscsEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/bscsEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="dbxdbEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/dbxdbEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="pmEntityManager" auto-create="true" persistence-unit-jndi-name="java:/pmEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="loyaltyEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/loyaltyEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="drEntityManager" auto-create="true" persistence-unit-jndi-name="java:/drEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="netmovelEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/netmovelEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="sgsnStatsEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/sgsnStatsEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="tomalaEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/tomalaEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="jbpmEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/jbpmEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="roamingEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/roamingEntityManagerFactory" />
+	<persistence:managed-persistence-context
+		name="voucherEntityManager" auto-create="true"
+		persistence-unit-jndi-name="java:/voucherEntityManagerFactory" />
+	<factory name="csvHibernateSession" scope="stateless"
+		auto-create="true" value="#{csvEntityManager.delegate}" />
+	<factory name="simRegHibernateSession" scope="stateless"
+		auto-create="true" value="#{simRegEntityManager.delegate}"/>
+	<factory name="dwsHibernateSession" scope="stateless"
+		auto-create="true" value="#{dwsEntityManager.delegate}" />
+	<factory name="cdrliveHibernateSession" scope="stateless"
+		auto-create="true" value="#{cdrliveEntityManager.delegate}" />
+	<factory name="bscsHibernateSession" scope="stateless"
+		auto-create="true" value="#{bscsEntityManager.delegate}" />
+	<factory name="dbxdbHibernateSession" scope="stateless"
+		auto-create="true" value="#{dbxdbEntityManager.delegate}" />
+	<factory name="pmHibernateSession" scope="stateless"
+		auto-create="true" value="#{pmEntityManager.delegate}" />
+	<factory name="loyaltyHibernateSession" scope="stateless"
+		auto-create="true" value="#{loyaltyEntityManager.delegate}" />
+	<factory name="drHibernateSession" scope="stateless"
+		auto-create="true" value="#{drEntityManager.delegate}" />
+	<factory name="netmovelHibernateSession" scope="stateless"
+		auto-create="true" value="#{netmovelEntityManager.delegate}" />
+	<factory name="sgsnStatsHibernateSession" scope="stateless"
+		auto-create="true" value="#{sgsnStatsEntityManager.delegate}" />
+	<factory name="tomalaHibernateSession" scope="stateless"
+		auto-create="true" value="#{tomalaEntityManager.delegate}" />
+	<factory name="roamingHibernateSession" scope="stateless"
+		auto-create="true" value="#{roamingEntityManager.delegate}" />
+	<factory name="voucherHibernateSession" scope="stateless"
+		auto-create="true" value="#{voucherEntityManager.delegate}"/>
+	<factory name="jbpmHibernateSession" scope="stateless"
+		auto-create="true" value="#{jbpmEntityManager.delegate}"/>
+	<transaction:ejb-transaction />
+	
+	<ui:jpa-entity-loader name="csvEntityLoader"
+		entity-manager="#{csvEntityManager}" />
+	<ui:entity-converter name="csvEntityConverter"
+		entity-loader="#{csvEntityLoader}" />
+	<ui:jpa-entity-loader name="simRegEntityLoader"
+		entity-manager="#{simRegEntityManager}"/>
+	<ui:entity-converter name="simRegEntityConverter"
+		entity-loader="#{simRegEntityLoader}"/>
+	<ui:jpa-entity-loader name="dwsEntityLoader"
+		entity-manager="#{dwsEntityManager}" />
+	<ui:entity-converter name="dwsEntityConverter"
+		entity-loader="#{dwsEntityLoader}" />
+	<ui:jpa-entity-loader name="bscsEntityLoader"
+		entity-manager="#{bscsEntityManager}" />
+	<ui:entity-converter name="bscsEntityConverter"
+		entity-loader="#{bscsEntityLoader}" />
+	<ui:jpa-entity-loader name="pmEntityLoader"
+		entity-manager="#{pmEntityManager}" />
+	<ui:entity-converter name="pmEntityConverter"
+		entity-loader="#{pmEntityLoader}" />
+	<ui:jpa-entity-loader name="loyaltyEntityLoader"
+		entity-manager="#{loyaltyEntityManager}" />
+	<ui:entity-converter name="loyaltyEntityConverter"
+		entity-loader="#{loyaltyEntityLoader}" />
+	<ui:jpa-entity-loader name="roamingEntityLoader"
+		entity-manager="#{roamingEntityManager}" />
+	<ui:entity-converter name="roamingEntityConverter"
+		entity-loader="#{roamingEntityLoader}" />
+	<ui:jpa-entity-loader name="jbpmEntityLoader"
+		entity-manager="#{jbpmEntityManager}"/>
+	<ui:entity-converter name="jbpmEntityConverter"
+		entity-loader="#{jbpmEntityLoader}"/>
+
+	<component name="bb4pGateway" auto-create="true"
+		class="csv.gateway.bb4p.BB4PGateway" scope="stateless">
+		<property name="username">CSVAdmin</property>
+		<property name="password">CSVAdmin</property>
+	</component>
+	<mail:mail-session debug="false" session-jndi-name="java:/Mail" />
+	<async:quartz-dispatcher />
+	<document:document-store use-extensions="true" />
+	
+	
+	<bpm:jbpm>
+		<bpm:process-definitions>
+			<!-- 
+			<value>complaint_management.jpdl.xml</value>
+			<value>corporate_complaint_management.jpdl.xml</value>
+			 -->
+			<!-- 
+			<value>technical_department_complaint_management.jpdl.xml</value>
+			<value>prepaid_to_postpaid_migration.jpdl.xml</value>
+			 -->
+		</bpm:process-definitions>
+		<bpm:pageflow-definitions>
+			<value>register_new_prepaid_customer.jpdl.xml</value>
+		</bpm:pageflow-definitions>
+	</bpm:jbpm>
+
+	<security:identity authenticate-method="#{authenticator.authenticate}" />
+
+	<int:locale-config default-locale="pt"
+		supported-locales="en pt" />
+
+	<core:resource-loader>
+		<core:bundle-names>
+			<value>MessageResources</value>
+		</core:bundle-names>
+	</core:resource-loader>
+
+	<factory name="complaintSegmentList" auto-create="true" method="#{complaintSegmentListAction.retrieveComplaintSegments}"/>
+	<factory name="continentList" auto-create="true" scope="CONVERSATION"
+		method="#{countryListAction.returnContinentList}" />
+	<factory name="operatorContactTypeList" auto-create="true" scope="CONVERSATION"
+		method="#{operatorContactListAction.returnContactTypeList}" />
+	<factory name="operatorCountryList" auto-create="true" scope="CONVERSATION"
+		method="#{operatorCountryListAction.returnCountryList}" />	
+</components>

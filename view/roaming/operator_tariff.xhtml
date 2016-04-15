@@ -1,0 +1,103 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="operatorTariffSelectionRegion">
+		<table>
+			<tr>
+				<td valign="top" rowspan="2"><rich:panel
+					header="Operator Tariff">
+					<h:form id="operatorTariffList">
+						<rich:dataTable id="tblOperatorTariff"
+							value="#{operatorTariffListAction.operatorTariffList}" var="item"
+							rows="10">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column>
+										<h:outputText value="#{msg.roamingCountryName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.operatorName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.roamingServiceName}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="#{msg.roamingPrice}" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Edit" />
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.country.countryName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.operator.operatorName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.service.serviceName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.price}" />
+								</rich:column>
+
+								<rich:column>
+									<a:commandButton
+										action="#{operatorTariffListAction.editOperatorTariff(item)}"
+										value="Edit"
+										reRender="operatorTariffSelectionRegion,OpTrfServiceSelOne_1" />
+								</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+								<rich:datascroller for="tblOperatorTariff" maxPages="20"
+									boundaryControls="auto" fastControls="auto" />
+							</f:facet>
+						</rich:dataTable>
+						<div class="actionButtons"><h:commandButton
+							id="btnNewOpTariff" value="Create New"
+							action="#{operatorTariffListAction.newOperatorTariff}" /></div>
+					</h:form>
+				</rich:panel></td>
+				<td><rich:panel header="#{msg.roamingEditOperatorTariff}"
+					rendered="#{operatorTariffListAction.selectedOperatorTariff != null}">
+					<h:form id="frmEditOperatorTariff">
+						<h:panelGrid columns="2">
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingServiceName}</ui:define>
+								<h:selectOneMenu id="OpTrfServiceSelOne_1"
+									value="#{operatorTariffListAction.selectedOperatorTariff.service}">
+									<s:selectItems value="#{operatorTariffListAction.serviceList}"
+										var="ser" label="#{ser.serviceName}" />
+									<f:converter converterId="roamingEntityConverter" />
+								</h:selectOneMenu>
+							</s:decorate>
+							<s:decorate template="../edit.xhtml">
+								<ui:define name="label">#{msg.roamingPrice}</ui:define>
+								<h:inputText
+									value="#{operatorTariffListAction.selectedOperatorTariff.price}"
+									required="false" />
+							</s:decorate>
+						</h:panelGrid>
+						<div class="actionButtons"><h:commandButton
+							id="btnSaveOpTrf" value="Save"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail Save')}"
+							action="#{operatorTariffListAction.saveOperatorTariff}"
+							reRender="operatorFrequencySelectionRegion" /> <h:commandButton
+							id="btnDeleteOpFrq" value="Delete Operator Frequency"
+							rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail Delete')}"
+							action="#{operatorTariffListAction.deleteOperatorTariff}"
+							reRender="operatorTariffSelectionRegion" /></div>
+					</h:form>
+				</rich:panel></td>
+			</tr>
+		</table>
+	</h:panelGroup>
+</ui:composition>

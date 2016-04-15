@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<head>
+		<title>Invoice View Usage Report</title>
+	</head>
+	<body>
+	<table rules="all" border="1">
+		<caption>
+		<h3>INVOICE VIEW USAGE REPORT</h3>
+		</caption>
+		<tbody>
+			<tr>
+				<th colspan="2" align="left">
+				<h4>Date Of Report: <h:outputText
+					value="#{reportingService.startDate}">
+					<f:convertDateTime type="date" dateStyle="medium" timeZone="GMT+2"/>
+				</h:outputText></h4>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="5"></th>
+			</tr>
+			<tr>
+				<th>
+				<h4>User</h4>
+				</th>
+				<th>
+				<h4>MSISDN</h4>
+				</th>
+				<th>
+				<h4>Customer ID</h4>
+				</th>
+				<th>
+				<h4>Contract ID</h4>
+				</th>
+				<th>
+				<h4>Time</h4>
+				</th>
+			</tr>
+			<c:forEach items="#{reportingService.postpaidInvoiceViewMap}" var="entry">
+				<c:forEach items="#{entry.value}" var="invoiceView">
+					<tr>
+						<td><h:outputText value="#{entry.key.fullName}" /></td>
+						<td>${'-'} ${invoiceView.msisdn} ${'-'}</td>
+						<td><h:outputText value="#{callView.customerId}" /></td>
+						<td><h:outputText value="#{invoiceView.contractId}" /></td>
+						<td><h:outputText value="#{invoiceView.date}">
+							<f:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+						</h:outputText></td>
+					</tr>
+				</c:forEach>
+			</c:forEach>
+		</tbody>
+	</table>
+	</body>
+</ui:composition>

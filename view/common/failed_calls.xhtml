@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.viewFailedCalls}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<s:decorate template="./date_interval.xhtml">
+			<h:commandButton id="btnFailedCalls" action="#{commonOperationsService.retrieveFailedCalls}" value="#{msg.viewFailedCalls}" />
+		</s:decorate>
+		<h:form>
+		<rich:panel styleClass="sectionPanel">
+			<rich:dataTable id="failedCallsRecordsList" rows="13" 
+			columnClasses="aligncentercolumn,aligncentercolumn,alignrightcolumn,alignrightcolumn,alignrightcolumn"
+			onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
+			onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+			var="item" value="#{commonOperationsService.failedCalls}">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{msg.type}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.callingNumber}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.calledNumber}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.dateCharging}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.chargeableDuration}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.siteName}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.code}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.tsc}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{msg.description}" />
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="#{item.tsc}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.sourceMsisdn}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.destMsisdn}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.chargingDate}">
+						<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"  timeZone="GMT+02:00"/>
+					</h:outputText>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.chargeableDuration}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.siteName}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.code}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.tsc}" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.description}"/>
+				</rich:column>
+			</rich:columnGroup>
+			<f:facet name="footer">
+				<rich:datascroller for="failedCallsRecordsList" maxPages="20"
+				boundaryControls="auto" fastControls="auto" />
+			</f:facet>
+			</rich:dataTable>
+		</rich:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

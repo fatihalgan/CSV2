@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.initialComplaintEntry}" styleClass="sectionPanel">
+			<h:panelGrid columns="2">
+				<h:panelGrid columns="2">
+					<h:form>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.msisdn}</ui:define>
+							<h:inputText value="#{currentServedCustomer.msisdn}" size="9" maxlength="9" required="true"/>
+						</s:decorate>
+						<h:commandButton value="#{msg.singleCustomer}" action="#{currentServedCustomer.newCorporateCustomer}"/>	
+					</h:form>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<h:form>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.customerCode}</ui:define>
+							<h:inputText value="#{currentServedCustomer.customerCode}" size="20" required="true"/>
+						</s:decorate>
+						<h:commandButton value="#{msg.companyWide}" action="#{currentServedCustomer.newCorporateCustomerCode}"/>
+					</h:form>
+				</h:panelGrid>
+			</h:panelGrid>
+		</rich:panel>
+		
+		<rich:panel styleClass="sectionPanel" header="#{msg.enterComplaintDetails}" rendered="#{currentServedCustomer.customerValid}">
+			<h:form>
+				<h:panelGrid columns="2">
+					<h:panelGroup>
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">#{msg.companyName}</ui:define>
+							<h:outputText value="#{complaintManagementService.complaintOwner.company.companyName}" />
+						</s:decorate>
+						<s:button value="#{msg.updateCompanyInfo}" view="/corporate/edit_complaint_owner_company.xhtml" />
+					</h:panelGroup>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.msisdn}</ui:define>
+						<h:inputText value="#{complaintManagementService.complaintOwner.msisdn}" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.contactNumber}</ui:define>
+						<h:inputText value="#{complaintManagementService.complaintOwner.contactNumber}" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.firstName}</ui:define>
+						<h:inputText value="#{complaintManagementService.complaintOwner.firstName}" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.lastName}</ui:define>
+						<h:inputText value="#{complaintManagementService.complaintOwner.lastName}" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.subscriptionType}</ui:define>
+						<h:selectOneMenu value="#{complaintManagementService.complaintOwner.subscriptionType}">
+							<s:selectItems value="#{allSubscriptionTypes}" var="subscriptionType" label="#{subscriptionType.label}"/>
+							<s:convertEnum/>
+						</h:selectOneMenu>
+					</s:decorate>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.segment}</ui:define>
+						<h:selectOneMenu value="#{complaintManagementService.newComplaint.segment}">
+							<s:selectItems var="item" value="#{complaintSegmentList}" label="#{item.description}"/>
+							<f:converter converterId="csvEntityConverter"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.province}</ui:define>
+						<h:selectOneMenu value="#{complaintLocality.province}">
+							<a:support event="onchange" reRender="districts" ajaxSingle="true"/>
+							<s:selectItems var="item" value="#{complaintLocality.provinces}" label="#{item.name}"/>
+							<f:converter converterId="csvEntityConverter"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.district}</ui:define>
+						<h:selectOneMenu value="#{complaintLocality.district}" id="districts">
+							<s:selectItems var="item" value="#{complaintLocality.districts}" label="#{item.name}"/>
+							<f:converter converterId="csvEntityConverter"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.dateOfOccurence}</ui:define>
+						<rich:calendar direction="bottom-right" value="#{complaintLocality.dateOfOccurence}" datePattern="dd/MM/yyyy HH:mm" required="true"/>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">Complaint Status</ui:define>
+						<h:selectOneMenu value="#{complaintManagementService.newComplaint.status}">
+							<s:convertEnum/>
+							<s:selectItems value="#{allComplaintStatuses}" var="status" label="#{status.label}"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.destinationNumber}</ui:define>
+						<h:inputText value="#{complaintManagementService.newComplaint.destinationNumber}" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.displayInformation}</ui:define>
+						<h:inputTextarea value="#{complaintManagementService.newComplaint.displayInfo}" rows="6" cols="40"/>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.description}</ui:define>
+						<rich:editor value="#{complaintManagementService.newComplaint.description}" theme="advanced">
+							<f:param name="width" value="450"/>
+							<f:param name="height" value="100"/>
+						</rich:editor>
+					</s:decorate>	
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton action="#{complaintManagementService.rememberInitialComplaintEntry}" value="#{msg.rememberUntilCustomerSessionEnds}"/>
+					<h:commandButton action="#{complaintManagementService.saveComplaintEndCustomerSession}"  value="#{msg.saveComplaintWithoutStartingSession}" />
+				</div>
+			</h:form>
+		</rich:panel>
+		
+		<ui:include src="/complaints/show_complaints_history.xhtml" />
+		
+		<ui:include src="/complaints/show_complaint_details.xhtml" />
+		
+		<ui:include src="/tasks/complaint_iteration/complaint_iterations_history.xhtml" />
+	
+	</ui:define>
+</ui:composition>

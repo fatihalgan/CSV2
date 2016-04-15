@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+                
+	<rich:modalPanel id="complaintDetailsMp" width="600" height="420" zindex="2000" style="overflow:auto" domElementAttachment="body">
+		<f:facet name="header">#{msg.attendanceHistory}</f:facet>
+		<f:facet name="controls">
+			<a href="#" onclick="Richfaces.hideModalPanel('complaintDetailsMp')">X</a>
+		</f:facet>
+		<a:outputPanel id="complaintDetailPanel" layout="inline">
+			<rich:panel header="#{openComplaintAction.currentViewedComplaint.customerMsisdn}">
+			<h:panelGrid columns="1">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">Description</ui:define>
+					<h:outputText value="#{openComplaintAction.currentViewedComplaint.description}" escape="false"/>
+				</s:decorate>
+			</h:panelGrid>
+			</rich:panel>
+			<rich:dataGrid id="iterationHistoryGrid" value="#{openComplaintAction.currentViewedComplaint.iterations}" var="item"
+					columns="1" elements="50" first="0">
+					<rich:panel style="width:100%" >
+						<f:facet name="header">
+							<h:panelGroup layout="block">
+								<h:outputText value="#{item.enteredBy} - "/>
+								<h:outputText value="#{item.enteredOn} - ">
+									<s:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+								</h:outputText>
+								<h:outputText value="#{openComplaintAction.currentViewedComplaint.customerMsisdn}"/>
+							</h:panelGroup>
+						</f:facet>
+						<h:outputText value="#{item.comment}" escape="false"/>			
+					</rich:panel>
+				</rich:dataGrid>
+		</a:outputPanel>
+	</rich:modalPanel>              
+</ui:composition>

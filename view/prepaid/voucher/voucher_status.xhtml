@@ -1,0 +1,186 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">			
+		<center>
+			<h3>#{msg.voucher}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.searchCriteria}" styleClass="sectionPanel">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.voucherSerialNumber}</ui:define>
+						<h:inputText maxlength="15" size="20" required="true" value="#{voucherService.voucher.serialNumber}"
+							validatorMessage="Voucher Serial Number must be 15 digits, please enter correct value.">
+							<f:validateLength minimum="15" maximum="15"/>
+						</h:inputText>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton value="#{msg.findVoucherStatus}" action="#{voucherService.findVoucher}" />
+				</div>
+			</h:form>	
+		</rich:panel>
+		<rich:panel header="#{msg.voucherStatus}" rendered="#{voucherService.voucher.status != null}" styleClass="sectionPanel">
+			<h:panelGrid columns="4">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.serialNumber}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.serialNumber}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.agent}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.agent}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.batchId}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.batchId}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.currency}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.currency}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.expiryDate}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.expiryDate}">
+						<f:convertDateTime type="date" dateStyle="medium"/>
+					</h:inputText>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.operatorId}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.operatorId}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.timestamp}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.timestamp}">
+						<f:convertDateTime type="both" dateStyle="medium" timeStyle="medium" timeZone="GMT+2:00"/>
+					</h:inputText>
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.state}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.status.getLabel()}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.value}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.voucherValue}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.voucherGroup}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.voucherGroup}" />
+				</s:decorate>
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.subscriberNumber}</ui:define>
+					<h:inputText readonly="true" value="#{voucherService.voucher.subscriberNumber}" />
+				</s:decorate>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel header="#{msg.voucherHistory}" rendered="#{voucherService.voucherHistory.size() != 0}">
+			<rich:dataTable value="#{voucherService.voucherHistory}" var="item">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.user}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.serialNumber}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.operation}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.date}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.oldState}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.newState}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.msisdn}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.remark}" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.operator}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.serialNumber}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.operationType=='R'?'Refill':'Update State'}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.createdTime}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.strOldState}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.strNewState}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.msisdn}" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.remark}" />
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+		</rich:panel>
+		<rich:panel header="#{msg.makeVoucherRefill}" rendered="#{loggedInUser.hasPermissionFor('Refill Voucher') &amp;&amp; voucherService.voucher != null 
+			&amp;&amp; voucherService.voucher.canRefill()}">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.subscriberNumber}</ui:define>
+						<h:outputText value="#{voucherService.currentCustomer.msisdn}" />
+					</s:decorate>
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.reasonForRefill}</ui:define>
+						<h:inputTextarea value="#{voucherService.updateReason}" required="true"/>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton action="#{voucherService.refillVoucher}" value="Refill" />
+				</div>
+			</h:form>
+		</rich:panel>
+		
+		<rich:panel header="#{msg.updateVoucherState}" rendered="#{loggedInUser.hasPermissionFor('Update Voucher State') &amp;&amp; voucherService.voucher != null 
+			&amp;&amp; voucherService.voucher.canRefill()}">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../../display.xhtml">
+						<ui:define name="label">#{msg.currentState}</ui:define>
+						<h:outputText value="#{voucherService.voucher.status.label}" />
+					</s:decorate>
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.newState}</ui:define>
+						<h:selectOneMenu value="#{voucherService.newVoucherState}">
+							<s:convertEnum />
+							<s:selectItems value="#{allVoucherStateTransitions}" var="status" label="#{status.label}"/>
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.reasonForUpdate}</ui:define>
+						<h:inputTextarea value="#{voucherService.updateReason}" required="true"/>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<h:commandButton action="#{voucherService.updateVoucherState}" value="#{msg.updateVoucherState}" />
+				</div>
+			</h:form>		
+		</rich:panel>
+	</ui:define>			
+</ui:composition>

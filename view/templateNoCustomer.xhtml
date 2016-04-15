@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a="http://richfaces.org/a4j">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Customer Single View</title>
+<link href="#{facesContext.externalContext.requestContextPath}/css/mcel_csv.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<f:view>
+	<f:loadBundle basename="MessageResources" var="msg"/>
+	<div id="document">
+		<table>
+			<tr>
+				<td id="leftbar">
+					<div id="header">
+						<ui:include src="/header.xhtml"/>
+					</div>
+					<div id="greeting">
+						<ui:include src="/greeting.xhtml"/>
+					</div>
+					<div id="menubar">
+						<ui:include src="/menu.xhtml"/>
+					</div>
+				</td>
+				<td id="rightbar">
+					<div id="content">
+						<ui:insert name="content"/>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</f:view>
+</body>
+</html>

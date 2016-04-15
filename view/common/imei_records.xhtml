@@ -1,0 +1,60 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+				template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+	<center>
+		<h3>#{msg.findIMEIRecords}</h3>
+	</center>
+	<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+	<h:form>
+		<div class="actionButtons">
+			<h:commandButton action="#{commonOperationsService.retrieveIMEIRecords}" value="#{msg.findIMEIRecords}" />
+		</div>
+		<rich:panel styleClass="sectionPanel">
+			<rich:dataTable id="imeiRecordsList" rows="13"
+				columnClasses="aligncentercolumn,aligncentercolumn,alignrightcolumn,alignrightcolumn,alignrightcolumn"
+				onRowMouseOver="this.style.backgroundColor='#F1F1F1'"
+				onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+				var="item" value="#{commonOperationsService.imeiRecords}">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.imei}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.firstCDRDate}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.lastCDRDate}" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.imei}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.firstCDRDate}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"  timeZone="GMT+02:00"/>
+						</h:outputText>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.lastCDRDate}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"  timeZone="GMT+02:00"/>
+						</h:outputText>
+					</rich:column>
+				</rich:columnGroup>
+				<f:facet name="footer">
+					<rich:datascroller for="imeiRecordsList" maxPages="20" boundaryControls="auto" fastControls="auto" />
+				</f:facet>
+			</rich:dataTable>
+		</rich:panel>
+	</h:form>
+	</ui:define>
+</ui:composition>

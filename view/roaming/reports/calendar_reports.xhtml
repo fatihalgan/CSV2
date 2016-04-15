@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>Calendar Reports</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<rich:panel>
+			<h:form id="frmCalenderReport">
+				<h:panelGrid columns="1">
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">Report Type</ui:define>
+						<h:selectOneMenu value="#{calendarReportService.reportType}">
+							<f:selectItem itemLabel="Implementation Calendar" itemValue="1" />
+							<f:selectItem itemLabel="Implementation Calendar KPI"
+								itemValue="2" />
+							<f:selectItem itemLabel="Negotiation Calendar" itemValue="3" />
+							<f:selectItem itemLabel="Negotiation Calendar KPI" itemValue="4" />
+							<f:selectItem itemLabel="Comercial Launch Calendar KPI"
+								itemValue="5" />
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.roamingActive}</ui:define>
+						<h:selectOneMenu value="#{calendarReportService.isActive}">
+							<f:selectItem itemLabel="All" itemValue="All" />
+							<f:selectItem itemLabel="Active" itemValue="Active" />
+							<f:selectItem itemLabel="Passive" itemValue="Passive" />
+						</h:selectOneMenu>
+					</s:decorate>
+					<h:commandButton id="btnRep" value="Get Report"
+						action="#{calendarReportService.retrieveCalendarReport}" />
+				</h:panelGrid>
+			</h:form>
+		</rich:panel>
+
+	</ui:define>
+</ui:composition>

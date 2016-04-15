@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:rich="http://richfaces.org/rich"
+	  			xmlns:c="http://java.sun.com/jstl/core"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.finishOpenComplaint}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:tabPanel>
+			<rich:tab label="#{msg.myCurrentTask}" switchType="client">
+				<h:form>
+				<c:set var="task" value="#{taskInstance}" />
+				<rich:panel header="#{msg.myCurrentTask}" rendered="#{taskInstance != null}">
+					<s:decorate template="/tasks/complaint_management/complaint_details.xhtml" rendered="#{task.processInstance.processDefinition.name == 'ComplaintManagement'
+						or task.processInstance.processDefinition.name == 'CorporateComplaintManagement'}">
+					</s:decorate>
+				</rich:panel>
+				</h:form>
+			</rich:tab>
+			<rich:tab label="#{msg.delegateComplaint}" switchType="client">
+				<h:panelGrid columns="1">
+					<rich:panel header="#{msg.attachments}" styleClass="sectionPanel" style="height: 180px;">
+						<h:form>
+							<s:decorate template="../../edit.xhtml">
+								<ui:define name="label">#{msg.attachments}</ui:define>
+								<rich:fileUpload id="attachments" maxFilesQuantity="3" fileUploadListener="#{attendOpenComplaintTask.attachmentAdded}"
+									immediateUpload="false" allowFlash="false" listHeight="75px">
+				 					<a:support event="onuploadcomplete" reRender="attachments" ajaxSingle="true" limitToList="true"/>
+								</rich:fileUpload>
+							</s:decorate>
+						</h:form>
+					</rich:panel>
+					<rich:panel header="#{msg.delegateOpenComplaint}" styleClass="sectionPanel" rendered="#{openComplaint.phase.value == 'Help Desk'}">
+						<h:form>
+							<ui:include src="/tasks/complaint_iteration/delegate_complaint_form.xhtml"/>		
+						</h:form>
+					</rich:panel>
+					<rich:panel header="#{msg.delegateOpenComplaint}" styleClass="sectionPanel" rendered="#{openComplaint.phase.value == 'Outbound Support' or openComplaint.phase.value == 'Supervisor Feedback' or openComplaint.phase.value == 'Customer Feedback' or openComplaint.phase.value == 'Account Manager'}">
+						<h:form>
+							<ui:include src="/tasks/complaint_iteration/after_delegation_form.xhtml"/>		
+						</h:form>
+					</rich:panel>
+					<rich:panel header="#{msg.closeComplaint}" styleClass="sectionPanel" rendered="#{openComplaint.phase.value == 'Account Manager' or openComplaint.phase.value == 'Help Desk' or openComplaint.phase.value == 'Customer Feedback'}">
+						<h:form>
+							<ui:include src="/tasks/complaint_iteration/close_complaint_form.xhtml" />
+						</h:form>
+					</rich:panel>
+				</h:panelGrid>
+			</rich:tab>
+		</rich:tabPanel>
+		<ui:include src="/tasks/complaint_iteration/complaint_iterations_history.xhtml" />
+		<ui:include src="/tasks/complaint_management/complaint_attachments.xhtml" />
+		<ui:include src="/tasks/complaint_management/complaint_display_info.xhtml" />
+		<ui:include src="/tasks/complaint_management/complaint_status_remark.xhtml" />
+	</ui:define>			
+</ui:composition>

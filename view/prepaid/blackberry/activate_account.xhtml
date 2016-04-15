@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:rich="http://richfaces.org/rich"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+	  			xmlns:a="http://richfaces.org/a4j">
+	<rich:panel styleClass="sectionPanel" header="#{msg.activateAccount}">
+			<h:panelGrid columns="1">
+				<s:decorate template="../../edit.xhtml">
+					<ui:define name="label">Volume</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.newActivation.volume}" />
+				</s:decorate>
+				<s:decorate template="../../edit.xhtml">
+					<ui:define name="label">Commercial Offer</ui:define>
+					<h:selectOneMenu value="#{bb4pCustomerCareService.newActivation.commercialOffer}">
+						<s:convertEnum/>
+						<s:selectItems value="#{allBB4PComOffers}" var="offer" label="#{offer.label}"/>
+					</h:selectOneMenu>
+				</s:decorate>
+				<s:decorate template="../../edit.xhtml">
+					<ui:define name="label">Duration Type</ui:define>
+					<h:selectOneMenu value="#{bb4pCustomerCareService.newActivation.durationType}">
+						<s:convertEnum />
+						<s:selectItems value="#{allBB4PDurationTypes}" var="dt" label="#{dt.label}"/>				
+					</h:selectOneMenu>
+				</s:decorate>
+				<s:decorate template="../../edit.xhtml">
+					<ui:define name="label">Duration</ui:define>
+					<h:inputText value="#{bb4pCustomerCareService.newActivation.duration}" />
+				</s:decorate>
+				<s:decorate template="../../edit.xhtml">
+					<ui:define name="label">Reason</ui:define>
+					<h:inputTextarea value="#{bb4pCustomerCareService.reason}" required="true" rows="10" cols="30" requiredMessage="Please enter reason"/>
+				</s:decorate>
+			</h:panelGrid>
+			<div class="actionButtons">
+				<h:commandButton value="#{msg.activateAccount}" action="#{bb4pCustomerCareService.activateAccount}" />
+			</div>
+	</rich:panel>	  			
+</ui:composition>

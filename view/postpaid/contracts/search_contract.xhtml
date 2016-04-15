@@ -1,0 +1,117 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:m="http://jboss.com/products/seam/mail"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.searchForCustomerContract}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>
+		<rich:panel header="#{msg.searchCriteria}" styleClass="sectionPanel">
+			<h:panelGrid columns="2">
+			<h:form>
+				<rich:panel header="#{msg.searchLargeAccount}">
+					<h:panelGrid columns="1">
+						<s:decorate template="../../edit.xhtml">
+							<ui:define name="label">#{msg.customerCode}</ui:define>
+							<h:inputText value="#{contractService.contractSearchCriteria.customerCode}" required="true"/>
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons">
+						<h:commandButton action="#{contractService.retrieveLargeAccounts}" value="#{msg.searchLargeAccount}"/>
+					</div>
+				</rich:panel> 
+			</h:form>
+			<h:form>
+				<rich:panel header="#{msg.searchIndividualCustomer}">
+					<h:panelGrid columns="1">
+						<s:decorate template="../../edit.xhtml">
+							<ui:define name="label">#{msg.customerCode}</ui:define>
+							<h:inputText value="#{contractService.contractSearchCriteria.customerCode}"/>
+						</s:decorate>
+						<s:decorate template="../../edit.xhtml">
+							<ui:define name="label">#{msg.storageMediumNo}</ui:define>
+							<h:inputText value="#{contractService.contractSearchCriteria.storageMediumNo}" />
+						</s:decorate>
+						<s:decorate template="../../edit.xhtml">
+							<ui:define name="label">#{msg.msisdn}</ui:define>
+							<h:inputText value="#{contractService.contractSearchCriteria.msisdn}" />
+						</s:decorate>
+						<s:decorate template="../../edit.xhtml">
+							<ui:define name="label">#{msg.firstName}</ui:define>
+							<h:inputText value="#{contractService.contractSearchCriteria.firstName}" />
+						</s:decorate>
+						<s:decorate template="../../edit.xhtml">
+							<ui:define name="label">#{msg.lastName}</ui:define>
+							<h:inputText value="#{contractService.contractSearchCriteria.lastName}" />
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons">
+						<h:commandButton value="#{msg.searchIndividualCustomer}" action="#{contractService.searchCustomerContracts}" />
+					</div>
+				</rich:panel>
+			</h:form>
+			</h:panelGrid>
+		</rich:panel>
+		<rich:panel header="#{msg.searchResults}" styleClass="sectionPanel" rendered="#{not empty contractService.accountList}">
+			<h:form>
+			<rich:dataTable id="tblContractList" value="#{contractService.accountList}" var="item">
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{msg.customerCode}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.name}"/>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.status}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.contractResponsible}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.paymentResponsible}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{msg.address}"></h:outputText>
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Details" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="#{item.customerCode}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.name}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.status}" rendered="#{item.largeAccount}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.contractResponsible}" rendered="#{item.largeAccount}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.paymentResponsible}" rendered="#{item.largeAccount}"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="#{item.fullAddress}"/>
+					</rich:column>
+					<rich:column>
+						<h:commandButton action="#{contractService.viewAccountDetails(item)}" value="View Details" />
+					</rich:column>
+				</rich:columnGroup>
+			</rich:dataTable>
+			</h:form>
+		</rich:panel>			
+	</ui:define>
+</ui:composition>

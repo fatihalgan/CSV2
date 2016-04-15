@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	
+	<rich:dataTable id="duoActivationsTable" rows="10" var="item" value="#{netmovelService.duoActivations}"
+		onRowMouseOver="this.style.backgroundColor='yellow'"
+		onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'">
+		<f:facet name="header">
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="Transaction ID" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Service Class" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Package Name" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Activation Date" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Deactivation Date" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Last Operation" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Status" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Last Operation Result" />
+				</rich:column>
+			</rich:columnGroup>
+		</f:facet>
+		<rich:columnGroup>
+			<rich:column>
+				<h:outputText value="#{item.id}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.serviceClassBefore} - #{item.serviceClassAfter}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.contractName}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.activationDate}">
+					<s:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.deactivationDate}">
+					<s:convertDateTime type="both" dateStyle="medium" timeStyle="short"/>
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.operationCode}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.status}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.resultCode}" />
+			</rich:column>
+		</rich:columnGroup>
+		<f:facet name="footer">
+			<rich:datascroller for="duoActivationsTable" maxPages="20" boundaryControls="auto" fastControls="auto" />
+		</f:facet>		
+	</rich:dataTable>                
+</ui:composition>

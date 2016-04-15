@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="csv.crm.complaintmng.domain">
+	<typedef name="ComplaintStatusType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.crm.complaintmng.domain.ComplaintStatus</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<typedef name="SubscriptionType" class="csv.util.persistence.GenericEnumUserType">
+		<param name="enumClass">csv.common.domain.SubscriptionType</param>
+        <param name="identifierMethod">getValue</param>
+        <param name="valueOfMethod">factory</param>
+	</typedef>
+	<class name="ComplaintSegment" table="CRM_COMPLAINT_SEGMENTS">
+		<id name="id" column="ID">
+			<generator class="assigned"/>
+		</id>
+		<property name="description" column="DESCRIPTION" type="string"/>
+	</class>
+	<class name="CorporateClient" table="CRM_CORPORATE_CLIENTS">
+		<id name="customerCode" column="CUSTOMER_CODE" type="string">
+			<generator class="assigned"/>
+		</id>
+		<property name="companyName" column="COMPANY_NAME" type="string" not-null="true"/>
+		<property name="contactNumber" column="CONTACT_NUMBER" type="string"/>
+		<property name="contactPerson" column="CONTACT_PERSON" type="string"/>
+		<many-to-one name="corporateResponsible" class="csv.security.domain.User" column="CORP_RESP" outer-join="true"/>
+	</class>
+	<class abstract="true" name="ComplaintOwner" table="CRM_COMPLAINT_OWNERS">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_CRM</param>
+			</generator>
+		</id>
+		<discriminator column="OWNER_TYPE" type="string" not-null="true"/>
+		<property name="contactNumber" type="string" column="CONTACT_NUMBER"/>
+		<property name="firstName" column="FIRST_NAME" type="string"/>
+		<property name="lastName" column="LAST_NAME" type="string"/>
+		<property name="msisdn" type="string" column="MSISDN"/>
+		<property name="subscriptionType" column="SUBSCRIPTION_TYPE" type="SubscriptionType" not-null="true"/>
+		<set name="complaints" inverse="true" lazy="true" cascade="all">
+			<key column="OWNER"/>
+			<one-to-many class="Complaint"/>
+		</set>
+		<subclass name="PersonalComplaintOwner" discriminator-value="Personal"/>
+		<subclass name="CorporateComplaintOwner" discriminator-value="Corporate">
+			<many-to-one name="company" class="CorporateClient" column="CUSTOMER_CODE" lazy="false" outer-join="true" cascade="all"/>
+		</subclass>
+	</class>
+	<class name="Complaint" table="CRM_COMPLAINTS">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_CRM</param>
+			</generator>
+		</id>
+		<property name="openingDate" column="OPENING_DATE" type="timestamp"/>
+		<property name="closingDate" column="CLOSING_DATE" type="timestamp"/>
+		<property name="description" column="DESCRIPTION" type="string"/>
+		<property name="status" column="STATUS" type="ComplaintStatusType"/>
+		<property name="destinationNumber" column="DEST_NUMBER" type="string"/>
+		<property name="dateOfOccurence" column="DATE_OF_OCCURENCE" type="timestamp"/>
+		<property name="displayInfo" column="DISPLAY_INFO" type="string"/>
+		<set name="attachments" inverse="true" lazy="true" cascade="all">
+			<key column="COMPLAINT_ID"/>
+			<one-to-many class="ComplaintAttachment"/>
+		</set>
+		<many-to-one name="segment" class="ComplaintSegment" column="SEGMENT_ID" outer-join="true" lazy="false" not-null="true"/>
+		<many-to-one name="owner" class="ComplaintOwner" column="OWNER" outer-join="true" lazy="false"/>
+		<many-to-one name="creator" class="csv.security.domain.User" column="CREATOR" outer-join="true"/>
+		<many-to-one name="location" class="csv.common.domain.District" column="DISTRICT_ID" lazy="false" outer-join="true" not-null="true"/>
+		
+	</class>
+	<class name="ComplaintAttachment" table="CRM_COMPLAINT_ATTACHMENTS">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">SEQ_CRM_ATTACH</param>
+			</generator>
+		</id>
+		<property name="fileName" column="FILE_NAME" type="string"/>
+		<property name="fileData" column="DATA" type="binary"/>
+		<many-to-one name="owningComplaint" class="Complaint" column="COMPLAINT_ID" lazy="false" outer-join="true"/>
+	</class>
+</hibernate-mapping>

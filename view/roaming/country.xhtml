@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="countrySelectionRegion">
+		<rich:panel header="#{msg.roamingEditCountry}"
+			rendered="#{countryListAction.selectedCountry != null}">
+			<h:form id="frmEditCountry">
+				<h:panelGrid columns="2">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingCountryName}</ui:define>
+						<h:inputText
+							value="#{countryListAction.selectedCountry.countryName}"
+							required="true" size="80" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingContinent}</ui:define>
+						<h:selectOneMenu
+							value="#{countryListAction.selectedCountry.continent}">
+							<s:selectItems value="#{continentList}" var="cnt"
+								label="#{cnt.name}" />
+							<f:converter converterId="roamingEntityConverter" />
+						</h:selectOneMenu>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingUtc}</ui:define>
+						<h:inputText value="#{countryListAction.selectedCountry.utc}"
+							required="false">
+							<a:support event="onblur" ajaxSingle="true"
+								reRender="cntUTCTimeDiff_1,cntUTCEndTimeDiff_2"
+								action="#{countryListAction.calculateTimeDiffs}" />
+						</h:inputText>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingUtcEnd}</ui:define>
+						<h:inputText value="#{countryListAction.selectedCountry.utcEnd}"
+							required="false">
+							<a:support event="onblur" ajaxSingle="true"
+								reRender="cntUTCTimeDiff_1,cntUTCEndTimeDiff_2"
+								action="#{countryListAction.calculateTimeDiffs}" />
+						</h:inputText>
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingDaylightSave}</ui:define>
+						<h:selectBooleanCheckbox
+							value="#{countryListAction.selectedCountry.daylightSave}"
+							required="false" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingUtcTimeDiff}</ui:define>
+						<h:inputText id="cntUTCTimeDiff_1"
+							value="#{countryListAction.selectedCountry.utcTimeDiff}"
+							required="false" />
+					</s:decorate>
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingUtcEndTimeDiff}</ui:define>
+						<h:inputText id="cntUTCEndTimeDiff_2"
+							value="#{countryListAction.selectedCountry.utcEndTimeDiff}"
+							required="false" />
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons"><h:commandButton id="btnSave"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}"
+					value="Save" action="#{countryListAction.saveCountry}" /> <h:commandButton
+					id="btnDelete" value="Delete Country"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}"
+					action="#{countryListAction.deleteCountry}" /></div>
+			</h:form>
+		</rich:panel>
+
+		<rich:panel header="Countries">
+			<h:form id="countryList">
+				<h:panelGrid columns="3">
+					<s:decorate template="../display.xhtml">
+						<ui:define name="label">Country Name</ui:define>
+						<h:inputText value="#{countryListAction.countryName}" />
+					</s:decorate>
+					<h:commandButton id="search" value="Search"
+						action="#{countryListAction.searchCountriesByName}" />
+					<h:commandButton id="clear" value="Clear Search"
+						action="#{countryListAction.searchCountries}" />
+				</h:panelGrid>
+				<rich:dataTable id="tblCountries"
+					value="#{countryListAction.countryList}" var="item" rows="20">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="Country Name" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="UTC" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Continent" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Details" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.countryName}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.utc}" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="#{item.continent.name}" />
+						</rich:column>
+						<rich:column>
+							<a:commandButton action="#{countryListAction.editCountry(item)}"
+								value="Edit" reRender="countrySelectionRegion" />
+						</rich:column>
+						<rich:column>
+							<a:commandLink action="#{countryListAction.updateDetails(item)}"
+								value="Details" reRender="countrySelectionRegion" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblCountries" maxPages="20"
+							boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+				<div class="actionButtons"><h:commandButton id="btnNewCountry"
+					value="Create New Country" action="#{countryListAction.newCountry}" /></div>
+			</h:form>
+		</rich:panel>
+		<rich:panel header="Country Details">
+			<rich:tabPanel switchType="ajax">
+				<rich:tab label="#{msg.roamingCountryNatCode}">
+					<ui:include src="/roaming/national_code.xhtml">
+					</ui:include>
+				</rich:tab>
+				<rich:tab label="#{msg.roamingCountryIntCode}">
+					<ui:include src="/roaming/international_code.xhtml" />
+				</rich:tab>
+				<rich:tab label="#{msg.roamingCountryRegion}">
+					<ui:include src="/roaming/country_region.xhtml" />
+				</rich:tab>
+			</rich:tabPanel>
+		</rich:panel>
+	</h:panelGroup>
+</ui:composition>

@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="tadigStatusSelectionRegion">
+		<rich:panel header="#{msg.roamingEditTadigStatus}"
+			rendered="#{tadigStatusListAction.selectedTadigStatus != null}">
+			<h:form id="frmEditTadigStatus">
+				<h:panelGrid columns="2">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingTadigStatusDesc}</ui:define>
+						<h:inputText
+							value="#{tadigStatusListAction.selectedTadigStatus.description}"
+							required="true" size="80" />
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons"><h:commandButton id="btnSaveTdSt"
+					value="Save" action="#{tadigStatusListAction.saveTadigStatus}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}" />
+				<h:commandButton id="btnDeleteTdSt" value="Delete Tadig Status"
+					action="#{tadigStatusListAction.deleteTadigStatus}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}" /></div>
+			</h:form>
+		</rich:panel>
+
+		<rich:panel header="TadigStatuses">
+			<h:form id="tadigStatusList">
+				<rich:dataTable id="tblTadigStatuses"
+					value="#{tadigStatusListAction.tadigStatusList}" var="item"
+					rows="20">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.roamingTadigStatusDesc}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.description}" />
+						</rich:column>
+						<rich:column>
+							<a:commandButton
+								action="#{tadigStatusListAction.editTadigStatus(item)}"
+								value="Edit" reRender="tadigStatusSelectionRegion" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblTadigStatuses" maxPages="20"
+							boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+				<div class="actionButtons"><h:commandButton id="btnNewIrSt"
+					value="Create New" action="#{tadigStatusListAction.newTadigStatus}" /></div>
+			</h:form>
+		</rich:panel>
+	</h:panelGroup>
+</ui:composition>

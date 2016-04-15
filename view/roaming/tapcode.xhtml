@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	<h:panelGroup layout="vertical" id="tapcodeSelectionRegion">
+		<rich:panel header="#{msg.roamingEditTapcode}"
+			rendered="#{tapcodeListAction.selectedTapcode != null}">
+			<h:form id="frmEditTapcode">
+				<h:panelGrid columns="2">
+					<s:decorate template="../edit.xhtml">
+						<ui:define name="label">#{msg.roamingTapcode}</ui:define>
+						<h:inputText value="#{tapcodeListAction.selectedTapcode.tapcode}"
+							required="true" />
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons"><h:commandButton id="btnSaveTc"
+					value="Save" action="#{tapcodeListAction.saveTapcode}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Save')}" />
+				<h:commandButton id="btnDeleteTc" value="Delete"
+					action="#{tapcodeListAction.deleteTapcode}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters Delete')}" /></div>
+			</h:form>
+		</rich:panel>
+
+		<rich:panel header="Tapcodes">
+			<h:form id="tapcodeList">
+				<rich:dataTable id="tblTapcodes"
+					value="#{tapcodeListAction.tapcodeList}" var="item" rows="20">
+					<f:facet name="header">
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText value="#{msg.roamingTapcode}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="Edit" />
+							</rich:column>
+
+						</rich:columnGroup>
+					</f:facet>
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="#{item.tapcode}" />
+						</rich:column>
+						<rich:column>
+							<a:commandButton action="#{tapcodeListAction.editTapcode(item)}"
+								value="Edit" reRender="tapcodeSelectionRegion" />
+						</rich:column>
+					</rich:columnGroup>
+					<f:facet name="footer">
+						<rich:datascroller for="tblTapcodes" maxPages="20"
+							boundaryControls="auto" fastControls="auto" />
+					</f:facet>
+				</rich:dataTable>
+				<div class="actionButtons"><h:commandButton id="btnNewTc"
+					value="Create New" action="#{tapcodeListAction.newTapcode}" /></div>
+			</h:form>
+		</rich:panel>
+	</h:panelGroup>
+</ui:composition>

@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<h:form id="frmInterval">
+		<rich:panel header="#{msg.searchCriteria}" styleClass="sectionPanel">
+		<h:panelGrid columns="3">
+			<s:decorate template="../edit.xhtml">
+				<ui:define name="label">#{msg.startDate}</ui:define>
+				<rich:calendar value="#{commonOperationsService.startDate}" direction="bottom-right"/>
+			</s:decorate>
+			<s:decorate template="../edit.xhtml">
+				<ui:define name="label">#{msg.endDate}</ui:define>
+				<rich:calendar value="#{commonOperationsService.endDate}" direction="bottom-right"/>	
+			</s:decorate>
+			<ui:insert/>
+		</h:panelGrid>
+		</rich:panel>
+	</h:form>
+</ui:composition>

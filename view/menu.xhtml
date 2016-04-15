@@ -1,0 +1,250 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+	<h:form id="mainMenuForm">
+		<rich:panel header="New Workspace">
+			<font color="#058E94" style="font-style: italic; font-weight: bold;" >
+				<h:panelGrid columns="1">
+					<s:link action="home" target="new" value="Open New Workspace" propagation="none" rendered="#{currentServedCustomer.customerValid}"/>
+					<s:link value="#{msg.menuLogout}" action="logout" propagation="end"/>
+				</h:panelGrid>
+			</font>
+		</rich:panel>
+		<rich:panel header="Current Tasks">
+			<h:panelGroup layout="vertical">
+				<h:panelGrid columns="1">
+					<h:selectOneMenu value="#{switcher.conversationIdOrOutcome}">
+						<f:selectItems value="#{switcher.selectItems}" />
+					</h:selectOneMenu>
+					<h:commandButton action="#{switcher.select}" value="Switch Task" />
+				</h:panelGrid>
+				<h:panelGrid columns="1" rendered="#{currentServedCustomer.customerValid}">
+					<h:commandButton action="#{currentServedCustomer.dismissCurrentCustomer}" value="#{msg.dismissCustomer}" />
+				</h:panelGrid>
+				<h:panelGrid columns="1" rendered="#{!currentServedCustomer.customerValid}">
+					<h:inputText value="#{currentServedCustomer.msisdn}" size="9" maxlength="9" />
+					<h:commandButton action="#{currentServedCustomer.newCustomer}" value="#{msg.newCustomer}" />
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+					<h:selectOneMenu value="#{localeSelector.localeString}">
+						<f:selectItems value="#{localeSelector.supportedLocales}" />
+					</h:selectOneMenu>
+					<h:commandButton action="#{localeSelector.select}" value="ChangeLanguage" />
+				</h:panelGrid>
+			</h:panelGroup>
+		</rich:panel>
+		<rich:panelMenu width="160">
+			<rich:panelMenuGroup label="#{msg.menuPrepaid}" rendered="#{loggedInUser.hasPermissionFor('Prepaid')}">
+				<rich:panelMenuItem action="prepaidEnquiry" label="#{msg.menuPrepaidEnquiry}"
+					rendered="#{loggedInUser.hasPermissionFor('Find Customer Information') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}"/>
+				<rich:panelMenuItem action="newPrepaidRegistration" label="#{msg.menuNewPrepaidRegistration}"
+					rendered="#{loggedInUser.hasPermissionFor('New Prepaid Registration') and not currentServedCustomer.customerValid}">
+				</rich:panelMenuItem>
+				<rich:panelMenuItem action="searchPrepaidRegistration" label="#{msg.menuPrepaidRegistration}"
+					rendered="#{loggedInUser.hasPermissionFor('View Prepaid Registration') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}" />
+				<rich:panelMenuItem action="prepaidSIMActivation" label="#{msg.menuPrepaidSIMActivation}"
+					rendered="#{loggedInUser.hasPermissionFor('Prepaid SIM Activation')}"/>
+				<rich:panelMenuItem action="voucherStatus"
+					label="#{msg.menuVoucherStatus}"
+					rendered="#{loggedInUser.hasPermissionFor('MINSAT Find Voucher Status') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}" />
+				<rich:panelMenuItem action="netmovelPrepago"
+					label="#{msg.menuNetmovelPrepago}"
+					rendered="#{loggedInUser.hasPermissionFor('Netmovel Prepago') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}"/>
+				<rich:panelMenuItem action="netmovelDuo" label="#{msg.menuNetmovelDuo}"
+					rendered="#{loggedInUser.hasPermissionFor('Netmovel DUO') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}"/>
+				<rich:panelMenuItem action="netmovelVoiceAddOn" label="#{msg.menuNetmovelVoiceAddOn}"
+					rendered="#{loggedInUser.hasPermissionFor('Netmovel Voice Add On') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}"/>
+				<rich:panelMenuItem action="bb4p"
+					label="#{msg.menuBlackBerryPrepaid}"
+					rendered="#{loggedInUser.hasPermissionFor('BlackBerry For Prepaid') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}" />
+				<rich:panelMenuItem action="prepaidSimSwap"
+					label="#{msg.menuPrepaidSimSwap}"
+					rendered="#{loggedInUser.hasPermissionFor('Prepaid SIM Swap') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}" />
+				<rich:panelMenuItem action="prepaidToPostpaidMigration"
+					label="#{msg.menuPrepaidToPostpaidMigration}"
+					rendered="#{loggedInUser.hasPermissionFor('Prepaid To Postpaid Migration') and currentServedCustomer.customerValid and currentServedCustomer.msisdnIdentifier}"/>
+			</rich:panelMenuGroup>
+			<rich:panelMenuGroup label="#{msg.menuPostpaid}" rendered="#{loggedInUser.hasPermissionFor('Postpaid')}">
+				<rich:panelMenuItem action="invoiceView" label="#{msg.menuInvoiceView}"
+					rendered="#{loggedInUser.hasPermissionFor('Postpaid - Find Invoice Detail')}" />
+				<rich:panelMenuItem action="callsView" label="#{msg.menuCallView}"
+					rendered="#{loggedInUser.hasPermissionFor('Postpaid - Call History') and currentServedCustomer.customerValid}" />
+				<rich:panelMenuItem action="contractEnquiry" label="#{msg.menuContractEnquiry}"
+					rendered="#{loggedInUser.hasPermissionFor('Postpaid Contract Enquiry')}" />
+			</rich:panelMenuGroup>
+			<rich:panelMenuGroup label="#{msg.menuCorporate}" rendered="#{loggedInUser.hasPermissionFor('Corporate')}">
+				<rich:panelMenuItem label="#{msg.menuMyCorporateClients}" action="myCorporateClients" rendered="#{loggedInUser.hasPermissionFor('Manage Corporate Clients')}"/>
+				<rich:panelMenuItem label="#{msg.menuNewCustomerSession}" action="newCorporateCustomerSession"/>
+			</rich:panelMenuGroup>
+			<rich:panelMenuGroup label="#{msg.menuCommon}" rendered="#{loggedInUser.hasPermissionFor('Common') and currentServedCustomer.msisdnIdentifier}">
+				<rich:panelMenuItem action="pukInformation" label="#{msg.menuViewPUK}"
+					rendered="#{loggedInUser.hasPermissionFor('View PUK')}" />
+				<rich:panelMenuItem action="imeiRecords" label="#{msg.findIMEIRecords}"
+					rendered="#{loggedInUser.hasPermissionFor('Find IMEI')}" />
+				<rich:panelMenuItem action="failedCalls" label="#{msg.viewFailedCalls}"
+					rendered="#{loggedInUser.hasPermissionFor('Find Failed Calls')}" />
+				<rich:panelMenuItem action="sendsms" label="#{msg.menuSendSMS}" 
+					rendered="#{loggedInUser.hasPermissionFor('Send SMS')}" />
+				<rich:panelMenuItem action="tomala" label="#{msg.menuTomala}" 
+					rendered="#{loggedInUser.hasPermissionFor('Retrieve Tomala Status')}" />
+				<rich:panelMenuItem action="voiceMail" label="#{msg.menuVoiceMail}" 
+					rendered="#{loggedInUser.hasPermissionFor('Voice Mail Service')}" />
+				<rich:panelMenuItem action="smscManage" label="#{msg.menuSMSCManage}"
+					rendered="#{loggedInUser.hasPermissionFor('Sms Manage')}" />
+			</rich:panelMenuGroup>
+			<rich:panelMenuGroup label="#{msg.menuTaskManagement}">
+				<rich:panelMenuItem action="home" label="#{msg.menuWaitingTasks}"
+					rendered="#{!currentServedCustomer.customerValid}" />
+				<rich:panelMenuItem action="myCurrentTask"
+					label="#{msg.menuShowCurrentTask}"
+					rendered="#{not attendOpenComplaintTask.initialComplaintEntry}" />
+				<rich:panelMenuItem action="manageOpenTasks"
+					label="#{msg.menuManagePooledTasks}" rendered="#{!currentServedCustomer.customerValid}"/>
+				<rich:panelMenuItem action="manageOpenComplaints"
+					label="#{msg.menuManageOpenComplaints}"
+					rendered="#{loggedInUser.hasPermissionFor('View Open Complaints') and not currentServedCustomer.customerValid}" />
+			</rich:panelMenuGroup>
+			<rich:panelMenuGroup label="#{msg.menuExternalSystems}">
+				<rich:panelMenuItem submitMode="none"
+					onclick="document.location.href='http://10.1.4.145:8000/webota/'"
+					rendered="#{loggedInUser.hasPermissionFor('MMS/GPRS Settings')}"
+					target="new">
+					<h:outputLink value="http://10.1.4.145:8000/webota/">
+						<h:outputText value="#{msg.menuMMSGPRS}" />
+					</h:outputLink>
+				</rich:panelMenuItem>
+				<rich:panelMenuItem submitMode="none"
+					onclick="document.location.href='http://10.1.17.70:8282/mcel-customer-care'"
+					rendered="#{loggedInUser.hasPermissionFor('ECDS')}"
+					target="new">
+					<h:outputLink value="http://10.1.17.70:8282/mcel-customer-care">
+						<h:outputText value="#{msg.menuECDS}" />
+					</h:outputLink>
+				</rich:panelMenuItem>
+				<rich:panelMenuItem action="ddsTariff" rendered="true"
+					label="Tarifa Woza" />
+				<rich:panelMenuItem submitMode="none"
+					onclick="document.location.href='http://10.1.13.2:8080/portal'"
+					target="new">
+					<h:outputLink value="http://10.1.13.2:8080/portal">
+						<h:outputText value="#{msg.menuDDS}" />
+					</h:outputLink>
+				</rich:panelMenuItem>
+			</rich:panelMenuGroup>
+
+			<rich:panelMenuGroup label="#{msg.menuEMAHLR}" rendered="#{loggedInUser.hasPermissionFor('EMA') and currentServedCustomer.msisdnIdentifier}">
+				<rich:panelMenuItem action="emaStatus"
+					label="#{msg.menuEMAGetStatus}"
+					rendered="#{loggedInUser.hasPermissionFor('EMA Get Status')}" />
+			</rich:panelMenuGroup>
+
+			<rich:panelMenuGroup label="#{msg.menuRoaming}"
+				rendered="#{loggedInUser.hasPermissionFor('Roaming')}">
+				<rich:panelMenuItem action="roamingParams"
+					label="#{msg.menuRoamingParams}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Parameters')}" />
+				<rich:panelMenuItem action="roamingOperator"
+					label="#{msg.menuRoamingOperator}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Operator')}" />
+				<rich:panelMenuItem action="roamingOperatorDetails"
+					label="#{msg.menuRoamingOperatorDetails}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Detail')}" />
+				<rich:panelMenuItem action="roamingTransfer"
+					label="#{msg.menuRoamingOperatorTransfer}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Operator Transfer')}" />
+				<rich:panelMenuItem action="roamingAgreement"
+					label="#{msg.menuRoamingAgreement}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Agreement')}" />
+				<rich:panelMenuItem action="roamingSchedule"
+					label="#{msg.menuRoamingSchedule}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Schedule')}" />
+				<rich:panelMenuItem action="roamingTariffTransfer"
+					label="#{msg.menuRoamingTariffTransfer}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Tariff Transfer')}" />
+				<rich:panelMenuItem action="roamingTariff"
+					label="#{msg.menuRoamingTariff}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Tariff')}" />
+				<rich:panelMenuItem action="roamingServiceTariff"
+					label="#{msg.menuRoamingServiceTariff}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Service Tariff')}" />
+				<rich:panelMenuItem action="roamingScheduleReport"
+					label="#{msg.menuRoamingRolloutReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Schedule Report')}" />
+				<rich:panelMenuItem action="roamingCalendarReport"
+					label="#{msg.menuRoamingCalendarReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Calendar Report')}" />
+				<rich:panelMenuItem action="roamingCommercialReport"
+					label="#{msg.menuRoamingCommercialReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Commercial Report')}" />
+				<rich:panelMenuItem action="roamingTariffReport"
+					label="#{msg.menuRoamingTariffReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Roaming Tariff Report')}" />
+			</rich:panelMenuGroup>
+
+			<rich:panelMenuGroup label="#{msg.menuAdministration}" rendered="#{loggedInUser.hasPermissionFor('Administration')}">
+				<rich:panelMenuItem action="operations"
+					label="#{msg.menuOperations}"
+					rendered="#{loggedInUser.hasPermissionFor('Manage Operations')}">
+					<s:conversationPropagation type="end" />
+				</rich:panelMenuItem>
+				<rich:panelMenuItem action="modules" label="#{msg.menuModules}"
+					rendered="#{loggedInUser.hasPermissionFor('Manage Operations')}">
+					<s:conversationPropagation type="end" />
+				</rich:panelMenuItem>
+				<rich:panelMenuItem action="groups" label="#{msg.menuGroups}"
+					rendered="#{loggedInUser.hasPermissionFor('Manage Groups')}">
+					<s:conversationPropagation type="end" />
+				</rich:panelMenuItem>
+				<rich:panelMenuItem action="users" label="#{msg.menuUsers}"
+					rendered="#{loggedInUser.hasPermissionFor('Manage Users')}">
+					<s:conversationPropagation type="end" />
+				</rich:panelMenuItem>
+				<rich:panelMenuItem action="complaintSegments" label="#{msg.menuComplaintSegments}"
+					rendered="#{loggedInUser.hasPermissionFor('Manage Complaint Segments')}">
+					<s:conversationPropagation type="end" />
+				</rich:panelMenuItem>
+				<rich:panelMenuItem action="manageAllOpenTasksForSystemAdmin" label="#{msg.menuManagePooledTasks}" 
+					rendered="#{loggedInUser.hasPermissionFor('Manage All Open Tasks') and not currentServedCustomer.customerValid}">
+				
+				</rich:panelMenuItem>
+			</rich:panelMenuGroup>
+
+			<rich:panelMenuGroup label="#{msg.menuReports}">
+				<rich:panelMenuItem action="userAudit" label="#{msg.menuUserAudit}"
+					rendered="#{loggedInUser.hasPermissionFor('Audit User Actions')}" />
+				<rich:panelMenuItem action="adjustmentsReport"
+					label="#{msg.menuAdjustmentReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Daily Adjustments Report')}" />
+				<rich:panelMenuItem action="CSVUsageReport"
+					label="#{msg.menuCSVUsageReport}"
+					rendered="#{loggedInUser.hasPermissionFor('CSV Usage Report')}" />
+				<rich:panelMenuItem action="bscsCallViewUsageReport"
+					label="#{msg.menuPostpaidCallReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Postpaid Call View Usage Report')}" />
+				<rich:panelMenuItem action="bscsInvoiceViewUsageReport"
+					label="#{msg.menuPostpaidInvoiceViewReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Postpaid Invoice View Usage Report')}" />
+				<rich:panelMenuItem action="emaReport" label="#{msg.menuEmaReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Daily Ema Report')}" />
+				<rich:panelMenuItem action="smsReport" label="#{msg.menuSMSReport}"
+					rendered="#{loggedInUser.hasPermissionFor('SMS Report')}" />
+				<rich:panelMenuItem action="operationsLogReport" label="#{msg.menuOperationsLogReport}"
+					rendered="#{loggedInUser.hasPermissionFor('Operations Log Report')}" />
+			</rich:panelMenuGroup>
+
+			<rich:panelMenuGroup label="#{msg.menuSystem}">
+				<rich:panelMenuItem action="myActions" label="#{msg.menuMyLastActions}" />
+				<rich:panelMenuItem action="changePassword" label="#{msg.menuChangePassword}" />
+				<rich:panelMenuItem action="logout" label="#{msg.menuLogout}" />
+				<rich:panelMenuItem action="users" label="#{msg.menuUsers}"
+					rendered="#{loggedInUser.hasPermissionFor('Edit User Details')}">
+					<s:conversationPropagation type="end" />
+				</rich:panelMenuItem>
+			</rich:panelMenuGroup>
+		</rich:panelMenu>
+	</h:form>
+</ui:composition>

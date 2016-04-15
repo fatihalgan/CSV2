@@ -1,0 +1,159 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	
+	<rich:panel header="#{msg.currentStatus}" styleClass="sectionPanel">
+		<h:panelGrid columns="3">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.msisdn}</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.currentCustomer.fullMsisdn}"/>								
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.mainAccount}</ui:define> 
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.mainAccountBalance}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.freeSMS}</ui:define>				
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.SMSAccount.balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.freeMMS}</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.MMSAccount.balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="#{prepaidAccountService.account.getDedicatedAccount(3) != null}">
+				<ui:define name="label">#{msg.dedicatedAccount}3</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.getDedicatedAccount(3).balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="#{prepaidAccountService.account.getDedicatedAccount(4) != null}">
+				<ui:define name="label">#{msg.dedicatedAccount}4</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.getDedicatedAccount(4).balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="#{prepaidAccountService.account.getDedicatedAccount(5) != null}">
+				<ui:define name="label">#{msg.dedicatedAccount}5</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.getDedicatedAccount(5).balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="#{prepaidAccountService.account.getDedicatedAccount(6) != null}">
+				<ui:define name="label">#{msg.dedicatedAccount}6</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.getDedicatedAccount(6).balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="#{prepaidAccountService.account.getDedicatedAccount(7) != null}">
+				<ui:define name="label">#{msg.dedicatedAccount}7</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.getDedicatedAccount(7).balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="#{prepaidAccountService.account.getDedicatedAccount(8) != null}">
+				<ui:define name="label">#{msg.dataAccount}</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.getDedicatedAccount(8).balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="#{prepaidAccountService.account.getDedicatedAccount(9) != null}">
+				<ui:define name="label">#{msg.dedicatedAccount}9</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.getDedicatedAccount(9).balance}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml" rendered="#{prepaidAccountService.account.getDedicatedAccount(10) != null}">
+				<ui:define name="label">#{msg.dedicatedAccount}10</ui:define>
+				<h:inputText readonly="true" value="#{prepaidAccountService.account.getDedicatedAccount(10).balance}" />
+			</s:decorate>
+		</h:panelGrid>
+	</rich:panel>
+	<rich:panel header="#{msg.makeAdjustment}" styleClass="sectionPanel" rendered="#{loggedInUser.hasPermissionFor('Prepaid Adjustment-Give Credits') || loggedInUser.hasPermissionFor('Prepaid Adjustment-Take Back Credits')}">
+		<h:panelGrid columns="3">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForMainAccount}</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.mainAccountAdjustment}"
+					validatorMessage="Please enter a numeric value for main account adjustment">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForFreeSMS}</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[0]}"
+					validatorMessage="Please enter a numeric value for free SMS adjustment">
+					<f:validateLongRange minimum="0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForFreeMMS}</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[1]}"
+					validatorMessage="Please enter a numeric value for free MMS adjustment">
+					<f:validateLongRange minimum="0"/>
+				</h:inputText>
+			</s:decorate>
+		</h:panelGrid>
+		<h:panelGrid columns="3">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForDedicatedAccount}3</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[2]}"
+					validatorMessage="Please enter a numeric value for #{msg.adjustmentForNetmovelBundleAccount}"
+					readonly="#{not loggedInUser.canMakeAdjustmentsOnAllDedicatedAccounts}">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForDedicatedAccount}4</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[3]}"
+					validatorMessage="Please enter a numeric value for #{msg.adjustmentForDedicatedAccount}4">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForDedicatedAccount}5</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[4]}"
+					validatorMessage="Please enter a numeric value for #{msg.adjustmentForDedicatedAccount}5">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForDedicatedAccount}6</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[5]}"
+					validatorMessage="Please enter a numeric value for #{msg.adjustmentForDedicatedAccount}6">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForDedicatedAccount}7</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[6]}"
+					validatorMessage="Please enter a numeric value for #{msg.adjustmentForDedicatedAccount}7">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForData}(MB)</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[7]}"
+					validatorMessage="Please enter a numeric value for #{msg.adjustmentForDedicatedAccount}8">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForDedicatedAccount}9</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[8]}"
+					validatorMessage="Please enter a numeric value for #{msg.adjustmentForDedicatedAccount}9">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.adjustmentForDedicatedAccount}10</ui:define>
+				<h:inputText value="#{prepaidAccountService.adjustment.dedicatedAccountAdjustment[9]}"
+					validatorMessage="Please enter a numeric value for #{msg.adjustmentForDedicatedAccount}10">
+					<f:validateDoubleRange minimum="0.0"/>
+				</h:inputText>
+			</s:decorate>
+		</h:panelGrid>
+		<h:panelGrid columns="1">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.reasonForAdjustment}</ui:define>
+				<h:inputTextarea value="#{prepaidAccountService.adjustment.reason}" rows="5" cols="50"/>
+			</s:decorate>
+		</h:panelGrid>
+		<div class="actionButtons">
+			<h:commandButton value="#{msg.giveCreditsToSubscriber}" action="#{prepaidAccountService.giveCreditsToSubscriber}" 
+				rendered="#{loggedInUser.hasPermissionFor('Prepaid Adjustment-Give Credits')}"
+				onclick="if(!confirm('Are you sure to give credits to subscriber?')) {alert ('Rebate operation cancelled'); return false;}"/>
+			<h:commandButton value="#{msg.takeCreditsFromSubscriber}" action="#{prepaidAccountService.takeCreditsFromSubscriber}" 
+				rendered="#{loggedInUser.hasPermissionFor('Prepaid Adjustment-Take Back Credits')}"
+				onclick="if(!confirm('Are you sure to take credits from subscriber?')) {alert ('Debit operation cancelled'); return false;}"/>	
+		</div>	
+	</rich:panel>                
+</ui:composition>

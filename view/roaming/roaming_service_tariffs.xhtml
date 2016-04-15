@@ -1,0 +1,165 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<h:panelGroup layout="vertical" id="serviceTariffSelectionRegion">
+			<rich:panel header="#{msg.roamingEditServiceTariffs}"
+				rendered="#{roamingServiceTariffListAction.selectedRoamingServiceTariff != null}">
+				<h:form id="frmEditRst">
+					<h:panelGrid columns="2">
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingService}</ui:define>
+							<h:selectOneMenu id="rstRoamingService"
+								value="#{roamingServiceTariffListAction.selectedRoamingServiceTariff.roamingService}">
+								<f:converter converterId="roamingEntityConverter" />
+								<s:selectItems
+									value="#{roamingServiceTariffListAction.roamingServiceList}"
+									var="rs" label="#{rs.roamingServiceName}" />
+							</h:selectOneMenu>
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingCountryRegion}</ui:define>
+							<h:selectOneMenu id="rstCountryRegion"
+								value="#{roamingServiceTariffListAction.selectedRoamingServiceTariff.countryRegion}">
+								<f:converter converterId="roamingEntityConverter" />
+								<s:selectItems
+									value="#{roamingServiceTariffListAction.countryRegionList}"
+									var="cr" label="#{cr.countryRegionName}" />
+							</h:selectOneMenu>
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingPrice}</ui:define>
+							<h:inputText
+								value="#{roamingServiceTariffListAction.selectedRoamingServiceTariff.price}" />
+						</s:decorate>
+						<s:decorate template="../edit.xhtml">
+							<ui:define name="label">#{msg.roamingCountryRegionInfo}</ui:define>
+							<h:inputTextarea
+								value="#{roamingServiceTariffListAction.selectedRoamingServiceTariff.information}" />
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons"><h:commandButton id="btnSaveTrf"
+						value="Save"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Service Tariff Save')}"
+						action="#{roamingServiceTariffListAction.saveRoamingServiceTariff}" />
+					<h:commandButton id="btnDeleteAgSt" value="Delete "
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Service Tariff Delete')}"
+						action="#{roamingServiceTariffListAction.deleteRoamingServiceTariff}" /></div>
+				</h:form>
+			</rich:panel>
+			<rich:panel header="#{msg.roamingSearchServiceTariff}">
+				<h:form id="frmSearchRst">
+					<h:panelGrid columns="2">
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">#{msg.roamingCcnc}</ui:define>
+							<h:inputText value="#{roamingServiceTariffListAction.ccnc}" />
+						</s:decorate>
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">#{msg.roamingNetworkCode}</ui:define>
+							<h:inputText value="#{roamingServiceTariffListAction.mccmnc}" />
+						</s:decorate>
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">#{msg.roamingOperatorCode}</ui:define>
+							<h:inputText
+								value="#{roamingServiceTariffListAction.operatorCode}" />
+						</s:decorate>
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">#{msg.roamingOperatorName}</ui:define>
+							<h:inputText
+								value="#{roamingServiceTariffListAction.operatorName}" />
+						</s:decorate>
+						<s:decorate template="../display.xhtml">
+							<h:commandButton value="Find Operator List"
+								action="#{roamingServiceTariffListAction.findOperatorCountryListByCriteria}" />
+						</s:decorate>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<s:decorate template="../display.xhtml">
+							<ui:define name="label">#{msg.roamingOperatorCountry}</ui:define>
+							<h:selectOneMenu id="rstOperatorCountrySelOne_1"
+								value="#{roamingServiceTariffListAction.selectedOperatorCountry}">
+								<f:converter converterId="roamingEntityConverter" />
+								<s:selectItems
+									value="#{roamingServiceTariffListAction.operatorCountryList}"
+									var="opCou"
+									label="#{opCou.country.countryName}-#{opCou.operator.operatorName}" />
+							</h:selectOneMenu>
+						</s:decorate>
+					</h:panelGrid>
+					<div class="actionButtons"><h:commandButton
+						id="btnSearchTariffs" value="Search"
+						action="#{roamingServiceTariffListAction.searchRoamingServiceTariffList}" />
+					</div>
+				</h:form>
+			</rich:panel>
+			<rich:panel header="Service Tariffs">
+				<h:form id="RstList">
+					<rich:dataTable id="tblRstList"
+						value="#{roamingServiceTariffListAction.roamingServiceTariffList}"
+						var="item" rows="10">
+						<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText value="#{msg.roamingCountry}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingOperator}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingService}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingCountryRegion}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{msg.roamingPrice}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="Edit" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:columnGroup>
+							<rich:column>
+								<h:outputText
+									value="#{item.operatorCountry.country.countryName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText
+									value="#{item.operatorCountry.operator.operatorName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.roamingService.roamingServiceName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.countryRegion.countryRegionName}" />
+							</rich:column>
+							<rich:column>
+								<h:outputText value="#{item.price}" />
+							</rich:column>
+							<rich:column>
+								<a:commandButton
+									action="#{roamingServiceTariffListAction.editRoamingServiceTariff(item)}"
+									value="Edit" reRender="serviceTariffSelectionRegion" />
+							</rich:column>
+						</rich:columnGroup>
+						<f:facet name="footer">
+							<rich:datascroller for="tblRstList" maxPages="20"
+								boundaryControls="auto" fastControls="auto" />
+						</f:facet>
+					</rich:dataTable>
+					<div class="actionButtons"><h:commandButton id="btnNewRst"
+						value="Create New"
+						action="#{roamingServiceTariffListAction.newRoamingServiceTariff}" /></div>
+				</h:form>
+			</rich:panel>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

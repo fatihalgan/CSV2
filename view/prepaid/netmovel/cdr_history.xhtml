@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	
+	<rich:dataTable id="cdrHistoryTable" rows="20" var="item" value="#{netmovelService.cdrHistory}"
+		onRowMouseOver="this.style.backgroundColor='yellow'"
+		onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'">
+		<f:facet name="header">
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="Opening Time" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Duration(Seconds)" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Uplink Volume(MB)" />	
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Downlink Volume(MB)" />
+				</rich:column>
+				<rich:column>
+					<h:outputText value="Access Point(APN)" />
+				</rich:column>
+			</rich:columnGroup>
+		</f:facet>
+		<rich:columnGroup>
+			<rich:column>
+				<h:outputText value="#{item.openingTime}">
+					<f:convertDateTime dateStyle="medium" timeStyle="short" type="both"/>
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.duration}" />
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.uplinkVolumeMB}">
+					<f:convertNumber maxFractionDigits="2"/>
+				</h:outputText>	
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.downlinkVolumeMB}">
+					<f:convertNumber maxFractionDigits="2"/>
+				</h:outputText>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{item.accessPointName}" />
+			</rich:column>
+		</rich:columnGroup>
+		<f:facet name="footer">
+			<rich:datascroller for="cdrHistoryTable" maxPages="20" boundaryControls="auto" fastControls="auto" />
+		</f:facet>		
+	</rich:dataTable>                
+</ui:composition>

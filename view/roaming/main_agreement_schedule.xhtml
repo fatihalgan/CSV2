@@ -1,0 +1,636 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+		<h3>#{msg.roamingAgreementSchedule}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" />
+		<h:panelGroup id="agreementScheduleRegion" layout="table">
+			<rich:panel layout="table" header="Main Agreement Schedule">
+				<h:form id="agreementScheduleSearchForm">
+					<rich:panel header="Schedules">
+						<rich:dataTable id="tblSchedules"
+							value="#{mainAgreementScheduleListAction.mainAgreementScheduleList}"
+							var="item" rows="20">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column>
+										<h:outputText value="Main Agreement" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Country" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Operator Name" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="TAPCODE" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Type" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Status" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Ireg St." />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Tadig St." />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Com. Launch Date" />
+									</rich:column>
+									<rich:column>
+										<h:outputText value="Planned Date" />
+									</rich:column>
+
+									<rich:column>
+										<h:outputText value="Signature Date" />
+									</rich:column>
+
+									<rich:column>
+										<h:outputText value="First Approach Date" />
+									</rich:column>
+
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.mainAgreement.description}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.country.countryName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.operator.operatorName}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText
+										value="#{item.operatorCountry.operator.operatorCode}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.scheduleType.label}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.status.description}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.iregStatus.description}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.tadigStatus.description}" />
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.commercialLaunchDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="EET" />
+									</h:outputText>
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.plannedLaunchDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="EET" />
+									</h:outputText>
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.signatureDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="EET" />
+									</h:outputText>
+								</rich:column>
+								<rich:column>
+									<h:outputText value="#{item.firstApproachDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="EET" />
+									</h:outputText>
+								</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+								<rich:datascroller for="tblSchedules" maxPages="20"
+									boundaryControls="auto" fastControls="auto" />
+							</f:facet>
+						</rich:dataTable>
+					</rich:panel>
+					<rich:panel header="Schedule Search" styleClass="sectionPanel">
+						<table>
+							<tr>
+								<td valign="top"><rich:panel>
+									<h:panelGrid columns="2">
+										<s:decorate template="../display.xhtml">
+											<ui:define name="label">#{msg.roamingCcnc}</ui:define>
+											<h:inputText value="#{mainAgreementScheduleListAction.ccnc}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml">
+											<ui:define name="label">#{msg.roamingNetworkCode}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.mccmnc}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml">
+											<ui:define name="label">#{msg.roamingOperatorCode}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.operatorCode}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml">
+											<ui:define name="label">#{msg.roamingOperatorName}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.operatorName}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml">
+											<h:commandButton value="Find Operator List"
+												action="#{mainAgreementScheduleListAction.findOperatorCountryListByCriteria}" />
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+								<td valign="top"><rich:panel>
+									<h:panelGrid>
+										<s:decorate template="../display.xhtml">
+											<ui:define name="label">#{msg.roamingMainAgreement}</ui:define>
+											<h:selectOneMenu id="masMainAgreementSelOne_2"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreement}">
+												<a:support event="onblur" ajaxSingle="true"
+													reRender="masOperatorRegionSelOne_2"
+													action="#{mainAgreementScheduleListAction.findOperatorCountryList}" />
+												<f:converter converterId="roamingEntityConverter" />
+												<s:selectItems id="maScMaList"
+													value="#{mainAgreementScheduleListAction.mainAgreementList}"
+													var="ma" label="#{ma.description}" />
+											</h:selectOneMenu>
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td valign="top"><rich:panel>
+									<h:panelGrid>
+										<s:decorate template="../display.xhtml">
+											<ui:define name="label">#{msg.roamingOperatorCountry}</ui:define>
+											<h:selectOneMenu id="masOperatorRegionSelOne_2"
+												value="#{mainAgreementScheduleListAction.selectedOperatorCountry}">
+												<f:converter converterId="roamingEntityConverter" />
+												<s:selectItems
+													value="#{mainAgreementScheduleListAction.operatorCountryList}"
+													var="opReg"
+													label="#{opReg.country.countryName}-#{opReg.operator.operatorName}" />
+											</h:selectOneMenu>
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+							</tr>
+							<tr>
+								<td valign="top"><rich:panel>
+									<h:panelGrid columns="2">
+										<s:decorate template="../display.xhtml">
+											<ui:define name="label">#{msg.roamingScheduleType}</ui:define>
+											<h:selectOneMenu id="masScheduleTypeSelOne_2"
+												value="#{mainAgreementScheduleListAction.selectedScheduleType}">
+												<a:support event="onchange"
+													action="#{mainAgreementScheduleListAction.changeScheduleTypeSelection}"
+													reRender="detailPanel" />
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingScheduleTypes}"
+													var="types" label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+							</tr>
+						</table>
+						<div class="actionButtons"><h:commandButton id="btnSearch"
+							value="Search"
+							action="#{mainAgreementScheduleListAction.searchMainAgreementSchedule}" />
+						</div>
+					</rich:panel>
+				</h:form>
+				<h:form>
+					<rich:panel id="detailPanel" header="Schedule Details"
+						styleClass="sectionPanel">
+						<table>
+							<tr>
+								<td valign="top"><rich:panel>
+									<h:panelGrid columns="2">
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5,6')}">
+											<ui:define name="label">#{msg.roamingStatus}</ui:define>
+											<h:selectOneMenu id="masStatusSelOneGsm"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.status}">
+												<f:converter converterId="roamingEntityConverter" />
+												<s:selectItems
+													value="#{mainAgreementScheduleListAction.agreementStatusList}"
+													var="st" label="#{st.description}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingImplementationStatus}</ui:define>
+											<h:selectOneMenu id="masImpStSelOneGsm"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.implementationStatus}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingStatuses}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5,6')}">
+											<ui:define name="label">#{msg.roamingIregTestStatus}</ui:define>
+											<h:selectOneMenu id="gsmIregSelOne"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.iregStatus}">
+												<f:converter converterId="roamingEntityConverter" />
+												<s:selectItems
+													value="#{mainAgreementScheduleListAction.iregStatusList}"
+													var="isl" label="#{isl.description}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingTadigTestStatus}</ui:define>
+											<h:selectOneMenu id="gsmTadigSelOne"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.tadigStatus}">
+												<f:converter converterId="roamingEntityConverter" />
+												<s:selectItems
+													value="#{mainAgreementScheduleListAction.tadigStatusList}"
+													var="ts" label="#{ts.description}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2')}">
+											<ui:define name="label">#{msg.roamingCommercialPriority}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.commercialPriority}">
+												<a:support event="onblur"
+													action="#{mainAgreementScheduleListAction.calculatePriority}"
+													reRender="masGeneralPriority" />
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingPriorities}" var="types"
+													label="#{types.value}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2')}">
+											<ui:define name="label">#{msg.roamingTechnicalPriority}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.technicalPriority}">
+												<a:support event="onblur"
+													action="#{mainAgreementScheduleListAction.calculatePriority}"
+													reRender="masGeneralPriority" />
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingPriorities}" var="types"
+													label="#{types.value}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2')}">
+											<ui:define name="label">#{msg.roamingCommitmentLevel}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.commitmentLevel}">
+												<a:support event="onblur"
+													action="#{mainAgreementScheduleListAction.calculatePriority}"
+													reRender="masGeneralPriority" />
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingPriorities}" var="types"
+													label="#{types.value}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2')}">
+											<ui:define name="label">#{msg.roamingGeneralPriority}</ui:define>
+											<h:inputText id="masGeneralPriority" readonly="true" size="4"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.generalPriority}">
+												<f:convertNumber groupingUsed="true" minFractionDigits="2"
+													maxFractionDigits="2" />
+											</h:inputText>
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+								<td valign="top"><rich:panel>
+									<h:panelGrid columns="2">
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5,6')}">
+											<ui:define name="label">#{msg.roamingPlannedMonthOfTest}</ui:define>
+											<h:inputText id="masPlanMonOfTest"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.plannedMonthOfTest}">
+												<a:support event="onblur" reRender="masPlanMonOfTest" />
+												<f:convertDateTime pattern="MM/yyyy" timeZone="EET" />
+											</h:inputText>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5,6')}">
+											<ui:define name="label">#{msg.roamingScheduledTestDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.scheduledTestDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5,6')}">
+											<ui:define name="label">#{msg.roamingPlannedLaunchDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.plannedLaunchDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5,6')}">
+											<ui:define name="label">#{msg.roamingCommercialLaunchDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.commercialLaunchDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5,6')}">
+											<ui:define name="label">#{msg.roamingSignatureDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.signatureDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5,6')}">
+											<ui:define name="label">#{msg.mainAgreementFirstApproachDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.firstApproachDate}" />
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+							</tr>
+							<tr>
+								<td valign="top"><rich:panel
+									rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+									<h:panelGrid columns="2">
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingTdoperatorName}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.tdoperatorName}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingTdoperatorReceptionDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.tdoperatorReceptionDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingTdoperatorStatus}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.tdoperatorStatus}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingFileStatuses}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+								<td valign="top"><rich:panel
+									rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+									<h:panelGrid columns="2">
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1')}">
+											<ui:define name="label">#{msg.roamingIr24TestStartDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.ir24TestStartDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1')}">
+											<ui:define name="label">#{msg.roamingIr24TestEndDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.ir24TestEndDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1')}">
+											<ui:define name="label">#{msg.roamingIr24OutboundTestEndDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.ir24OutboundTestEndDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingTdmoz01Name}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.tdmoz01Name}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingTdmoz01DispatchDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.tdmoz01DispatchDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingTdmoz01Status}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.tdmoz01Status}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingStatuses}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+							</tr>
+							<tr>
+
+								<td valign="top"><rich:panel
+									rendered="#{mainAgreementScheduleListAction.isRendered('1,2,4,5,6')}">
+									<h:panelGrid columns="3">
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1')}">
+											<ui:define name="label">#{msg.roamingUnixImplmStatus}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.unixImplmStatus}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingStatuses}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2')}">
+											<ui:define name="label">#{msg.roamingBscsixImplmStatus}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.bscsixImplmStatus}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingStatuses}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1')}">
+											<ui:define name="label">#{msg.roamingImplementationDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.implementationDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,4,5,6')}">
+											<ui:define name="label">#{msg.roamingTestCardsAvailableBoth}</ui:define>
+											<h:selectBooleanCheckbox
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.testCardsAvailableBoth}"
+												required="false" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,4,5')}">
+											<ui:define name="label">#{msg.roamingCardInboundActive}</ui:define>
+											<h:selectBooleanCheckbox
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.cardInboundActive}"
+												required="false" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,4,5')}">
+											<ui:define name="label">#{msg.roamingCardOutboundActive}</ui:define>
+											<h:selectBooleanCheckbox
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.cardOutboundActive}"
+												required="false" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1')}">
+											<ui:define name="label">#{msg.roamingSignalingGatewayImplm}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.signalingGatewayImplm}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingStatuses}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1')}">
+											<ui:define name="label">#{msg.roamingInternationalRoutesQuality}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.internationalRoutesQuality}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingQualities}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+								<td valign="top"><rich:panel
+									rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+									<h:panelGrid columns="2">
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingAction}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.action}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1')}">
+											<ui:define name="label">#{msg.roamingIregKpi}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.iregKpi}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,3,4,5')}">
+											<ui:define name="label">#{msg.roamingTestDuration} (Day)</ui:define>
+											<h:inputText readonly="true"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.testDuration}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('1,3,4,5')}">
+											<ui:define name="label">#{msg.roamingRolloutDuration} (Day)</ui:define>
+											<h:inputText readonly="true"
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.rolloutDuration}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('2')}">
+											<ui:define name="label">#{msg.roamingPolicyImplmEndDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.policyImplmEndDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('2')}">
+											<ui:define name="label">#{msg.roamingCgsnImplmStartDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.cgsnImplmStartDate}" />
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+							</tr>
+							<tr>
+								<td valign="top"><rich:panel
+									rendered="#{mainAgreementScheduleListAction.isRendered('2,3,4,5')}">
+									<h:panelGrid columns="3">
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingIr35TestStartDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.ir35TestStartDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingIr35TestEndDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.ir35TestEndDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('2,3,4,5')}">
+											<ui:define name="label">#{msg.roamingIr35OutboundTestEndDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.ir35OutboundTestEndDate}" />
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+								<td valign="top"><rich:panel
+									rendered="#{mainAgreementScheduleListAction.isRendered('3,4,5')}">
+									<h:panelGrid columns="3">
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('3')}">
+											<ui:define name="label">#{msg.roamingGprsRoamingWorking}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.gprsRoamingWorking}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('3,4,5')}">
+											<ui:define name="label">#{msg.roamingNssImplmDate}</ui:define>
+											<rich:calendar
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.nssImplmDate}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('4,5')}">
+											<ui:define name="label">#{msg.roamingCsImplmStatus}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.csImplmStatus}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingStatuses}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+
+									</h:panelGrid>
+								</rich:panel></td>
+							</tr>
+							<tr>
+								<td valign="top"><rich:panel
+									rendered="#{mainAgreementScheduleListAction.isRendered('6')}">
+									<h:panelGrid>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('6')}">
+											<ui:define name="label">#{msg.roamingPlatform}</ui:define>
+											<h:inputText
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.platform}" />
+										</s:decorate>
+										<s:decorate template="../display.xhtml"
+											rendered="#{mainAgreementScheduleListAction.isRendered('6')}">
+											<ui:define name="label">#{msg.roamingMmsgwTestStatus}</ui:define>
+											<h:selectOneMenu
+												value="#{mainAgreementScheduleListAction.selectedMainAgreementSchedule.mmsgwTestStatus}">
+												<s:convertEnum />
+												<s:selectItems value="#{allRoamingStatuses}" var="types"
+													label="#{types.label}" />
+											</h:selectOneMenu>
+										</s:decorate>
+									</h:panelGrid>
+								</rich:panel></td>
+							</tr>
+						</table>
+					</rich:panel>
+					<div class="saveScheduleDiv"><h:commandButton
+						id="btnDeleteSchedule" value="Delete"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Schedule Save')}"
+						action="#{mainAgreementScheduleListAction.deleteMainAgreementSchedule}" /><h:commandButton
+						id="btnSaveSchedule" value="Save"
+						rendered="#{loggedInUser.hasPermissionFor('Roaming Schedule Delete')}"
+						action="#{mainAgreementScheduleListAction.saveMainAgreementSchedule}" /></div>
+				</h:form>
+			</rich:panel>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,27 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a="http://richfaces.org/a4j"
+	  			xmlns:rich="http://richfaces.org/rich"
+				template="templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.waitingTasks}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors" infoClass="info"/>
+		<rich:tabPanel>
+			<rich:tab label="#{msg.pooledTasks}" switchType="server" actionListener="#{filterableTaskInstanceList.resetPooledTaskList}">
+				<ui:include src="/tasks/my_pooled_tasks.xhtml" />
+			</rich:tab>
+			<rich:tab label="#{msg.myAssignedTasks}" switchType="server" actionListener="#{filterableTaskInstanceList.resetMyAssignedTaskList}">
+				<ui:include src="/tasks/my_assigned_tasks.xhtml" />
+			</rich:tab>
+		</rich:tabPanel>
+		<ui:include src="/tasks/complaint_iteration/complaint_iterations_history.xhtml" />
+		<ui:include src="/tasks/complaint_management/complaint_attachments.xhtml" />
+		<ui:include src="/tasks/complaint_management/complaint_display_info.xhtml" />
+		<ui:include src="/tasks/complaint_management/complaint_status_remark.xhtml" />
+	</ui:define>
+</ui:composition>

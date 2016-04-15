@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:m="http://jboss.com/products/seam/mail"
+				template="../../templateNoCustomer.xhtml">
+	<ui:define name="content">
+		<center>
+			<h3>#{msg.invoiceView}</h3>
+		</center>
+		<rich:messages globalOnly="true" layout="table" errorClass="errors"/>			
+		<h:panelGrid columns="2">
+		<rich:panel styleClass="sectionPanel" header="#{msg.searchByInvoiceNumber}">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.invoiceNumber}</ui:define>
+						<h:inputText value="#{postpaidService.invoiceInfo.invoiceNo}" required="true" requiredMessage="Please enter invoice number"/>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<a:commandButton action="#{postpaidService.retrieveInvoiceInfoByInvoiceNo}" value="Submit" 
+					reRender="pnlInvoiceInfo" onclick="this.value='#{msg.queryRunning}'; this.disabled=true" 
+					oncomplete="this.value='Submit'; this.disabled=false"/>
+				</div>
+			</h:form>
+		</rich:panel>
+		<rich:panel styleClass="sectionPanel" header="#{msg.searchByCustomer}">
+			<h:form>
+				<h:panelGrid columns="1">
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.customerCode}</ui:define>
+						<h:inputText value="#{postpaidService.postpaidAccount.customerCode}" required="true" requiredMessage="Please enter customer code"/>
+					</s:decorate>
+					<s:decorate template="../../edit.xhtml">
+						<ui:define name="label">#{msg.period}</ui:define>
+						<h:selectOneMenu value="#{postpaidService.invoiceInfo.period}" required="true">
+							<f:selectItems value="#{applicationService.invoicePeriodsListBox}"/>
+						</h:selectOneMenu>
+					</s:decorate>
+				</h:panelGrid>
+				<div class="actionButtons">
+					<a:commandButton action="#{postpaidService.retrieveInvoiceInfoByCustomerDetails}" value="Submit" 
+						reRender="pnlInvoiceInfo" onclick="this.value='#{msg.queryRunning}'; this.disabled=true" 
+						oncomplete="this.value='Submit'; this.disabled=false"/>
+				</div>
+			</h:form>
+		</rich:panel>
+		</h:panelGrid>
+		<rich:panel id="pnlInvoiceInfo" styleClass="sectionPanel" header="#{msg.invoiceInformation}">
+			<h:panelGrid columns="1">
+				<s:decorate template="../../display.xhtml">
+					<ui:define name="label">#{msg.name}</ui:define>
+					<h:inputText value="#{postpaidService.postpaidAccount.fullName}" readonly="true" size="50"/>
+				</s:decorate>
+			</h:panelGrid>
+			<rich:dataGrid value="#{postpaidService.invoiceInfo.invoicePathList}" var="item" columns="2"  first="0"
+				rendered="#{not empty postpaidService.invoiceInfo.invoicePathList}">
+		    	<f:facet name="header">
+		        	<h:outputText value="Invoice List"/>
+		        </f:facet>
+		        <h:form>
+		        <h:panelGrid columns="3">
+	            	<h:outputLink value="#{item}" target="_new">
+						<h:outputText value="#{msg.clickViewInvoice}" />
+					</h:outputLink>
+					<rich:spacer width="5"/>
+					<h:commandButton rendered="#{postpaidService.postpaidAccount.email != null}"
+						action="#{postpaidService.sendInvoiceMail(item)}" value="#{msg.sendInvoice}"/>	                                    
+		        </h:panelGrid>
+		        </h:form>
+		    </rich:dataGrid>
+		</rich:panel>
+	</ui:define>	
+</ui:composition>

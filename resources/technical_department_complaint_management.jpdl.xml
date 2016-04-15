@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process-definition 
+	xmlns="urn:jbpm.org:jpdl-3.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:jbpm.org:jpdl-3.2 http://jbpm.org/xsd/jpdl-3.2.xsd"
+  	name="TechnicalDepartmentComplaintManagement">
+  	
+  	<start-state name="Raise Complaint">
+		<transition to="Help Desk Attendance"></transition>
+	</start-state>
+
+	<task-node name="Help Desk Attendance">
+		<task name="Attend Complaint">
+			<assignment pooled-actors="Fault Management"></assignment>
+		</task>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}" name="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<event type="node-enter">
+			<action expression="#{openComplaintAttendanceFinished.technicalDepartmentComplaintReiterated}"></action>
+		</event>
+		<transition to="Resolved?"></transition>
+	</task-node>
+
+	<decision name="Resolved?">
+		<transition to="End" name="Yes - to End">
+			<condition expression="#{openComplaint.finalized == true}"></condition>
+		</transition>
+		<transition to="Technical Support Attendance" name="No - to Technical Support Attendance">
+			<condition expression="#{openComplaint.finalized == false}"></condition>
+		</transition>
+	</decision>
+
+	<task-node name="Technical Support Attendance">
+		<task name="Attend Complaint">
+			<assignment actor-id="#{openComplaint.assignedToUser}" pooled-actors="#{openComplaint.assignedTo}"/>
+			<reminder duedate="1 business days" repeat="1 business days"/>
+		</task>
+		<event type="task-assign">
+			<action expression="#{openComplaintTaskAssigned.notifyTaskAssigned}"></action>
+		</event>
+		<transition to="Help Desk Attendance"></transition>
+	</task-node>
+
+	<end-state name="End"></end-state>
+</process-definition>

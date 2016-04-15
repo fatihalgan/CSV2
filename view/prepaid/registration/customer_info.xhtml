@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich">
+	<rich:panel header="#{msg.customerInfo}" styleClass="sectionPanel" rendered="#{prepaidCustomerService.currentSubscription != null}">
+		<h:panelGrid columns="3">
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.name}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.name}" readonly="true"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.surname}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.surname}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.otherNames}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.otherNames}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.birthDate}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.birthDate}">
+					<f:convertDateTime type="date" dateStyle="medium"/>
+				</h:outputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.birthPlace}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.birthPlace}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.nationality}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.nationality}"/>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.gender}</ui:define>
+				<h:selectOneMenu value="#{prepaidCustomerService.currentSubscription.registeredTo.gender}" readonly="true">
+					<s:convertEnum />
+					<s:selectItems value="#{allGenders}" var="gender" label="#{gender.label}"/>
+				</h:selectOneMenu>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.enteredBy}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.saveUser}" />
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.enteredOn}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.saveDate}">
+					<f:convertDateTime dateStyle="medium" type="date"/>
+				</h:outputText>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.registrationStatus}</ui:define>
+				<h:selectOneMenu value="#{prepaidCustomerService.currentSubscription.registeredTo.status}" readonly="true">
+					<s:convertEnum />
+					<s:selectItems var="status" value="#{allCustomerRegistrationStatuses}" label="#{status.label}"/>
+				</h:selectOneMenu>
+			</s:decorate>
+			<s:decorate template="../../display.xhtml">
+				<ui:define name="label">#{msg.documentsComplete}</ui:define>
+				<h:outputText value="#{prepaidCustomerService.currentSubscription.registeredTo.documentsComplete}" />
+			</s:decorate>
+		</h:panelGrid>
+	</rich:panel>
+</ui:composition>
