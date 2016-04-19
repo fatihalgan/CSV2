@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import com.bridge.crs.model.SubscriptionHistory;
+import com.bridge.pelatro.model.RecentSubscriberActivity;
 
 import csv.common.domain.CurrentServedCustomer;
 import csv.gateway.cs.Language;
@@ -26,6 +27,7 @@ public interface IPrepaidAccountService {
 	public PrepaidAccount getAccount();
 	public Account getDwsAccount();
 	public SubscriptionHistory getSubscriptionHistory();
+	public RecentSubscriberActivity getRecentSubscriberActivity();
 	public BigDecimal getLoyaltyPoints();
 	public List<LoyaltyTransaction> getLoyaltyTransactions();
 	public void retrieveAccountHistory();
