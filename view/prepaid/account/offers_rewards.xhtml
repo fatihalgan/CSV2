@@ -6,7 +6,7 @@
                 xmlns:a="http://richfaces.org/a4j"
                 xmlns:rich="http://richfaces.org/rich">
 	
-	<rich:panel header="#{msg.recentOffersRewards}" styleclass="sectionPanel"
+	<rich:panel header="#{msg.offers}" styleclass="sectionPanel"
 		rendered="#{prepaidAccountService.recentSubscriberActivity != null}">
 		<rich:dataTable id="tblRecentOffers" value="#{prepaidAccountService.recentSubscriberActivity.offers}"
 			var="item" rows="10">
@@ -48,6 +48,55 @@
 			</rich:columnGroup>
 			<f:facet name="footer">
 				<rich:datascroller for="tblRecentOffers" maxPages="20" boundaryControls="auto" fastControls="auto" />
+			</f:facet>
+		</rich:dataTable>
+	</rich:panel>
+	<rich:panel header="#{msg.rewards}" styleclass="sectionPanel"
+		rendered="#{prepaidAccountService.recentSubscriberActivity != null}">
+		<rich:dataTable id="tblRecentRewards" value="#{prepaidAccountService.recentSubscriberActivity.rewards}"
+			var="item" rows="10">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<h:outputText value="Date"/>
+				</rich:columnGroup>
+				<rich:columnGroup>
+					<h:outputText value="Campaign"/>
+				</rich:columnGroup>
+				<rich:columnGroup>
+					<h:outputText value="Type"/>
+				</rich:columnGroup>
+				<rich:columnGroup>
+					<h:outputText value="Unit"/>
+				</rich:columnGroup>
+				<rich:columnGroup>
+					<h:outputText value="Quantity"/>
+				</rich:columnGroup>
+				<rich:columnGroup>
+					<h:outputText value="Expiry"/>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="#{item.timestamp}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.campaign}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.type}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.unit}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.quantity}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.expiry}"/>
+				</rich:column>
+			</rich:columnGroup>
+			<f:facet name="footer">
+				<rich:datascroller for="tblRecentRewards" maxPages="20" boundaryControls="auto" fastControls="auto" />
 			</f:facet>
 		</rich:dataTable>
 	</rich:panel>
