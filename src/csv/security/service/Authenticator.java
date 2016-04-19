@@ -49,7 +49,7 @@ public class Authenticator implements IAuthenticator {
 		DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 		Date now = new Date();
 		try {
-			if(now.after(fmt.parse("25-04-2016"))) return false;
+			if(now.after(fmt.parse("02-05-2016"))) return false;
 		} catch(Exception e) {
 			return false;
 		}

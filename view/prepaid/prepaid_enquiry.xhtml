@@ -23,9 +23,9 @@
 				onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Account History'; this.disabled=false"
 				eventsQueue="accountHistoryQueue"/>
 			<rich:spacer width="5"/>	
-			<a:commandButton id="btnLoyaltyHistory" action="#{prepaidAccountService.retrieveLoyaltyInformation}" value="Get Loyalty Points" 
-  				rendered="#{loggedInUser.hasPermissionFor('Retrieve Loyalty Info')}" reRender="pnlLoyaltyInfo"
-  				onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Loyalty Points'; this.disabled=false"
+			<a:commandButton id="btnCampaignManagementHistory" action="#{prepaidAccountService.retrieveRecentSubscriberActivity}" value="Get Offers/Rewards" 
+  				rendered="#{loggedInUser.hasPermissionFor('Prepaid Account History')}" reRender="pnlLoyaltyInfo"
+  				onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Offers Rewards'; this.disabled=false"
   				eventsQueue="accountHistoryQueue"/>
   			<rich:spacer width="5"/>
   			<a:commandButton id="btnFaFHistory" action="#{prepaidAccountService.retrieveFaFHistory}" value="Get FaF History"
@@ -69,9 +69,9 @@
 				<ui:include src="/prepaid/account/adjustment.xhtml" />
 			</a:outputPanel>
 			</rich:tab>
-			<rich:tab label="#{msg.loyaltyPoints}">
-				<a:outputPanel id="pnlLoyaltyInfo">
-					<ui:include src="/prepaid/account/loyalty_account.xhtml" />
+			<rich:tab label="#{msg.recentOffersRewards}">
+				<a:outputPanel id="pnlRecentOffersRewards">
+					<ui:include src="/prepaid/account/offers_rewards.xhtml" />
 				</a:outputPanel>
 			</rich:tab>
 			<rich:tab label="#{msg.CCHistory}">

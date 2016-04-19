@@ -24,6 +24,7 @@ import com.bridge.crs.model.SubscriptionHistory;
 import com.bridge.crs.model.TransactionDetails;
 import com.bridge.ena.cs.command.AbstractCSCommand;
 import com.bridge.loyalty.prepaid.service.IPrepaidLoyaltyService;
+import com.bridge.pelatro.model.RecentSubscriberActivity;
 
 import csv.common.domain.CurrentServedCustomer;
 import csv.common.service.BaseService;
@@ -32,6 +33,7 @@ import csv.gateway.cs.AIRGateway;
 import csv.gateway.cs.CRSGateway;
 import csv.gateway.cs.Language;
 import csv.gateway.cs.MINSATGateway;
+import csv.gateway.cs.PelatroGateway;
 import csv.gateway.cs.ServiceClass;
 import csv.prepaid.dao.IDWSDao;
 import csv.prepaid.dao.ILoyaltyDao;
@@ -66,6 +68,9 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 	@In("crsGateway")
 	private CRSGateway crsGateway;
 	
+	@In("pelatroGateway")
+	private PelatroGateway pelatroGateway;
+	
 	@In("dwsDao")
 	private IDWSDao dwsDao;
 	
@@ -83,6 +88,8 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 	private Account dwsAccount;
 	
 	private SubscriptionHistory subscriptionHistory = new SubscriptionHistory();
+	
+	private RecentSubscriberActivity recentSubscriberActivity = new RecentSubscriberActivity();
 	
 	private BigDecimal loyaltyPoints = null;
 	
@@ -141,6 +148,10 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 
 	public void setSubscriptionHistory(SubscriptionHistory subscriptionHistory) {
 		this.subscriptionHistory = subscriptionHistory;
+	}
+	
+	public RecentSubscriberActivity getRecentSubscriberActivity() {
+		return recentSubscriberActivity;
 	}
 
 	public BigDecimal getLoyaltyPoints() {
@@ -263,6 +274,15 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 			subscriptionHistory = crsGateway.retrieveSubscriptionHistory(currentCustomer.getPrefix() + currentCustomer.getMsisdn(), startDate, endDate);
 			if(subscriptionHistory.getEventHistoryFiltered().size() == 0) facesMessages.add(Severity.WARN, "No history records found in CRS for the selected period..");
 			logAccess(OperationNames.PrepaidAccountHistory, currentCustomer.getFullMsisdn(), formatDate(startDate) + "-" + formatDate(endDate));
+		} catch(Exception e) {
+			logger.error(e);
+			facesMessages.add(Severity.ERROR, e.getMessage());
+		}
+	}
+	
+	public void retrieveRecentSubscriberActivity() {
+		try {
+			recentSubscriberActivity = pelatroGateway.retrieveRecentActivity(currentCustomer.getFullMsisdn());
 		} catch(Exception e) {
 			logger.error(e);
 			facesMessages.add(Severity.ERROR, e.getMessage());

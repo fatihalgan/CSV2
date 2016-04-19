@@ -30,6 +30,7 @@ public interface IPrepaidAccountService {
 	public List<LoyaltyTransaction> getLoyaltyTransactions();
 	public void retrieveAccountHistory();
 	public void retrieveCRSAccountHistory();
+	public void retrieveRecentSubscriberActivity();
 	public void retrieveFaFHistory();
 	public void retrieveEventDetails(AbstractAccountEvent event);
 	public void retrieveCRSEventDetails(com.bridge.crs.model.AbstractAccountEvent event);

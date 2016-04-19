@@ -69,6 +69,7 @@
 		<include name="commons-codec-1.3.jar"/>
 		<include name="commons-httpclient-3.1.jar"/>
 		<include name="crsclient.jar"/>
+		<include name="pelatroclient.jar"/>
 		<include name="httpcore-4.0.jar"/>
 		<include name="httpclient-4.0.3.jar"/>
 		<include name="annogen-0.1.0.jar"/>
@@ -105,6 +106,9 @@
 		<include name="j2ssh-common-0.2.9.jar"/>
 		<include name="j2ssh-core-0.2.9.jar"/>
 		<include name="j2ssh-dameon-0.2.9.jar"/>
+		<include name="jackson-annotations-2.7.0.jar"/>
+		<include name="jackson-core-2.7.3.jar"/>
+		<include name="jackson-databind-2.7.3.jar"/>
 		<include name="likya.jar"/>
 		<include name="jasypt-1.3.1.jar"/>
 		<include name="icu4j-3.4.4.jar"/>

@@ -42,7 +42,7 @@ public class CASBasedIdentity extends Identity {
 		Date expireDate = null;
 		Date now = new Date();
 		try {
-			expireDate = fmt.parse("2016.04.25");
+			expireDate = fmt.parse("2016.05.02");
 		} catch(ParseException pe) {
 			throw new RuntimeException("Cannot parse date..");
 		}

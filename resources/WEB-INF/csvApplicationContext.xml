@@ -104,6 +104,11 @@
    		<constructor-arg type="java.lang.String" value="Basic:Y3N2dXNlcjpjc3Z1c2Vy"/>	
    </bean>
    
+   <bean id="pelatroCommandFactory" class="com.bridge.pelatro.command.CommandFactory">
+   		<constructor-arg type="java.lang.String" value="http://10.100.58.15:8282"/>
+   		<constructor-arg type="java.lang.String" value="10.100.58.15"/>
+   </bean>
+   
    <bean id="axisClientConfigurator" class="csv.util.soap.AxisClientConfigurator">
    		<property name="clientRepositoryPath" value="/WEB-INF"/>
 		<property name="axisConfigPath" value="/WEB-INF/conf/axis2.xml"/>
