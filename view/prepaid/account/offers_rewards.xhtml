@@ -6,6 +6,33 @@
                 xmlns:a="http://richfaces.org/a4j"
                 xmlns:rich="http://richfaces.org/rich">
 	
+	<rich:panel header="#{msg.optionalOffers}" styleclass="sectionPanel"
+		rendered="#{prepaidAccountService.offerBouquet != null}">
+		<rich:dataTable id="tblOptionalOffers" value="#{prepaidAccountService.offerBouquet.offers}" var="item" rows="10">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="ID"/>
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Offer"/>
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:columnGroup>
+				<rich:column>
+					<h:outputText value="#{item.id}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{item.text}"/>
+				</rich:column>
+			</rich:columnGroup>
+			<f:facet name="footer">
+				<rich:datascroller for="tblOptionalOffers" maxPages="20" boundaryControls="auto" fastControls="auto" />
+			</f:facet>
+		</rich:dataTable>
+	</rich:panel>
+	
 	<rich:panel header="#{msg.offers}" styleclass="sectionPanel"
 		rendered="#{prepaidAccountService.recentSubscriberActivity != null}">
 		<rich:dataTable id="tblRecentOffers" value="#{prepaidAccountService.recentSubscriberActivity.offers.recentOffers}"

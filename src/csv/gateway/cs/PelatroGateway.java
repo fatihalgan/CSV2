@@ -12,6 +12,8 @@ import org.jboss.seam.log.Log;
 
 import com.bridge.pelatro.command.CommandFactory;
 import com.bridge.pelatro.command.RetrieveOffersCommand;
+import com.bridge.pelatro.command.RetrieveOptInOffersCommand;
+import com.bridge.pelatro.model.OfferBouquet;
 import com.bridge.pelatro.model.RecentSubscriberActivity;
 import com.bridge.pelatro.model.RecentSubscriberActivityResponse;
 
@@ -43,6 +45,19 @@ public class PelatroGateway implements Serializable {
 		} catch(Exception e) {
 			logger.error("Could not get activity history from Campaign Management System: ", e.getMessage());
 			throw new RuntimeException("Could not get activity history from Campaign Management System: " + e.getMessage());
+		}
+		return resp;
+	}
+	
+	public OfferBouquet retrieveOptionalOffers(String msisdn) {
+		OfferBouquet resp = null;
+		try {
+			RetrieveOptInOffersCommand cmd = commandFactory.getRetrieveOptInOffersCommand(msisdn);
+			cmd.execute();
+			resp = cmd.getOfferBouquet();
+		} catch(Exception e) {
+			logger.error("Could not get Optional Offers from Campaign Management System: ", e.getMessage());
+			throw new RuntimeException("Could not get Optional Offers from Campaign Management System: " + e.getMessage());
 		}
 		return resp;
 	}

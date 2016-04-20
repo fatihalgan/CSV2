@@ -24,6 +24,7 @@ import com.bridge.crs.model.SubscriptionHistory;
 import com.bridge.crs.model.TransactionDetails;
 import com.bridge.ena.cs.command.AbstractCSCommand;
 import com.bridge.loyalty.prepaid.service.IPrepaidLoyaltyService;
+import com.bridge.pelatro.model.OfferBouquet;
 import com.bridge.pelatro.model.RecentSubscriberActivity;
 
 import csv.common.domain.CurrentServedCustomer;
@@ -91,6 +92,8 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 	
 	private RecentSubscriberActivity recentSubscriberActivity = new RecentSubscriberActivity();
 	
+	private OfferBouquet offerBouquet = null;
+	
 	private BigDecimal loyaltyPoints = null;
 	
 	private List<LoyaltyTransaction> loyaltyTransactions = null;
@@ -152,6 +155,10 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 	
 	public RecentSubscriberActivity getRecentSubscriberActivity() {
 		return recentSubscriberActivity;
+	}
+	
+	public OfferBouquet getOfferBouquet() {
+		return offerBouquet;
 	}
 
 	public BigDecimal getLoyaltyPoints() {
@@ -283,6 +290,7 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 	public void retrieveRecentSubscriberActivity() {
 		try {
 			recentSubscriberActivity = pelatroGateway.retrieveRecentActivity(currentCustomer.getFullMsisdn());
+			offerBouquet = pelatroGateway.retrieveOptionalOffers(currentCustomer.getFullMsisdn());
 		} catch(Exception e) {
 			logger.error(e);
 			facesMessages.add(Severity.ERROR, e.getMessage());
