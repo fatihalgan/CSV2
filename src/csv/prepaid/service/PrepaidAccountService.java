@@ -290,7 +290,21 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 	public void retrieveRecentSubscriberActivity() {
 		try {
 			recentSubscriberActivity = pelatroGateway.retrieveRecentActivity(currentCustomer.getFullMsisdn());
+		} catch(Exception e) {
+			logger.error(e);
+			facesMessages.add(Severity.ERROR, e.getMessage());
+		}
+		try {		
 			offerBouquet = pelatroGateway.retrieveOptionalOffers(currentCustomer.getFullMsisdn());
+		} catch(Exception e) {
+			logger.error(e);
+			facesMessages.add(Severity.ERROR, e.getMessage());
+		}
+	}
+	
+	public void acceptCampaignOffer(String offerId) {
+		try {
+			pelatroGateway.acceptOffer(offerId, currentCustomer.getFullMsisdn());
 		} catch(Exception e) {
 			logger.error(e);
 			facesMessages.add(Severity.ERROR, e.getMessage());

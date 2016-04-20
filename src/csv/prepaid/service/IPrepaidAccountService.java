@@ -29,6 +29,7 @@ public interface IPrepaidAccountService {
 	public Account getDwsAccount();
 	public SubscriptionHistory getSubscriptionHistory();
 	public RecentSubscriberActivity getRecentSubscriberActivity();
+	public void acceptCampaignOffer(String offerId);
 	public OfferBouquet getOfferBouquet();
 	public BigDecimal getLoyaltyPoints();
 	public List<LoyaltyTransaction> getLoyaltyTransactions();
