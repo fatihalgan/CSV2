@@ -24,7 +24,7 @@
 				eventsQueue="accountHistoryQueue"/>
 			<rich:spacer width="5"/>	
 			<a:commandButton id="btnCampaignManagementHistory" action="#{prepaidAccountService.retrieveRecentSubscriberActivity}" value="Get Offers/Rewards" 
-  				rendered="#{loggedInUser.hasPermissionFor('Prepaid Account History')}" reRender="pnlLoyaltyInfo"
+  				rendered="#{loggedInUser.hasPermissionFor('Prepaid Account History')}" reRender="pnlRecentOffersRewards"
   				onclick="this.value='#{msg.queryRunning}'; this.disabled=true" oncomplete="this.value='Get Offers Rewards'; this.disabled=false"
   				eventsQueue="accountHistoryQueue"/>
   			<rich:spacer width="5"/>
