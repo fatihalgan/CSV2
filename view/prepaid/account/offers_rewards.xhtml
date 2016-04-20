@@ -8,7 +8,7 @@
 	
 	<rich:panel header="#{msg.offers}" styleclass="sectionPanel"
 		rendered="#{prepaidAccountService.recentSubscriberActivity != null}">
-		<rich:dataTable id="tblRecentOffers" value="#{prepaidAccountService.recentSubscriberActivity.offers}"
+		<rich:dataTable id="tblRecentOffers" value="#{prepaidAccountService.recentSubscriberActivity.offers.recentOffers}"
 			var="item" rows="10">
 			<f:facet name="header">
 				<rich:columnGroup>
@@ -53,7 +53,7 @@
 	</rich:panel>
 	<rich:panel header="#{msg.rewards}" styleclass="sectionPanel"
 		rendered="#{prepaidAccountService.recentSubscriberActivity != null}">
-		<rich:dataTable id="tblRecentRewards" value="#{prepaidAccountService.recentSubscriberActivity.rewards}"
+		<rich:dataTable id="tblRecentRewards" value="#{prepaidAccountService.recentSubscriberActivity.rewards.recentRewards}"
 			var="item" rows="10">
 			<f:facet name="header">
 				<rich:columnGroup>
