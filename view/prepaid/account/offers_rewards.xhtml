@@ -39,7 +39,7 @@
 			</f:facet>
 		</rich:dataTable>
 	</rich:panel>
-	
+	<hr/>
 	<rich:panel header="#{msg.offers}" styleclass="sectionPanel"
 		rendered="#{prepaidAccountService.recentSubscriberActivity != null}">
 		<rich:dataTable id="tblRecentOffers" value="#{prepaidAccountService.recentSubscriberActivity.offers.recentOffers}"
@@ -65,7 +65,7 @@
 			</f:facet>
 			<rich:columnGroup>
 				<rich:column>
-					<h:outputText value="#{item.timestamp}"/>
+					<h:outputText value="#{item.timestampDate}"/>
 				</rich:column>
 				<rich:column>
 					<h:outputText value="#{item.campaign}"/>
@@ -74,7 +74,7 @@
 					<h:outputText value="#{item.offer}"/>
 				</rich:column>
 				<rich:column>
-					<h:outputText value="#{item.status}"/>
+					<h:outputText value="#{item.statusDesc}"/>
 				</rich:column>
 				<rich:column>
 					<h:outputText value="#{item.validity}"/>
@@ -85,6 +85,7 @@
 			</f:facet>
 		</rich:dataTable>
 	</rich:panel>
+	<hr/>
 	<rich:panel header="#{msg.rewards}" styleclass="sectionPanel"
 		rendered="#{prepaidAccountService.recentSubscriberActivity != null}">
 		<rich:dataTable id="tblRecentRewards" value="#{prepaidAccountService.recentSubscriberActivity.rewards.recentRewards}"
@@ -111,7 +112,7 @@
 			</f:facet>
 			<rich:columnGroup>
 				<rich:column>
-					<h:outputText value="#{item.timestamp}"/>
+					<h:outputText value="#{item.timestampDate}"/>
 				</rich:column>
 				<rich:column>
 					<h:outputText value="#{item.campaign}"/>
@@ -126,7 +127,7 @@
 					<h:outputText value="#{item.quantity}"/>
 				</rich:column>
 				<rich:column>
-					<h:outputText value="#{item.expiry}"/>
+					<h:outputText value="#{item.expiryDate}"/>
 				</rich:column>
 			</rich:columnGroup>
 			<f:facet name="footer">
