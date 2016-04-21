@@ -306,6 +306,7 @@ public class PrepaidAccountService extends BaseService implements IPrepaidAccoun
 		try {
 			pelatroGateway.acceptOffer(offerId, currentCustomer.getFullMsisdn());
 			facesMessages.add(Severity.INFO, "Offer was accepted successfully...");
+			retrieveRecentSubscriberActivity();
 		} catch(Exception e) {
 			logger.error(e);
 			facesMessages.add(Severity.ERROR, e.getMessage());
