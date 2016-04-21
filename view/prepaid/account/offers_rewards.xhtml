@@ -17,6 +17,9 @@
 					<rich:column>
 						<h:outputText value="Offer"/>
 					</rich:column>
+					<rich:column>
+						<h:outputText value="Accept Offer"/>
+					</rich:column>
 				</rich:columnGroup>
 			</f:facet>
 			<rich:columnGroup>
@@ -25,6 +28,10 @@
 				</rich:column>
 				<rich:column>
 					<h:outputText value="#{item.text}"/>
+				</rich:column>
+				<rich:column>
+					<a:commandButton action="#{prepaidAccountService.acceptCampaignOffer(item.id)}"
+						value="Accept Offer" reRender="tblOptionalOffers"></a:commandButton>
 				</rich:column>
 			</rich:columnGroup>
 			<f:facet name="footer">
